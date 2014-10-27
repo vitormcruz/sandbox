@@ -24,7 +24,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 @Title("Addressbook")
-@Theme("valo")
+@Theme("runo")
 public class AddressbookUI extends UI {
 
     /* User interface components are stored in session. */
