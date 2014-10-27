@@ -40,10 +40,10 @@ class Application extends SpringBootServletInitializer{
 
     @Bean
     public ServletRegistrationBean vaadinServlet(){
-        ServletRegistrationBean registration = new ServletRegistrationBean(new VaadinServlet(), "/*");
+        ServletRegistrationBean registration = new ServletRegistrationBean(new VaadinServlet(), "/payroll/*", "/VAADIN/*");
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("UI", "sandbox.AddressbookUI");
+        params.put("UI", "sandbox.PayrollUI");
         registration.setInitParameters(params);
         return registration;
     }

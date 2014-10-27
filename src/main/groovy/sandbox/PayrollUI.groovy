@@ -4,9 +4,9 @@ import com.vaadin.annotations.Title
 import com.vaadin.server.VaadinRequest
 import com.vaadin.ui.UI
 
-@Title("Addressbook")
+@Title("Payroll")
 @Theme("valo")
-public class AddressbookUI extends UI {
+public class PayrollUI extends UI {
     protected void init(VaadinRequest request) {
         System.out.println("ahaaaa!!!");
      }
