@@ -1,28 +1,21 @@
 package sandbox
-
-import com.vaadin.annotations.Theme;
-import com.vaadin.annotations.Title;
-import com.vaadin.data.Container.Filter;
-import com.vaadin.data.Item;
-import com.vaadin.data.Property;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.fieldgroup.FieldGroup;
-import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.HorizontalSplitPanel;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
-
+import com.vaadin.annotations.Theme
+import com.vaadin.annotations.Title
+import com.vaadin.data.Container.Filter
+import com.vaadin.data.Item
+import com.vaadin.data.fieldgroup.FieldGroup
+import com.vaadin.data.util.IndexedContainer
+import com.vaadin.event.FieldEvents.TextChangeEvent
+import com.vaadin.event.FieldEvents.TextChangeListener
+import com.vaadin.server.VaadinRequest
+import com.vaadin.ui.*
+import com.vaadin.ui.AbstractTextField.TextChangeEventMode
+import com.vaadin.ui.Button.ClickEvent
+import com.vaadin.ui.Button.ClickListener
+/**
+ * Copied from Vaadin tutorial to have a working example of it on this project. I will change its contents over time.
+ * (https://github.com/vaadin/addressbook/blob/master/src/main/java/com/vaadin/tutorial/addressbook/AddressbookUI.java)
+ */
 @Title("Addressbook")
 @Theme("runo")
 public class AddressbookUI extends UI {
@@ -228,8 +221,7 @@ public class AddressbookUI extends UI {
 		contactList.setSelectable(true);
 		contactList.setImmediate(true);
 
-		contactList.addValueChangeListener(new Property.ValueChangeListener() {
-			public void valueChange(ValueChangeEvent event) {
+		contactList.addValueChangeListener({ event ->
 				Object contactId = contactList.getValue();
 
 				/*
@@ -243,8 +235,7 @@ public class AddressbookUI extends UI {
 							.getItem(contactId));
 
 				editorLayout.setVisible(contactId != null);
-			}
-		});
+			})
 	}
 
 	/*
