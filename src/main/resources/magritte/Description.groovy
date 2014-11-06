@@ -1,0 +1,5 @@
+package magritte
+
+
+class Description {
+}
