@@ -1,4 +1,4 @@
-package magritte.junit
+package magritte.test.junit
 import org.junit.internal.runners.model.ReflectiveCallable
 import org.junit.runners.model.FrameworkMethod
 
