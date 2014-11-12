@@ -5,6 +5,7 @@ import com.vaadin.data.Container.Filter
 import com.vaadin.data.Item
 import com.vaadin.data.fieldgroup.FieldGroup
 import com.vaadin.data.util.IndexedContainer
+import com.vaadin.server.Sizeable
 import com.vaadin.server.VaadinRequest
 import com.vaadin.ui.*
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode
@@ -12,9 +13,9 @@ import com.vaadin.ui.AbstractTextField.TextChangeEventMode
  * Copied from Vaadin tutorial to have a working example of it on this project. I will change its contents over time.
  * (https://github.com/vaadin/addressbook/blob/master/src/main/java/com/vaadin/tutorial/addressbook/AddressbookUI.java)
  */
-@Title("Addressbook")
-@Theme("runo")
-public class AddressbookUI extends UI {
+@Title("Sandbox")
+@Theme("valo")
+public class SandboxUI extends UI {
 
     /* User interface components are stored in session. */
     private Table contactList = new Table();
@@ -55,15 +56,26 @@ public class AddressbookUI extends UI {
      * visual editor, CSS or HTML templates for layout instead.
      */
     private void initLayout() {
+        VerticalSplitPanel baseLayout = new VerticalSplitPanel()
+        baseLayout.setLocked(true)
+        baseLayout.setSplitPosition(7, Sizeable.Unit.PERCENTAGE)
+        setContent(baseLayout)
+
 
         /* Root of the user interface component tree is set */
-        HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
-        setContent(splitPanel);
+        HorizontalSplitPanel addressBookPanel = new HorizontalSplitPanel();
+
+        def menu = new MenuBar()
+        def item = menu.addItem("Teste", null)
+        item.addItem("AddressBook", { selectedItem -> baseLayout.setSecondComponent(addressBookPanel)} )
+        item.addItem("PayRoll", { selectedItem -> baseLayout.setSecondComponent(null)} )
+        baseLayout.setFirstComponent(menu)
+
 
         /* Build the component tree */
         VerticalLayout leftLayout = new VerticalLayout();
-        splitPanel.addComponent(leftLayout);
-        splitPanel.addComponent(editorLayout);
+        addressBookPanel.addComponent(leftLayout);
+        addressBookPanel.addComponent(editorLayout);
         leftLayout.addComponent(contactList);
         HorizontalLayout bottomLeftLayout = new HorizontalLayout();
         leftLayout.addComponent(bottomLeftLayout);

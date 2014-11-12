@@ -8,7 +8,7 @@ class InitController {
 
     @RequestMapping("/")
     String redirectFirstPage() {
-        return "redirect:addressbook/";
+        return "redirect:sandbox/";
     }
 
 }
