@@ -68,7 +68,7 @@ public class SandboxUI extends UI {
         def menu = new MenuBar()
         def item = menu.addItem("Teste", null)
         item.addItem("AddressBook", { selectedItem -> baseLayout.setSecondComponent(addressBookPanel)} )
-        item.addItem("PayRoll", { selectedItem -> baseLayout.setSecondComponent(null)} )
+        item.addItem("PayRoll", { selectedItem -> baseLayout.setSecondComponent(new PayrollPage())} )
         baseLayout.setFirstComponent(menu)
 
 
