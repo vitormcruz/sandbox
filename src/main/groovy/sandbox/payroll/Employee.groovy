@@ -1,4 +1,4 @@
-package sandbox
+package sandbox.payroll
 
 class Employee {
 

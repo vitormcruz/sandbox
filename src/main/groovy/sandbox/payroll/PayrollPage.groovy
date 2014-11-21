@@ -1,6 +1,7 @@
-package sandbox
+package sandbox.payroll
 import com.vaadin.ui.AbsoluteLayout
 import com.vaadin.ui.FormLayout
+import sandbox.payroll.Employee
 
 class PayrollPage extends AbsoluteLayout {
 

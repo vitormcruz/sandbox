@@ -3,7 +3,7 @@ import magritte.DescriptionMethod
 import magritte.StringDescription
 import org.junit.Test
 import org.junit.runner.RunWith
-import sandbox.Employee
+import sandbox.payroll.Employee
 import testGenerator.TestSuitDescription
 import testGenerator.junit.JUnit4TestgeneratorRunner
 

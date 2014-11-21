@@ -1,4 +1,4 @@
-package sandbox
+package sandbox.vaadin.magritte
 
 import com.vaadin.ui.TextField
 import magritte.AbstractVisitableDescription
