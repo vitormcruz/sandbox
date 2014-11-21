@@ -1,4 +1,4 @@
-package magritte.test
+package testGenerator
 import magritte.DescriptionMethod
 import magritte.StringDescription
 import org.junit.Ignore

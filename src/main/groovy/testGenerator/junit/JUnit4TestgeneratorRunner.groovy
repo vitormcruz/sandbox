@@ -1,14 +1,14 @@
-package magritte.test.junit
+package testGenerator.junit
 import org.junit.runners.BlockJUnit4ClassRunner
 import org.junit.runners.model.FrameworkMethod
 import org.junit.runners.model.InitializationError
 
-class JUnit4MagritteDescriptionAwareRunner extends BlockJUnit4ClassRunner{
+class JUnit4TestgeneratorRunner extends BlockJUnit4ClassRunner{
 
     /**
      * Constructs a new instance of the default runner
      */
-    JUnit4MagritteDescriptionAwareRunner(Class<?> klass) throws InitializationError {
+    JUnit4TestgeneratorRunner(Class<?> klass) throws InitializationError {
         super(klass)
     }
 

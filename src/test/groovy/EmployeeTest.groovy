@@ -1,13 +1,13 @@
 import magritte.Description
 import magritte.DescriptionMethod
 import magritte.StringDescription
-import magritte.test.TestSuitDescription
-import magritte.test.junit.JUnit4MagritteDescriptionAwareRunner
 import org.junit.Test
 import org.junit.runner.RunWith
 import sandbox.Employee
+import testGenerator.TestSuitDescription
+import testGenerator.junit.JUnit4TestgeneratorRunner
 
-@RunWith(JUnit4MagritteDescriptionAwareRunner)
+@RunWith(JUnit4TestgeneratorRunner)
 class EmployeeTest {
 
     @Test
@@ -18,7 +18,7 @@ class EmployeeTest {
     @DescriptionMethod
     def Description myDescription(){
         def testSuitDescription = TestSuitDescription().forClass(getEmployeeClass())
-        testSuitDescription.addRestrictionDefinition(new StringDescription().acessor("name").beRequired())
+        testSuitDescription.addClassDefinition(new StringDescription().acessor("name").beRequired())
         return testSuitDescription
     }
 

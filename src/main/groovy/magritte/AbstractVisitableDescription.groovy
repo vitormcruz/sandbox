@@ -10,17 +10,20 @@ abstract class AbstractVisitableDescription implements Description {
      */
     protected def messagesSend = [:]
 
-    AbstractVisitableDescription beRequired() {
+    @Override
+    Description beRequired() {
         messagesSend.put("beRequired", [null])
         return this
     }
 
-    AbstractVisitableDescription acessor(String acessor) {
+    @Override
+    Description acessor(String acessor) {
         messagesSend.put("acessor", [acessor])
         return this
     }
 
-    abstract AbstractVisitableDescription defaultValue(defaultValue)
+    @Override
+    abstract Description defaultValue(defaultValue)
 
     AbstractVisitableDescription addConfigurationMessageSend(message, params){
         messagesSend.put(message, params)

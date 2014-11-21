@@ -1,4 +1,4 @@
-package magritte.test
+package testGenerator
 import magritte.DescriptionMethod
 /**
  * Load a class with a test case based on a magritte description

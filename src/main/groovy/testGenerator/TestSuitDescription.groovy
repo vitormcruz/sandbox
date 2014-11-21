@@ -1,11 +1,8 @@
-package magritte.test
-
+package testGenerator
+import magritte.AbstractVisitableDescription
 import magritte.Description
-import magritte.DescriptionVisitor
 
-
-class TestSuitDescription implements Description {
-
+class TestSuitDescription extends AbstractVisitableDescription{
     Class classUnderTest
     def descriptions = []
 
@@ -21,13 +18,9 @@ class TestSuitDescription implements Description {
         return new TestSuitDescription(classUnderTest)
     }
 
-    def addRestrictionDefinition(Description description) {
+    AbstractVisitableDescription addClassDefinition(AbstractVisitableDescription description) {
         descriptions.add(description)
-    }
-
-    def visit(DescriptionVisitor descritionVisitor){
-        descritionVisitor.descriptionOf(classUnderTest)
-
+        return this
     }
 
     //TODO think what to do with that.....
@@ -44,5 +37,8 @@ class TestSuitDescription implements Description {
     @Override
     Description defaultValue(Object defaultValue) {
         return null
+    }
+    Collection getTestScenarios() {
+        return []
     }
 }
