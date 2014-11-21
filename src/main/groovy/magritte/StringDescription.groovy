@@ -1,25 +1,14 @@
 package magritte
 
-class StringDescription extends Description {
+class StringDescription extends AbstractVisitableDescription implements MagnitudeDescription {
 
-    //TODO acho que dá para jogar tudo para cima.
-    /**
-     * A map whose key is the message send and the value is a ordered array of parameters.
-     */
-    def messagesSend = [:]
-
-    Description beRequired() {
-        messagesSend.put("beRequired", [null])
-        return this
+    @Override
+    StringDescription defaultValue(defaultValue) {
+        return addConfigurationMessageSend("acessor", [defaultValue])
     }
 
-    Description acessor(String acessor) {
-        messagesSend.put("acessor", [acessor])
-        return this
-    }
-
-    Description defaultValue(String defaultValue) {
-        messagesSend.put("acessor": [defaultValue])
-        return this
+    @Override
+    StringDescription label(label) {
+        return addConfigurationMessageSend("label", label)
     }
 }

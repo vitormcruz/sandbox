@@ -4,7 +4,7 @@ import magritte.Description
 import magritte.DescriptionVisitor
 
 
-class TestSuitDescription extends Description{
+class TestSuitDescription implements Description {
 
     Class classUnderTest
     def descriptions = []
@@ -30,4 +30,19 @@ class TestSuitDescription extends Description{
 
     }
 
+    //TODO think what to do with that.....
+    @Override
+    Description acessor(String acessor) {
+        return null
+    }
+
+    @Override
+    Description beRequired() {
+        return null
+    }
+
+    @Override
+    Description defaultValue(Object defaultValue) {
+        return null
+    }
 }

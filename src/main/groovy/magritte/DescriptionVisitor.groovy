@@ -1,10 +1,8 @@
 package magritte
 
-
+/**
+ * A descriptor visitor visits descriptions
+ */
 abstract class DescriptionVisitor {
-
-    abstract def void descriptionOf(Class aClass)
-
-
 
 }

@@ -66,7 +66,7 @@ public class SandboxUI extends UI {
         HorizontalSplitPanel addressBookPanel = new HorizontalSplitPanel();
 
         def menu = new MenuBar()
-        def item = menu.addItem("Teste", null)
+        def item = menu.addItem("Experimentations", null)
         item.addItem("AddressBook", { selectedItem -> baseLayout.setSecondComponent(addressBookPanel)} )
         item.addItem("PayRoll", { selectedItem -> baseLayout.setSecondComponent(new PayrollPage())} )
         baseLayout.setFirstComponent(menu)

@@ -1,5 +1,9 @@
 package magritte
 
 
-class Description {
+interface Description {
+
+    Description acessor(String acessor);
+    Description beRequired();
+    Description defaultValue(defaultValue);
 }
