@@ -1,5 +1,5 @@
 package testGenerator
-import magritte.DescriptionMethod
+import sandbox.magritte.DescriptionMethod
 /**
  * Load a class with a test case based on a magritte description
  */

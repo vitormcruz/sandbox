@@ -1,4 +1,4 @@
-package magritte
+package sandbox.magritte
 
 
 //TODO make this guy implement everything by default, so that subclasses do not need to implement themselfs only calling addConfigurationMessageSend

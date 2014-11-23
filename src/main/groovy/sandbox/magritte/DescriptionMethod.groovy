@@ -1,4 +1,4 @@
-package magritte
+package sandbox.magritte
 
 import java.lang.annotation.*
 

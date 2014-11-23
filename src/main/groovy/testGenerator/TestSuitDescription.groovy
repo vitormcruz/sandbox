@@ -1,6 +1,6 @@
 package testGenerator
-import magritte.AbstractVisitableDescription
-import magritte.Description
+import sandbox.magritte.AbstractVisitableDescription
+import sandbox.magritte.Description
 
 class TestSuitDescription extends AbstractVisitableDescription{
     Class classUnderTest

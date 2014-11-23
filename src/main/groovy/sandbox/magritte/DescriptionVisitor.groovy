@@ -1,4 +1,4 @@
-package magritte
+package sandbox.magritte
 
 /**
  * A descriptor visitor visits descriptions

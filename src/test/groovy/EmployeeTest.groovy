@@ -1,6 +1,6 @@
-import magritte.Description
-import magritte.DescriptionMethod
-import magritte.StringDescription
+import sandbox.magritte.Description
+import sandbox.magritte.DescriptionMethod
+import sandbox.magritte.StringDescription
 import org.junit.Test
 import org.junit.runner.RunWith
 import sandbox.payroll.Employee

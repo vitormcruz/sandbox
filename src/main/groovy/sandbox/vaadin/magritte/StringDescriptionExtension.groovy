@@ -1,7 +1,7 @@
 package sandbox.vaadin.magritte
 
 import com.vaadin.ui.Component
-import magritte.StringDescription
+import sandbox.magritte.StringDescription
 
 class StringDescriptionExtension {
 

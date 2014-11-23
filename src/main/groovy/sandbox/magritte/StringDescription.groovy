@@ -1,4 +1,4 @@
-package magritte
+package sandbox.magritte
 
 class StringDescription extends AbstractVisitableDescription implements MagnitudeDescription {
 

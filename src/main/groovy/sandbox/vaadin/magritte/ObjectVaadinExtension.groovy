@@ -1,13 +1,16 @@
 package sandbox.vaadin.magritte
+
 import com.vaadin.ui.Component
-import magritte.StringDescription
+import sandbox.magritte.MagritteDescriptionFactory
+import sandbox.magritte.StringDescription
 
 class ObjectVaadinExtension {
 
     public static Component asVaadinComponent(Object anObject){
-        StringDescription description = new StringDescription().acessor("name").label("employee.name")
+        //TODO tinha que retornar uma descrição apenas, criar um container e fazer recursivo.
+        StringDescription description = MagritteDescriptionFactory.forObject(anObject)
         return description.asVaadinComponentFor(anObject)
-//        	^ MAPragmaBuilder for: self
+
     }
 
 }

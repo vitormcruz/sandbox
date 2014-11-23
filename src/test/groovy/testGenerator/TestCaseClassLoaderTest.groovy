@@ -1,6 +1,6 @@
 package testGenerator
-import magritte.DescriptionMethod
-import magritte.StringDescription
+import sandbox.magritte.DescriptionMethod
+import sandbox.magritte.StringDescription
 import org.junit.Ignore
 import org.junit.Test
 

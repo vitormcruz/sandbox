@@ -1,4 +1,4 @@
-package magritte
+package sandbox.magritte
 
 
 interface MagnitudeDescription extends Description{

@@ -1,9 +1,7 @@
 package sandbox.vaadin.magritte
-
 import com.vaadin.ui.TextField
-import magritte.AbstractVisitableDescription
-import magritte.Description
-import magritte.MagnitudeDescription
+import sandbox.magritte.Description
+import sandbox.magritte.MagnitudeDescription
 
 class VaadinStringComponent extends TextField implements MagnitudeDescription {
 
@@ -14,17 +12,18 @@ class VaadinStringComponent extends TextField implements MagnitudeDescription {
     }
 
     @Override
-    AbstractVisitableDescription acessor(String acessor) {
+    Description acessor(String acessor) {
         this.setValue(sourceObject."$acessor")
-    }
-
-    @Override
-    AbstractVisitableDescription beRequired() {
         return this
     }
 
     @Override
-    AbstractVisitableDescription defaultValue(Object defaultValue) {
+    Description beRequired() {
+        return this
+    }
+
+    @Override
+    Description defaultValue(Object defaultValue) {
         return this
     }
 
