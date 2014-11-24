@@ -1,15 +1,10 @@
 package sandbox.payroll
 import com.vaadin.ui.AbsoluteLayout
-import com.vaadin.ui.FormLayout
-import sandbox.payroll.Employee
 
 class PayrollPage extends AbsoluteLayout {
 
     PayrollPage() {
-        def form = new FormLayout()
-        this.addComponent(form)
-        def employee = new Employee()
-        employee.name = "Vitor"
-        form.addComponent(employee.asVaadinComponent())
+        def employee = new Employee(name: "Vitor", address: "rua 1", email: "bla@bla.com")
+        this.addComponent(employee.asVaadinComponent())
     }
 }

@@ -38,6 +38,12 @@ class TestSuitDescription extends AbstractVisitableDescription{
     Description defaultValue(Object defaultValue) {
         return null
     }
+
+    @Override
+    Description label(Object label) {
+        return null
+    }
+
     Collection getTestScenarios() {
         return []
     }

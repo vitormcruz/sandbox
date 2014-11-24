@@ -1,4 +1,5 @@
 moduleName=sandbox-module
 moduleVersion=1.0
-extensionClasses=sandbox.vaadin.magritte.ObjectVaadinExtension, sandbox.vaadin.magritte.StringDescriptionExtension
+extensionClasses=sandbox.vaadin.magritte.ObjectVaadinExtension, sandbox.vaadin.magritte.DescriptionExtension, \
+sandbox.vaadin.magritte.StringDescriptionExtension, sandbox.vaadin.magritte.DescriptionContainerExtension
 staticExtensionClasses=
