@@ -1,4 +1,4 @@
-package testGenerator
+package sandbox.testGenerator
 import sandbox.magritte.AbstractVisitableDescription
 import sandbox.magritte.Description
 

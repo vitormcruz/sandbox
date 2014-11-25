@@ -1,4 +1,4 @@
-package testGenerator.junit
+package sandbox.testGenerator.junit
 import org.junit.internal.runners.model.ReflectiveCallable
 import org.junit.runners.model.FrameworkMethod
 

@@ -1,5 +1,0 @@
-package testGenerator
-
-
-class TestScenario {
-}

@@ -4,8 +4,8 @@ import sandbox.magritte.StringDescription
 import org.junit.Test
 import org.junit.runner.RunWith
 import sandbox.payroll.Employee
-import testGenerator.TestSuitDescription
-import testGenerator.junit.JUnit4TestgeneratorRunner
+import sandbox.testGenerator.TestSuitDescription
+import sandbox.testGenerator.junit.JUnit4TestgeneratorRunner
 
 @RunWith(JUnit4TestgeneratorRunner)
 class EmployeeTest {

@@ -1,4 +1,4 @@
-package testGenerator
+package sandbox.testGenerator
 import sandbox.magritte.StringDescription
 import org.junit.Ignore
 import org.junit.Test

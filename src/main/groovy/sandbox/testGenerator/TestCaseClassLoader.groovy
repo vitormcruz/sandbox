@@ -1,4 +1,4 @@
-package testGenerator
+package sandbox.testGenerator
 import sandbox.magritte.DescriptionMethod
 /**
  * Load a class with a test case based on a magritte description
