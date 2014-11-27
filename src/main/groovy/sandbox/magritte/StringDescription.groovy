@@ -11,4 +11,10 @@ class StringDescription extends AbstractVisitableDescription implements Magnitud
     StringDescription label(label) {
         return addConfigurationMessageSend("label", label)
     }
+
+    //TODO Create test and implement this method
+    @Override
+    Description maxSize(Integer maxSize) {
+        return null
+    }
 }

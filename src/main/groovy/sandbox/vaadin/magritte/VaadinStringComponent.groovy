@@ -17,6 +17,7 @@ class VaadinStringComponent extends TextField implements MagnitudeDescription {
         return this
     }
 
+    //TODO Test and implement all that is below.
     @Override
     Description beRequired() {
         return this
@@ -30,6 +31,11 @@ class VaadinStringComponent extends TextField implements MagnitudeDescription {
     @Override
     Description label(label) {
         this.setCaption(label)
+        return this
+    }
+
+    @Override
+    Description maxSize(Integer maxSize) {
         return this
     }
 }

@@ -16,7 +16,7 @@ class JUnit4TestgeneratorRunner extends BlockJUnit4ClassRunner{
     protected List<FrameworkMethod> computeTestMethods() {
         def methods = new ArrayList<>(super.computeTestMethods())
         def testClass = getTestClass().getJavaClass()
-        testClass.metaClass.testeDinamico = {assert false: "Funcionou!!!!!!!!!!!!!"}
+        testClass.metaClass.testeDinamico = {assert true}
         def testeBliBli = testClass.metaClass.methods.find { it.name.equals("testeDinamico") }
         methods.add(new FrameworkMetaMethod(testeBliBli))
         return methods

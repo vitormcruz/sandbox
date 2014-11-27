@@ -11,6 +11,7 @@ class Employee {
     def String address
     def String email
 
+    //TODO how to use only Interfaces? Such as IDescriptionContainter.new().acessor...? Or maby a global variable (coud be configured by spring, but I want to avoid that)
     @DescriptionMethod
     public Description myDescription(){
         return new DescriptionContainer(

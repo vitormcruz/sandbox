@@ -30,7 +30,7 @@ abstract class AbstractVisitableDescription implements Description {
         return this
     }
 
-    //TODO change the name for
+    //TODO change the name?
     void accept(aDescriptorVisitor){
         messagesSend.each {aDescriptorVisitor."${it.key}"(it.value)}
     }
