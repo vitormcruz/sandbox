@@ -12,6 +12,9 @@ class DescriptionContainerExtension {
             throw new IllegalArgumentException("Cannot create test scenarios for a DescriptionContainer that do not specify a target class")
         }
 
-        return []
+        def testGenerator = new TestGeneratorDescriptionContainer(aDescrition.getForClass())
+        aDescrition.accept(testGenerator)
+
+        return testGenerator.getTestScenarios()
     }
 }

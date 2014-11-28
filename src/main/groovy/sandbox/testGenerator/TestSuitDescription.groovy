@@ -2,6 +2,7 @@ package sandbox.testGenerator
 import sandbox.magritte.AbstractVisitableDescription
 import sandbox.magritte.Description
 
+//TODO this one will be deleted... soon
 class TestSuitDescription extends AbstractVisitableDescription{
     Class classUnderTest
     def descriptions = []
@@ -23,7 +24,6 @@ class TestSuitDescription extends AbstractVisitableDescription{
         return this
     }
 
-    //TODO think what to do with that.....
     @Override
     Description acessor(String acessor) {
         return null
