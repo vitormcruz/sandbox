@@ -37,7 +37,7 @@ class TestCaseClassLoaderTest {
     public static class ClassWithATestSuitDescription {
         @DescriptionMethod
         def myDescription(){
-            def testSuitDescription = new TestSuitDescription().forClass(ClassUnderTest)
+//            def testSuitDescription = new TestSuitDescription().forClass(ClassUnderTest)
             testSuitDescription.addRestrictionDefinition("name", new StringDescription().beRequired())
             return testSuitDescription
         }

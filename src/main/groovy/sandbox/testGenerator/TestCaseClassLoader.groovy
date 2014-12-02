@@ -14,7 +14,7 @@ class TestCaseClassLoader {
         if(descriptionMethods.size().equals(1)){
             def description = descriptionMethods[0]()
 
-            assert description instanceof TestSuitDescription : /Sorry, messy here, only TestCaseDescriptions supported today... /
+//            assert description instanceof TestSuitDescription : /Sorry, messy here, only TestCaseDescriptions supported today... /
 
 //            description.each {}
         }

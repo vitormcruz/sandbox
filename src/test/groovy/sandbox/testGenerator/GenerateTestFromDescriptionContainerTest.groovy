@@ -9,7 +9,7 @@ import static groovy.test.GroovyAssert.shouldFail
 /**
  * Tests the description of test suits.
  */
-class GenerateTestFromDescriptionTest {
+class GenerateTestFromDescriptionContainerTest {
 
     //TODO Ok, this should not be done like this
     @BeforeClass
