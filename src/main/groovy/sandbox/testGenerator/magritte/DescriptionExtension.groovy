@@ -1,10 +1,17 @@
 package sandbox.testGenerator.magritte
 
 import sandbox.magritte.Description
+import sandbox.magritte.DescriptionContainer
+import sandbox.magritte.StringDescription
 import sandbox.testGenerator.TestScenario
 
+
+//TODO this could be a generic extension on the magritte package. Implementations, such as for vaadin and test generator, could only fill classesForDescription apropriadamente.
 class DescriptionExtension {
-    static classesForDescriptions = [:]
+    //TODO this definition sure should not be here
+    static classesForDescriptions = [ (StringDescription)    : TestsGeneratorForStringDescription,
+                                      (DescriptionContainer) : TestGeneratorForContainerDescriptor
+                                    ]
 
     public static Collection<TestScenario> asTestScenariosFor(Description aDescription, descriptedClass){
         def testGenerator = classesForDescriptions.get(aDescription.getClass()).newInstance(descriptedClass) //TODO if the class do not exist, provide a better exception than a null pointer messed by groovy
