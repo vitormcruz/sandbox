@@ -13,15 +13,20 @@ import sandbox.magritte.MagritteDescriptionFactory
 class TestTeacher {
     def teach(Class aClass) {
         Collection<TestScenario> testScenarios = getTestScenariosFor(aClass)
-        teachClassToTestEachScenario(aClass, testScenarios)
-        aClass.metaClass.static.getMagritteTests = { testScenarios.collect {it.testName} }
+        return teachClassToTestEachScenario(aClass, testScenarios)
     }
 
     private Collection<TestScenario> getTestScenariosFor(Class aClass) {
         MagritteDescriptionFactory.forObject(aClass.newInstance()).asTestScenariosFor(aClass)
     }
 
-    private Iterable<TestScenario> teachClassToTestEachScenario(aClass, Collection<TestScenario> testScenarios) {
-        testScenarios.each { aClass.metaClass."${it.testName}" << it.getClojure() }
+    private Collection<MetaMethod> teachClassToTestEachScenario(aClass, Collection<TestScenario> testScenarios) {
+        Collection<MetaMethod> methodsCreatedForTest = []
+        testScenarios.each {
+            aClass.metaClass."${it.testName}" << it.getClojure()
+            methodsCreatedForTest.add(aClass.metaClass.getMetaMethod(it.testName))
+        }
+
+        return methodsCreatedForTest
     }
 }

@@ -20,8 +20,8 @@ class TestTeacherTest {
 
     @Test
     def void "Teach a class without description"(){
-        testTeacher.teach(ClassWithoutDescription)
-        assert ClassWithoutDescription.magritteTests.isEmpty()
+        def testMethodosTeached = testTeacher.teach(ClassWithoutDescription)
+        assert testMethodosTeached.isEmpty()
     }
 
     public static class ClassWithoutDescription {}
@@ -29,8 +29,8 @@ class TestTeacherTest {
     @Ignore("Will work when the tests of MagritteDescriptionFactory explore the case when a description is empty")
     @Test
     def void "Load class with an empty description"(){
-        testTeacher.teach(ClassWithEmptyDescription)
-        assert ClassWithEmptyDescription.magritteTests.isEmpty()
+        def testMethodosTeached = testTeacher.teach(ClassWithEmptyDescription)
+        assert testMethodosTeached.isEmpty()
     }
 
     public static class ClassWithEmptyDescription {
@@ -41,8 +41,8 @@ class TestTeacherTest {
 
     @Test
     def void "Load class with one description, each generating one test"(){
-        testTeacher.teach(ClassWithADescription)
-        assert ClassWithADescription.magritteTests.size == 1
+        def testMethodosTeached = testTeacher.teach(ClassWithADescription)
+        assert testMethodosTeached.size() == 1
     }
 
     public static class ClassWithADescription {
@@ -54,8 +54,8 @@ class TestTeacherTest {
 
     @Test
     def void "Load class with N descriptions, each generating one test"(){
-        testTeacher.teach(ClassWithNDescriptions)
-        assert ClassWithNDescriptions.magritteTests.size == 3
+        def testMethodosTeached = testTeacher.teach(ClassWithNDescriptions)
+        assert testMethodosTeached.size() == 3
     }
 
     public static class ClassWithNDescriptions {
@@ -69,11 +69,17 @@ class TestTeacherTest {
 
     @Test
     def void "Load class with N descriptions, each generating N tests"(){
-        DescriptionVisitorForTest.testScenarios = [new TestScenario(), new TestScenario()]
-        testTeacher.teach(ClassWithNDescriptions)
-        assert ClassWithNDescriptions.magritteTests.size == 6
-        DescriptionVisitorForTest.testScenarios = [new TestScenario()]
+        def aux = DescriptionVisitorForTest.testScenarios
+        DescriptionVisitorForTest.testScenarios = [new TestScenario(UUID.randomUUID().toString(), {}),
+                                                   new TestScenario(UUID.randomUUID().toString(), {})]
+        def testMethodosTeached = testTeacher.teach(ClassWithNDescriptions)
+        assert testMethodosTeached.size() == 6
+        DescriptionVisitorForTest.testScenarios = aux
     }
 
     public static class ClassUnderTest{}
+
+
+    //TODO the list of test methods must have unique method names.
+
 }

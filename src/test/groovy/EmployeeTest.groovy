@@ -5,9 +5,9 @@ import sandbox.magritte.DescriptionContainer
 import sandbox.magritte.DescriptionMethod
 import sandbox.magritte.StringDescription
 import sandbox.payroll.Employee
-import sandbox.testGenerator.junit.JUnit4TestgeneratorRunner
+import sandbox.testGenerator.junit.JUnit4TestGeneratorRunner
 
-@RunWith(JUnit4TestgeneratorRunner)
+@RunWith(JUnit4TestGeneratorRunner)
 class EmployeeTest {
 
     @Test
@@ -18,7 +18,7 @@ class EmployeeTest {
     @DescriptionMethod
     def Description myDescription(){
         return  new DescriptionContainer(
-                                        getEmployeeClass(), new StringDescription().acessor("name").beRequired())
+                                        getEmployeeClass(), new StringDescription().acessor("name"))
     }
 
     Class<Employee> getEmployeeClass() {

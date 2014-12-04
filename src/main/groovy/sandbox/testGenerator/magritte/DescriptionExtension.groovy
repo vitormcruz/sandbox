@@ -14,7 +14,9 @@ class DescriptionExtension {
                                     ]
 
     public static Collection<TestScenario> asTestScenariosFor(Description aDescription, descriptedClass){
-        def testGenerator = classesForDescriptions.get(aDescription.getClass()).newInstance(descriptedClass) //TODO if the class do not exist, provide a better exception than a null pointer messed by groovy
+        def specificDescription = classesForDescriptions.get(aDescription.getClass())
+        if(specificDescription == null) return []
+        def testGenerator = specificDescription.newInstance(descriptedClass) //TODO if the class do not exist, provide a better exception than a null pointer messed by groovy
         aDescription.accept(testGenerator)
         return testGenerator.getTestScenarios()
     }

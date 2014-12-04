@@ -5,7 +5,7 @@ import sandbox.magritte.Description
 
 class DescriptionVisitorForTest implements Description{
 
-    static def testScenarios = [new TestScenario()]
+    static def testScenarios = [new TestScenario(UUID.randomUUID().toString(), {assert true})]
 
     DescriptionVisitorForTest(Class forClass) {
     }

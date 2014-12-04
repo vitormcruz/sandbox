@@ -5,8 +5,15 @@ import sandbox.testGenerator.TestScenario
 
 class TestsGeneratorForStringDescription implements MagnitudeDescription {
 
+    private Class descriptedClass
+
+    TestsGeneratorForStringDescription(Class descriptedClass) {
+        this.descriptedClass = descriptedClass
+    }
+
     def getTestScenarios(){
-        return new TestScenario(testName: "This is a thes for string yet to be implemented", clojure: {assert true})
+        //TODO This is a test for string yet to be implemented
+        return [new TestScenario("This is a test for string yet to be implemented", {assert true})]
     }
 
     @Override
