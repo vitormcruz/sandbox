@@ -1,5 +1,6 @@
 package sandbox.magritte
 
+//TODo String should not implement from magnitude.
 class StringDescription extends AbstractVisitableDescription implements MagnitudeDescription {
 
     @Override
@@ -15,6 +16,6 @@ class StringDescription extends AbstractVisitableDescription implements Magnitud
     //TODO Create test and implement this method
     @Override
     Description maxSize(Integer maxSize) {
-        return null
+        return addConfigurationMessageSend("maxSize", maxSize)
     }
 }

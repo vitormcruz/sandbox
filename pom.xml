@@ -196,5 +196,13 @@
             <version>${junit.version}</version>
             <scope>compile</scope>
         </dependency>
+
+        <!--&lt;!&ndash;TODO Maybe I don't need hamcrest-all, but only part of it&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.hamcrest</groupId>-->
+            <!--<artifactId>hamcrest-all</artifactId>-->
+            <!--<version>1.3</version>-->
+        <!--</dependency>-->
+
     </dependencies>
 </project>

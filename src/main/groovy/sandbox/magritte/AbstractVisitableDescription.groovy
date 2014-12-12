@@ -5,6 +5,7 @@ package sandbox.magritte
 abstract class AbstractVisitableDescription implements Description {
 
     //TODO encapsular messagesSend????
+    //TODO acessor should be the first in the message list, how to do this?
     /**
      * A map whose key is the message send and the value is a ordered array of parameters.
      */

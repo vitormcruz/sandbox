@@ -17,7 +17,7 @@ class TestTeacher {
     }
 
     private Collection<TestScenario> getTestScenariosFor(Class aClass) {
-        MagritteDescriptionFactory.forObject(aClass.newInstance()).asTestScenariosFor(aClass)
+        MagritteDescriptionFactory.forObject(aClass.newInstance()).asTestScenarios()
     }
 
     private Collection<MetaMethod> teachClassToTestEachScenario(aClass, Collection<TestScenario> testScenarios) {

@@ -6,7 +6,6 @@ import sandbox.magritte.StringDescription
 import sandbox.testGenerator.TestScenario
 
 
-//TODO this could be a generic extension on the magritte package. Implementations, such as for vaadin and test generator, could only fill classesForDescription apropriadamente.
 class DescriptionExtension {
     //TODO this definition sure should not be here
     static classesForDescriptions = [ (StringDescription)    : TestsGeneratorForStringDescription,

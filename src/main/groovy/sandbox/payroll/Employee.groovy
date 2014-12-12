@@ -20,4 +20,12 @@ class Employee {
                     new StringDescription().acessor("email").label("employee.email"))
     }
 
+    def Collection<String> validate(){
+        //TODO change for validation api based on description
+        if(name.length() > 100){
+            return ["employee.validation.name.maxsize.error"]
+        }
+        return []
+    }
+
 }

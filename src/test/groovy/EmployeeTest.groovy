@@ -17,8 +17,7 @@ class EmployeeTest {
 
     @DescriptionMethod
     def Description myDescription(){
-        return  new DescriptionContainer(
-                                        getEmployeeClass(), new StringDescription().acessor("name"))
+        return  new DescriptionContainer(getEmployeeClass(), new StringDescription().acessor("name").maxSize(100))
     }
 
     Class<Employee> getEmployeeClass() {
