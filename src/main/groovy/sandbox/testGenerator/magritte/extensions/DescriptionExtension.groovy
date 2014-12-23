@@ -1,15 +1,16 @@
-package sandbox.testGenerator.magritte
+package sandbox.testGenerator.magritte.extensions
 
 import sandbox.magritte.Description
-import sandbox.magritte.DescriptionContainer
 import sandbox.magritte.StringDescription
 import sandbox.testGenerator.TestScenario
-
+import sandbox.testGenerator.magritte.TestGeneratorForContainerDescriptor
+import sandbox.testGenerator.magritte.TestsGeneratorForStringDescription
+import sandbox.testGenerator.magritte.model.TestDescriptionContainer
 
 class DescriptionExtension {
     //TODO this definition sure should not be here
     static classesForDescriptions = [ (StringDescription)    : TestsGeneratorForStringDescription,
-                                      (DescriptionContainer) : TestGeneratorForContainerDescriptor
+                                      (TestDescriptionContainer) : TestGeneratorForContainerDescriptor
                                     ]
 
     public static Collection<TestScenario> asTestScenariosFor(Description aDescription, descriptedClass){

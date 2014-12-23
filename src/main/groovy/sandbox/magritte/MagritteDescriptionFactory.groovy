@@ -14,8 +14,8 @@ class MagritteDescriptionFactory {
 
         //TODO make it consider many methods annotated with DescriptionMethod
         if(descriptionMethods[0] == null){
-            return new DescriptionContainer(object.getClass())
+            return new DescriptionContainer()
         }
-        return descriptionMethods[0].invoke(object) as Description
+        return descriptionMethods[0].invoke(object)
     }
 }

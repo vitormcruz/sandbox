@@ -2,14 +2,14 @@ package sandbox.testGenerator
 import org.junit.BeforeClass
 import org.junit.Test
 import sandbox.magritte.Description
-import sandbox.magritte.DescriptionContainer
-import sandbox.testGenerator.magritte.DescriptionExtension
+import sandbox.testGenerator.magritte.extensions.DescriptionExtension
+import sandbox.testGenerator.magritte.model.TestDescriptionContainer
 
 import static groovy.test.GroovyAssert.shouldFail
 /**
  * Tests the description of test suits.
  */
-class GenerateTestFromDescriptionContainerTest {
+class TestDescriptionContainerTest {
 
     //TODO Ok, this should not be done like this
     @BeforeClass
@@ -20,20 +20,20 @@ class GenerateTestFromDescriptionContainerTest {
 
     @Test
     def void "Create a test scenarios for null class"(){
-        def description = new DescriptionContainer(null, [] as Description[])
+        def description = new TestDescriptionContainer(null, [] as Description[])
         def ex = shouldFail(IllegalArgumentException, { description.asTestScenarios() })
         assert ex.message == "Cannot create test scenarios for a DescriptionContainer that do not specify a target class"
     }
 
     @Test
     def void "Create a test scenarios without specify any definition for the class under test"(){
-        def description = new DescriptionContainer(ClassUnderTest, [] as Description[])
+        def description = new TestDescriptionContainer(ClassUnderTest, [] as Description[])
         assert description.asTestScenarios().isEmpty() : "No definition test suit description should not generate any test methods."
     }
 
     @Test
     def void "Create a test description specifying one definition for the class under test"(){
-        def description = new DescriptionContainer(ClassUnderTest, new DescriptionForTest())
+        def description = new TestDescriptionContainer(ClassUnderTest, new DescriptionForTest())
 
         def testCases = description.asTestScenarios()
         assert DescriptionVisitorForTest.testScenarios as Set == testCases as Set : "A test suit with a class definition should generate test methods based on the description used."
@@ -41,7 +41,7 @@ class GenerateTestFromDescriptionContainerTest {
 
     @Test
     def void "Create a test description specifying N definitions for the class under test"(){
-        def description = new DescriptionContainer(ClassUnderTest, new DescriptionForTest(), new DescriptionForTest2())
+        def description = new TestDescriptionContainer(ClassUnderTest, new DescriptionForTest(), new DescriptionForTest2())
         def testScenariosEsperados = []
         testScenariosEsperados.addAll(DescriptionVisitorForTest2.testScenarios)
         testScenariosEsperados.addAll(DescriptionVisitorForTest.testScenarios)

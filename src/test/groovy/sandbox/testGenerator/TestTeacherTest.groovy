@@ -4,9 +4,9 @@ import org.junit.BeforeClass
 import org.junit.Ignore
 import org.junit.Test
 import sandbox.magritte.Description
-import sandbox.magritte.DescriptionContainer
 import sandbox.magritte.DescriptionMethod
-import sandbox.testGenerator.magritte.DescriptionExtension
+import sandbox.testGenerator.magritte.extensions.DescriptionExtension
+import sandbox.testGenerator.magritte.model.TestDescriptionContainer
 
 class TestTeacherTest {
 
@@ -48,7 +48,7 @@ class TestTeacherTest {
     public static class ClassWithADescription {
         @DescriptionMethod
         def myDescription(){
-            return new DescriptionContainer(ClassUnderTest, [new DescriptionForTest()] as Description[])
+            return new TestDescriptionContainer(ClassUnderTest, [new DescriptionForTest()] as Description[])
         }
     }
 
@@ -61,7 +61,7 @@ class TestTeacherTest {
     public static class ClassWithNDescriptions {
         @DescriptionMethod
         def myDescription(){
-            return new DescriptionContainer(ClassUnderTest, [new DescriptionForTest(),
+            return new TestDescriptionContainer(ClassUnderTest, [new DescriptionForTest(),
                                                              new DescriptionForTest(),
                                                              new DescriptionForTest()] as Description[])
         }
