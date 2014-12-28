@@ -1,13 +1,11 @@
 package sandbox.validator
 import org.junit.runner.Result
-import org.junit.runner.RunWith
 import org.junit.runner.notification.RunListener
 
 import static sandbox.validator.ValidatorGlobals.notifier
 
 /**
  */
-@RunWith(ValidatorRunner)
 trait ValidatorTrait {
 
     def ResultInterface validate(){

@@ -4,8 +4,10 @@ import sandbox.magritte.Description
 import sandbox.magritte.DescriptionContainer
 import sandbox.magritte.DescriptionMethod
 import sandbox.magritte.StringDescription
+import sandbox.validator.Validation
+import sandbox.validator.ValidatorTrait
 
-class Employee {
+class Employee implements ValidatorTrait{
 
     def String name
     def String address
@@ -20,12 +22,12 @@ class Employee {
                     new StringDescription().acessor("email").label("employee.email"))
     }
 
-    def Collection<String> validate(){
+    @Validation
+    public void validateNameMaxLength(){
         //TODO change for validation api based on description
-        if(name.length() > 100){
-            return ["employee.validation.name.maxsize.error"]
+        if(name.length() > 100) {
+            throw new IllegalArgumentException("employee.validation.name.maxsize.error")
         }
-        return []
     }
 
 }

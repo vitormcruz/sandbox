@@ -47,7 +47,7 @@ class TestsGeneratorForStringDescription extends StringDescription {
             testSubject."${acessor}" = StringUtils.leftPad("", size, 'X')
             def result = testSubject.validate()
 
-            assertThat(result, testVerificationMatcher)
+            assertThat(result.getFailures().collect {it.getException().getMessage()}, testVerificationMatcher)
         }
 
     }
