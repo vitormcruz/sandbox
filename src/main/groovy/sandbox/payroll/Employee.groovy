@@ -1,12 +1,12 @@
 package sandbox.payroll
 
-import sandbox.magritte.DescriptionContainer
-import sandbox.magritte.DescriptionMethod
-import sandbox.magritte.StringDescription
+import sandbox.magritte.description.DescriptionContainer
+import sandbox.magritte.description.DescriptionMethod
+import sandbox.magritte.description.StringDescription
 import sandbox.validator.Validation
 import sandbox.validator.ValidatorTrait
-import static sandbox.magritte.DescriptionFactory.New
-import static sandbox.magritte.DescriptionFactory.newContainer
+import static sandbox.magritte.description.DescriptionFactory.New
+import static sandbox.magritte.description.DescriptionFactory.newContainer
 
 class Employee implements ValidatorTrait {
 
