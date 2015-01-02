@@ -1,12 +1,16 @@
-package sandbox.magritte
+package sandbox.magritte.imp
+
+import sandbox.magritte.DescriptionContainer
+import sandbox.magritte.DescriptionMethod
 
 import java.lang.reflect.Method
 
+import static sandbox.magritte.DescriptionFactory.New
 /**
  */
-class MagritteDescriptionFactory {
+class MagritteDescriptionModelBuilder {
 
-    public static Description forObject(object){
+    def static forObject(object){
         Collection<Method> descriptionMethods = object.getClass()
                                                       .methods.findAll {method ->
             method.declaredAnnotations.find {it instanceof DescriptionMethod} != null
@@ -14,7 +18,7 @@ class MagritteDescriptionFactory {
 
         //TODO make it consider many methods annotated with DescriptionMethod
         if(descriptionMethods[0] == null){
-            return new DescriptionContainer()
+            return New(DescriptionContainer)
         }
         return descriptionMethods[0].invoke(object)
     }

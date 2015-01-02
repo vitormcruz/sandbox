@@ -1,11 +1,12 @@
 import org.junit.Test
 import org.junit.runner.RunWith
-import sandbox.magritte.Description
 import sandbox.magritte.DescriptionMethod
 import sandbox.magritte.StringDescription
 import sandbox.payroll.Employee
 import sandbox.testGenerator.junit.JUnit4TestGeneratorRunner
-import sandbox.testGenerator.magritte.model.TestDescriptionContainer
+import sandbox.testGenerator.magritte.model.TestDescription
+
+import static sandbox.magritte.DescriptionFactory.New
 
 @RunWith(JUnit4TestGeneratorRunner)
 class EmployeeTest {
@@ -16,8 +17,9 @@ class EmployeeTest {
     }
 
     @DescriptionMethod
-    def Description myDescription(){
-        return  new TestDescriptionContainer(getEmployeeClass(), new StringDescription().acessor("name").maxSize(100))
+    def myDescription(){
+        return New(TestDescription).descriptionsFor(getEmployeeClass(),
+                                                    New(StringDescription).acessor("name").maxSize(100))
     }
 
     Class<Employee> getEmployeeClass() {

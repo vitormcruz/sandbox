@@ -2,10 +2,10 @@ package sandbox.vaadin.magritte
 
 import com.vaadin.ui.FormLayout
 import sandbox.magritte.Description
-import sandbox.magritte.IDescriptionContainer
+import sandbox.magritte.DescriptionContainer
 
 //TODO it would be better to have something more generic than a form layout.
-class VaadinContainerComponent extends FormLayout implements IDescriptionContainer{
+class VaadinContainerComponent extends FormLayout implements DescriptionContainer{
 
     private def descriptedObject
 
@@ -14,30 +14,10 @@ class VaadinContainerComponent extends FormLayout implements IDescriptionContain
     }
 
     @Override
-    IDescriptionContainer addAll(Collection<? extends Description> collection) {
+    DescriptionContainer addAll(Collection<? extends Description> collection) {
         collection.each {
             this.addComponent(it.asVaadinComponentFor(descriptedObject))
         }
         return this
-    }
-
-    @Override
-    Description acessor(String acessor) {
-        return null
-    }
-
-    @Override
-    Description beRequired() {
-        return null
-    }
-
-    @Override
-    Description defaultValue(Object defaultValue) {
-        return null
-    }
-
-    @Override
-    Description label(Object label) {
-        return null
     }
 }

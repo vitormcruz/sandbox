@@ -1,22 +1,16 @@
 package sandbox.testGenerator
 
-import org.junit.BeforeClass
 import org.junit.Ignore
 import org.junit.Test
 import sandbox.magritte.Description
 import sandbox.magritte.DescriptionMethod
-import sandbox.testGenerator.magritte.extensions.DescriptionExtension
-import sandbox.testGenerator.magritte.model.TestDescriptionContainer
+import sandbox.testGenerator.magritte.model.TestDescription
+
+import static sandbox.magritte.DescriptionFactory.New
 
 class TestTeacherTest {
 
     TestTeacher testTeacher = new TestTeacher()
-
-    //TODO Ok, this should not be done like this
-    @BeforeClass
-    static void setupAll(){
-        DescriptionExtension.classesForDescriptions.put(DescriptionForTest, DescriptionVisitorForTest)
-    }
 
     @Test
     def void "Teach a class without description"(){
@@ -48,7 +42,7 @@ class TestTeacherTest {
     public static class ClassWithADescription {
         @DescriptionMethod
         def myDescription(){
-            return new TestDescriptionContainer(ClassUnderTest, [new DescriptionForTest()] as Description[])
+            return New(TestDescription).descriptionsFor(ClassUnderTest, [new DescriptionForTest()] as Description[])
         }
     }
 
@@ -61,7 +55,7 @@ class TestTeacherTest {
     public static class ClassWithNDescriptions {
         @DescriptionMethod
         def myDescription(){
-            return new TestDescriptionContainer(ClassUnderTest, [new DescriptionForTest(),
+            return New(TestDescription).descriptionsFor(ClassUnderTest, [new DescriptionForTest(),
                                                              new DescriptionForTest(),
                                                              new DescriptionForTest()] as Description[])
         }
@@ -69,12 +63,12 @@ class TestTeacherTest {
 
     @Test
     def void "Load class with N descriptions, each generating N tests"(){
-        def aux = DescriptionVisitorForTest.testScenarios
-        DescriptionVisitorForTest.testScenarios = [new TestScenario(UUID.randomUUID().toString(), {}),
+        def aux = DescriptionForTest.testScenarios
+        DescriptionForTest.testScenarios = [new TestScenario(UUID.randomUUID().toString(), {}),
                                                    new TestScenario(UUID.randomUUID().toString(), {})]
         def testMethodosTeached = testTeacher.teach(ClassWithNDescriptions)
         assert testMethodosTeached.size() == 6
-        DescriptionVisitorForTest.testScenarios = aux
+        DescriptionForTest.testScenarios = aux
     }
 
     public static class ClassUnderTest{}

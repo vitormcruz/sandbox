@@ -1,6 +1,6 @@
 package sandbox.testGenerator
 
-import sandbox.magritte.MagritteDescriptionFactory
+import sandbox.magritte.imp.MagritteDescriptionModelBuilder
 /**
  * <pre>
  *
@@ -17,7 +17,7 @@ class TestTeacher {
     }
 
     private Collection<TestScenario> getTestScenariosFor(Class aClass) {
-        MagritteDescriptionFactory.forObject(aClass.newInstance()).asTestScenarios()
+        MagritteDescriptionModelBuilder.forObject(aClass.newInstance()).asTestScenarios()
     }
 
     private Collection<MetaMethod> teachClassToTestEachScenario(aClass, Collection<TestScenario> testScenarios) {

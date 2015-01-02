@@ -4,6 +4,7 @@ import sandbox.magritte.Description
 
 
 class DescriptionForTest implements Description{
+    static def testScenarios = [new TestScenario(UUID.randomUUID().toString(), {assert true})]
 
     @Override
     Description acessor(String acessor) {
@@ -25,8 +26,8 @@ class DescriptionForTest implements Description{
         return null
     }
 
-    def accept(visitor){
-
+    public Collection<TestScenario> asTestScenariosFor(descriptedClass){
+        testScenarios
     }
 
 }

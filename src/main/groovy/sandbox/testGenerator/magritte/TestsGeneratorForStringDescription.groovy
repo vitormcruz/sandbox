@@ -1,12 +1,14 @@
 package sandbox.testGenerator.magritte
 import org.apache.commons.lang.StringUtils
+import sandbox.magritte.Description
 import sandbox.magritte.StringDescription
 import sandbox.testGenerator.TestScenario
 
-import static org.hamcrest.CoreMatchers.*
+import static org.hamcrest.CoreMatchers.hasItem
+import static org.hamcrest.CoreMatchers.not
 import static org.junit.Assert.assertThat
 //TODO extends Description? I must think more how I will leave the dependencies of descriptions....
-class TestsGeneratorForStringDescription extends StringDescription {
+class TestsGeneratorForStringDescription implements StringDescription {
 
     private Class descriptedClass
     private String acessor
@@ -18,6 +20,12 @@ class TestsGeneratorForStringDescription extends StringDescription {
 
     def getTestScenarios(){
         return testScenarios
+    }
+
+    @Override
+    Description acessor(String acessor) {
+        this.acessor = acessor
+        return this
     }
 
     @Override
@@ -53,23 +61,17 @@ class TestsGeneratorForStringDescription extends StringDescription {
     }
 
     @Override
-    StringDescription acessor(String acessor) {
-        this.acessor = acessor
-        return this
-    }
-
-    @Override
-    StringDescription beRequired() {
+    Description beRequired() {
         return null
     }
 
     @Override
-    StringDescription defaultValue(Object defaultValue) {
+    Description defaultValue(Object defaultValue) {
         return null
     }
 
     @Override
-    StringDescription label(Object label) {
+    Description label(Object label) {
         return null
     }
 }

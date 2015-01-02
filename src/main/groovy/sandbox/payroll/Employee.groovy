@@ -1,9 +1,11 @@
 package sandbox.payroll
 
-import sandbox.magritte.Description
 import sandbox.magritte.DescriptionContainer
 import sandbox.magritte.DescriptionMethod
 import sandbox.magritte.StringDescription
+
+import static sandbox.magritte.DescriptionFactory.New
+import static sandbox.magritte.DescriptionFactory.newContainer
 
 class Employee {
 
@@ -13,11 +15,10 @@ class Employee {
 
     //TODO how to use only Interfaces? Such as IDescriptionContainter.new().acessor...? Or maby a global variable (coud be configured by spring, but I want to avoid that)
     @DescriptionMethod
-    public Description myDescription(){
-        return new DescriptionContainer(
-                    new StringDescription().acessor("name").label("employee.name"),
-                    new StringDescription().acessor("address").label("employee.address"),
-                    new StringDescription().acessor("email").label("employee.email"))
+    public myDescription(){
+        return newContainer(DescriptionContainer, New(StringDescription).acessor("name").label("employee.name"),
+                                                   New(StringDescription).acessor("address").label("employee.address"),
+                                                   New(StringDescription).acessor("email").label("employee.email"))
     }
 
     def Collection<String> validate(){

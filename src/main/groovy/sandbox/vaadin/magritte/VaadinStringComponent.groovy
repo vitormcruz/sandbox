@@ -1,9 +1,9 @@
 package sandbox.vaadin.magritte
 import com.vaadin.ui.TextField
 import sandbox.magritte.Description
-import sandbox.magritte.MagnitudeDescription
+import sandbox.magritte.StringDescription
 
-class VaadinStringComponent extends TextField implements MagnitudeDescription {
+class VaadinStringComponent extends TextField implements StringDescription {
 
     private def sourceObject
 
@@ -34,8 +34,7 @@ class VaadinStringComponent extends TextField implements MagnitudeDescription {
         return this
     }
 
-    @Override
-    Description maxSize(Integer maxSize) {
+    StringDescription maxSize(Integer maxSize) {
         return this
     }
 }

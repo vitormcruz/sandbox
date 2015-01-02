@@ -1,4 +1,5 @@
 package sandbox.vaadin.magritte
+
 import com.vaadin.ui.Component
 import sandbox.magritte.DescriptionContainer
 
