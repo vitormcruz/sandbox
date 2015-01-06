@@ -7,7 +7,7 @@ import sandbox.magritte.description.StringDescription
 import sandbox.magritte.testGenerator.junit.JUnit4TestGeneratorRunner
 import sandbox.magritte.testGenerator.description.TestDescription
 
-import static sandbox.magritte.description.DescriptionFactory.New
+import static sandbox.magritte.description.builder.DescriptionFactory.New
 
 @RunWith(JUnit4TestGeneratorRunner)
 class EmployeeTest {

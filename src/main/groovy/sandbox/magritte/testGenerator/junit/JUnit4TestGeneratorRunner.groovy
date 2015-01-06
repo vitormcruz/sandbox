@@ -2,6 +2,7 @@ package sandbox.magritte.testGenerator.junit
 import org.junit.runners.BlockJUnit4ClassRunner
 import org.junit.runners.model.FrameworkMethod
 import org.junit.runners.model.InitializationError
+import sandbox.magritte.testGenerator.TestTeacher
 
 class JUnit4TestGeneratorRunner extends BlockJUnit4ClassRunner{
 

@@ -1,7 +1,4 @@
-package sandbox.magritte.description.recordingDescription.util
-
-import sandbox.magritte.description.recordingDescription.util.InterfaceForRecording
-
+package sandbox.magritte.description.util
 
 class InterfaceForRecordingImpl implements InterfaceForRecording {
     @Override

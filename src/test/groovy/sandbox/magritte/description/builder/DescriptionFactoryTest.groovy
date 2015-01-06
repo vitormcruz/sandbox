@@ -1,4 +1,4 @@
-package sandbox.magritte.description
+package sandbox.magritte.description.builder
 
 import org.junit.Ignore
 import org.junit.Test

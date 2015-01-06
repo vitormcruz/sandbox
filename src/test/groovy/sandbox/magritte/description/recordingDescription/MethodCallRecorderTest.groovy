@@ -1,11 +1,11 @@
 package sandbox.magritte.description.recordingDescription
 import org.junit.Test
-import sandbox.magritte.description.recordingDescription.util.AbstractClassForRecording
-import sandbox.magritte.description.recordingDescription.util.InterfaceForRecording
-import sandbox.magritte.description.recordingDescription.util.InterfaceForRecordingImpl
-import sandbox.magritte.description.recordingDescription.util.InterfaceWithHierarchyForRecording
-import sandbox.magritte.description.recordingDescription.util.PlaybackVerifier
-import sandbox.magritte.description.recordingDescription.util.TraitForRecording
+import sandbox.magritte.description.util.AbstractClassForRecording
+import sandbox.magritte.description.util.InterfaceForRecording
+import sandbox.magritte.description.util.InterfaceForRecordingImpl
+import sandbox.magritte.description.util.InterfaceWithHierarchyForRecording
+import sandbox.magritte.description.util.PlaybackVerifier
+import sandbox.magritte.description.util.TraitForRecording
 
 import static sandbox.magritte.description.recordingDescription.MethodCallRecorder.METHOD_NAME
 import static groovy.test.GroovyAssert.shouldFail

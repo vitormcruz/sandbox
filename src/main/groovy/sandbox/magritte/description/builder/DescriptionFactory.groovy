@@ -1,4 +1,4 @@
-package sandbox.magritte.description
+package sandbox.magritte.description.builder
 import sandbox.magritte.description.recordingDescription.MethodCallRecorder
 /**
  * I am kind of a Monostate/Service Locator that can provide for you a default set of descriptions implementationss, that
@@ -9,6 +9,7 @@ import sandbox.magritte.description.recordingDescription.MethodCallRecorder
  * implementations are used across an entire application. You should consider carefully doing it diferently since many
  * problems can arise and since it should't really be a common situation.
  */
+//TODO should I use an interface??? In code I would use new DescriptionFactory().New, the way it is I can make a static import
 class DescriptionFactory {
 
     static <T> T New(Class<T> aDescriptionType) {

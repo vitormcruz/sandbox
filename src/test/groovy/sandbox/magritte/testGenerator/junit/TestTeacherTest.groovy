@@ -5,10 +5,11 @@ import org.junit.Test
 import sandbox.magritte.description.Description
 import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.testGenerator.TestScenario
+import sandbox.magritte.testGenerator.TestTeacher
 import sandbox.magritte.testGenerator.description.TestDescription
 import sandbox.magritte.testGenerator.junit.scenarioGenerator.util.DescriptionForTest
 
-import static sandbox.magritte.description.DescriptionFactory.New
+import static sandbox.magritte.description.builder.DescriptionFactory.New
 
 class TestTeacherTest {
 

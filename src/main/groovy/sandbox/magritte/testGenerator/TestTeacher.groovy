@@ -1,12 +1,12 @@
-package sandbox.magritte.testGenerator.junit
-
-import sandbox.magritte.description.recordingDescription.MagritteDescriptionModelBuilder
-import sandbox.magritte.testGenerator.TestScenario
-
+package sandbox.magritte.testGenerator
+import sandbox.magritte.description.builder.MagritteDescriptionModelBuilder
 /**
  * <pre>
  *
  * Teach a test class how to test according to its test description.
+ *
+ * Runers specifc implementations should provide a way to tell their frameworks that the methods created are
+ * tests.
  *
  * Example:
  *

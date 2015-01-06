@@ -14,7 +14,7 @@ class VaadinContainerComponent extends FormLayout implements DescriptionContaine
     }
 
     @Override
-    DescriptionContainer addAll(Collection<? extends Description> collection) {
+    DescriptionContainer addAll(Description ...collection) {
         collection.each {
             this.addComponent(it.asVaadinComponentFor(descriptedObject))
         }

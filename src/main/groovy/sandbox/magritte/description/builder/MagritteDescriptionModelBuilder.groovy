@@ -1,11 +1,11 @@
-package sandbox.magritte.description.recordingDescription
+package sandbox.magritte.description.builder
 
 import sandbox.magritte.description.DescriptionContainer
 import sandbox.magritte.description.DescriptionModelDefinition
 
 import java.lang.reflect.Method
 
-import static sandbox.magritte.description.DescriptionFactory.New
+import static sandbox.magritte.description.builder.DescriptionFactory.New
 
 /**
  */

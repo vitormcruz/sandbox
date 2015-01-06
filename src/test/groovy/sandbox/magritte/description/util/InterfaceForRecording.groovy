@@ -1,4 +1,4 @@
-package sandbox.magritte.description.recordingDescription.util
+package sandbox.magritte.description.util
 
 
 interface InterfaceForRecording {

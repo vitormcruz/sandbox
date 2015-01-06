@@ -1,11 +1,11 @@
-package sandbox.magritte.description.recordingDescription
+package sandbox.magritte.description.builder
 import org.junit.Ignore
 import org.junit.Test
 import sandbox.magritte.description.DescriptionContainer
 import sandbox.magritte.description.DescriptionModelDefinition
-import sandbox.magritte.description.recordingDescription.util.PlaybackVerifier
+import sandbox.magritte.description.util.PlaybackVerifier
 
-import static sandbox.magritte.description.DescriptionFactory.New
+import static sandbox.magritte.description.builder.DescriptionFactory.New
 
 class MagritteDescriptionModelBuilderTest {
 

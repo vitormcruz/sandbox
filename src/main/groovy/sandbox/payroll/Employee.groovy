@@ -5,7 +5,7 @@ import sandbox.magritte.description.StringDescription
 import sandbox.validator.Validation
 import sandbox.validator.ValidatorTrait
 
-import static sandbox.magritte.description.DescriptionFactory.New
+import static sandbox.magritte.description.builder.DescriptionFactory.New
 
 class Employee implements ValidatorTrait {
 
