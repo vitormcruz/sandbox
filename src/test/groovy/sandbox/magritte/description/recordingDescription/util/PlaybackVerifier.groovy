@@ -25,4 +25,8 @@ class PlaybackVerifier {
         assert methodOrderExpected == methodOrderObtained
         assert argumentOrderExpected == argumentOrderObtained
     }
+
+    def nothingWasPlayed() {
+        return methodOrderObtained.isEmpty()
+    }
 }

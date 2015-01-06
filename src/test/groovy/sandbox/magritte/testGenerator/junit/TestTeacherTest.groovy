@@ -3,9 +3,8 @@ package sandbox.magritte.testGenerator.junit
 import org.junit.Ignore
 import org.junit.Test
 import sandbox.magritte.description.Description
-import sandbox.magritte.description.DescriptionMethod
+import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.testGenerator.TestScenario
-import sandbox.magritte.testGenerator.junit.TestTeacher
 import sandbox.magritte.testGenerator.description.TestDescription
 import sandbox.magritte.testGenerator.junit.scenarioGenerator.util.DescriptionForTest
 
@@ -31,7 +30,7 @@ class TestTeacherTest {
     }
 
     public static class ClassWithEmptyDescription {
-        @DescriptionMethod
+        @DescriptionModelDefinition
         def empty(){
         }
     }
@@ -43,7 +42,7 @@ class TestTeacherTest {
     }
 
     public static class ClassWithADescription {
-        @DescriptionMethod
+        @DescriptionModelDefinition
         def myDescription(){
             return New(TestDescription).descriptionsFor(ClassUnderTest, [new DescriptionForTest()] as Description[])
         }
@@ -56,7 +55,7 @@ class TestTeacherTest {
     }
 
     public static class ClassWithNDescriptions {
-        @DescriptionMethod
+        @DescriptionModelDefinition
         def myDescription(){
             return New(TestDescription).descriptionsFor(ClassUnderTest, [new DescriptionForTest(),
                                                              new DescriptionForTest(),

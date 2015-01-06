@@ -1,22 +1,18 @@
 package sandbox.magritte.description
 import sandbox.magritte.description.recordingDescription.MethodCallRecorder
 /**
- * I can be used to create descriptions of many types. I am also a monostate with a default set of description
- * implementations. My state can change once, because I may be used with some set of custom description implementations,
- * but if my implementation change more than once I will complain. I should be used in situations where the same set
- * of description implementations are used across an entire application, if you would like to vary them dependending on
- * the situation, then I am not usefull for you, but that should not be a common situation.
+ * I am kind of a Monostate/Service Locator that can provide for you a default set of descriptions implementationss, that
+ * you can change if, for example, for you own optimized set of descriptions implementations. If you, however, change it
+ * more than once I will assume some error was made and complain since I represent a global fammily of descriptions and
+ * that shouldn't be changing all the time. If, however, you *really* know what you are doing, you can tell me to avoid
+ * complaining, but be aware that I was designed to be used as a global in situations where the same set of description
+ * implementations are used across an entire application. You should consider carefully doing it diferently since many
+ * problems can arise and since it should't really be a common situation.
  */
 class DescriptionFactory {
 
     static <T> T New(Class<T> aDescriptionType) {
         def recorder = new MethodCallRecorder(aDescriptionType)
         return recorder.asTypeBeeingRecorded()
-    }
-
-    static <T extends DescriptionContainer> T newContainer(Class<T> containerType, ...descriptions){
-        def recorder = new MethodCallRecorder(DescriptionContainer).asTypeBeeingRecorded()
-        recorder.addAll(descriptions as Collection)
-        return recorder
     }
 }

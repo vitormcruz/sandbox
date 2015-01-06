@@ -2,7 +2,7 @@ package sandbox.payroll
 
 import org.junit.Test
 import org.junit.runner.RunWith
-import sandbox.magritte.description.DescriptionMethod
+import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.description.StringDescription
 import sandbox.magritte.testGenerator.junit.JUnit4TestGeneratorRunner
 import sandbox.magritte.testGenerator.description.TestDescription
@@ -17,7 +17,7 @@ class EmployeeTest {
         assert true : "bloblo"
     }
 
-    @DescriptionMethod
+    @DescriptionModelDefinition
     def myDescription(){
         return New(TestDescription).descriptionsFor(getEmployeeClass(),
                                                     New(StringDescription).acessor("name").maxSize(100))
