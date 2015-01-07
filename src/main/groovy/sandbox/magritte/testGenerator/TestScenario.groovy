@@ -1,15 +1,9 @@
 package sandbox.magritte.testGenerator
 
 
-class TestScenario {
-    def final testName
-    def final clojure
+interface TestScenario {
 
-    TestScenario() {
-    }
+    String getTestName()
+    Closure getClojure()
 
-    TestScenario(testName, clojure) {
-        this.testName = testName
-        this.clojure = clojure
-    }
 }

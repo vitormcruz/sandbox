@@ -1,11 +1,11 @@
 package sandbox.magritte.testGenerator.junit.scenarioGenerator.util
 
 import sandbox.magritte.description.Description
-import sandbox.magritte.testGenerator.TestScenario
+import sandbox.magritte.testGenerator.SimpleTestScenario
 
 
 class DescriptionForTest implements Description{
-    static def testScenarios = [new TestScenario(UUID.randomUUID().toString(), {assert true})]
+    static def testScenarios = [new SimpleTestScenario(UUID.randomUUID().toString(), {assert true})]
 
     @Override
     Description acessor(String acessor) {
@@ -27,7 +27,7 @@ class DescriptionForTest implements Description{
         return null
     }
 
-    public Collection<TestScenario> asTestScenariosFor(descriptedClass){
+    public Collection<SimpleTestScenario> asTestScenariosFor(descriptedClass){
         testScenarios
     }
 

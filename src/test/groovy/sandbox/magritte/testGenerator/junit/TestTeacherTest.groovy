@@ -4,16 +4,33 @@ import org.junit.Ignore
 import org.junit.Test
 import sandbox.magritte.description.Description
 import sandbox.magritte.description.DescriptionModelDefinition
-import sandbox.magritte.testGenerator.TestScenario
+import sandbox.magritte.testGenerator.SimpleTestScenario
 import sandbox.magritte.testGenerator.TestTeacher
 import sandbox.magritte.testGenerator.description.TestDescription
 import sandbox.magritte.testGenerator.junit.scenarioGenerator.util.DescriptionForTest
+import sandbox.magritte.testGenerator.junit.scenarioGenerator.util.TestGeneratorForTestDescriptionPartial
 
+import static groovy.test.GroovyAssert.shouldFail
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 
 class TestTeacherTest {
 
-    TestTeacher testTeacher = new TestTeacher()
+    TestTeacher testTeacher = new TestTeacher(TestGeneratorForTestDescriptionPartial)
+
+    @Test
+    def void "Create a teacher class without specifying TesteGenerator for TestDescription"(){
+        def ex = shouldFail IllegalArgumentException, {new TestTeacher(null)}
+        assert ex.message == "You should provide a TestGenerator implementation class"
+    }
+
+    @Test
+    @Ignore
+    def void "Create a teacher class with a TesteGenerator for TestDescription that do have default constructor"(){}
+
+
+    @Test
+    @Ignore
+    def void "Create a teacher class with a class that is not a TesteGenerator for TestDescription"(){}
 
     @Test
     def void "Teach a class without description"(){
@@ -23,7 +40,6 @@ class TestTeacherTest {
 
     public static class ClassWithoutDescription {}
 
-    @Ignore("Will work when the tests of MagritteDescriptionFactory explore the case when a description is empty")
     @Test
     def void "Load class with an empty description"(){
         def testMethodosTeached = testTeacher.teach(ClassWithEmptyDescription)
@@ -67,8 +83,8 @@ class TestTeacherTest {
     @Test
     def void "Load class with N descriptions, each generating N tests"(){
         def aux = DescriptionForTest.testScenarios
-        DescriptionForTest.testScenarios = [new TestScenario(UUID.randomUUID().toString(), {}),
-                                                   new TestScenario(UUID.randomUUID().toString(), {})]
+        DescriptionForTest.testScenarios = [new SimpleTestScenario(UUID.randomUUID().toString(), {}),
+                                                   new SimpleTestScenario(UUID.randomUUID().toString(), {})]
         def testMethodosTeached = testTeacher.teach(ClassWithNDescriptions)
         assert testMethodosTeached.size() == 6
         DescriptionForTest.testScenarios = aux

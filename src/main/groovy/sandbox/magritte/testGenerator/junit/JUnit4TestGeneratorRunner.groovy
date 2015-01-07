@@ -3,6 +3,7 @@ import org.junit.runners.BlockJUnit4ClassRunner
 import org.junit.runners.model.FrameworkMethod
 import org.junit.runners.model.InitializationError
 import sandbox.magritte.testGenerator.TestTeacher
+import sandbox.magritte.testGenerator.junit.scenarioGenerator.JUnitTestGeneratorForTestDescription
 
 class JUnit4TestGeneratorRunner extends BlockJUnit4ClassRunner{
 
@@ -16,9 +17,10 @@ class JUnit4TestGeneratorRunner extends BlockJUnit4ClassRunner{
 
     @Override
     protected List<FrameworkMethod> computeTestMethods() {
-        def methods = new ArrayList<>(super.computeTestMethods())
-        def metaMethods = new TestTeacher().teach(getTestClass().getJavaClass())
-        metaMethods.each {methods.add(new FrameworkMetaMethod(it))}
-        return methods
+        def knownMethods = new ArrayList<>(super.computeTestMethods())
+        def teacher = new TestTeacher(JUnitTestGeneratorForTestDescription)
+        def teachedMethods = teacher.teach(getTestClass().getJavaClass())
+        teachedMethods.each {knownMethods.add(new FrameworkMetaMethod(it))}
+        return knownMethods
     }
 }

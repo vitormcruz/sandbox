@@ -2,7 +2,7 @@ package sandbox.magritte.testGenerator.junit.scenarioGenerator
 import org.apache.commons.lang.StringUtils
 import sandbox.magritte.description.Description
 import sandbox.magritte.description.StringDescription
-import sandbox.magritte.testGenerator.TestScenario
+import sandbox.magritte.testGenerator.SimpleTestScenario
 
 import static org.hamcrest.CoreMatchers.hasItem
 import static org.hamcrest.CoreMatchers.not
@@ -39,7 +39,7 @@ class TestsGeneratorForStringDescription implements StringDescription {
          [size: maxSize, testVerificationMatcher: sucessMatcher],
          [size: maxSize + 1, testVerificationMatcher: errorMatcher]].each {
 
-            testScenarios.add(new TestScenario("The ${acessor} of ${descriptedClass.getSimpleName()} should have " +
+            testScenarios.add(new SimpleTestScenario("The ${acessor} of ${descriptedClass.getSimpleName()} should have " +
                                                "at max ${maxSize} characters. Testing with ${it.size} characters.",
                                                 testSizeTemplate(it.size, it.testVerificationMatcher)))
 
