@@ -61,30 +61,8 @@ class TestGeneratorForTestDescriptionTest {
     public static class ClassUnderTest{
     }
 
-    //TODO reduce size of these classes
-
     public static class DescriptionForTest2 implements Description{
         static def testScenarios = [new SimpleTestScenario()]
-
-        @Override
-        Description acessor(String acessor) {
-            return null
-        }
-
-        @Override
-        Description beRequired() {
-            return null
-        }
-
-        @Override
-        Description defaultValue(Object defaultValue) {
-            return null
-        }
-
-        @Override
-        Description label(Object label) {
-            return null
-        }
 
         public Collection<SimpleTestScenario> asTestScenariosFor(descriptedClass){
             testScenarios

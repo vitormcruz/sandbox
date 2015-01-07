@@ -1,6 +1,6 @@
 package sandbox.magritte.description
 
-interface StringDescription extends Description{
+interface StringDescription extends BaseDescription{
 
     StringDescription maxSize(Integer maxSize)
 
