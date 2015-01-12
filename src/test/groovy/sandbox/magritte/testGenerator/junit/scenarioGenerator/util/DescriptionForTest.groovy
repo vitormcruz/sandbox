@@ -1,13 +1,13 @@
 package sandbox.magritte.testGenerator.junit.scenarioGenerator.util
 
 import sandbox.magritte.description.Description
-import sandbox.magritte.testGenerator.SimpleTestScenario
+import sandbox.magritte.methodGeneration.generator.imp.SimpleGeneratedMethod
 
 
 class DescriptionForTest implements Description{
-    static def testScenarios = [new SimpleTestScenario(UUID.randomUUID().toString(), {assert true})]
+    static def testScenarios = [new SimpleGeneratedMethod(UUID.randomUUID().toString(), {assert true})]
 
-    public Collection<SimpleTestScenario> asTestScenariosFor(descriptedClass){
+    public Collection<SimpleGeneratedMethod> asTestScenariosFor(descriptedClass){
         testScenarios
     }
 

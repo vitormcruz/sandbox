@@ -1,13 +1,15 @@
 package sandbox.magritte.testGenerator.junit.scenarioGenerator
 import sandbox.magritte.description.Description
-import sandbox.magritte.testGenerator.SimpleTestScenario
+import sandbox.magritte.methodGeneration.generator.imp.SimpleGeneratedMethod
+import sandbox.magritte.testGenerator.TestGeneratorForTestDescription
 
 class JUnitTestGeneratorForTestDescription extends TestGeneratorForTestDescription {
+
     @Override
-    Collection<? extends SimpleTestScenario> getTestsOf(Description aDescription, Class classUnderTest) {
+    Collection<? extends SimpleGeneratedMethod> getTestsOf(Description aDescription, Class classUnderTest) {
         def testGenerator = aDescription.getTestGenerator(classUnderTest)
         aDescription.accept(testGenerator)
-        return testGenerator.getTestScenarios()
+        return testGenerator.getGeneratedMethods()
     }
 
 }

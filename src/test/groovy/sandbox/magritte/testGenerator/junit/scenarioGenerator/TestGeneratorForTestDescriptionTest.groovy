@@ -3,7 +3,7 @@ package sandbox.magritte.testGenerator.junit.scenarioGenerator
 import org.junit.Ignore
 import org.junit.Test
 import sandbox.magritte.description.Description
-import sandbox.magritte.testGenerator.SimpleTestScenario
+import sandbox.magritte.methodGeneration.generator.imp.SimpleGeneratedMethod
 import sandbox.magritte.testGenerator.junit.scenarioGenerator.util.DescriptionForTest
 import sandbox.magritte.testGenerator.junit.scenarioGenerator.util.TestGeneratorForTestDescriptionPartial
 
@@ -23,7 +23,7 @@ class TestGeneratorForTestDescriptionTest {
     @Test
     def void "Create a test description without specify any definition for the class under test"(){
         def testDescription = new TestGeneratorForTestDescriptionPartial().descriptionsFor(ClassUnderTest, [] as Description[])
-        assert testDescription.getTestScenarios().isEmpty() : "No definition test suit description should not generate any test methods."
+        assert testDescription.getGeneratedMethods().isEmpty() : "No definition test suit description should not generate any test methods."
     }
 
     @Test
@@ -41,7 +41,7 @@ class TestGeneratorForTestDescriptionTest {
     @Test
     def void "Create a test description specifying one definition for the class under test"(){
         def testDescription = new TestGeneratorForTestDescriptionPartial().descriptionsFor(ClassUnderTest, new DescriptionForTest())
-        assert DescriptionForTest.testScenarios as Set == testDescription.getTestScenarios() as Set :
+        assert DescriptionForTest.testScenarios as Set == testDescription.getGeneratedMethods() as Set :
                 "A test suit with a class definition should generate test methods based on the description used."
     }
 
@@ -54,7 +54,7 @@ class TestGeneratorForTestDescriptionTest {
         testScenariosEsperados.addAll(DescriptionForTest2.testScenarios)
         testScenariosEsperados.addAll(DescriptionForTest.testScenarios)
 
-        def testCases = description.getTestScenarios()
+        def testCases = description.getGeneratedMethods()
         assert testScenariosEsperados as Set == testCases as Set : "A test suit with a class definition should generate test methods based on the descriptions used."
     }
 
@@ -62,9 +62,9 @@ class TestGeneratorForTestDescriptionTest {
     }
 
     public static class DescriptionForTest2 implements Description{
-        static def testScenarios = [new SimpleTestScenario()]
+        static def testScenarios = [new SimpleGeneratedMethod()]
 
-        public Collection<SimpleTestScenario> asTestScenariosFor(descriptedClass){
+        public Collection<SimpleGeneratedMethod> asTestScenariosFor(descriptedClass){
             testScenarios
         }
 

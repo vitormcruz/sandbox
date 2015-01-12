@@ -2,7 +2,7 @@ package sandbox.magritte.testGenerator.junit.description
 
 import sandbox.magritte.description.Description
 import sandbox.magritte.description.StringDescription
-import sandbox.magritte.testGenerator.junit.scenarioGenerator.TestsGeneratorForStringDescription
+import sandbox.magritte.testGenerator.junit.scenarioGenerator.JUnitTestsGeneratorForStringDescription
 
 class JUnitTestGenerationDescriptionsExtension {
 
@@ -10,8 +10,8 @@ class JUnitTestGenerationDescriptionsExtension {
         throw new UnsupportedOperationException("") //TODO message
     }
 
-    public static TestsGeneratorForStringDescription getTestGenerator(StringDescription aDescription, descriptedClass){
-        return new TestsGeneratorForStringDescription(descriptedClass)
+    public static JUnitTestsGeneratorForStringDescription getTestGenerator(StringDescription aDescription, descriptedClass){
+        return new JUnitTestsGeneratorForStringDescription(descriptedClass)
     }
 
 

@@ -4,8 +4,8 @@ import org.junit.Ignore
 import org.junit.Test
 import sandbox.magritte.description.Description
 import sandbox.magritte.description.DescriptionModelDefinition
-import sandbox.magritte.testGenerator.SimpleTestScenario
-import sandbox.magritte.testGenerator.TestTeacher
+import sandbox.magritte.methodGeneration.generator.imp.SimpleGeneratedMethod
+import sandbox.magritte.methodGeneration.generator.imp.MethodTeacher
 import sandbox.magritte.testGenerator.description.TestDescription
 import sandbox.magritte.testGenerator.junit.scenarioGenerator.util.DescriptionForTest
 import sandbox.magritte.testGenerator.junit.scenarioGenerator.util.TestGeneratorForTestDescriptionPartial
@@ -13,13 +13,13 @@ import sandbox.magritte.testGenerator.junit.scenarioGenerator.util.TestGenerator
 import static groovy.test.GroovyAssert.shouldFail
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 
-class TestTeacherTest {
+class TestTeacherMethod {
 
-    TestTeacher testTeacher = new TestTeacher(TestGeneratorForTestDescriptionPartial)
+    MethodTeacher testTeacher = new MethodTeacher(TestGeneratorForTestDescriptionPartial)
 
     @Test
     def void "Create a teacher class without specifying TesteGenerator for TestDescription"(){
-        def ex = shouldFail IllegalArgumentException, {new TestTeacher(null)}
+        def ex = shouldFail IllegalArgumentException, {new MethodTeacher(null)}
         assert ex.message == "You should provide a TestGenerator implementation class"
     }
 
@@ -83,8 +83,8 @@ class TestTeacherTest {
     @Test
     def void "Load class with N descriptions, each generating N tests"(){
         def aux = DescriptionForTest.testScenarios
-        DescriptionForTest.testScenarios = [new SimpleTestScenario(UUID.randomUUID().toString(), {}),
-                                                   new SimpleTestScenario(UUID.randomUUID().toString(), {})]
+        DescriptionForTest.testScenarios = [new SimpleGeneratedMethod(UUID.randomUUID().toString(), {}),
+                                                   new SimpleGeneratedMethod(UUID.randomUUID().toString(), {})]
         def testMethodosTeached = testTeacher.teach(ClassWithNDescriptions)
         assert testMethodosTeached.size() == 6
         DescriptionForTest.testScenarios = aux

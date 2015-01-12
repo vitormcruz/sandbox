@@ -2,23 +2,25 @@ package sandbox.magritte.testGenerator.junit.scenarioGenerator
 import org.apache.commons.lang.StringUtils
 import sandbox.magritte.description.Description
 import sandbox.magritte.description.StringDescription
-import sandbox.magritte.testGenerator.SimpleTestScenario
+import sandbox.magritte.methodGeneration.generator.GeneratedMethod
+import sandbox.magritte.methodGeneration.generator.imp.SimpleGeneratedMethod
+import sandbox.magritte.methodGeneration.description.MethodGenerator
 
 import static org.hamcrest.CoreMatchers.hasItem
 import static org.hamcrest.CoreMatchers.not
 import static org.junit.Assert.assertThat
 //TODO extends Description? I must think more how I will leave the dependencies of descriptions....
-class TestsGeneratorForStringDescription implements StringDescription {
+class JUnitTestsGeneratorForStringDescription implements StringDescription, MethodGenerator {
 
     private Class descriptedClass
     private String acessor
     private testScenarios = []
 
-    TestsGeneratorForStringDescription(Class descriptedClass) {
+    JUnitTestsGeneratorForStringDescription(Class descriptedClass) {
         this.descriptedClass = descriptedClass
     }
 
-    def getTestScenarios(){
+    Collection<GeneratedMethod> getGeneratedMethods(){
         return testScenarios
     }
 
@@ -39,7 +41,7 @@ class TestsGeneratorForStringDescription implements StringDescription {
          [size: maxSize, testVerificationMatcher: sucessMatcher],
          [size: maxSize + 1, testVerificationMatcher: errorMatcher]].each {
 
-            testScenarios.add(new SimpleTestScenario("The ${acessor} of ${descriptedClass.getSimpleName()} should have " +
+            testScenarios.add(new SimpleGeneratedMethod("The ${acessor} of ${descriptedClass.getSimpleName()} should have " +
                                                "at max ${maxSize} characters. Testing with ${it.size} characters.",
                                                 testSizeTemplate(it.size, it.testVerificationMatcher)))
 
