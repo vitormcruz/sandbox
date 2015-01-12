@@ -2,14 +2,13 @@ package sandbox.magritte.testGenerator.junit.scenarioGenerator
 import org.apache.commons.lang.StringUtils
 import sandbox.magritte.description.Description
 import sandbox.magritte.description.StringDescription
-import sandbox.magritte.methodGeneration.generator.GeneratedMethod
-import sandbox.magritte.methodGeneration.generator.imp.SimpleGeneratedMethod
+import sandbox.magritte.methodGeneration.GeneratedMethod
+import sandbox.magritte.methodGeneration.imp.SimpleGeneratedMethod
 import sandbox.magritte.methodGeneration.description.MethodGenerator
 
 import static org.hamcrest.CoreMatchers.hasItem
 import static org.hamcrest.CoreMatchers.not
 import static org.junit.Assert.assertThat
-//TODO extends Description? I must think more how I will leave the dependencies of descriptions....
 class JUnitTestsGeneratorForStringDescription implements StringDescription, MethodGenerator {
 
     private Class descriptedClass

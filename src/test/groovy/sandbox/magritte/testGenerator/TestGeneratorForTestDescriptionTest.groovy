@@ -1,11 +1,11 @@
-package sandbox.magritte.testGenerator.junit.scenarioGenerator
+package sandbox.magritte.testGenerator
 
 import org.junit.Ignore
 import org.junit.Test
 import sandbox.magritte.description.Description
-import sandbox.magritte.methodGeneration.generator.imp.SimpleGeneratedMethod
-import sandbox.magritte.testGenerator.junit.scenarioGenerator.util.DescriptionForTest
-import sandbox.magritte.testGenerator.junit.scenarioGenerator.util.TestGeneratorForTestDescriptionPartial
+import sandbox.magritte.methodGeneration.imp.SimpleGeneratedMethod
+import sandbox.magritte.testGenerator.util.DescriptionForTest
+import sandbox.magritte.testGenerator.util.TestGeneratorForTestDescriptionPartial
 
 import static groovy.test.GroovyAssert.shouldFail
 /**

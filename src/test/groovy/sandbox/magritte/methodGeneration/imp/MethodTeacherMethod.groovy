@@ -1,36 +1,34 @@
-package sandbox.magritte.testGenerator.junit
-
+package sandbox.magritte.methodGeneration.imp
 import org.junit.Ignore
 import org.junit.Test
 import sandbox.magritte.description.Description
 import sandbox.magritte.description.DescriptionModelDefinition
-import sandbox.magritte.methodGeneration.generator.imp.SimpleGeneratedMethod
-import sandbox.magritte.methodGeneration.generator.imp.MethodTeacher
 import sandbox.magritte.testGenerator.description.TestDescription
-import sandbox.magritte.testGenerator.junit.scenarioGenerator.util.DescriptionForTest
-import sandbox.magritte.testGenerator.junit.scenarioGenerator.util.TestGeneratorForTestDescriptionPartial
+import sandbox.magritte.testGenerator.util.DescriptionForTest
+import sandbox.magritte.testGenerator.util.TestGeneratorForTestDescriptionPartial
 
 import static groovy.test.GroovyAssert.shouldFail
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 
-class TestTeacherMethod {
+//TODO review this class
+class MethodTeacherMethod {
 
     MethodTeacher testTeacher = new MethodTeacher(TestGeneratorForTestDescriptionPartial)
 
     @Test
-    def void "Create a teacher class without specifying TesteGenerator for TestDescription"(){
+    def void "Create a teacher class without specifying MethodGenerator for TestDescription"(){
         def ex = shouldFail IllegalArgumentException, {new MethodTeacher(null)}
         assert ex.message == "You should provide a TestGenerator implementation class"
     }
 
     @Test
     @Ignore
-    def void "Create a teacher class with a TesteGenerator for TestDescription that do have default constructor"(){}
+    def void "Create a teacher class with a TesteGenerator for MethodGenerator that do have default constructor"(){}
 
 
     @Test
     @Ignore
-    def void "Create a teacher class with a class that is not a TesteGenerator for TestDescription"(){}
+    def void "Create a teacher class with a class that is not a MethodGenerator for TestDescription"(){}
 
     @Test
     def void "Teach a class without description"(){

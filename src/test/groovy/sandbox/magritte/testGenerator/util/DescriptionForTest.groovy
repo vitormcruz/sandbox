@@ -1,7 +1,7 @@
-package sandbox.magritte.testGenerator.junit.scenarioGenerator.util
+package sandbox.magritte.testGenerator.util
 
 import sandbox.magritte.description.Description
-import sandbox.magritte.methodGeneration.generator.imp.SimpleGeneratedMethod
+import sandbox.magritte.methodGeneration.imp.SimpleGeneratedMethod
 
 
 class DescriptionForTest implements Description{

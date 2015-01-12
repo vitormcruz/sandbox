@@ -1,7 +1,7 @@
 package sandbox.magritte.testGenerator
 import sandbox.magritte.description.Description
-import sandbox.magritte.methodGeneration.generator.GeneratedMethod
-import sandbox.magritte.methodGeneration.generator.imp.SimpleGeneratedMethod
+import sandbox.magritte.methodGeneration.GeneratedMethod
+import sandbox.magritte.methodGeneration.imp.SimpleGeneratedMethod
 import sandbox.magritte.methodGeneration.description.MethodGenerator
 import sandbox.magritte.testGenerator.description.TestDescription
 

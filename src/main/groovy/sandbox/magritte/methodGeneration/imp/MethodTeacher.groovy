@@ -1,7 +1,7 @@
-package sandbox.magritte.methodGeneration.generator.imp
+package sandbox.magritte.methodGeneration.imp
 import sandbox.magritte.description.builder.MagritteDescriptionModelBuilder
 import sandbox.magritte.methodGeneration.description.MethodGenerator
-import sandbox.magritte.methodGeneration.generator.GeneratedMethod
+import sandbox.magritte.methodGeneration.GeneratedMethod
 
 /**
  * <pre>

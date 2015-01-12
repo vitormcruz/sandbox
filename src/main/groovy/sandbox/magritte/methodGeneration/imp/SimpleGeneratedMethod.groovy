@@ -1,6 +1,6 @@
-package sandbox.magritte.methodGeneration.generator.imp
+package sandbox.magritte.methodGeneration.imp
 
-import sandbox.magritte.methodGeneration.generator.GeneratedMethod
+import sandbox.magritte.methodGeneration.GeneratedMethod
 
 
 class SimpleGeneratedMethod implements GeneratedMethod{

@@ -1,6 +1,6 @@
 package sandbox.magritte.testGenerator.junit.scenarioGenerator
 import sandbox.magritte.description.Description
-import sandbox.magritte.methodGeneration.generator.imp.SimpleGeneratedMethod
+import sandbox.magritte.methodGeneration.imp.SimpleGeneratedMethod
 import sandbox.magritte.testGenerator.TestGeneratorForTestDescription
 
 class JUnitTestGeneratorForTestDescription extends TestGeneratorForTestDescription {
