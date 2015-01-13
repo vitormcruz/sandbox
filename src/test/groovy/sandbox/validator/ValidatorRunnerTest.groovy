@@ -3,6 +3,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.Result
 import org.junit.runner.notification.RunNotifier
+import sandbox.validator.imp.ValidatorRunner
 
 class ValidatorRunnerTest {
     private RunNotifier notifier

@@ -1,7 +1,6 @@
 package sandbox.magritte.testGenerator.junit.scenarioGenerator
 
-
-class JUnitTestsGeneratorForStringDescriptionTest extends GroovyTestCase {
+class JUnitTestsGeneratorForStringDescriptionTest {
 
     //TODO implement tests
 }

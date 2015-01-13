@@ -1,25 +1,36 @@
 package sandbox.validator
 import org.junit.runner.Result
 import org.junit.runner.notification.RunListener
-
+import org.junit.runner.notification.RunNotifier
+import sandbox.validator.imp.ValidatorRunner
 /**
  */
 trait ValidatorTrait {
+    def private final defaultValidatorRunner = new ValidatorRunner(this)
+    def private final defaultRunNotifier = new RunNotifier()
+
 
     def ResultInterface validate(){
         //TODO copied from JUnitCore, probably will change in function of specific listeners or notifiers from different layers (presentation, persistence etc) interested on validation result, but I don't know how yet.
         Result result = new Result();
         RunListener listener = result.createListener();
-        ValidatorGlobals.notifier.addFirstListener(listener);
-        def validatorRunner = new ValidatorRunner(this)
+        getNotifier().addFirstListener(listener);
         try {
-            ValidatorGlobals.notifier.fireTestRunStarted(validatorRunner.getDescription());
-            validatorRunner.run(ValidatorGlobals.notifier);
-            ValidatorGlobals.notifier.fireTestRunFinished(result);
+            getNotifier().fireTestRunStarted(getValidatorRunner().getDescription());
+            getValidatorRunner().run(getNotifier());
+            getNotifier().fireTestRunFinished(result);
         } finally {
-            ValidatorGlobals.notifier.removeListener(listener);
+            getNotifier().removeListener(listener);
         }
 
         return result as ResultInterface;
+    }
+
+    public ValidatorRunner getValidatorRunner() {
+        return defaultValidatorRunner
+    }
+
+    public RunNotifier getNotifier() {
+        return defaultRunNotifier
     }
 }

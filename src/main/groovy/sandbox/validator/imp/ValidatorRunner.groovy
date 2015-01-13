@@ -1,10 +1,12 @@
-package sandbox.validator
+package sandbox.validator.imp
 import org.junit.After
 import org.junit.Before
 import org.junit.runner.Description
 import org.junit.runners.BlockJUnit4ClassRunner
 import org.junit.runners.model.FrameworkMethod
 import org.junit.runners.model.InitializationError
+import sandbox.validator.Validation
+
 //TODO maybe I should extend ParentRunner.....
 //TODO Explain that it should not be used with @RunWith annotation...
 class ValidatorRunner extends BlockJUnit4ClassRunner{
