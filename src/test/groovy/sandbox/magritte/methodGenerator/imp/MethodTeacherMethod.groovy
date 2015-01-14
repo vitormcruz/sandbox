@@ -1,4 +1,4 @@
-package sandbox.magritte.methodGeneration.imp
+package sandbox.magritte.methodGenerator.imp
 import org.junit.Ignore
 import org.junit.Test
 import sandbox.magritte.description.Description

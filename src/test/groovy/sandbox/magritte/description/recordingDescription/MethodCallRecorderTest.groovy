@@ -103,4 +103,6 @@ class MethodCallRecorderTest {
         assert methodCallRecorder.asTypeBeeingRecorded() instanceof InterfaceForRecording :
         "The object returned by asTypeBeeingRecorded is not the correct one."
     }
+
+    //TODO Calling a method more than once
 }

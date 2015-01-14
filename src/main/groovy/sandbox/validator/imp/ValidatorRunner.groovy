@@ -5,8 +5,9 @@ import org.junit.runner.Description
 import org.junit.runners.BlockJUnit4ClassRunner
 import org.junit.runners.model.FrameworkMethod
 import org.junit.runners.model.InitializationError
+import sandbox.magritte.methodGenerator.imp.MethodTeacher
+import sandbox.magritte.testGenerator.junit.FrameworkMetaMethod
 import sandbox.validator.Validation
-
 //TODO maybe I should extend ParentRunner.....
 //TODO Explain that it should not be used with @RunWith annotation...
 class ValidatorRunner extends BlockJUnit4ClassRunner{
@@ -29,7 +30,12 @@ class ValidatorRunner extends BlockJUnit4ClassRunner{
 
     @Override
     protected List<FrameworkMethod> computeTestMethods() {
-        return getTestClass().getAnnotatedMethods(Validation);
+        //TODO extract dynamic method creation into construction so that MethodTeacher do not teach every time
+        def knownMethods = new ArrayList<>(getTestClass().getAnnotatedMethods(Validation))
+        def teacher = new MethodTeacher(ValidationGeneratorForDescriptorContainer)
+        def teachedMethods = teacher.teach(getTestClass().getJavaClass())
+        teachedMethods.each {knownMethods.add(new FrameworkMetaMethod(it))}
+        return knownMethods
     }
 
     @Override
@@ -51,4 +57,6 @@ class ValidatorRunner extends BlockJUnit4ClassRunner{
     protected Object createTest() throws Exception {
         return objectUnderValidation
     }
+
+
 }

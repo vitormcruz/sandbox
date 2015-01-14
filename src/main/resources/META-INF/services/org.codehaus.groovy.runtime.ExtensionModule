@@ -1,5 +1,5 @@
 moduleName=sandbox-module
 moduleVersion=1.0
 extensionClasses=sandbox.magritte.vaadin.ObjectVaadinExtension, sandbox.magritte.vaadin.description.DescriptionExtension, \
-sandbox.magritte.testGenerator.junit.description.JUnitTestGenerationDescriptionsExtension
+sandbox.magritte.testGenerator.junit.description.JUnitTestGenerationDescriptionsExtension, sandbox.validator.magritte.description.ValidationGenerationDescriptionExtensions
 staticExtensionClasses=

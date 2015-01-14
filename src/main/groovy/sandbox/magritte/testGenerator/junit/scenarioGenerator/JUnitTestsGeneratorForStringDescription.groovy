@@ -2,9 +2,9 @@ package sandbox.magritte.testGenerator.junit.scenarioGenerator
 import org.apache.commons.lang.StringUtils
 import sandbox.magritte.description.Description
 import sandbox.magritte.description.StringDescription
-import sandbox.magritte.methodGeneration.GeneratedMethod
-import sandbox.magritte.methodGeneration.imp.SimpleGeneratedMethod
-import sandbox.magritte.methodGeneration.description.MethodGenerator
+import sandbox.magritte.methodGenerator.GeneratedMethod
+import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
+import sandbox.magritte.methodGenerator.description.MethodGenerator
 
 import static org.hamcrest.CoreMatchers.hasItem
 import static org.hamcrest.CoreMatchers.not
@@ -24,8 +24,8 @@ class JUnitTestsGeneratorForStringDescription implements StringDescription, Meth
     }
 
     @Override
-    Description acessor(String acessor) {
-        this.acessor = acessor
+    Description accessor(String accessor) {
+        this.acessor = accessor
         return this
     }
 

@@ -20,7 +20,7 @@ class EmployeeTest {
     @DescriptionModelDefinition
     def myDescription(){
         return New(TestDescription).descriptionsFor(getEmployeeClass(),
-                                                    New(StringDescription).acessor("name").maxSize(100))
+                                                    New(StringDescription).accessor("name").maxSize(100))
     }
 
     Class<Employee> getEmployeeClass() {

@@ -1,4 +1,4 @@
-package sandbox.magritte.methodGeneration
+package sandbox.magritte.methodGenerator
 
 
 interface GeneratedMethod {

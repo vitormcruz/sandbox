@@ -3,7 +3,7 @@ package sandbox.magritte.testGenerator
 import org.junit.Ignore
 import org.junit.Test
 import sandbox.magritte.description.Description
-import sandbox.magritte.methodGeneration.imp.SimpleGeneratedMethod
+import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
 import sandbox.magritte.testGenerator.util.DescriptionForTest
 import sandbox.magritte.testGenerator.util.TestGeneratorForTestDescriptionPartial
 

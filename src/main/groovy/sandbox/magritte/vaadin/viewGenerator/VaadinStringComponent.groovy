@@ -12,8 +12,8 @@ class VaadinStringComponent extends TextField implements StringDescription {
     }
 
     @Override
-    Description acessor(String acessor) {
-        this.setValue(sourceObject."$acessor")
+    Description accessor(String accessor) {
+        this.setValue(sourceObject."$accessor")
         return this
     }
 
