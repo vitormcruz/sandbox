@@ -1,8 +1,9 @@
 package sandbox.validator
 
 import org.junit.Test
+import sandbox.validator.imp.DefaultValidatorTrait
 
-class ValidatorTraitTest {
+class DefaultValidatorTraitTest {
 
     @Test
     def void "Validate a class that implements ValidatorTrait"(){
@@ -10,7 +11,7 @@ class ValidatorTraitTest {
         assert result.getFailureCount() == 1
     }
 
-    public static class ClassUnderTest implements ValidatorTrait{
+    public static class ClassUnderTest implements DefaultValidatorTrait{
         @Validation
         public void validateSomething(){
             assert false

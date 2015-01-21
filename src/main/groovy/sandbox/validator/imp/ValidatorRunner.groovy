@@ -7,10 +7,13 @@ import org.junit.runners.model.FrameworkMethod
 import org.junit.runners.model.InitializationError
 import sandbox.magritte.methodGenerator.imp.MethodTeacher
 import sandbox.magritte.testGenerator.junit.FrameworkMetaMethod
+import sandbox.validator.ParentValidatorRunner
 import sandbox.validator.Validation
+import sandbox.magritte.validationGenerator.ValidationGeneratorForDescriptorContainer
+
 //TODO maybe I should extend ParentRunner.....
 //TODO Explain that it should not be used with @RunWith annotation...
-class ValidatorRunner extends BlockJUnit4ClassRunner{
+class ValidatorRunner extends BlockJUnit4ClassRunner implements ParentValidatorRunner{
 
     /**
      * Constructs a new instance of the default runner

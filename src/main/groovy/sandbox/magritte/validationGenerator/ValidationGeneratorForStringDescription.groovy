@@ -1,4 +1,4 @@
-package sandbox.validator.validationGenerator
+package sandbox.magritte.validationGenerator
 
 import sandbox.magritte.description.Description
 import sandbox.magritte.description.StringDescription

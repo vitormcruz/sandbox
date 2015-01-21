@@ -1,9 +1,16 @@
-package sandbox.validator
+package sandbox.validator.imp
 import org.junit.runner.Result
 import org.junit.runner.notification.RunListener
 import org.junit.runner.notification.RunNotifier
+import sandbox.validator.ParentValidatorRunner
+import sandbox.validator.ResultInterface
+import sandbox.validator.ValidatorTrait
+/**
+ */
+trait DefaultValidatorTrait implements ValidatorTrait{
 
-trait ValidatorTrait {
+    def private validatorRunner = new ValidatorRunner(this)
+    def private runNotifier = new RunNotifier()
 
     def ResultInterface validate(){
         //TODO copied from JUnitCore, probably will change in function of specific listeners or notifiers from different layers (presentation, persistence etc) interested on validation result, but I don't know how yet.
@@ -21,8 +28,19 @@ trait ValidatorTrait {
         return result as ResultInterface;
     }
 
-    public abstract ParentValidatorRunner getValidatorRunner()
-    public abstract RunNotifier getNotifier()
-    public abstract void setValidatorRunner(ParentValidatorRunner runner)
-    public abstract void setNotifier(RunNotifier runNotifier)
+    public ParentValidatorRunner getValidatorRunner() {
+        return validatorRunner
+    }
+
+    public RunNotifier getNotifier() {
+        return runNotifier
+    }
+
+    public void setValidatorRunner(ParentValidatorRunner runner) {
+        this.validatorRunner = runner
+    }
+
+    public void setNotifier(RunNotifier runNotifier) {
+        this.runNotifier = runNotifier
+    }
 }
