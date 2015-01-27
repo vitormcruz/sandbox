@@ -5,7 +5,7 @@ import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator
 import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
 
-class ValidationGeneratorForDescriptorContainer implements DescriptionContainer, MethodGenerator {
+class ValidationGeneratorForDescriptionContainer implements DescriptionContainer, MethodGenerator {
 
     Collection<SimpleGeneratedMethod> validatons = []
 

@@ -5,19 +5,18 @@ import org.junit.runner.Description
 import org.junit.runners.BlockJUnit4ClassRunner
 import org.junit.runners.model.FrameworkMethod
 import org.junit.runners.model.InitializationError
+import sandbox.magritte.description.builder.MagritteDescriptionModelBuilder
+import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.imp.MethodTeacher
 import sandbox.magritte.testGenerator.junit.FrameworkMetaMethod
 import sandbox.validator.ParentValidatorRunner
 import sandbox.validator.Validation
-import sandbox.magritte.validationGenerator.ValidationGeneratorForDescriptorContainer
-
 //TODO maybe I should extend ParentRunner.....
 //TODO Explain that it should not be used with @RunWith annotation...
 class ValidatorRunner extends BlockJUnit4ClassRunner implements ParentValidatorRunner{
 
-    /**
-     * Constructs a new instance of the default runner
-     */
+    private MethodTeacher methodTeacher = new MethodTeacher()
+
     private Object objectUnderValidation
 
     /**
@@ -33,12 +32,15 @@ class ValidatorRunner extends BlockJUnit4ClassRunner implements ParentValidatorR
 
     @Override
     protected List<FrameworkMethod> computeTestMethods() {
-        //TODO extract dynamic method creation into construction so that MethodTeacher do not teach every time
         def knownMethods = new ArrayList<>(getTestClass().getAnnotatedMethods(Validation))
-        def teacher = new MethodTeacher(ValidationGeneratorForDescriptorContainer)
-        def teachedMethods = teacher.teach(getTestClass().getJavaClass())
+        def teachedMethods = methodTeacher.teach(getTestClass().getJavaClass(), getGeneratedMethods())
         teachedMethods.each {knownMethods.add(new FrameworkMetaMethod(it))}
         return knownMethods
+    }
+
+    private Collection<GeneratedMethod> getGeneratedMethods() {
+        return MagritteDescriptionModelBuilder.forObject(objectUnderValidation).asMethodGenerator()
+                                                                               .getGeneratedMethods()
     }
 
     @Override

@@ -45,10 +45,11 @@ class MethodCallRecorder<T> {
         return this.asType(clazz)
     }
 
-    //TODO where should I put this???
-    void accept(aDescriptorVisitor){
+    def accept(aDescriptorVisitor){
         messagesSend.each {
             aDescriptorVisitor."${it[METHOD_NAME]}"(*it[METHOD_ARGUMENTS])
         }
+
+        return aDescriptorVisitor
     }
 }

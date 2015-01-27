@@ -7,7 +7,7 @@ class JUnitTestGeneratorForTestDescription extends TestGeneratorForTestDescripti
 
     @Override
     Collection<? extends SimpleGeneratedMethod> getTestsOf(Description aDescription, Class classUnderTest) {
-        def testGenerator = aDescription.getTestGenerator(classUnderTest)
+        def testGenerator = aDescription.getMyTestGenerator(classUnderTest)
         aDescription.accept(testGenerator)
         return testGenerator.getGeneratedMethods()
     }
