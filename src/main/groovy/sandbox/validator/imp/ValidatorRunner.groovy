@@ -15,7 +15,7 @@ import sandbox.validator.Validation
 //TODO Explain that it should not be used with @RunWith annotation...
 class ValidatorRunner extends BlockJUnit4ClassRunner implements ParentValidatorRunner{
 
-    private MethodTeacher methodTeacher = new MethodTeacher()
+    def private static methodTeacher = new MethodTeacher()
 
     private Object objectUnderValidation
 
