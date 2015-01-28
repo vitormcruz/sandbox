@@ -8,21 +8,18 @@ import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
 
 class ValidationGeneratorForStringDescription implements MethodGenerator, StringDescription{
 
+    ValidationFactory validationFactory = new DefaultValidationFactory<SimpleGeneratedMethod>(SimpleGeneratedMethod)
+
     def private validations = []
     def private accessorProxy = [:]
 
     @Override
     StringDescription maxSize(Integer maxSize) {
-        //TODO extract a common validation code that is tested and reused here to create dynamic validation
-        validations.add(new SimpleGeneratedMethod("Validate ${accessorProxy.acessor} has no more than ${maxSize} characters.",
-                {
-                    def accessor = delegate."${accessorProxy.acessor}"
-                    if(accessor != null && accessor.size() > maxSize){
-                        throw new IllegalArgumentException("${delegate.getClass().getSimpleName().toLowerCase()}.validation.${accessorProxy.acessor}.maxsize.error")
-                    }
-                }
-        ))
+        validations.add(validationFactory.getMaxSizeValidation(accessorProxy.acessor, maxSize))
         return this
+    }
+
+    private SimpleGeneratedMethod teste(accessor, maxSize) {
     }
 
     @Override
