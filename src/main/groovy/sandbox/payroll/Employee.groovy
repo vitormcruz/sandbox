@@ -1,4 +1,5 @@
 package sandbox.payroll
+
 import sandbox.magritte.description.DescriptionContainer
 import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.description.StringDescription
@@ -8,6 +9,7 @@ import static sandbox.magritte.description.builder.DescriptionFactory.New
 
 class Employee implements DefaultValidatorTrait {
 
+    def Long id
     def String name
     def String address
     def String email

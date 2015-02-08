@@ -1,4 +1,6 @@
 package sandbox
+
+import com.vaadin.annotations.Push
 import com.vaadin.annotations.Theme
 import com.vaadin.annotations.Title
 import com.vaadin.data.Container.Filter
@@ -9,14 +11,15 @@ import com.vaadin.server.Sizeable
 import com.vaadin.server.VaadinRequest
 import com.vaadin.ui.*
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode
+import sandbox.heavyValidation.HeavyValidationPage
 import sandbox.payroll.PayrollPage
-
 /**
  * Copied from Vaadin tutorial to have a working example of it on this project. I will change its contents over time.
  * (https://github.com/vaadin/addressbook/blob/master/src/main/java/com/vaadin/tutorial/addressbook/AddressbookUI.java)
  */
 @Title("Sandbox")
 @Theme("valo")
+@Push
 public class SandboxUI extends UI {
 
     /* User interface components are stored in session. */
@@ -46,6 +49,7 @@ public class SandboxUI extends UI {
      * up your user interface here.
      */
     protected void init(VaadinRequest request) {
+//        this.setPollInterval(200)
         initLayout();
         initContactList();
         initEditor();
@@ -71,6 +75,7 @@ public class SandboxUI extends UI {
         def item = menu.addItem("Experimentations", null)
         item.addItem("AddressBook", { selectedItem -> baseLayout.setSecondComponent(addressBookPanel)} )
         item.addItem("PayRoll", { selectedItem -> baseLayout.setSecondComponent(new PayrollPage())} )
+        item.addItem("HeavyValidation", { selectedItem -> baseLayout.setSecondComponent(new HeavyValidationPage())} )
         baseLayout.setFirstComponent(menu)
 
 
