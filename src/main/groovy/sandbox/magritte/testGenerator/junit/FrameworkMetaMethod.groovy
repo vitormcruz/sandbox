@@ -7,8 +7,7 @@ import java.lang.reflect.Method
 import java.lang.reflect.Modifier
 /**
  * Class created to hack BlockJUnit4ClassRunner in order to provide groovy dynamic meta methods to be executed by test
- * cases. The BlockJUnit4ClassRunner is very inflexible around that since it uses FrameworkMethod instead of
- * FrameworkMember or some interface.
+ * cases.
  */
 class FrameworkMetaMethod extends FrameworkMethod{
 

@@ -4,34 +4,30 @@ import sandbox.magritte.description.Description
 import sandbox.magritte.description.StringDescription
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
-import sandbox.magritte.methodGenerator.description.MethodGenerator
 
 import static org.hamcrest.CoreMatchers.hasItem
 import static org.hamcrest.CoreMatchers.not
 import static org.junit.Assert.assertThat
-class JUnitTestsGeneratorForStringDescription implements StringDescription, MethodGenerator {
 
-    private Class descriptedClass
-    private String acessor
-    private testScenarios = []
+class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForBaseDescription implements StringDescription{
 
-    JUnitTestsGeneratorForStringDescription(Class descriptedClass) {
-        this.descriptedClass = descriptedClass
+    JUnitTestsGeneratorForStringDescription(Class describedClass) {
+        super.describedClass = describedClass
     }
 
     Collection<GeneratedMethod> getGeneratedMethods(){
-        return testScenarios
+        return super.testScenarios
     }
 
     @Override
     Description accessor(String accessor) {
-        this.acessor = accessor
+        super.accessor = accessor
         return this
     }
 
     @Override
     StringDescription maxSize(Integer maxSize) {
-        String error = "${descriptedClass.getSimpleName().toLowerCase()}.validation.${acessor}.maxsize.error"
+        String error = "${describedClass.getSimpleName().toLowerCase()}.validation.${accessor}.maxsize.error"
 
         //TODO the implementation of the actual method should be specific of the test framework
         def errorMatcher = hasItem(error)
@@ -40,7 +36,7 @@ class JUnitTestsGeneratorForStringDescription implements StringDescription, Meth
          [size: maxSize, testVerificationMatcher: sucessMatcher],
          [size: maxSize + 1, testVerificationMatcher: errorMatcher]].each {
 
-            testScenarios.add(new SimpleGeneratedMethod("The ${acessor} of ${descriptedClass.getSimpleName()} should have " +
+            testScenarios.add(new SimpleGeneratedMethod("The ${accessor} of ${describedClass.getSimpleName()} should have " +
                                                "at max ${maxSize} characters. Testing with ${it.size} characters.",
                                                 testSizeTemplate(it.size, it.testVerificationMatcher)))
 
@@ -52,8 +48,8 @@ class JUnitTestsGeneratorForStringDescription implements StringDescription, Meth
 
     def testSizeTemplate(size, testVerificationMatcher){
         return {
-           def testSubject = descriptedClass.newInstance()
-            testSubject."${acessor}" = StringUtils.leftPad("", size, 'X')
+           def testSubject = describedClass.newInstance()
+            testSubject."${accessor}" = StringUtils.leftPad("", size, 'X')
             def result = testSubject.validate()
 
             assertThat(result.getFailures().collect {it.getException().getMessage()}, testVerificationMatcher)
@@ -62,17 +58,12 @@ class JUnitTestsGeneratorForStringDescription implements StringDescription, Meth
     }
 
     @Override
-    Description beRequired() {
-        return null
-    }
-
-    @Override
     Description defaultValue(Object defaultValue) {
-        return null
+        return this
     }
 
     @Override
     Description label(Object label) {
-        return null
+        return this
     }
 }

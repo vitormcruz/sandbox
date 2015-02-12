@@ -5,8 +5,6 @@ package sandbox.magritte.description.recordingDescription
  */
 class MethodCallRecorder<T> {
 
-    //TODO acessor should be the first in the message list, how to do this?
-
     public static final int METHOD_NAME = 0
     public static final int METHOD_ARGUMENTS = 1
 
