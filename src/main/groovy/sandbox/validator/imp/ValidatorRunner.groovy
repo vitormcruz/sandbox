@@ -22,8 +22,7 @@ class ValidatorRunner extends BlockJUnit4ClassRunner implements ParentValidatorR
     /**
      * Constructs a new ValidationRunner for an object under validation, passed by parameter.
      *
-     * This constructor makes it spam an error if anyone tries to execute this with an @RunWith annotation, as it
-     * should be.
+     * This constructor makes it spam an error if anyone tries to execute this with an @RunWith annotation.
      */
     ValidatorRunner(Object objectUnderValidation) throws InitializationError {
         super(objectUnderValidation.class)

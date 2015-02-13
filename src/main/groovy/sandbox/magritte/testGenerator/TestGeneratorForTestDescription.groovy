@@ -11,6 +11,7 @@ abstract class TestGeneratorForTestDescription implements TestDescription, Metho
 
     @Override
     def TestDescription descriptionsFor(Class classUnderTest, Description... descriptions) {
+        //TODO use validation framework
         if(classUnderTest == null){
             throw new IllegalArgumentException("Cannot create test scenarios for a TestDescription that do not specify a target class")
         }
