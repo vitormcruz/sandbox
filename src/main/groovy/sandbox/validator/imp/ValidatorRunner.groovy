@@ -16,7 +16,7 @@ import sandbox.validator.Validation
 class ValidatorRunner extends BlockJUnit4ClassRunner implements ParentValidatorRunner{
 
     def private static methodTeacher = new MethodTeacher()
-
+    
     private Object objectUnderValidation
 
     /**

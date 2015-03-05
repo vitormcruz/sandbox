@@ -20,17 +20,16 @@ Sandbox
 ## General TODO
 
 ### Validation
-1- Use apache validation instead of implementing generated validations by hand
-2- Generalize error message build
-3- Create a new failure that provides more information of the error, such as the aspect been tested
-4- Optimize method generation to occur only one time
-5- Consider hierarchy
-6- Consider validation of an object that depends of the validation of other object (circular dependency)
-7- Avoid running tests again if nothing changed
-8- Parallel running???
+2. Generalize error message build
+3. Create a new failure that provides more information of the error, such as the aspect been tested
+4. Optimize method generation to occur only one time
+5. Consider hierarchy
+6. Consider validation of an object that depends of the validation of other object (circular dependency)
+7. Avoid running tests again if nothing changed
+8. Parallel running???
 
 ### Test generator
-1- Generalize Test name build
-2- Optimize method generation
-3- Optimize method generation to occur only one time
-4- Consider hierarchy
+1. Generalize Test name build
+2. Optimize method generation
+3. Optimize method generation to occur only one time
+4. Consider hierarchy

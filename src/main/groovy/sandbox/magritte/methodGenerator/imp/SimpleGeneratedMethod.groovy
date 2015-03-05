@@ -4,8 +4,8 @@ import sandbox.magritte.methodGenerator.GeneratedMethod
 
 
 class SimpleGeneratedMethod implements GeneratedMethod{
-    def final String methodName
-    def final Closure clojure
+    protected String methodName
+    protected Closure clojure
 
     SimpleGeneratedMethod() {
     }
@@ -13,5 +13,15 @@ class SimpleGeneratedMethod implements GeneratedMethod{
     SimpleGeneratedMethod(String methodName, Closure clojure) {
         this.methodName = methodName
         this.clojure = clojure
+    }
+
+    @Override
+    String getMethodName() {
+        return methodName
+    }
+
+    @Override
+    Closure getClojure() {
+        return clojure
     }
 }

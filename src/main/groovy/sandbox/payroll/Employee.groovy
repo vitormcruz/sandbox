@@ -4,11 +4,11 @@ import sandbox.magritte.description.DescriptionContainer
 import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.description.StringDescription
 import sandbox.validator.Validation
-import sandbox.validator.imp.DefaultValidatorTrait
+import sandbox.validator.imp.ValidatorTrait
 
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 
-class Employee implements DefaultValidatorTrait {
+class Employee implements ValidatorTrait {
 
     def Long id
     def String name
