@@ -61,8 +61,7 @@ class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentVal
     protected void collectInitializationErrors(List<Throwable> errors) {
         super.collectInitializationErrors(errors);
 
-        validateNoNonStaticInnerClass(errors);
-        validateConstructor(errors);
+        //TODO validate that the class has a default constructor (Maybe this validations exits in some API)
         validateInstanceMethods(errors);
         validateFields(errors);
         validateMethods(errors);
@@ -75,54 +74,6 @@ class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentVal
     private void validateMethods(List<Throwable> errors) {
         RULE_METHOD_VALIDATOR.validate(getTestClass(), errors);
     }
-
-    
-    protected void validateNoNonStaticInnerClass(List<Throwable> errors) {
-        if (getTestClass().isANonStaticInnerClass()) {
-            String gripe = "The inner class " + getTestClass().getName()
-                    + " is not static.";
-            errors.add(new Exception(gripe));
-        }
-    }
-
-    /**
-     * Adds to {@code errors} if the test class has more than one constructor,
-     * or if the constructor takes parameters. Override if a subclass requires
-     * different validation rules.
-     */
-    protected void validateConstructor(List<Throwable> errors) {
-        validateOnlyOneConstructor(errors);
-        validateZeroArgConstructor(errors);
-    }
-
-    /**
-     * Adds to {@code errors} if the test class has more than one constructor
-     * (do not override)
-     */
-    protected void validateOnlyOneConstructor(List<Throwable> errors) {
-        if (!hasOneConstructor()) {
-            String gripe = "Test class should have exactly one public constructor";
-            errors.add(new Exception(gripe));
-        }
-    }
-
-    /**
-     * Adds to {@code errors} if the test class's single constructor takes
-     * parameters (do not override)
-     */
-    protected void validateZeroArgConstructor(List<Throwable> errors) {
-        if (!getTestClass().isANonStaticInnerClass()
-                && hasOneConstructor()
-                && (getTestClass().getOnlyConstructor().getParameterTypes().length != 0)) {
-            String gripe = "Test class should have exactly one public zero-argument constructor";
-            errors.add(new Exception(gripe));
-        }
-    }
-
-    private boolean hasOneConstructor() {
-        return getTestClass().getJavaClass().getConstructors().length == 1;
-    }
-
 
     protected void validateInstanceMethods(List<Throwable> errors) {
         /* Wanted the same method without the verification for zero computed test method, i.e., I don't wanna the
