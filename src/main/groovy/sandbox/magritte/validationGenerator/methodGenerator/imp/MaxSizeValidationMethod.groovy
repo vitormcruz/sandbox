@@ -9,9 +9,8 @@ class MaxSizeValidationMethod extends SimpleGeneratedMethod {
     }
 
     MaxSizeValidationMethod(accessor, maxSize) {
-
         super.methodName = "Validate ${accessor} has no more than ${maxSize} characters."
-        clojure = {
+        super.clojure = {
             def value = delegate."${accessor}"
             if (! new CodeValidator("", 0, maxSize, null).isValid(value)) {
                 throw new IllegalArgumentException("${delegate.getClass().getSimpleName().toLowerCase()}.validation.${accessor}.maxsize.error")

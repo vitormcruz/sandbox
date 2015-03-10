@@ -46,25 +46,26 @@ class Employee implements ValidatorTrait {
                 description().string("address").maxSize(100).label("employee.address")]
 
 
+
+        return [
+            "name".isA(StringDescription).maxSize(50).label("employee.name"),
+            "address".isA(StringDescription).maxSize(200).label("employee.address"),
+            "email".isA(StringDescription).maxSize(100).label("employee.email"),
+        ]
+
+        in Java:
+
+        return [
+            isA("name", StringDescription).maxSize(50).label("employee.name"),
+            isA("address", StringDescription).maxSize(200).label("employee.address"),
+            isA("email", StringDescription).maxSize(100).label("employee.email"),
+        ]
+
+
         */
 
-        return New(DescriptionContainer).addAll(New(StringDescription).accessor("name").maxSize(50).label("employee.name"),
-                                                New(StringDescription).accessor("address").maxSize(100).label("employee.address"),
-                                                New(StringDescription).accessor("email").label("employee.email"))
-    }
-
-    @Validation
-    public void validateNameMandatory(){
-        if(StringUtils.isBlank(name)) throw new IllegalArgumentException("employee.validation.name.mandatory.error")
-    }
-
-    @Validation
-    public void validateAddressMandatory(){
-        if(StringUtils.isBlank(address)) throw new IllegalArgumentException("employee.validation.address.mandatory.error")
-    }
-
-    @Validation
-    public void validateEmailMandatory(){
-        if(StringUtils.isBlank(email)) throw new IllegalArgumentException("employee.validation.email.mandatory.error")
+        return New(DescriptionContainer).addAll(New(StringDescription).accessor("name").maxSize(50).label("employee.name").beRequired(),
+                                                New(StringDescription).accessor("address").maxSize(200).label("employee.address").beRequired(),
+                                                New(StringDescription).accessor("email").maxSize(100).label("employee.email").beRequired())
     }
 }

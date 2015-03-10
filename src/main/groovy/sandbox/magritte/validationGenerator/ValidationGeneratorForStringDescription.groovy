@@ -26,6 +26,7 @@ class ValidationGeneratorForStringDescription implements MethodGenerator, String
 
     @Override
     Description beRequired() {
+        validations.add(validationFactory.getRequiredValidation(accessorProxy.acessor))
         return this
     }
 

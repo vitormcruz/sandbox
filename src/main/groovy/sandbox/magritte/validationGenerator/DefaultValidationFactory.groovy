@@ -1,5 +1,6 @@
 package sandbox.magritte.validationGenerator
 
+import sandbox.magritte.validationGenerator.methodGenerator.imp.RequiredValidation
 import sandbox.magritte.validationGenerator.methodGenerator.imp.MaxSizeValidationMethod
 
 class DefaultValidationFactory<T> implements ValidationFactory<T>{
@@ -10,5 +11,10 @@ class DefaultValidationFactory<T> implements ValidationFactory<T>{
     @Override
     def T getMaxSizeValidation(accessor, maxSize){
         return new MaxSizeValidationMethod(accessor, maxSize);
+    }
+
+    @Override
+    T getRequiredValidation(Object accessor) {
+        return new RequiredValidation(accessor);
     }
 }

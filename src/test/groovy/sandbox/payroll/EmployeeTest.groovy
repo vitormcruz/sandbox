@@ -21,8 +21,8 @@ class EmployeeTest {
     def myTestDescription(){
         return New(TestDescription).descriptionsFor(getEmployeeClass(),
                                                     New(StringDescription).accessor("name").maxSize(50).beRequired(),
-                                                    New(StringDescription).accessor("email").beRequired(),
-                                                    New(StringDescription).accessor("address").maxSize(100).beRequired())
+                                                    New(StringDescription).accessor("address").maxSize(200).beRequired(),
+                                                    New(StringDescription).accessor("email").maxSize(100).beRequired())
     }
 
     Class<Employee> getEmployeeClass() {
