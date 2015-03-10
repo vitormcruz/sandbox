@@ -18,7 +18,7 @@ class FrameworkMetaMethod extends FrameworkMethod{
     }
 
     FrameworkMetaMethod(MetaMethod metaMethod) {
-        super(null)
+        super(metaMethod.class.getMethods()[0]) //TODO just pass some object so that FrameworkMethod does not complain.
         this.metaMethod = metaMethod
     }
 
@@ -124,11 +124,5 @@ class FrameworkMetaMethod extends FrameworkMethod{
     Annotation[] getAnnotations() {
         //MetMethod does not have get annottion method
         return new Annotation[0]
-    }
-
-    @Override
-    def <T extends Annotation> T getAnnotation(Class<T> annotationType) {
-        //MetMethod does not have get annottion method
-        return null
     }
 }

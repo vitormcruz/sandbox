@@ -1,4 +1,5 @@
 package sandbox.validator.imp
+
 import org.junit.After
 import org.junit.Before
 import org.junit.Ignore
@@ -11,6 +12,7 @@ import org.junit.runners.ParentRunner
 import org.junit.runners.model.FrameworkMethod
 import org.junit.runners.model.InitializationError
 import org.junit.runners.model.Statement
+import org.junit.runners.model.TestClass
 import sandbox.magritte.description.builder.MagritteDescriptionModelBuilder
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.imp.MethodTeacher
@@ -18,27 +20,32 @@ import sandbox.magritte.testGenerator.junit.FrameworkMetaMethod
 import sandbox.validator.ParentValidatorRunner
 import sandbox.validator.Validation
 
-import static org.junit.internal.runners.rules.RuleFieldValidator.RULE_METHOD_VALIDATOR
-import static org.junit.internal.runners.rules.RuleFieldValidator.RULE_VALIDATOR
+import static org.junit.internal.runners.rules.RuleMemberValidator.RULE_METHOD_VALIDATOR
+import static org.junit.internal.runners.rules.RuleMemberValidator.RULE_VALIDATOR
 
-//TODO maybe I should extend ParentRunner.....
+//TODO maybe I should extend ParentRunnerMoreAbstract.....
 //TODO Explain that it should not be used with @RunWith annotation...
 class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentValidatorRunner{
 
     def private static methodTeacher = new MethodTeacher()
     
-    private Object objectUnderValidation
+    private Object subjectOfValidation
 
     /**
      * Constructs a new ValidationRunner for an object under validation, passed by parameter.
      *
      * This constructor makes it spam an error if anyone tries to execute this with an @RunWith annotation.
      */
-    ValidatorRunner(Object objectUnderValidation) throws InitializationError {
-        super(objectUnderValidation.class)
-        this.objectUnderValidation = objectUnderValidation
+    ValidatorRunner(Object subjectOfValidation) throws InitializationError {
+        super(subjectOfValidation.getClass())
+        this.subjectOfValidation = subjectOfValidation
     }
-    
+
+    @Override
+    protected TestClass createTestClass(Class<?> classOfValidationSubject) {
+        return new ValidationClass(classOfValidationSubject)
+    }
+
     @Override
     protected List getChildren() {
         return computeTestMethods();
@@ -52,7 +59,7 @@ class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentVal
     }
 
     private Collection<GeneratedMethod> getGeneratedMethods() {
-        return MagritteDescriptionModelBuilder.forObject(objectUnderValidation).asMethodGenerator()
+        return MagritteDescriptionModelBuilder.forObject(subjectOfValidation).asMethodGenerator()
                                                                                .getGeneratedMethods()
     }
     
@@ -76,17 +83,9 @@ class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentVal
     }
 
     protected void validateInstanceMethods(List<Throwable> errors) {
-        /* Wanted the same method without the verification for zero computed test method, i.e., I don't wanna the
-        validation to fail just because there are no validation methods, actually, I wanna exactly the contrary.*/
         validatePublicVoidNoArgMethods(After.class, false, errors);
         validatePublicVoidNoArgMethods(Before.class, false, errors);
         validatePublicVoidNoArgMethods(Validation.class, false, errors);
-    }
-
-    @Override
-    protected Description describeChild(FrameworkMethod method) {
-        return Description.createTestDescription(getTestClass().getJavaClass(),
-                method.getName(), method.getAnnotations());
     }
 
        @Override
@@ -97,6 +96,12 @@ class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentVal
         } else {
             runLeaf(methodBlock(method), description, notifier);
         }
+    }
+
+    @Override
+    protected Description describeChild(FrameworkMethod method) {
+        return Description.createTestDescription(getTestClass().getJavaClass(),
+                method.getName(), method.getAnnotations());
     }
 
     //TODO copied from JUNIT. See if it will remain like this
@@ -116,7 +121,7 @@ class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentVal
         Statement statement = new InvokeMethod(method, test);
         
         
-        //TODO I wanna to do this using rules, but for now I will comment out since I am not using yet. Befores and after will not work until I fix that
+        //TODO I wanna to do this using rules, but for now I will comment out since I am not using yet. Befores and Afters will not work until I fix that
 //        statement = possiblyExpectingExceptions(method, test, statement);
 //        statement = withPotentialTimeout(method, test, statement);
 //        statement = withBefores(method, test, statement);
@@ -126,8 +131,7 @@ class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentVal
     }
     
     protected Object createTest() throws Exception {
-        return objectUnderValidation
+        return subjectOfValidation
     }
-
 
 }
