@@ -1,7 +1,7 @@
 package sandbox.magritte.validationGenerator.methodGenerator.imp
+
 import org.apache.commons.validator.routines.CodeValidator
 import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
-import sandbox.validator.imp.ValidatorTrait
 
 class MaxSizeValidationMethod extends SimpleGeneratedMethod {
     

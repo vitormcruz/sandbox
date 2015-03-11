@@ -1,7 +1,7 @@
 package sandbox.magritte.validationGenerator
 
-import sandbox.magritte.validationGenerator.methodGenerator.imp.RequiredValidation
 import sandbox.magritte.validationGenerator.methodGenerator.imp.MaxSizeValidationMethod
+import sandbox.magritte.validationGenerator.methodGenerator.imp.RequiredValidation
 
 class DefaultValidationFactory<T> implements ValidationFactory<T>{
 

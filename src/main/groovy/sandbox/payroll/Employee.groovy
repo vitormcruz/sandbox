@@ -1,9 +1,7 @@
 package sandbox.payroll
-import org.apache.commons.lang.StringUtils
-import sandbox.magritte.description.DescriptionContainer
+
 import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.description.StringDescription
-import sandbox.validator.Validation
 import sandbox.validator.imp.ValidatorTrait
 
 import static sandbox.magritte.description.builder.DescriptionFactory.New
@@ -47,25 +45,13 @@ class Employee implements ValidatorTrait {
 
 
 
-        return [
-            "name".isA(StringDescription).maxSize(50).label("employee.name"),
-            "address".isA(StringDescription).maxSize(200).label("employee.address"),
-            "email".isA(StringDescription).maxSize(100).label("employee.email"),
-        ]
 
-        in Java:
-
-        return [
-            isA("name", StringDescription).maxSize(50).label("employee.name"),
-            isA("address", StringDescription).maxSize(200).label("employee.address"),
-            isA("email", StringDescription).maxSize(100).label("employee.email"),
-        ]
 
 
         */
 
-        return New(DescriptionContainer).addAll(New(StringDescription).accessor("name").maxSize(50).label("employee.name").beRequired(),
-                                                New(StringDescription).accessor("address").maxSize(200).label("employee.address").beRequired(),
-                                                New(StringDescription).accessor("email").maxSize(100).label("employee.email").beRequired())
+        return [New(StringDescription).accessor("name").maxSize(50).label("employee.name").beRequired(),
+                New(StringDescription).accessor("address").maxSize(200).label("employee.address").beRequired(),
+                New(StringDescription).accessor("email").maxSize(100).label("employee.email").beRequired()]
     }
 }

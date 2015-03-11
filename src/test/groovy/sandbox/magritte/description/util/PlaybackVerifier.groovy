@@ -8,6 +8,15 @@ class PlaybackVerifier {
     private List<List> argumentOrderExpected = []
     private List<List> argumentOrderObtained = []
 
+    PlaybackVerifier() {
+    }
+
+    PlaybackVerifier(descriptions) {
+        descriptions.each {
+            it.accept(this)
+        }
+    }
+
     def expectedMethodOrder(List<String> methodOrder){
         this.methodOrderExpected.addAll(methodOrder)
     }

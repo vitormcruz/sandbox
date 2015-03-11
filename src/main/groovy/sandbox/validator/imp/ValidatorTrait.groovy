@@ -1,8 +1,9 @@
 package sandbox.validator.imp
 
 import org.junit.runner.notification.RunNotifier
-import sandbox.validator.ParentValidatorRunner
 import sandbox.validator.AbstractValidatorTrait
+import sandbox.validator.ParentValidatorRunner
+
 /**
  */
 trait ValidatorTrait implements AbstractValidatorTrait{
