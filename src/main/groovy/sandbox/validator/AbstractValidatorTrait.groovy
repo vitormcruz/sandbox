@@ -21,6 +21,11 @@ trait AbstractValidatorTrait {
         return result as ResultInterface;
     }
 
+    def void validateFailingOnError(){
+        def result = validate()
+        if(!result.wasSuccessful()) throw new ValidationException(result)
+    }
+
     public abstract ParentValidatorRunner getValidatorRunner()
     public abstract RunNotifier getNotifier()
 }

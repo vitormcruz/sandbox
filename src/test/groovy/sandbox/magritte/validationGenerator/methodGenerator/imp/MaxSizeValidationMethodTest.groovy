@@ -1,25 +1,64 @@
 package sandbox.magritte.validationGenerator.methodGenerator.imp
 
-import org.junit.Ignore
-import org.junit.runner.RunWith
-import sandbox.magritte.description.DescriptionModelDefinition
-import sandbox.magritte.description.StringDescription
-import sandbox.magritte.testGenerator.description.TestDescription
-import sandbox.magritte.testGenerator.junit.JUnit4TestGeneratorRunner
+import org.junit.Test
+import sandbox.validator.ResultInterface
+import sandbox.validator.ValidationException
 
-import static sandbox.magritte.description.builder.DescriptionFactory.New
+import static groovy.test.GroovyAssert.shouldFail
+import static org.hamcrest.CoreMatchers.hasItem
+import static org.hamcrest.CoreMatchers.not
+import static org.junit.Assert.assertThat
 
-@RunWith(JUnit4TestGeneratorRunner)
-@Ignore("I will have to provide a way to describe a method. Look at magritte implementation of pharo to see what they have done")
 class MaxSizeValidationMethodTest {
-    
-    @DescriptionModelDefinition
-    def myTestDescription(){
-        return New(TestDescription).descriptionsFor(MaxSizeValidationMethod,
-                                                    New(StringDescription).accessor("accessor").maxSize(50).beRequired()
-//                                                    New(StringDescription).accessor("email").beRequired()
-        )
+
+
+    @Test
+    def void "accessor is required"(){
+        ValidationException ex = shouldFail(ValidationException, {new MaxSizeValidationMethod(null, 10)})
+        assertThat(extractErrorMessagesFromResult(ex.result),
+                   hasItem("MaxSizeValidationMethod.creation.accessor.required"))
     }
-    
-    
+
+    @Test
+    def void "accessor cannot be empty"(){
+        ValidationException ex = shouldFail(ValidationException, {new MaxSizeValidationMethod("", 10)})
+        assertThat(extractErrorMessagesFromResult(ex.result),
+                   hasItem("MaxSizeValidationMethod.creation.accessor.required"))
+    }
+
+    @Test
+    def void "maxSize is required"(){
+        ValidationException ex = shouldFail(ValidationException, {new MaxSizeValidationMethod("tst", null)})
+        assertThat(extractErrorMessagesFromResult(ex.result),
+                   hasItem("MaxSizeValidationMethod.creation.maxSize.required"))
+    }
+
+    @Test
+    def void "maxSize must not be negative"(){
+        def errorMatcher = hasItem("MaxSizeValidationMethod.creation.maxSize.negative")
+        def successMatcher = not(hasItem("MaxSizeValidationMethod.creation.maxSize.negative"))
+
+        [[maxSize: -10, expected: errorMatcher],
+         [maxSize: -1, expected: errorMatcher],
+         [maxSize: 0, expected: successMatcher],
+         [maxSize:10, expected: successMatcher]].each { example ->
+            def errors = captureErrors {new MaxSizeValidationMethod("tst", example.maxSize)}
+            assertThat(errors, example.expected)
+        }
+    }
+
+    def Collection captureErrors(clojure){
+        try{
+            clojure()
+        }catch (ValidationException ve){
+            return extractErrorMessagesFromResult(ve.result)
+        }
+
+        return []
+    }
+
+    private List<String> extractErrorMessagesFromResult(ResultInterface result) {
+        result.getFailures().collect { it.getException().getMessage() }
+    }
+
 }

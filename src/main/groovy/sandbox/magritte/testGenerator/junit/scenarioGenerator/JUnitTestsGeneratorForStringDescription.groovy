@@ -31,7 +31,7 @@ class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForBaseD
 
         //TODO the implementation of the actual method should be specific of the test framework
         def errorMatcher = hasItem(error)
-        def sucessMatcher = not(hasItem(error))
+        def successMatcher = not(hasItem(error))
         [[size: maxSize -1, testVerificationMatcher: sucessMatcher],
          [size: maxSize, testVerificationMatcher: sucessMatcher],
          [size: maxSize + 1, testVerificationMatcher: errorMatcher]].each {
