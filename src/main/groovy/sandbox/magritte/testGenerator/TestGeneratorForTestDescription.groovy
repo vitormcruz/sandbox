@@ -1,13 +1,14 @@
 package sandbox.magritte.testGenerator
+
 import sandbox.magritte.description.Description
 import sandbox.magritte.methodGenerator.GeneratedMethod
-import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator
 import sandbox.magritte.testGenerator.description.TestDescription
 
 abstract class TestGeneratorForTestDescription implements TestDescription, MethodGenerator {
 
-    Collection<SimpleGeneratedMethod> testScenarios = []
+    Collection<GeneratedMethod> testScenarios
+    def protected mandatoryTestGenerator = new MandatoryTestGenerator();
 
     @Override
     def TestDescription descriptionsFor(Class classUnderTest, Description... descriptions) {
@@ -16,14 +17,19 @@ abstract class TestGeneratorForTestDescription implements TestDescription, Metho
             throw new IllegalArgumentException("Cannot create test scenarios for a TestDescription that do not specify a target class")
         }
 
-        descriptions.each {
-            testScenarios.addAll(getTestsOf(it, classUnderTest))
+        mandatoryTestGenerator.setClassUnderTest(classUnderTest)
+
+        testScenarios = descriptions.collectMany {
+            def methodGenerator = it.getMyTestGenerator(classUnderTest)
+            methodGenerator.setMandatoryTestGenerator(mandatoryTestGenerator)
+            it.accept(methodGenerator)
+            methodGenerator.getGeneratedMethods()
         }
+
+        testScenarios.addAll(mandatoryTestGenerator.getGeneratedMethods())
 
         return this
     }
-
-    abstract Collection<? extends SimpleGeneratedMethod> getTestsOf(Description description, Class classUnderTest)
 
     @Override
     Collection<GeneratedMethod> getGeneratedMethods() {

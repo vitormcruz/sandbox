@@ -20,12 +20,6 @@ class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForBaseD
     }
 
     @Override
-    Description accessor(String accessor) {
-        super.accessor = accessor
-        return this
-    }
-
-    @Override
     StringDescription maxSize(Integer maxSize) {
         String error = "${describedClass.getSimpleName().toLowerCase()}.validation.${accessor}.maxsize.error"
 
