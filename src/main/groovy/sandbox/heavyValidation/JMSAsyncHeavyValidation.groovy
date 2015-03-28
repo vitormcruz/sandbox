@@ -2,8 +2,8 @@ package sandbox.heavyValidation
 
 import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.core.MessageCreator
-import sandbox.SandboxApplication
 import sandbox.MessageReceiver
+import sandbox.SandboxApplication
 
 import javax.jms.JMSException
 import javax.jms.Message

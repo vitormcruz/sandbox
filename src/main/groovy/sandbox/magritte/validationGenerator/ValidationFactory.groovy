@@ -6,4 +6,5 @@ package sandbox.magritte.validationGenerator
 interface ValidationFactory<T>{
 
     def T getMaxSizeValidation(accessor, maxSize)
+    def T getRequiredValidation(accessor)
 }

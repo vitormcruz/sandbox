@@ -1,14 +1,12 @@
 package sandbox.payroll
-import org.apache.commons.lang.StringUtils
-import sandbox.magritte.description.DescriptionContainer
+
 import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.description.StringDescription
-import sandbox.validator.Validation
-import sandbox.validator.imp.DefaultValidatorTrait
+import sandbox.validator.imp.ValidatorTrait
 
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 
-class Employee implements DefaultValidatorTrait {
+class Employee implements ValidatorTrait {
 
     def Long id
     def String name
@@ -46,25 +44,14 @@ class Employee implements DefaultValidatorTrait {
                 description().string("address").maxSize(100).label("employee.address")]
 
 
+
+
+
+
         */
 
-        return New(DescriptionContainer).addAll(New(StringDescription).accessor("name").maxSize(50).label("employee.name"),
-                                                New(StringDescription).accessor("address").maxSize(100).label("employee.address"),
-                                                New(StringDescription).accessor("email").label("employee.email"))
-    }
-
-    @Validation
-    public void validateNameMandatory(){
-        if(StringUtils.isBlank(name)) throw new IllegalArgumentException("employee.validation.name.mandatory.error")
-    }
-
-    @Validation
-    public void validateAddressMandatory(){
-        if(StringUtils.isBlank(address)) throw new IllegalArgumentException("employee.validation.address.mandatory.error")
-    }
-
-    @Validation
-    public void validateEmailMandatory(){
-        if(StringUtils.isBlank(email)) throw new IllegalArgumentException("employee.validation.email.mandatory.error")
+        return [New(StringDescription).accessor("name").maxSize(50).label("employee.name").beRequired(),
+                New(StringDescription).accessor("address").maxSize(200).label("employee.address").beRequired(),
+                New(StringDescription).accessor("email").maxSize(100).label("employee.email").beRequired()]
     }
 }

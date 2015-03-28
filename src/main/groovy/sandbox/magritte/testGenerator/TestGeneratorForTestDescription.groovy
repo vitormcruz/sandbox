@@ -3,6 +3,7 @@ package sandbox.magritte.testGenerator
 import sandbox.magritte.description.Description
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator
+import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
 import sandbox.magritte.testGenerator.description.TestDescription
 
 abstract class TestGeneratorForTestDescription implements TestDescription, MethodGenerator {

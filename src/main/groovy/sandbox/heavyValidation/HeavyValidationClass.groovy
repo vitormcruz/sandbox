@@ -1,10 +1,10 @@
 package sandbox.heavyValidation
 import org.junit.Test
 import sandbox.validator.Validation
-import sandbox.validator.imp.DefaultValidatorTrait
+import sandbox.validator.imp.ValidatorTrait
 /**
  */
-class HeavyValidationClass implements DefaultValidatorTrait{
+class HeavyValidationClass implements ValidatorTrait{
 
     def Long smallWait = 100
     def Long mediumWait = 800

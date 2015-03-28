@@ -1,11 +1,8 @@
 package sandbox.magritte.description.builder
 
-import sandbox.magritte.description.DescriptionContainer
 import sandbox.magritte.description.DescriptionModelDefinition
 
 import java.lang.reflect.Method
-
-import static sandbox.magritte.description.builder.DescriptionFactory.New
 
 /**
  */
@@ -19,10 +16,10 @@ class MagritteDescriptionModelBuilder {
 
 
         if (descriptionMethods[0] == null) {
-            return New(DescriptionContainer)
+            return []
         }
 
         def descriptionModel = descriptionMethods[0].invoke(object)
-        return descriptionModel == null ? New(DescriptionContainer) : descriptionModel
+        return descriptionModel == null ? [] : descriptionModel
     }
 }

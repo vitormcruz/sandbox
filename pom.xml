@@ -16,7 +16,7 @@
         <vaadin.version>7.3.4</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
         <jdk.version>1.6</jdk.version>
-        <junit.version>4.11</junit.version>
+        <junit.version>4.12</junit.version>
     </properties>
 
     <!-- Inherit defaults from Spring Boot -->
@@ -261,6 +261,14 @@
             <version>2.1</version>
             <scope>compile</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.4.1</version>
+            <scope>compile</scope>
+        </dependency>
+
 
         <!--Todo needed compile for magritte, create a new module and turn back to test-->
         <dependency>

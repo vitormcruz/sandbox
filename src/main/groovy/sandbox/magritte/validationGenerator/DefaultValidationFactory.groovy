@@ -1,24 +1,20 @@
 package sandbox.magritte.validationGenerator
-import org.apache.commons.lang.StringUtils
+
+import sandbox.magritte.validationGenerator.methodGenerator.imp.MaxSizeValidationMethod
+import sandbox.magritte.validationGenerator.methodGenerator.imp.RequiredValidation
 
 class DefaultValidationFactory<T> implements ValidationFactory<T>{
 
-    Class<T> generatedMethodClass
-
-    DefaultValidationFactory(Class<T> generatedMethodClass) {
-        this.generatedMethodClass = generatedMethodClass
+    DefaultValidationFactory() {
     }
 
     @Override
     def T getMaxSizeValidation(accessor, maxSize){
-        generatedMethodClass.newInstance("Validate ${accessor} has no more than ${maxSize} characters.",
-            {
-                def value = delegate."${accessor}"
-                if (StringUtils.length(value)> maxSize) {
-                    throw new IllegalArgumentException("${delegate.getClass().getSimpleName().toLowerCase()}.validation.${accessor}.maxsize.error")
-                }
-            }
-        )
+        return new MaxSizeValidationMethod(accessor, maxSize);
+    }
 
+    @Override
+    T getRequiredValidation(Object accessor) {
+        return new RequiredValidation(accessor);
     }
 }

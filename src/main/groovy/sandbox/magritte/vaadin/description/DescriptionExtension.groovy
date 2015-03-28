@@ -2,7 +2,6 @@ package sandbox.magritte.vaadin.description
 
 import com.vaadin.ui.Component
 import sandbox.magritte.description.Description
-import sandbox.magritte.description.DescriptionContainer
 import sandbox.magritte.description.StringDescription
 import sandbox.magritte.vaadin.viewGenerator.VaadinContainerComponent
 import sandbox.magritte.vaadin.viewGenerator.VaadinStringComponent
@@ -13,9 +12,8 @@ class DescriptionExtension {
         //TODO Return a null component by default. This tell the callee that rhis description is unknow or not treated/ignored by vaadin-magritte implementation. Test this.
     }
 
-    public static Component asVaadinComponentFor(DescriptionContainer aDescriptionContainer, descriptedObject){
-        def component = new VaadinContainerComponent(descriptedObject)
-        aDescriptionContainer.accept(component)
+    public static Component asVaadinComponentFor(Collection descriptions, descriptedObject){
+        def component = new VaadinContainerComponent(descriptions, descriptedObject)
         return component
     }
 

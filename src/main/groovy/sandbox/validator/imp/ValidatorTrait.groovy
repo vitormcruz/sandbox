@@ -1,11 +1,12 @@
 package sandbox.validator.imp
 
 import org.junit.runner.notification.RunNotifier
+import sandbox.validator.AbstractValidatorTrait
 import sandbox.validator.ParentValidatorRunner
-import sandbox.validator.ValidatorTrait
+
 /**
  */
-trait DefaultValidatorTrait implements ValidatorTrait{
+trait ValidatorTrait implements AbstractValidatorTrait{
 
     def private validatorRunner = new ValidatorRunner(this)
     def private runNotifier = new RunNotifier()
@@ -16,13 +17,5 @@ trait DefaultValidatorTrait implements ValidatorTrait{
 
     public RunNotifier getNotifier() {
         return runNotifier
-    }
-
-    public void setValidatorRunner(ParentValidatorRunner runner) {
-        this.validatorRunner = runner
-    }
-
-    public void setNotifier(RunNotifier runNotifier) {
-        this.runNotifier = runNotifier
     }
 }
