@@ -21,7 +21,7 @@ class MethodTeacher {
         validateMethodsToGenerate(methodsToGenerate)
         Collection<MetaMethod> methodsCreated = []
         methodsToGenerate.each {
-            aClass.metaClass."${it.methodName}" << it.getClojure()
+            aClass.metaClass."${it.methodName}" << it.getClosure()
             methodsCreated.add(aClass.metaClass.getMetaMethod(it.methodName))
         }
         return methodsCreated

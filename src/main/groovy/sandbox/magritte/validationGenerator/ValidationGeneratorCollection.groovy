@@ -15,7 +15,7 @@ class ValidationGeneratorCollection implements MethodGenerator {
 
     ValidationGeneratorCollection(descriptions) {
         descriptions.each {
-            validatons.addAll(it.asMethodGenerator().getGeneratedMethods())
+           validatons.addAll(it.asMethodGenerator().getGeneratedMethods())
         }
     }
 

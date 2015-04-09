@@ -1,10 +1,14 @@
 package sandbox.magritte.validationGenerator
+
+import sandbox.magritte.methodGenerator.GeneratedMethod
+
 /**
  *
- * @param < T > GeneratedMethod class
  */
-interface ValidationFactory<T>{
+interface ValidationFactory{
 
-    def T getMaxSizeValidation(accessor, maxSize)
-    def T getRequiredValidation(accessor)
+    def GeneratedMethod getMaxSizeValidation(accessor, maxSize)
+    def GeneratedMethod getRequiredValidation(accessor)
+    def GeneratedMethod getBeNaturalValidation(accessor)
+    def GeneratedMethod getBeNotBlankValidation(accessor)
 }

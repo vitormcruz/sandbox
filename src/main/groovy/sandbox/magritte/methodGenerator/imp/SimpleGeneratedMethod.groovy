@@ -5,14 +5,14 @@ import sandbox.magritte.methodGenerator.GeneratedMethod
 
 class SimpleGeneratedMethod implements GeneratedMethod{
     protected String methodName
-    protected Closure clojure
+    protected Closure closure
 
     SimpleGeneratedMethod() {
     }
 
-    SimpleGeneratedMethod(String methodName, Closure clojure) {
+    SimpleGeneratedMethod(String methodName, Closure closure) {
         this.methodName = methodName
-        this.clojure = clojure
+        this.closure = closure
     }
 
     @Override
@@ -21,7 +21,7 @@ class SimpleGeneratedMethod implements GeneratedMethod{
     }
 
     @Override
-    Closure getClojure() {
-        return clojure
+    Closure getClosure() {
+        return closure
     }
 }

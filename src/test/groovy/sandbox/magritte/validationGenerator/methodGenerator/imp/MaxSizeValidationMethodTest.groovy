@@ -11,32 +11,31 @@ import static org.junit.Assert.assertThat
 
 class MaxSizeValidationMethodTest {
 
-
     @Test
     def void "accessor is required"(){
         ValidationException ex = shouldFail(ValidationException, {new MaxSizeValidationMethod(null, 10)})
         assertThat(extractErrorMessagesFromResult(ex.result),
-                   hasItem("MaxSizeValidationMethod.creation.accessor.required"))
+                   hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod\$constructorvalidation.validation.accessor.mandatory.error"))
     }
 
     @Test
     def void "accessor cannot be empty"(){
         ValidationException ex = shouldFail(ValidationException, {new MaxSizeValidationMethod("", 10)})
         assertThat(extractErrorMessagesFromResult(ex.result),
-                   hasItem("MaxSizeValidationMethod.creation.accessor.required"))
+                   hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod\$constructorvalidation.validation.accessor.mandatory.error"))
     }
 
     @Test
     def void "maxSize is required"(){
         ValidationException ex = shouldFail(ValidationException, {new MaxSizeValidationMethod("tst", null)})
         assertThat(extractErrorMessagesFromResult(ex.result),
-                   hasItem("MaxSizeValidationMethod.creation.maxSize.required"))
+                   hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod\$constructorvalidation.validation.maxSize.mandatory.error"))
     }
 
     @Test
-    def void "maxSize must not be negative"(){
-        def errorMatcher = hasItem("MaxSizeValidationMethod.creation.maxSize.negative")
-        def successMatcher = not(hasItem("MaxSizeValidationMethod.creation.maxSize.negative"))
+    def void "maxSize must not be a natural number"(){
+        def errorMatcher = hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod\$constructorvalidation.validation.maxSize.natural.number.error")
+        def successMatcher = not(hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod\$constructorvalidation.validation.maxSize.natural.number.error"))
 
         [[maxSize: -10, expected: errorMatcher],
          [maxSize: -1, expected: errorMatcher],

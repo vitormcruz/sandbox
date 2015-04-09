@@ -34,6 +34,11 @@ class VaadinStringComponent extends TextField implements StringDescription {
         return this
     }
 
+    @Override
+    StringDescription beNotBlank() {
+        return this
+    }
+
     StringDescription maxSize(Integer maxSize) {
         return this
     }

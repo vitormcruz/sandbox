@@ -17,7 +17,7 @@ abstract class JunitTestGeneratorForBaseDescription implements BaseDescription, 
 
     @Override
     Description beRequired() {
-        String error = "${describedClass.getSimpleName().toLowerCase()}.validation.${accessor}.mandatory.error"
+        String error = "${describedClass.getName().toLowerCase()}.validation.${accessor}.mandatory.error"
 
         testScenarios.add(new SimpleGeneratedMethod("The ${accessor} of ${describedClass.getSimpleName()} is required. " +
                                                     "Testing providing null for it.",

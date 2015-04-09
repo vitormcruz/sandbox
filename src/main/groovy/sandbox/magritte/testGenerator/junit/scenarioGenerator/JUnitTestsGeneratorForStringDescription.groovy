@@ -26,14 +26,19 @@ class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForBaseD
     }
 
     @Override
+    StringDescription beNotBlank() {
+        return this
+    }
+
+    @Override
     StringDescription maxSize(Integer maxSize) {
-        String error = "${describedClass.getSimpleName().toLowerCase()}.validation.${accessor}.maxsize.error"
+        String error = "${describedClass.getName().toLowerCase()}.validation.${accessor}.maxsize.error"
 
         //TODO the implementation of the actual method should be specific of the test framework
         def errorMatcher = hasItem(error)
         def successMatcher = not(hasItem(error))
-        [[size: maxSize -1, testVerificationMatcher: sucessMatcher],
-         [size: maxSize, testVerificationMatcher: sucessMatcher],
+        [[size: maxSize -1, testVerificationMatcher: successMatcher],
+         [size: maxSize, testVerificationMatcher: successMatcher],
          [size: maxSize + 1, testVerificationMatcher: errorMatcher]].each {
 
             testScenarios.add(new SimpleGeneratedMethod("The ${accessor} of ${describedClass.getSimpleName()} should have " +

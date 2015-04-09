@@ -1,5 +1,5 @@
 package sandbox.heavyValidation
-import org.junit.Test
+
 import sandbox.validator.Validation
 import sandbox.validator.imp.ValidatorTrait
 /**
@@ -109,11 +109,6 @@ class HeavyValidationClass implements ValidatorTrait{
     @Validation
     def void validate20(){
         sleep(longWait)
-    }
-
-    @Test
-    def void teste(){
-        new HeavyValidationClass().validate();
     }
 
 }
