@@ -1,7 +1,5 @@
 package sandbox.magritte.testGenerator.junit.scenarioGenerator
-
 import sandbox.magritte.description.BaseDescription
-import sandbox.magritte.description.Description
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator
 import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
@@ -16,7 +14,7 @@ abstract class JunitTestGeneratorForBaseDescription implements BaseDescription, 
     def protected Class describedClass
 
     @Override
-    Description beRequired() {
+    BaseDescription beRequired() {
         String error = "${describedClass.getName().toLowerCase()}.validation.${accessor}.mandatory.error"
 
         testScenarios.add(new SimpleGeneratedMethod("The ${accessor} of ${describedClass.getSimpleName()} is required. " +

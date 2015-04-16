@@ -1,7 +1,5 @@
 package sandbox.magritte.validationGenerator
-
 import sandbox.magritte.description.BaseDescription
-import sandbox.magritte.description.Description
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator
 
@@ -14,24 +12,24 @@ abstract class ValidationGeneratorForBaseDescription implements MethodGenerator,
     private validations = []
 
     @Override
-    Description accessor(String accessor) {
+    BaseDescription accessor(String accessor) {
         accessorProxy.put("acessor", accessor)
         return this
     }
 
     @Override
-    Description beRequired() {
+    BaseDescription beRequired() {
         addValidation(validationFactory.getRequiredValidation(accessorProxy.acessor))
         return this
     }
 
     @Override
-    Description defaultValue(Object defaultValue) {
+    BaseDescription defaultValue(Object defaultValue) {
         return this
     }
 
     @Override
-    Description label(Object label) {
+    BaseDescription label(Object label) {
         return this
     }
 

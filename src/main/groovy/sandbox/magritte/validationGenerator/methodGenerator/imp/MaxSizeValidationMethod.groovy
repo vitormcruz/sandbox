@@ -1,13 +1,14 @@
 package sandbox.magritte.validationGenerator.methodGenerator.imp
-
 import org.apache.commons.validator.routines.CodeValidator
 import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.description.NumberDescription
+import sandbox.magritte.description.OperationDescription
 import sandbox.magritte.description.StringDescription
 import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
-import sandbox.validator.MustBeValidToo
 import sandbox.validator.imp.ValidatorTrait
 
+import static sandbox.magritte.description.OperationDescription.FIRST
+import static sandbox.magritte.description.OperationDescription.SECOND
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 
 class MaxSizeValidationMethod extends SimpleGeneratedMethod implements ValidatorTrait{
@@ -16,11 +17,10 @@ class MaxSizeValidationMethod extends SimpleGeneratedMethod implements Validator
     }
 
     MaxSizeValidationMethod(accessor, maxSize) {
-        new ConstructorValidation(this, accessor, maxSize).validateFailingOnError()
         createValidationMethod(accessor, maxSize)
     }
 
-    private void createValidationMethod(accessor, maxSize) {
+    void createValidationMethod(accessor, maxSize) {
         super.methodName = "Validate ${accessor} has no more than ${maxSize} characters."
         super.closure = {
             def value = delegate."${accessor}"
@@ -30,25 +30,10 @@ class MaxSizeValidationMethod extends SimpleGeneratedMethod implements Validator
         }
     }
 
-    public static class ConstructorValidation implements ValidatorTrait{
-
-        @MustBeValidToo
-        private Object myObjectAlmostConstructed
-        private Object accessor
-        private Object maxSize
-
-        ConstructorValidation(myObjectAlmostConstructed, accessor, maxSize) {
-            this.maxSize = maxSize
-            this.accessor = accessor
-            this.myObjectAlmostConstructed = myObjectAlmostConstructed
-        }
-
-        @DescriptionModelDefinition
-        public myDescription(){
-            return [New(StringDescription).accessor("accessor").beNotBlank(),
-                    New(NumberDescription).accessor("maxSize").beRequired().beNatural()]
-        }
+    @DescriptionModelDefinition
+    public myDescription(){
+        return [New(OperationDescription).forConstructor().withParameter(FIRST, "accessor", New(StringDescription).beNotBlank())
+                                                          .withParameter(SECOND, "maxSize", New(NumberDescription).beRequired()
+                                                                                                                   .beNatural())]
     }
-
-
 }

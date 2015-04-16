@@ -1,7 +1,7 @@
 package sandbox.magritte.testGenerator.junit.scenarioGenerator
 import org.junit.Ignore
 import org.junit.Test
-import sandbox.magritte.description.Description
+import sandbox.magritte.description.BaseDescription
 
 class JunitTestGeneratorForBaseDescriptionTest{
 
@@ -32,17 +32,17 @@ class JunitTestGeneratorForBaseDescriptionTest{
     class JunitTestGeneratorForBaseDescriptionPartial extends JunitTestGeneratorForBaseDescription{
 
         @Override
-        Description accessor(String accessor) {
+        BaseDescription accessor(String accessor) {
             return null
         }
 
         @Override
-        Description defaultValue(Object defaultValue) {
+        BaseDescription defaultValue(Object defaultValue) {
             return null
         }
 
         @Override
-        Description label(Object label) {
+        BaseDescription label(Object label) {
             return null
         }
 

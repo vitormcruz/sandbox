@@ -1,6 +1,6 @@
 package sandbox.magritte.testGenerator.junit.scenarioGenerator
 import org.apache.commons.lang.StringUtils
-import sandbox.magritte.description.Description
+import sandbox.magritte.description.BaseDescription
 import sandbox.magritte.description.StringDescription
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
@@ -20,7 +20,7 @@ class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForBaseD
     }
 
     @Override
-    Description accessor(String accessor) {
+    BaseDescription accessor(String accessor) {
         super.accessor = accessor
         return this
     }
@@ -63,12 +63,12 @@ class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForBaseD
     }
 
     @Override
-    Description defaultValue(Object defaultValue) {
+    BaseDescription defaultValue(Object defaultValue) {
         return this
     }
 
     @Override
-    Description label(Object label) {
+    BaseDescription label(Object label) {
         return this
     }
 }

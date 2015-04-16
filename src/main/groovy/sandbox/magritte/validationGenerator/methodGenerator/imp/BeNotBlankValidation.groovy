@@ -22,7 +22,7 @@ class BeNotBlankValidation extends SimpleGeneratedMethod implements ValidatorTra
         super.methodName = "Validate ${accessor} cannot be blank."
         super.closure = {
             def value = delegate."${accessor}"
-            if (!StringUtils.isNotBlank(value)) {
+            if (StringUtils.isBlank(value)) {
                 throw new IllegalArgumentException("${delegate.getClass().getName().toLowerCase()}.validation.${accessor}.mandatory.error")
             }
         }
