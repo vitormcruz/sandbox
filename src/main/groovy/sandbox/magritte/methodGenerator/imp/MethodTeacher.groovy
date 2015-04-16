@@ -3,7 +3,6 @@ package sandbox.magritte.methodGenerator.imp
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator
 
-//TODO Make teacher teach only if not already taught
 /**
  * <pre>
  *
@@ -21,7 +20,7 @@ class MethodTeacher {
         validateMethodsToGenerate(methodsToGenerate)
         Collection<MetaMethod> methodsCreated = []
         methodsToGenerate.each {
-            aClass.metaClass."${it.methodName}" << it.getClosure()
+            it.teachMyselfTo(aClass)
             methodsCreated.add(aClass.metaClass.getMetaMethod(it.methodName))
         }
         return methodsCreated
