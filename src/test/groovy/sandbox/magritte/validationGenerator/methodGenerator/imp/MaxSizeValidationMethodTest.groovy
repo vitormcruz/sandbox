@@ -22,20 +22,20 @@ class MaxSizeValidationMethodTest {
     def void "accessor cannot be empty"(){
         ValidationException ex = shouldFail(ValidationException, {new MaxSizeValidationMethod("", 10)})
         assertThat(extractErrorMessagesFromResult(ex.result),
-                   hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod\$constructorvalidation.validation.accessor.mandatory.error"))
+                   hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod.createValidationMethod.validation.accessor.mandatory.error"))
     }
 
     @Test
     def void "maxSize is required"(){
         ValidationException ex = shouldFail(ValidationException, {new MaxSizeValidationMethod("tst", null)})
         assertThat(extractErrorMessagesFromResult(ex.result),
-                   hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod\$constructorvalidation.validation.maxSize.mandatory.error"))
+                   hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod.createValidationMethod.validation.maxSize.mandatory.error"))
     }
 
     @Test
-    def void "maxSize must not be a natural number"(){
-        def errorMatcher = hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod\$constructorvalidation.validation.maxSize.natural.number.error")
-        def successMatcher = not(hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod\$constructorvalidation.validation.maxSize.natural.number.error"))
+    def void "maxSize must be a natural number"(){
+        def errorMatcher = hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod.createValidationMethod.validation.maxSize.natural.number.error")
+        def successMatcher = not(hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod.createValidationMethod.validation.maxSize.natural.number.error"))
 
         [[maxSize: -10, expected: errorMatcher],
          [maxSize: -1, expected: errorMatcher],

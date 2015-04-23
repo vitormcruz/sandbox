@@ -1,4 +1,6 @@
 package sandbox.magritte.validationGenerator.methodGenerator.imp
+
+import org.apache.commons.lang.StringUtils
 import org.apache.commons.validator.routines.CodeValidator
 import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
 import sandbox.validator.imp.ValidatorTrait
@@ -16,8 +18,16 @@ class MaxSizeValidationMethod extends SimpleGeneratedMethod implements Validator
         def result = forMethod("createValidationMethod")
                      .withLooseValidation("Validate accessor is not null",
                                          {
-                                            if(accessor==null) throw new IllegalArgumentException("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod.createValidationMethod.validation.accessor.mandatory.error")
+                                            if(StringUtils.isBlank(accessor)) throw new IllegalArgumentException("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod.createValidationMethod.validation.accessor.mandatory.error")
                                          })
+                     .withLooseValidation("Validate maxSize is not null",
+                                            {
+                                               if(maxSize==null) throw new IllegalArgumentException("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod.createValidationMethod.validation.maxSize.mandatory.error")
+                                            })
+                     .withLooseValidation("Validate maxSize is a natural number",
+                                           {
+                                              if(maxSize<0) throw new IllegalArgumentException("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod.createValidationMethod.validation.maxSize.natural.number.error")
+                                           })
                      .validateFailingOnError()
         super.methodName = "Validate ${accessor} has no more than ${maxSize} characters."
         super.closure = {
