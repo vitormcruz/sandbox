@@ -24,6 +24,7 @@ class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForBaseD
         super.accessor = accessor
         return this
     }
+    
 
     @Override
     StringDescription beNotBlank() {
