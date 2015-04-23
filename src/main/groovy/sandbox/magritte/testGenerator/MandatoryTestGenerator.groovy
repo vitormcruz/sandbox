@@ -22,7 +22,7 @@ class MandatoryTestGenerator implements MethodGenerator {
 
     def requiredAccessor(Object requiredAccessor) {
         requiredAccessors.add(requiredAccessor)
-        String error = "${classUnderTest.getSimpleName().toLowerCase()}.validation.${requiredAccessor}.mandatory.error"
+        String error = "${classUnderTest.getName().toLowerCase()}.validation.${requiredAccessor}.mandatory.error"
 
         testScenarios.add(new SimpleGeneratedMethod("The ${requiredAccessor} of ${classUnderTest.getSimpleName()} is required. " +
                                                     "Testing providing null for it.",
