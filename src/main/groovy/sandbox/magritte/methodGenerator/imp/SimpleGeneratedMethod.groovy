@@ -25,7 +25,6 @@ class SimpleGeneratedMethod implements GeneratedMethod{
         return closure
     }
 
-    //TODO Make teacher teach only if not already taught
     @Override
     void teachMyselfTo(Class grasshopper) {
         grasshopper.metaClass."${getMethodName()}" << getClosure()

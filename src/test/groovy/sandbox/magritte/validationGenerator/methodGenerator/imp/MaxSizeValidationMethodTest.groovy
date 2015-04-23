@@ -12,15 +12,10 @@ import static org.junit.Assert.assertThat
 class MaxSizeValidationMethodTest {
 
     @Test
-    def void blabla(){
-        def t = new MaxSizeValidationMethod("name", 10)
-    }
-
-    @Test
     def void "accessor is required"(){
         ValidationException ex = shouldFail(ValidationException, {new MaxSizeValidationMethod(null, 10)})
         assertThat(extractErrorMessagesFromResult(ex.result),
-                   hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod\$constructorvalidation.validation.accessor.mandatory.error"))
+                   hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod.createValidationMethod.validation.accessor.mandatory.error"))
     }
 
     @Test

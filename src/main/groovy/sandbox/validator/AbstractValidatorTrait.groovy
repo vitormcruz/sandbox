@@ -1,4 +1,5 @@
 package sandbox.validator
+
 import org.junit.runner.Result
 import org.junit.runner.notification.RunListener
 import org.junit.runner.notification.RunNotifier
@@ -28,4 +29,9 @@ trait AbstractValidatorTrait {
 
     public abstract ParentValidatorRunner getValidatorRunner()
     public abstract RunNotifier getNotifier()
+
+    def LooseValidationBuilder forMethod(String methodUnderValidation) {
+        return new LooseValidationBuilder(this, methodUnderValidation)
+    }
+
 }

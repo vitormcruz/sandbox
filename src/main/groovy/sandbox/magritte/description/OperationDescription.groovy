@@ -7,7 +7,7 @@ interface OperationDescription extends Description{
     public final Integer THIRD = 3
     public final Integer FOURTH = 4
 
-    OperationDescription named(String name);
+    OperationDescription named(String methodName);
     OperationDescription forConstructor();
     OperationDescription withParameter(number, name, Description description);
 }

@@ -7,7 +7,7 @@ import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
 
 class ValidationGeneratorForOperationDescription implements MethodGenerator, OperationDescription{
 
-    private String category
+    private String operationName
     def validations = []
 
     @Override
@@ -16,13 +16,14 @@ class ValidationGeneratorForOperationDescription implements MethodGenerator, Ope
     }
 
     @Override
-    OperationDescription named(String name) {
+    OperationDescription named(String operationName) {
+        this.operationName = operationName
         return null
     }
 
     @Override
     OperationDescription forConstructor() {
-        category = "constructor"
+        named("constructor")
         return this
     }
 

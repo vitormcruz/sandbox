@@ -53,6 +53,7 @@ class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentVal
 
     protected List<FrameworkMethod> computeTestMethods() {
         def knownMethods = new ArrayList<>(getTestClass().getAnnotatedMethods(Validation))
+        //TODO Make teacher teach only if not already taught, i.e, only once
         def teachedMethods = methodTeacher.teach(getTestClass().getJavaClass(), getGeneratedMethods())
         teachedMethods.each {knownMethods.add(new FrameworkMetaMethod(it))}
         return knownMethods

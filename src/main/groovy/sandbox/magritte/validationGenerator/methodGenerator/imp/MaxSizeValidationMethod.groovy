@@ -1,15 +1,7 @@
 package sandbox.magritte.validationGenerator.methodGenerator.imp
 import org.apache.commons.validator.routines.CodeValidator
-import sandbox.magritte.description.DescriptionModelDefinition
-import sandbox.magritte.description.NumberDescription
-import sandbox.magritte.description.OperationDescription
-import sandbox.magritte.description.StringDescription
 import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
 import sandbox.validator.imp.ValidatorTrait
-
-import static sandbox.magritte.description.OperationDescription.FIRST
-import static sandbox.magritte.description.OperationDescription.SECOND
-import static sandbox.magritte.description.builder.DescriptionFactory.New
 
 class MaxSizeValidationMethod extends SimpleGeneratedMethod implements ValidatorTrait{
 
@@ -21,6 +13,12 @@ class MaxSizeValidationMethod extends SimpleGeneratedMethod implements Validator
     }
 
     void createValidationMethod(accessor, maxSize) {
+        def result = forMethod("createValidationMethod")
+                     .withLooseValidation("Validate accessor is not null",
+                                         {
+                                            if(accessor==null) throw new IllegalArgumentException("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod.createValidationMethod.validation.accessor.mandatory.error")
+                                         })
+                     .validateFailingOnError()
         super.methodName = "Validate ${accessor} has no more than ${maxSize} characters."
         super.closure = {
             def value = delegate."${accessor}"
@@ -30,10 +28,10 @@ class MaxSizeValidationMethod extends SimpleGeneratedMethod implements Validator
         }
     }
 
-    @DescriptionModelDefinition
-    public myDescription(){
-        return [New(OperationDescription).forConstructor().withParameter(FIRST, "accessor", New(StringDescription).beNotBlank())
-                                                          .withParameter(SECOND, "maxSize", New(NumberDescription).beRequired()
-                                                                                                                   .beNatural())]
-    }
+//    @DescriptionModelDefinition
+//    public myDescription(){
+//        return [New(OperationDescription).forConstructor().withParameter(FIRST, "accessor", New(StringDescription).beNotBlank())
+//                                                          .withParameter(SECOND, "maxSize", New(NumberDescription).beRequired()
+//                                                                                                                   .beNatural())]
+//    }
 }
