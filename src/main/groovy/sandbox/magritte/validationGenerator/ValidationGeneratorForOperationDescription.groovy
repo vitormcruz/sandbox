@@ -28,9 +28,9 @@ class ValidationGeneratorForOperationDescription implements MethodGenerator, Ope
     }
 
     @Override
-    OperationDescription withParameter(Object number, Object name, Description description) {
+    OperationDescription withParameter(number, name, Description description) {
 
-        validations.add(new SimpleGeneratedMethod(methodName: "Teste", {
+        validations.add(new SimpleGeneratedMethod(methodName: "Teste", closure:{
 
             println("Passei por aqui!!!!")
 

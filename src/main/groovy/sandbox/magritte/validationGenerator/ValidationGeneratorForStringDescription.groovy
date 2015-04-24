@@ -9,13 +9,13 @@ class ValidationGeneratorForStringDescription extends ValidationGeneratorForBase
 
     @Override
     StringDescription beNotBlank() {
-        addValidation(validationFactory.getBeNotBlankValidation(accessorProxy.acessor))
+        addValidation(validationFactory.getBeNotBlankValidation(accessor))
         return this
     }
 
     @Override
     StringDescription maxSize(Integer maxSize) {
-        addValidation(validationFactory.getMaxSizeValidation(accessorProxy.acessor, maxSize))
+        addValidation(validationFactory.getMaxSizeValidation(accessor, maxSize))
         return this
     }
 }

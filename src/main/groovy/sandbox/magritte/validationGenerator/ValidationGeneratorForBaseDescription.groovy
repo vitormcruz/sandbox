@@ -7,19 +7,19 @@ abstract class ValidationGeneratorForBaseDescription implements MethodGenerator,
 
     ValidationFactory validationFactory = new DefaultValidationFactory<>()
     //TODO create a wrapper class for this.
-    def protected accessorProxy = [:]
+    def protected Accessor accessor = new Accessor()
 
     private validations = []
 
     @Override
-    BaseDescription accessor(String accessor) {
-        accessorProxy.put("acessor", accessor)
+    BaseDescription accessor(String accessorName) {
+        accessor.name = accessorName
         return this
     }
 
     @Override
     BaseDescription beRequired() {
-        addValidation(validationFactory.getRequiredValidation(accessorProxy.acessor))
+        addValidation(validationFactory.getRequiredValidation(accessor))
         return this
     }
 

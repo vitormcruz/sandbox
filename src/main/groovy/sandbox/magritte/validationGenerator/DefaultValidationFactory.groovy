@@ -12,22 +12,22 @@ class DefaultValidationFactory implements ValidationFactory{
     }
 
     @Override
-    def GeneratedMethod getMaxSizeValidation(accessor, maxSize){
-        return new MaxSizeValidationMethod(accessor, maxSize);
+    def GeneratedMethod getMaxSizeValidation(Accessor accessor, maxSize){
+        return new MaxSizeValidationMethod(maxSize).forAccessor(accessor);
     }
 
     @Override
-    GeneratedMethod getRequiredValidation(accessor) {
-        return new RequiredValidation(accessor);
+    GeneratedMethod getRequiredValidation(Accessor accessor) {
+        return new RequiredValidation().forAccessor(accessor);
     }
 
     @Override
-    GeneratedMethod getBeNaturalValidation(accessor) {
-        return new BeNaturalValidation(accessor);
+    GeneratedMethod getBeNaturalValidation(Accessor accessor) {
+        return new BeNaturalValidation().forAccessor(accessor);
     }
 
     @Override
-    GeneratedMethod getBeNotBlankValidation(accessor) {
-        return new BeNotBlankValidation(accessor)
+    GeneratedMethod getBeNotBlankValidation(Accessor accessor) {
+        return new BeNotBlankValidation().forAccessor(accessor)
     }
 }

@@ -1,17 +1,21 @@
 package sandbox.magritte.validationGenerator.methodGenerator.imp
 
-import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
+import sandbox.magritte.validationGenerator.Accessor
 
 /**
  */
-class RequiredValidation extends SimpleGeneratedMethod {
+class RequiredValidation extends BasicValidationMethod {
 
-    def RequiredValidation(def accessor) {
-        super.methodName = "Validate if ${accessor} is provided"
-        super.closure = {
-            def value = delegate."${accessor}"
-            if (value == null) {
-                throw new IllegalArgumentException("${delegate.getClass().getName().toLowerCase()}.validation.${accessor}.mandatory.error")
+    @Override
+    String defineName(String accessorName) {
+        return "Validate if ${accessorName} is provided"
+    }
+
+    @Override
+    Closure defineClosure(Accessor accessor) {
+        return {
+            if (accessor.getValue(delegate) == null) {
+                throw new IllegalArgumentException("${delegate.getClass().getName().toLowerCase()}.validation.${accessor.name}.mandatory.error")
             }
         }
     }
