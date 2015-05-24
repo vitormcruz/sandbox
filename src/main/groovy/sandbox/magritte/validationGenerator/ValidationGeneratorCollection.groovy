@@ -7,6 +7,7 @@ import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
 class ValidationGeneratorCollection implements MethodGenerator {
 
     Collection<SimpleGeneratedMethod> validatons = []
+    private Object descriptedObject
 
     @Override
     Collection<GeneratedMethod> getGeneratedMethods() {

@@ -15,7 +15,8 @@ class BeNaturalValidation extends BasicValidationMethod{
     @Override
     Closure defineClosure(Accessor accessor) {
         return {
-            def value = accessor.getValue(delegate)
+            accessor.setDelegate(delegate)
+            def value = accessor.getValue()
             if (!(value instanceof Integer) || !naturalNumberValidator.minValue(value, MIN_NATURAL_INTEGER)) {
                 throw new IllegalArgumentException("${delegate.getClass().getName().toLowerCase()}.validation.${accessor.name}.natural.number.error")
             }

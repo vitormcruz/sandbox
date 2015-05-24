@@ -17,6 +17,10 @@ abstract class ValidationGeneratorForBaseDescription implements MethodGenerator,
         return this
     }
 
+    void setAccessor(Accessor accessor) {
+        this.accessor = accessor
+    }
+
     @Override
     BaseDescription beRequired() {
         addValidation(validationFactory.getRequiredValidation(accessor))

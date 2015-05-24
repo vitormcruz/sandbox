@@ -29,6 +29,10 @@ class ValidationGeneratorForOperationDescription implements MethodGenerator, Ope
 
     @Override
     OperationDescription withParameter(number, name, Description description) {
+        ValidationGeneratorForBaseDescription validationGenerator = description.getMyValidationGenerator()
+
+//        def paramAccessor = new ParameterAccessor(name: name, paramValue: )
+//        validationGenerator.accessor()
 
         validations.add(new SimpleGeneratedMethod(methodName: "Teste", closure:{
 

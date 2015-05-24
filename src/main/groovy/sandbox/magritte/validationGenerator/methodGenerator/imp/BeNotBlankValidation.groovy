@@ -12,7 +12,8 @@ class BeNotBlankValidation extends BasicValidationMethod{
     @Override
     Closure defineClosure(Accessor accessor) {
         return {
-            if (StringUtils.isBlank(accessor.getValue(delegate))) {
+            accessor.setDelegate(delegate)
+            if (StringUtils.isBlank(accessor.getValue())) {
                 throw new IllegalArgumentException("${delegate.getClass().getName().toLowerCase()}.validation.${accessor.name}.mandatory.error")
             }
         }

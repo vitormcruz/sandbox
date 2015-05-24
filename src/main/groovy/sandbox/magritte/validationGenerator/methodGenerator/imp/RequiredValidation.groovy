@@ -14,7 +14,8 @@ class RequiredValidation extends BasicValidationMethod {
     @Override
     Closure defineClosure(Accessor accessor) {
         return {
-            if (accessor.getValue(delegate) == null) {
+            accessor.setDelegate(delegate)
+            if (accessor.getValue() == null) {
                 throw new IllegalArgumentException("${delegate.getClass().getName().toLowerCase()}.validation.${accessor.name}.mandatory.error")
             }
         }

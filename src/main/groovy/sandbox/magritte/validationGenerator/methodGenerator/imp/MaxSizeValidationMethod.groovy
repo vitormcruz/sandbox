@@ -37,7 +37,8 @@ class MaxSizeValidationMethod extends BasicValidationMethod {
     @Override
     Closure defineClosure(Accessor accessor) {
         return {
-            if (!codeValidator.isValid(accessor.getValue(delegate))) {
+            accessor.setDelegate(delegate)
+            if (!codeValidator.isValid(accessor.getValue())) {
                 throw new IllegalArgumentException("${delegate.getClass().getName().toLowerCase()}.validation.${accessor.name}.maxsize.error")
             }
         }
