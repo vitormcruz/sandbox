@@ -10,7 +10,7 @@ class ValidationGeneratorForNumberDescription extends ValidationGeneratorForBase
 
     @Override
     NumberDescription beNatural() {
-        addValidation(validationFactory.getBeNaturalValidation(accessor.acessor))
+        addValidation(validationFactory.getBeNaturalValidation(accessor))
         return this
     }
 }

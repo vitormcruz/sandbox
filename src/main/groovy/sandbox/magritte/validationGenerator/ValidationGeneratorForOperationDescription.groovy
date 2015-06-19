@@ -3,21 +3,23 @@ import sandbox.magritte.description.Description
 import sandbox.magritte.description.OperationDescription
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator
-import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
 
 class ValidationGeneratorForOperationDescription implements MethodGenerator, OperationDescription{
 
-    private String operationName
-    def validations = []
+    private ValidationForOperation generatedMethod
+
+    ValidationGeneratorForOperationDescription() {
+        generatedMethod = new ValidationForOperation()
+    }
 
     @Override
     Collection<GeneratedMethod> getGeneratedMethods() {
-        return validations
+        return [generatedMethod]
     }
 
     @Override
     OperationDescription named(String operationName) {
-        this.operationName = operationName
+        generatedMethod.setOperationName(operationName)
         return null
     }
 
@@ -29,17 +31,7 @@ class ValidationGeneratorForOperationDescription implements MethodGenerator, Ope
 
     @Override
     OperationDescription withParameter(number, name, Description description) {
-        ValidationGeneratorForBaseDescription validationGenerator = description.getMyValidationGenerator()
-
-//        def paramAccessor = new ParameterAccessor(name: name, paramValue: )
-//        validationGenerator.accessor()
-
-        validations.add(new SimpleGeneratedMethod(methodName: "Teste", closure:{
-
-            println("Passei por aqui!!!!")
-
-        }))
-
+        generatedMethod.setValidation(number, name, description)
         return this
     }
 }

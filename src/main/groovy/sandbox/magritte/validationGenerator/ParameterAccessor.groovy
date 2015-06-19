@@ -4,14 +4,14 @@ package sandbox.magritte.validationGenerator
  */
 class ParameterAccessor extends Accessor{
 
-    private paramValue
+    private paramNumber
 
-    void setParamValue(paramValue) {
-        this.paramValue = paramValue
+    void setParamNumber(paramNumber) {
+        this.paramNumber = paramNumber
     }
 
-    def getValue(){
-        return paramValue
+    @Override
+    def getClojureValue() {
+        return {return delegate.args[paramNumber]}
     }
-
 }

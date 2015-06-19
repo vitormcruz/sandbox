@@ -4,12 +4,16 @@ package sandbox.magritte.validationGenerator
  */
 class Accessor {
     def String name
-    def private delegate
+    protected delegate
 
     def getValue(){
-        def clojure = {return delegate."${name}"}
+        def clojure = getClojureValue()
         clojure.delegate = delegate
         return clojure()
+    }
+
+    def getClojureValue() {
+        return { return delegate."${name}" }
     }
 
     void setDelegate(delegate) {
