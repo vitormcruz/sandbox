@@ -6,7 +6,6 @@ import sandbox.magritte.methodGenerator.description.MethodGenerator
 abstract class ValidationGeneratorForBaseDescription implements MethodGenerator, BaseDescription{
 
     ValidationFactory validationFactory = new DefaultValidationFactory<>()
-    //TODO create a wrapper class for this.
     def protected Accessor accessor = new Accessor()
 
     private validations = []

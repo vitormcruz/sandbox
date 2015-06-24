@@ -1,5 +1,4 @@
 package sandbox.validator.imp
-
 import org.junit.After
 import org.junit.Before
 import org.junit.Ignore
@@ -22,7 +21,6 @@ import sandbox.validator.Validation
 
 import static org.junit.internal.runners.rules.RuleMemberValidator.RULE_METHOD_VALIDATOR
 import static org.junit.internal.runners.rules.RuleMemberValidator.RULE_VALIDATOR
-
 //TODO maybe I should extend ParentRunnerMoreAbstract.....
 //TODO Explain that it should not be used with @RunWith annotation...
 class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentValidatorRunner{
@@ -55,7 +53,12 @@ class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentVal
         def knownMethods = new ArrayList<>(getTestClass().getAnnotatedMethods(Validation))
         //TODO Make teacher teach only if not already taught, i.e, only once
         def teachedMethods = methodTeacher.teach(getTestClass().getJavaClass(), getGeneratedMethods())
-        teachedMethods.each {knownMethods.add(new FrameworkMetaMethod(it))}
+        //TODO Remove .contains("validationFor"). validationFor_someMethod should only be used by invokeMethod before someMethod execution, but I don't know how to separate those methods from those who should be executed by ValidationRunner.
+        teachedMethods.each {
+            if(!it.getName().contains("validationFor")) {
+                knownMethods.add(new FrameworkMetaMethod(it))
+            }
+        }
         return knownMethods
     }
 

@@ -4,8 +4,11 @@ import org.junit.runner.Result
 import org.junit.runner.notification.RunListener
 import org.junit.runner.notification.RunNotifier
 
-trait AbstractValidatorTrait{
+trait AbstractValidatorTrait implements GroovyInterceptable{
 
+    def looseValidations = []
+    def AbstractValidatorTrait subjectOfValidation
+    def methodUnderValidation
     private Map<String, Collection<String>> validationsForMethod = [:]
 
     def ResultInterface validate(){
@@ -32,8 +35,22 @@ trait AbstractValidatorTrait{
     public abstract ParentValidatorRunner getValidatorRunner()
     public abstract RunNotifier getNotifier()
 
-    def LooseValidationBuilder forMethod(String methodUnderValidation) {
+    def LooseValidationBuilder classifying(String methodUnderValidation) {
         return new LooseValidationBuilder(this, methodUnderValidation)
     }
 
+    def LooseValidationBuilder addValidation(String validationName, Closure validation) {
+        looseValidations.add([validationName: validationName, validation: validation])
+        return this
+    }
+
+    def invokeMethod(String name, Object args) {
+        def validationMethodForOperation = metaClass.getMetaMethod("validationFor_$name")
+        if(validationMethodForOperation != null){
+            validationMethodForOperation.invoke(this, args)
+        }
+
+        //TODO I am not sure if it is the best way of doing this. I could use getMetaMethod, but it will not return methods from superclass by the tie I write this
+        return metaClass.methods.find {it.name.equals(name)}.invoke(this, args)
+    }
 }

@@ -5,13 +5,18 @@ package sandbox.magritte.validationGenerator
 class ParameterAccessor extends Accessor{
 
     private paramNumber
+    private ThreadLocal<Collection> arguments = new ThreadLocal<Collection>()
 
     void setParamNumber(paramNumber) {
         this.paramNumber = paramNumber
     }
 
+    void setArguments(Collection arguments) {
+        this.arguments.set(arguments)
+    }
+
     @Override
-    def getClojureValue() {
-        return {return delegate.args[paramNumber]}
+    def getValue() {
+        return arguments.get().get(paramNumber-1)
     }
 }

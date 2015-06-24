@@ -13,7 +13,7 @@ class LooseValidationBuilder {
         this.methodUnderValidation = methodUnderValidation
     }
 
-    def LooseValidationBuilder withLooseValidation(String validationName, Closure validation) {
+    def LooseValidationBuilder addValidation(String validationName, Closure validation) {
         looseValidations.add([validationName: validationName, validation: validation])
         return this
     }
