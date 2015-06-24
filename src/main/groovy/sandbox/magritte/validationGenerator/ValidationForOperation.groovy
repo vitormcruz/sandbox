@@ -13,17 +13,17 @@ class ValidationForOperation extends SimpleGeneratedMethod{
 
 
     ValidationForOperation() {
-        super.closure = {args ->
+        super.methodBody = {args ->
             parametersMap.values().each {
                 it.setArguments([args].flatten())
             }
 
-            LooseValidationBuilder validationBuilder = delegate.classifying("ValidationForOperation")
+            LooseValidationBuilder validationBuilder = delegate.forClassification("ValidationForOperation")
 
             def outerDelegate = delegate
             getValidations().each {
-                it.getClosure().setDelegate(outerDelegate)
-                validationBuilder.addValidation(it.getMethodName(), it.getClosure())
+                it.getMethodBody().setDelegate(outerDelegate)
+                validationBuilder.addValidation(it.getMethodName(), it.getMethodBody())
             }
             validationBuilder.validateFailingOnError()
         }
@@ -39,7 +39,7 @@ class ValidationForOperation extends SimpleGeneratedMethod{
 
     def setValidation(Integer paramNumber, String paramName, Description description){
         def accessor = getParameterAccessorFor(paramNumber, paramName)
-        accessor.setDelegate(closure.getDelegate())
+        accessor.setDelegate(methodBody.getDelegate())
         def validation = description.getMyValidationGenerator()
         validation.setAccessor(accessor)
         description.accept(validation)

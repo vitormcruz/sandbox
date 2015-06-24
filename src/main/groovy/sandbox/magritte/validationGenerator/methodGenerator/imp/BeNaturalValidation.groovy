@@ -2,7 +2,7 @@ package sandbox.magritte.validationGenerator.methodGenerator.imp
 import org.apache.commons.validator.routines.IntegerValidator
 import sandbox.magritte.validationGenerator.Accessor
 
-class BeNaturalValidation extends BasicValidationMethod{
+class BeNaturalValidation extends BasicGeneratedValidationMethod{
 
     static def naturalNumberValidator = new IntegerValidator()
     public static final int MIN_NATURAL_INTEGER = 0

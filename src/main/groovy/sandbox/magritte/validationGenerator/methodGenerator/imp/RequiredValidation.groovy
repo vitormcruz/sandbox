@@ -4,7 +4,7 @@ import sandbox.magritte.validationGenerator.Accessor
 
 /**
  */
-class RequiredValidation extends BasicValidationMethod {
+class RequiredValidation extends BasicGeneratedValidationMethod {
 
     @Override
     String defineName(String accessorName) {

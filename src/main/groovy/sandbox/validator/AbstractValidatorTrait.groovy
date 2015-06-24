@@ -7,9 +7,6 @@ import org.junit.runner.notification.RunNotifier
 trait AbstractValidatorTrait implements GroovyInterceptable{
 
     def looseValidations = []
-    def AbstractValidatorTrait subjectOfValidation
-    def methodUnderValidation
-    private Map<String, Collection<String>> validationsForMethod = [:]
 
     def ResultInterface validate(){
         //TODO copied from JUnitCore, probably will change in function of specific listeners or notifiers from different layers (presentation, persistence etc) interested on validation result, but I don't know how yet.
@@ -35,8 +32,8 @@ trait AbstractValidatorTrait implements GroovyInterceptable{
     public abstract ParentValidatorRunner getValidatorRunner()
     public abstract RunNotifier getNotifier()
 
-    def LooseValidationBuilder classifying(String methodUnderValidation) {
-        return new LooseValidationBuilder(this, methodUnderValidation)
+    def LooseValidationBuilder forClassification(String classification) {
+        return new LooseValidationBuilder(this, classification)
     }
 
     def LooseValidationBuilder addValidation(String validationName, Closure validation) {

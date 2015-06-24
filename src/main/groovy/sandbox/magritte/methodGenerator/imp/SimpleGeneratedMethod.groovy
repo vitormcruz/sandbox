@@ -5,14 +5,14 @@ import sandbox.magritte.methodGenerator.GeneratedMethod
 
 class SimpleGeneratedMethod implements GeneratedMethod{
     protected String methodName
-    protected Closure closure
+    protected Closure methodBody
 
     SimpleGeneratedMethod() {
     }
 
-    SimpleGeneratedMethod(String methodName, Closure closure) {
+    SimpleGeneratedMethod(String methodName, Closure methodBody) {
         this.methodName = methodName
-        this.closure = closure
+        this.methodBody = methodBody
     }
 
     @Override
@@ -21,12 +21,12 @@ class SimpleGeneratedMethod implements GeneratedMethod{
     }
 
     @Override
-    Closure getClosure() {
-        return closure
+    Closure getMethodBody() {
+        return methodBody
     }
 
     @Override
     void teachMyselfTo(Class grasshopper) {
-        grasshopper.metaClass."${getMethodName()}" << getClosure()
+        grasshopper.metaClass."${getMethodName()}" << getMethodBody()
     }
 }

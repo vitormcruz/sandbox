@@ -6,16 +6,16 @@ import sandbox.validator.imp.ValidatorTrait
 
 /**
  */
-abstract class BasicValidationMethod extends SimpleGeneratedMethod implements ValidatorTrait{
+abstract class BasicGeneratedValidationMethod extends SimpleGeneratedMethod implements ValidatorTrait{
 
-    def forAccessor(Accessor accessor){
-        classifying("forAccessor")
+    def newForAccessor(Accessor accessor){
+        forClassification("newForAccessor")
             .addValidation("Validate accessor is not null",{
-                if(accessor==null) throw new IllegalArgumentException("sandbox.magritte.validationgenerator.methodgenerator.imp.BasicValidationMethod.createValidationMethod.validation.accessor.mandatory.error")
+                if(accessor == null) throw new IllegalArgumentException("sandbox.magritte.validationgenerator.methodgenerator.imp.BasicValidationMethod.createValidationMethod.validation.accessor.mandatory.error")
             }).validateFailingOnError()
 
         super.methodName = defineName(accessor.name)
-        super.closure = defineClosure(accessor)
+        super.methodBody = defineClosure(accessor)
         return this
     }
 

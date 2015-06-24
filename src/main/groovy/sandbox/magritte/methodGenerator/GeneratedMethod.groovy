@@ -4,6 +4,6 @@ package sandbox.magritte.methodGenerator
 interface GeneratedMethod {
 
     String getMethodName()
-    Closure getClosure()
+    def getMethodBody()
     def void teachMyselfTo(Class grasshopper)
 }

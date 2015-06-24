@@ -2,7 +2,7 @@ package sandbox.magritte.validationGenerator.methodGenerator.imp
 import org.apache.commons.lang.StringUtils
 import sandbox.magritte.validationGenerator.Accessor
 
-class BeNotBlankValidation extends BasicValidationMethod{
+class BeNotBlankValidation extends BasicGeneratedValidationMethod{
 
     @Override
     String defineName(String accessorName) {

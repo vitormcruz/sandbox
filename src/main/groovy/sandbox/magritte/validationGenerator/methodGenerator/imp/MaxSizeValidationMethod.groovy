@@ -8,7 +8,7 @@ import sandbox.magritte.validationGenerator.Accessor
 import static sandbox.magritte.description.OperationDescription.FIRST
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 
-class MaxSizeValidationMethod extends BasicValidationMethod {
+class MaxSizeValidationMethod extends BasicGeneratedValidationMethod {
 
     private CodeValidator codeValidator
 

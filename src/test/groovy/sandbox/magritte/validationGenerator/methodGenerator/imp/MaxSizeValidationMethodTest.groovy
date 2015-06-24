@@ -26,7 +26,7 @@ class MaxSizeValidationMethodTest extends BasicValidationMethodTest{
 
     @Test
     def void "maxSize is required"(){
-        ValidationException ex = shouldFail(ValidationException, {new MaxSizeValidationMethod(null).forAccessor(tstAccessor)})
+        ValidationException ex = shouldFail(ValidationException, {new MaxSizeValidationMethod(null).newForAccessor(tstAccessor)})
         assertThat(extractErrorMessagesFromResult(ex.result),
                    hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod.validation.maxSize.mandatory.error"))
     }
@@ -40,7 +40,7 @@ class MaxSizeValidationMethodTest extends BasicValidationMethodTest{
          [maxSize: -1, expected: errorMatcher],
          [maxSize: 0, expected: successMatcher],
          [maxSize:10, expected: successMatcher]].each { example ->
-            def errors = captureErrors {new MaxSizeValidationMethod(example.maxSize).forAccessor(tstAccessor)}
+            def errors = captureErrors {new MaxSizeValidationMethod(example.maxSize).newForAccessor(tstAccessor)}
             assertThat(errors, example.expected)
         }
     }
@@ -57,7 +57,7 @@ class MaxSizeValidationMethodTest extends BasicValidationMethodTest{
 
     @Override
     def getValidationMethodWith(Accessor accessor) {
-        return new MaxSizeValidationMethod(10).forAccessor(accessor)
+        return new MaxSizeValidationMethod(10).newForAccessor(accessor)
     }
 
     private static Collection<GeneratedMethod> getGeneratedMethodsFor(subjectOfValidation) {

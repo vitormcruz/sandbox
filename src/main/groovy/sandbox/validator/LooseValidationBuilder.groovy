@@ -8,9 +8,9 @@ class LooseValidationBuilder {
     def AbstractValidatorTrait subjectOfValidation
     def methodUnderValidation
 
-    LooseValidationBuilder(AbstractValidatorTrait subjectOfValidation, String methodUnderValidation) {
+    LooseValidationBuilder(AbstractValidatorTrait subjectOfValidation, String classification) {
         this.subjectOfValidation = subjectOfValidation
-        this.methodUnderValidation = methodUnderValidation
+        this.methodUnderValidation = classification
     }
 
     def LooseValidationBuilder addValidation(String validationName, Closure validation) {
