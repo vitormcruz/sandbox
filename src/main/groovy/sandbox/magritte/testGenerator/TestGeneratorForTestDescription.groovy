@@ -4,9 +4,9 @@ import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator
 import sandbox.magritte.testGenerator.description.TestDescription
 
-abstract class TestGeneratorForTestDescription implements TestDescription, MethodGenerator {
+class TestGeneratorForTestDescription implements TestDescription, MethodGenerator {
 
-    Collection<GeneratedMethod> testScenarios
+    Collection<GeneratedMethod> generatedMethods
     def protected mandatoryTestGenerator = new MandatoryTestGenerator();
 
     @Override
@@ -18,16 +18,16 @@ abstract class TestGeneratorForTestDescription implements TestDescription, Metho
 
         mandatoryTestGenerator.setClassUnderTest(classUnderTest)
 
-        testScenarios = descriptions.collectMany {
+        generatedMethods = descriptions.collectMany {
             it.asTestGenerator(classUnderTest, mandatoryTestGenerator).getGeneratedMethods()
         }
 
-        testScenarios.addAll(mandatoryTestGenerator.getGeneratedMethods())
+        generatedMethods.addAll(mandatoryTestGenerator.getGeneratedMethods())
         return this
     }
 
     @Override
     Collection<GeneratedMethod> getGeneratedMethods() {
-        return testScenarios
+        return generatedMethods
     }
 }
