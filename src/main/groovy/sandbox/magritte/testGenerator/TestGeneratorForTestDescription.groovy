@@ -8,7 +8,6 @@ abstract class TestGeneratorForTestDescription implements TestDescription, Metho
 
     Collection<GeneratedMethod> testScenarios
     def protected mandatoryTestGenerator = new MandatoryTestGenerator();
-    private Object descriptedObject
 
     @Override
     def TestDescription descriptionsFor(Class classUnderTest, Description... descriptions) {
@@ -20,14 +19,10 @@ abstract class TestGeneratorForTestDescription implements TestDescription, Metho
         mandatoryTestGenerator.setClassUnderTest(classUnderTest)
 
         testScenarios = descriptions.collectMany {
-            def methodGenerator = it.getMyTestGenerator(classUnderTest)
-            methodGenerator.setMandatoryTestGenerator(mandatoryTestGenerator)
-            it.accept(methodGenerator)
-            methodGenerator.getGeneratedMethods()
+            it.asTestGenerator(classUnderTest, mandatoryTestGenerator).getGeneratedMethods()
         }
 
         testScenarios.addAll(mandatoryTestGenerator.getGeneratedMethods())
-
         return this
     }
 

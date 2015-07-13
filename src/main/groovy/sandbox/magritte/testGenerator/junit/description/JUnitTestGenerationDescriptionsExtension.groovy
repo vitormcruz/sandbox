@@ -13,12 +13,11 @@ class JUnitTestGenerationDescriptionsExtension {
         return aTestDescription.accept(new JUnitTestGeneratorForTestDescription())
     }
 
-    public static MethodGenerator asTestGeneratorFor(Description aDescription, descriptedClass){
-        return aDescription.accept(aDescription.getMyTestGenerator(descriptedClass))
-    }
-
-    public static JUnitTestsGeneratorForStringDescription getMyTestGenerator(StringDescription aDescription, descriptedClass){
-        return new JUnitTestsGeneratorForStringDescription(descriptedClass)
+    public static JUnitTestsGeneratorForStringDescription asTestGenerator(StringDescription aDescription, descriptedClass, mandatoryTestGenerator){
+        def testGenerator = new JUnitTestsGeneratorForStringDescription(descriptedClass)
+        testGenerator.setMandatoryTestGenerator(mandatoryTestGenerator)
+        aDescription.accept(testGenerator)
+        return testGenerator
     }
 
 
