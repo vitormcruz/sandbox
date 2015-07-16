@@ -13,6 +13,10 @@ class JUnitTestGenerationDescriptionsExtension {
         return aTestDescription.accept(new TestGeneratorForTestDescription())
     }
 
+    public static JUnitTestsGeneratorForStringDescription asTestGenerator(Description aDescription, descriptedClass, mandatoryTestGenerator){
+        throw new UnsupportedOperationException("No asTestGenerator method was created for description ${aDescription.getClass().getName()}")
+    }
+
     public static JUnitTestsGeneratorForStringDescription asTestGenerator(StringDescription aDescription, descriptedClass, mandatoryTestGenerator){
         def testGenerator = new JUnitTestsGeneratorForStringDescription(descriptedClass)
         testGenerator.setMandatoryTestGenerator(mandatoryTestGenerator)
