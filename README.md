@@ -1,6 +1,8 @@
 Sandbox
 =======
 
+![Build Status](https://travis-ci.org/vitormcruz/sandbox.svg?branch=master)
+
 ##What do this project currently has:
 
 1. Maven
