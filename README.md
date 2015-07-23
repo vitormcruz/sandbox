@@ -61,6 +61,11 @@ With this description I can:
 3. Generate, dynamically, an object mother builder class that builds valid Employee classes;
 4. The sky is the limity....
 
+###Vaadin UI generation based on Magritte
+###Test generation based on Magritte
+###Validation generation based on Magritte
+
+The title say everything :)
 
 ## General TODO
 
