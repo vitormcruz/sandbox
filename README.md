@@ -48,11 +48,13 @@ Example:
 
 Supose a class Employee with a name and age, a description of this class could be:
 
-@DescriptionDefinition
-def myDescritpion(){
-   ["name".isAString().beRequired(),
-    "age".isAnInteger().minSize(18).beRequired()]
-}
+```
+   @DescriptionDefinition
+   def myDescritpion(){
+     ["name".isAString().beRequired(),
+     "age".isAnInteger().minSize(18).beRequired()]
+   }
+```
 
 With this description I can:
 
