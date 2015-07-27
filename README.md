@@ -3,6 +3,8 @@ Sandbox
 
 ![Build Status](https://travis-ci.org/vitormcruz/sandbox.svg?branch=master)
 
+Project in which I experiment various technologies and techniques, which maybe turn into real projects in the future.
+
 ##What do this project currently has:
 
 1. Maven
@@ -20,7 +22,7 @@ Sandbox
 
 ###Maven
 
-I will eventually create a build based on Graddle while mantaining maven working so that I can compare them. 
+I will eventually create a build based on Graddle while maintaining maven working so that I can compare them.
 
 ###Spring Boot 
 
@@ -34,11 +36,11 @@ Experimenting Vaadin and exploring how I could use it alongside Spring MVC.
 
 There are lots of validation frameworks with different mechanics. I have seen frameworks that:
 
-1. Relies on annotations, which tent to be rigidy toward validation using the annotations on single properties only. Also, I don't see annotations as a good way to make validations, since validation is not a meta information of a property. I also like to stick to the common OO facilities, using classes and messages to create behavior leverages all the advantagens of the language and facilitates reuse and flexibility;
+1. Relies on annotations, which tent to be rigid toward validation using the annotations on single properties only. Also, I don't see annotations as a good way to make validations, since validation is not a meta-information of a property. I also like to stick to the common OO facilities, using classes and messages to create behavior leverages all the advantages of the language and facilitates reuse and flexibility;
 2. Uses callbacks in a very flexible but complicated way; 
-3. Uses XML. XML are less a problem because of its verbose nature than for its rigidy; 
+3. Uses XML. XML are less a problem because of its verbose nature than for its rigidity;
 
-I don't find good any of the approaches I looked at, but I couldn't think of a better solution also. Them I read the great book A Mentoring Course in Smalltalk (http://www.lulu.com/shop/andres-valloud/a-mentoring-course-on-smalltalk/paperback/product-3788890.html), which describes a very interesting way of doing validation and an easy way to implement it. The autor compare Testing to Validation, and realize that they are the same, since Testing is just a specific kind of Validation. The family of xUnit started in Smalltalk, so they have a SUnit, and since Testing is validation, the author proposes changing SUnit and create a validation framework that has, for free, all of SUnit features.
+I don't find good any of the approaches I looked at, but I couldn't think of a better solution also. Them I read the great book A Mentoring Course in Smalltalk (http://www.lulu.com/shop/andres-valloud/a-mentoring-course-on-smalltalk/paperback/product-3788890.html), which describes a very interesting way of doing validation and an easy way to implement it. The author compare Testing to Validation, and realize that they are the same, since Testing is just a specific kind of Validation. The family of xUnit started in Smalltalk, so they have a SUnit, and since Testing is validation, the author proposes changing SUnit and create a validation framework that has, for free, all of SUnit features.
 
 What I did here was the same, but with JUnit.
 
@@ -48,7 +50,7 @@ Magritte (https://github.com/magritte-metamodel/magritte) is a meta-description 
 
 Example:
 
-Supose a class Employee with a name and age, a description of this class could be:
+Suppose a class Employee with a name and age, a description of this class could be:
 
 ```
    @DescriptionDefinition
@@ -63,7 +65,7 @@ With this description I can:
 1. Generate, dynamically, a web form that validates the required fields and that the age is an Integer => 18;
 2. Generate, dynamically, validations on the server side;
 3. Generate, dynamically, an object mother builder class that builds valid Employee classes;
-4. The sky is the limity....
+4. The sky is the limit....
 
 ###Vaadin UI generation based on Magritte
 ###Test generation based on Magritte
