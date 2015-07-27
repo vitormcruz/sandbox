@@ -4,6 +4,7 @@ import org.junit.Test
 import org.junit.runner.Result
 import org.junit.runner.notification.RunNotifier
 import sandbox.validator.imp.ValidatorRunner
+import sandbox.validator.imp.ValidatorTrait
 
 class ValidatorRunnerTest {
     private RunNotifier notifier
@@ -19,7 +20,7 @@ class ValidatorRunnerTest {
         assert result.getRunCount() == 0 : "Should not run methods annotated with @Test."
     }
 
-    public static class ClassWithTest{
+    public static class ClassWithTest implements ValidatorTrait{
         @Test
         def void "Should not run this method"(){
             assert true
@@ -32,7 +33,7 @@ class ValidatorRunnerTest {
         assert result.getFailureCount() == 0 : "Should not fail if a class do not have validation methods."
     }
 
-    public static class ClassWithoutTestsOrValidations{}
+    public static class ClassWithoutTestsOrValidations implements ValidatorTrait{}
 
     @Test
     def void "Validate with one method annotated with @Validation"(){
@@ -40,7 +41,7 @@ class ValidatorRunnerTest {
         assert result.getRunCount() == 1 : "Should run methods annotated with @Validation."
     }
 
-    public static class ClassWithOneValidationMethod {
+    public static class ClassWithOneValidationMethod implements ValidatorTrait{
         @Validation
         def void "Should run this method"(){
             assert true
@@ -71,7 +72,7 @@ class ValidatorRunnerTest {
         assert result.getFailureCount() == 3 : "All tests should fail."
     }
 
-    public static class ClassWithNValidationMethods {
+    public static class ClassWithNValidationMethods implements ValidatorTrait{
         def actualResult
         def expected
         def executeAssertion = {assert false}

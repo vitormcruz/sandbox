@@ -12,10 +12,8 @@ import org.junit.runners.model.FrameworkMethod
 import org.junit.runners.model.InitializationError
 import org.junit.runners.model.Statement
 import org.junit.runners.model.TestClass
-import sandbox.magritte.description.builder.MagritteDescriptionModelBuilder
-import sandbox.magritte.methodGenerator.GeneratedMethod
-import sandbox.magritte.methodGenerator.imp.MethodTeacher
-import sandbox.magritte.testGenerator.junit.FrameworkMetaMethod
+import sandbox.magritte.testGenerator.junit.FrameworkClosureMethod
+import sandbox.validator.AbstractValidatorTrait
 import sandbox.validator.ParentValidatorRunner
 import sandbox.validator.Validation
 
@@ -25,16 +23,14 @@ import static org.junit.internal.runners.rules.RuleMemberValidator.RULE_VALIDATO
 //TODO Explain that it should not be used with @RunWith annotation...
 class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentValidatorRunner{
 
-    def private static methodTeacher = new MethodTeacher()
-    
-    private Object subjectOfValidation
+    private AbstractValidatorTrait subjectOfValidation
 
     /**
      * Constructs a new ValidationRunner for an object under validation, passed by parameter.
      *
      * This constructor makes it spam an error if anyone tries to execute this with an @RunWith annotation.
      */
-    ValidatorRunner(Object subjectOfValidation) throws InitializationError {
+    ValidatorRunner(AbstractValidatorTrait subjectOfValidation) throws InitializationError {
         super(subjectOfValidation.getClass())
         this.subjectOfValidation = subjectOfValidation
     }
@@ -51,22 +47,12 @@ class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentVal
 
     protected List<FrameworkMethod> computeTestMethods() {
         def knownMethods = new ArrayList<>(getTestClass().getAnnotatedMethods(Validation))
-        //TODO Make teacher teach only if not already taught, i.e, only once
-        def teachedMethods = methodTeacher.teach(getTestClass().getJavaClass(), getGeneratedMethods())
-        //TODO Remove .contains("validationFor"). validationFor_someMethod should only be used by invokeMethod before someMethod execution, but I don't know how to separate those methods from those who should be executed by ValidationRunner.
-        teachedMethods.each {
-            if(!it.getName().contains("validationFor")) {
-                knownMethods.add(new FrameworkMetaMethod(it))
-            }
+        subjectOfValidation.validations.each {
+            knownMethods.add(new FrameworkClosureMethod(it.validationName, it.validation))
         }
         return knownMethods
     }
 
-    private Collection<GeneratedMethod> getGeneratedMethods() {
-        return MagritteDescriptionModelBuilder.forObject(subjectOfValidation).asMethodGenerator()
-                                                                               .getGeneratedMethods()
-    }
-    
     //TODO use validation framework! How cool would be that?
     @Override
     protected void collectInitializationErrors(List<Throwable> errors) {
@@ -133,9 +119,10 @@ class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentVal
 //        statement = withRules(method, test, statement);
         return statement;
     }
+
+
     
     protected Object createTest() throws Exception {
         return subjectOfValidation
     }
-
 }

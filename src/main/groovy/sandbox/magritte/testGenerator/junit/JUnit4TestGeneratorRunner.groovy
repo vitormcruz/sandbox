@@ -21,7 +21,7 @@ class JUnit4TestGeneratorRunner extends BlockJUnit4ClassRunner{
     @Override
     protected List<FrameworkMethod> computeTestMethods() {
         def knownMethods = new ArrayList<>(super.computeTestMethods())
-        def teachMethods = methodTeacher.teach(getTestClass().getJavaClass(), getGeneratedMethods())
+        def teachMethods = methodTeacher.teach(getTestClass().getJavaClass().newInstance(), getGeneratedMethods())
         teachMethods.each {knownMethods.add(new FrameworkMetaMethod(it))}
         return knownMethods
     }

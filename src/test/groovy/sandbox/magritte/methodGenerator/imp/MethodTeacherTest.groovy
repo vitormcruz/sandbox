@@ -11,7 +11,7 @@ class MethodTeacherTest {
 
     @Test
     def void "Teach a class without specifying generated methods"(){
-        def ex = shouldFail IllegalArgumentException, {new MethodTeacher().teach(ClassToBeTeach, null)}
+        def ex = shouldFail IllegalArgumentException, {new MethodTeacher().teach(ClassToBeTeach.newInstance(), null)}
         assert ex.message == "You should provide a non null collection of methods to teach"
     }
 
@@ -25,13 +25,13 @@ class MethodTeacherTest {
 
     @Test
     def void "Teach a class with empty method to teach collection"(){
-        def methodsTeach = testTeacher.teach(ClassToBeTeach, [] as Collection)
+        def methodsTeach = testTeacher.teach(ClassToBeTeach.newInstance(), [] as Collection)
         assert methodsTeach.isEmpty()
     }
 
     @Test
     def void "Teach one method"(){
-        def methodsTeach = testTeacher.teach(ClassToBeTeach, [new SimpleGeneratedMethod("test", {return true})])
+        def methodsTeach = testTeacher.teach(ClassToBeTeach.newInstance(), [new SimpleGeneratedMethod("test", {return true})])
         assert methodsTeach.size() == 1
         assert new ClassToBeTeach().test()
     }
@@ -44,7 +44,7 @@ class MethodTeacherTest {
                 new SimpleGeneratedMethod("test3", {return 42})
         ]
 
-        def testMethodosTeached = testTeacher.teach(ClassToBeTeach, generatedMethods)
+        def testMethodosTeached = testTeacher.teach(ClassToBeTeach.newInstance(), generatedMethods)
         assert testMethodosTeached.size() == 3
         assert new ClassToBeTeach().test1()
         assert !(new ClassToBeTeach().test2())

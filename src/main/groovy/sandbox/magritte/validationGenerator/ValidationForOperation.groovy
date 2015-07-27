@@ -1,35 +1,32 @@
 package sandbox.magritte.validationGenerator
 import sandbox.magritte.description.Description
 import sandbox.magritte.methodGenerator.GeneratedMethod
-import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
-import sandbox.validator.LooseValidationBuilder
-
 /**
  */
-class ValidationForOperation extends SimpleGeneratedMethod{
+class ValidationForOperation extends GeneratedValidationMethod{
 
+    def private String operationName
     def private Collection<GeneratedMethod> validations = []
+    //TODO I think thread local must be here and not inside ParameterAccessor
     private Map<Integer, ParameterAccessor> parametersMap = [:]
 
 
     ValidationForOperation() {
-        super.methodBody = {args ->
+        methodBody = {grasshopper, args ->
             parametersMap.values().each {
                 it.setArguments([args].flatten())
             }
 
-            LooseValidationBuilder validationBuilder = delegate.forClassification("ValidationForOperation")
-
-            def outerDelegate = delegate
+            setDelegate(grasshopper)
             getValidations().each {
-                it.getMethodBody().setDelegate(outerDelegate)
-                validationBuilder.addValidation(it.getMethodName(), it.getMethodBody())
+                it.getMethodBody().setDelegate(grasshopper)
+                delegate.addValidation(it.getMethodName(), it.getMethodBody(), operationName)
             }
-            validationBuilder.validateFailingOnError()
         }
     }
 
     void setOperationName(String operationName){
+        this.operationName = operationName
         this.methodName = "validationFor_$operationName"
     }
 
@@ -54,5 +51,17 @@ class ValidationForOperation extends SimpleGeneratedMethod{
         }
 
         return parameterAccessor
+    }
+
+    @Override
+    void teachMyselfTo(Object grasshopper) {
+        //Do nothing. Operation validation should be teach only in the context of its operation.
+    }
+
+    @Override
+    void teachMyselfToInContext(Object grasshopper, String context, paramsContext) {
+        if(operationName.equals(context)){
+            methodBody(grasshopper, paramsContext)
+        }
     }
 }

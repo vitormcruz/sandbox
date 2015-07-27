@@ -26,7 +26,7 @@ class SimpleGeneratedMethod implements GeneratedMethod{
     }
 
     @Override
-    void teachMyselfTo(Class grasshopper) {
-        grasshopper.metaClass."${getMethodName()}" << getMethodBody()
+    void teachMyselfTo(Object grasshopper) {
+        grasshopper.class.metaClass."${getMethodName()}" << getMethodBody()
     }
 }

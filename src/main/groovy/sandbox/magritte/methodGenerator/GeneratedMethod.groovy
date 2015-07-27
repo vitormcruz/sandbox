@@ -5,5 +5,5 @@ interface GeneratedMethod {
 
     String getMethodName()
     def getMethodBody()
-    def void teachMyselfTo(Class grasshopper)
+    def void teachMyselfTo(Object grasshopper)
 }

@@ -20,6 +20,7 @@ class MaxSizeValidationMethod extends BasicGeneratedValidationMethod {
     }
 
     void createCodeValidator(maxSize) {
+        this.validateFailingOnErrorFor("createCodeValidator", maxSize)
         codeValidator = new CodeValidator("", 0, maxSize, null)
     }
 

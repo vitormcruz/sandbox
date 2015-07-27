@@ -16,12 +16,12 @@ class MethodTeacher {
     MethodTeacher() {
     }
 
-    def teach(Class aClass, Collection<GeneratedMethod> methodsToGenerate) {
+    def teach(someObject, Collection<GeneratedMethod> methodsToGenerate) {
         validateMethodsToGenerate(methodsToGenerate)
         Collection<MetaMethod> methodsCreated = []
         methodsToGenerate.each {
-            it.teachMyselfTo(aClass)
-            methodsCreated.add(aClass.metaClass.getMetaMethod(it.methodName))
+            it.teachMyselfTo(someObject)
+            methodsCreated.add(someObject.class.metaClass.getMetaMethod(it.methodName))
         }
         return methodsCreated
     }
