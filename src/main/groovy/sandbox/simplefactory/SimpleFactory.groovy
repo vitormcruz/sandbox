@@ -1,21 +1,21 @@
-package sandbox.dfactory
+package sandbox.simplefactory
 
 import sandbox.magritte.testGenerator.TestGeneratorForTestDescription
 
 /**
  */
-class DFactory implements Map<Class, Configuration>{
-    private static DFactory dFactoryInstance = new DFactory()
+class SimpleFactory implements Map<Class, Configuration>{
+    private static SimpleFactory dFactoryInstance = new SimpleFactory()
 
     @Delegate
     private Map<Class, Configuration> configurations = new Hashtable<Class, Configuration>()
 
-    def static DFactory instance(){
+    def static SimpleFactory instance(){
         return dFactoryInstance
     }
 
-    static TestDFactory configureForTest() {
-        def dFactory = new TestDFactory(dFactoryInstance)
+    static SimpleFactoryForTest configureForTest() {
+        def dFactory = new SimpleFactoryForTest(dFactoryInstance)
         dFactoryInstance = dFactory
         return dFactory
     }
@@ -24,7 +24,7 @@ class DFactory implements Map<Class, Configuration>{
         dFactoryInstance = dFactoryInstance.getOriginalConfiguration()
     }
 
-    DFactory getOriginalConfiguration() {
+    SimpleFactory getOriginalConfiguration() {
         return this
     }
 

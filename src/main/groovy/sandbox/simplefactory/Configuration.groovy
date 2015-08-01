@@ -1,4 +1,4 @@
-package sandbox.dfactory
+package sandbox.simplefactory
 
 /**
  */

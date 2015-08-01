@@ -1,10 +1,10 @@
-package sandbox.dfactory
+package sandbox.simplefactory
 
 class ClassExtensions {
 
     //TODO I wnat to remove this calle from here....... :(
     public static <T> T smartNew(Class<T> aClass, Class caller){
-        return DFactory.instance().instanceForCallerOf(caller, aClass)
+        return SimpleFactory.instance().instanceForCallerOf(caller, aClass)
     }
 
     //TODO to implement...

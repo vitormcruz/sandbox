@@ -58,7 +58,7 @@ class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentVal
     protected void collectInitializationErrors(List<Throwable> errors) {
         super.collectInitializationErrors(errors);
 
-        //TODO validate that the class has a default constructor (Maybe this validations exits in some API)
+        //TODO validate that the class has a default constructor (Maybe this validations exists in some API)
         validateInstanceMethods(errors);
         validateFields(errors);
         validateMethods(errors);
