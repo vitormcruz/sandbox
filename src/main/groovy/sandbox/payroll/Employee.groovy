@@ -2,7 +2,7 @@ package sandbox.payroll
 
 import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.description.StringDescription
-import sandbox.validator.imp.ValidatorTrait
+import sandbox.validator.ValidatorTrait
 
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 

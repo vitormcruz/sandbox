@@ -29,7 +29,7 @@ class FrameworkClosureMethod extends FrameworkMethod {
         return new ReflectiveCallable() {
             @Override
             protected Object runReflectiveCall() throws Throwable {
-                return target.executeClosureValidation(closureMethod, params)
+                return closureMethod(params)
             }
         }.run();
     }

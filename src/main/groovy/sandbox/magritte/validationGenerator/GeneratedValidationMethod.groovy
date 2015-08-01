@@ -9,7 +9,7 @@ class GeneratedValidationMethod extends SimpleGeneratedMethod{
     @Override
     void teachMyselfTo(Object grasshopper) {
         getMethodBody().setDelegate(grasshopper)
-        grasshopper.addValidation(getMethodName(), getMethodBody())
+        grasshopper.withValidation(getMethodName(), getMethodBody())
     }
 
     void teachMyselfToInContext(Object grasshopper, String context, paramsContext) {

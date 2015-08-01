@@ -3,7 +3,7 @@ Sandbox
 
 ![Build Status](https://travis-ci.org/vitormcruz/sandbox.svg?branch=master)
 
-Project in which I experiment various technologies and techniques, which maybe turn into real projects in the future.
+Project in which I experiment various technologies and techniques.
 
 ##What do this project currently has:
 
@@ -60,12 +60,13 @@ Suppose a class Employee with a name and age, a description of this class could 
    }
 ```
 
-With this description I can:
+With this description I can generate, dynamically:
 
-1. Generate, dynamically, a web form that validates the required fields and that the age is an Integer => 18;
-2. Generate, dynamically, validations on the server side;
-3. Generate, dynamically, an object mother builder class that builds valid Employee classes;
-4. The sky is the limit....
+1. a web form that validates the required fields and that the age is an Integer => 18;
+2. validations on the server side;
+3. an object mother builder class that builds valid Employee classes;
+4. an entire web API;
+5. The sky is the limit....
 
 ###Vaadin UI generation based on Magritte
 ###Test generation based on Magritte

@@ -20,7 +20,7 @@ class ValidationForOperation extends GeneratedValidationMethod{
             setDelegate(grasshopper)
             getValidations().each {
                 it.getMethodBody().setDelegate(grasshopper)
-                delegate.addValidation(it.getMethodName(), it.getMethodBody(), operationName)
+                delegate.withValidation(it.getMethodName(), it.getMethodBody(), operationName)
             }
         }
     }

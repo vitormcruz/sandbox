@@ -13,7 +13,7 @@ import org.junit.runners.model.InitializationError
 import org.junit.runners.model.Statement
 import org.junit.runners.model.TestClass
 import sandbox.magritte.testGenerator.junit.FrameworkClosureMethod
-import sandbox.validator.AbstractValidatorTrait
+import sandbox.validator.ValidatorTrait
 import sandbox.validator.ParentValidatorRunner
 import sandbox.validator.Validation
 
@@ -23,14 +23,14 @@ import static org.junit.internal.runners.rules.RuleMemberValidator.RULE_VALIDATO
 //TODO Explain that it should not be used with @RunWith annotation...
 class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentValidatorRunner{
 
-    private AbstractValidatorTrait subjectOfValidation
+    private ValidatorTrait subjectOfValidation
 
     /**
      * Constructs a new ValidationRunner for an object under validation, passed by parameter.
      *
      * This constructor makes it spam an error if anyone tries to execute this with an @RunWith annotation.
      */
-    ValidatorRunner(AbstractValidatorTrait subjectOfValidation) throws InitializationError {
+    ValidatorRunner(ValidatorTrait subjectOfValidation) throws InitializationError {
         super(subjectOfValidation.getClass())
         this.subjectOfValidation = subjectOfValidation
     }

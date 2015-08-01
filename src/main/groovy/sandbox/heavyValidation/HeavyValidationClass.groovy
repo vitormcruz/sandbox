@@ -1,7 +1,6 @@
 package sandbox.heavyValidation
-
+import sandbox.validator.ValidatorTrait
 import sandbox.validator.Validation
-import sandbox.validator.imp.ValidatorTrait
 /**
  */
 class HeavyValidationClass implements ValidatorTrait{

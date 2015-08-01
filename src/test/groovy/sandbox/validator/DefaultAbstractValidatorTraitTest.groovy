@@ -1,7 +1,5 @@
 package sandbox.validator
-
 import org.junit.Test
-import sandbox.validator.imp.ValidatorTrait
 
 class DefaultAbstractValidatorTraitTest {
 

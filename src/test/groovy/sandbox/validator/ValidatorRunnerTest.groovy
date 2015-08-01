@@ -4,7 +4,6 @@ import org.junit.Test
 import org.junit.runner.Result
 import org.junit.runner.notification.RunNotifier
 import sandbox.validator.imp.ValidatorRunner
-import sandbox.validator.imp.ValidatorTrait
 
 class ValidatorRunnerTest {
     private RunNotifier notifier

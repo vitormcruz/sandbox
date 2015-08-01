@@ -2,7 +2,7 @@ package sandbox.magritte.validationGenerator.methodGenerator.imp
 import org.junit.Test
 import sandbox.magritte.validationGenerator.Accessor
 import sandbox.validator.ResultInterface
-import sandbox.validator.ValidationException
+import sandbox.validator.imp.ValidationException
 
 import static groovy.test.GroovyAssert.shouldFail
 import static org.hamcrest.CoreMatchers.hasItem
