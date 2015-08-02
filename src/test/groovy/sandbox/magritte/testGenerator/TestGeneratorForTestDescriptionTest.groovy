@@ -4,7 +4,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
-import sandbox.simplefactory.SimpleFactory
+import sandbox.smartfactory.SmartFactory
 import sandbox.magritte.description.Description
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator
@@ -22,12 +22,12 @@ class TestGeneratorForTestDescriptionTest {
     @Before
     def void setup(){
         mandatoryTestGeneratorMock = mock(MandatoryTestGenerator)
-        SimpleFactory.configureForTest().configurationFor(TestGeneratorForTestDescription).put(MandatoryTestGenerator, mandatoryTestGeneratorMock)
+        SmartFactory.configureForTest().configurationFor(TestGeneratorForTestDescription).put(MandatoryTestGenerator, mandatoryTestGeneratorMock)
     }
 
     @After
     def void cleanup(){
-        SimpleFactory.resetConfigForTest()
+        SmartFactory.resetConfigForTest()
     }
 
     @Test

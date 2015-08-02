@@ -1,21 +1,21 @@
-package sandbox.simplefactory
+package sandbox.smartfactory
 
 import sandbox.magritte.testGenerator.TestGeneratorForTestDescription
 
 /**
  */
-class SimpleFactory implements Map<Class, Configuration>{
-    private static SimpleFactory dFactoryInstance = new SimpleFactory()
+class SmartFactory implements Map<Class, Configuration>{
+    private static SmartFactory dFactoryInstance = new SmartFactory()
 
     @Delegate
     private Map<Class, Configuration> configurations = new Hashtable<Class, Configuration>()
 
-    def static SimpleFactory instance(){
+    def static SmartFactory instance(){
         return dFactoryInstance
     }
 
-    static SimpleFactoryForTest configureForTest() {
-        def dFactory = new SimpleFactoryForTest(dFactoryInstance)
+    static SmartFactoryForTest configureForTest() {
+        def dFactory = new SmartFactoryForTest(dFactoryInstance)
         dFactoryInstance = dFactory
         return dFactory
     }
@@ -24,7 +24,7 @@ class SimpleFactory implements Map<Class, Configuration>{
         dFactoryInstance = dFactoryInstance.getOriginalConfiguration()
     }
 
-    SimpleFactory getOriginalConfiguration() {
+    SmartFactory getOriginalConfiguration() {
         return this
     }
 
