@@ -1,6 +1,9 @@
-package sandbox.magritte.validationGenerator
+package sandbox.magritte.validationGenerator.descriptionModel
 import sandbox.magritte.description.Description
 import sandbox.magritte.methodGenerator.GeneratedMethod
+import sandbox.magritte.validationGenerator.validations.ParameterAccessor
+import sandbox.magritte.validationGenerator.validations.GeneratedValidationMethod
+
 /**
  */
 class ValidationForOperation extends GeneratedValidationMethod{

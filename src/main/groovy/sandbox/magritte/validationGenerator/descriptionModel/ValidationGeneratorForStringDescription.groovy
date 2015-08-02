@@ -1,6 +1,8 @@
-package sandbox.magritte.validationGenerator
+package sandbox.magritte.validationGenerator.descriptionModel
 import sandbox.magritte.description.StringDescription
 import sandbox.magritte.methodGenerator.description.MethodGenerator
+import sandbox.magritte.validationGenerator.ValidationFactory
+import sandbox.magritte.validationGenerator.validations.DefaultValidationFactory
 
 class ValidationGeneratorForStringDescription extends ValidationGeneratorForBaseDescription
                                               implements MethodGenerator, StringDescription{

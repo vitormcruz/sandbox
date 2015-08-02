@@ -1,6 +1,5 @@
-package sandbox.magritte.validationGenerator.methodGenerator.imp
+package sandbox.magritte.validationGenerator.validations
 import org.apache.commons.validator.routines.IntegerValidator
-import sandbox.magritte.validationGenerator.Accessor
 
 class BeNaturalValidation extends BasicGeneratedValidationMethod{
 

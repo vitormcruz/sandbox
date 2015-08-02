@@ -1,9 +1,8 @@
-package sandbox.magritte.validationGenerator.methodGenerator.imp
+package sandbox.magritte.validationGenerator.validations
 import org.apache.commons.validator.routines.CodeValidator
 import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.description.NumberDescription
 import sandbox.magritte.description.OperationDescription
-import sandbox.magritte.validationGenerator.Accessor
 
 import static sandbox.magritte.description.OperationDescription.FIRST
 import static sandbox.magritte.description.builder.DescriptionFactory.New

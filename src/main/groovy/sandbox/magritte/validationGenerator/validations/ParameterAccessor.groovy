@@ -1,4 +1,6 @@
-package sandbox.magritte.validationGenerator
+package sandbox.magritte.validationGenerator.validations
+
+import sandbox.magritte.validationGenerator.validations.Accessor
 
 /**
  */

@@ -1,4 +1,4 @@
-package sandbox.magritte.validationGenerator
+package sandbox.magritte.validationGenerator.descriptionModel
 
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator

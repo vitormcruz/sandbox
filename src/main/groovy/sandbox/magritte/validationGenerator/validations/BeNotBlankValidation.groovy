@@ -1,21 +1,18 @@
-package sandbox.magritte.validationGenerator.methodGenerator.imp
+package sandbox.magritte.validationGenerator.validations
+import org.apache.commons.lang.StringUtils
 
-import sandbox.magritte.validationGenerator.Accessor
-
-/**
- */
-class RequiredValidation extends BasicGeneratedValidationMethod {
+class BeNotBlankValidation extends BasicGeneratedValidationMethod{
 
     @Override
     String defineName(String accessorName) {
-        return "Validate if ${accessorName} is provided"
+        return "Validate ${accessorName} cannot be blank."
     }
 
     @Override
     Closure defineClosure(Accessor accessor) {
         return {
             accessor.setDelegate(delegate)
-            if (accessor.getValue() == null) {
+            if (StringUtils.isBlank(accessor.getValue())) {
                 throw new IllegalArgumentException("${delegate.getClass().getName().toLowerCase()}.validation.${accessor.name}.mandatory.error")
             }
         }

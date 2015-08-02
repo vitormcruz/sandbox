@@ -1,6 +1,5 @@
-package sandbox.magritte.validationGenerator.methodGenerator.imp
+package sandbox.magritte.validationGenerator.validations
 import org.junit.Test
-import sandbox.magritte.validationGenerator.Accessor
 import sandbox.validator.ResultInterface
 import sandbox.validator.imp.ValidationException
 

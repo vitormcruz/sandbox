@@ -1,6 +1,5 @@
-package sandbox.magritte.validationGenerator.methodGenerator.imp
+package sandbox.magritte.validationGenerator.validations
 import org.junit.Test
-import sandbox.magritte.validationGenerator.Accessor
 import sandbox.validator.imp.ValidationException
 
 import static groovy.test.GroovyAssert.shouldFail
@@ -16,13 +15,13 @@ class MaxSizeValidationMethodTest extends BasicValidationMethodTest{
     def void "maxSize is required"(){
         ValidationException ex = shouldFail(ValidationException, {new MaxSizeValidationMethod(null).newForAccessor(tstAccessor)})
         assertThat(extractErrorMessagesFromResult(ex.result),
-                   hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod.validation.maxSize.mandatory.error"))
+                   hasItem("sandbox.magritte.validationgenerator.validations.maxsizevalidationmethod.validation.maxSize.mandatory.error"))
     }
 
     @Test
     def void "maxSize must be a natural number"(){
-        def errorMatcher = hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod.validation.maxSize.natural.number.error")
-        def successMatcher = not(hasItem("sandbox.magritte.validationgenerator.methodgenerator.imp.maxsizevalidationmethod.validation.maxSize.natural.number.error"))
+        def errorMatcher = hasItem("sandbox.magritte.validationgenerator.validations.maxsizevalidationmethod.validation.maxSize.natural.number.error")
+        def successMatcher = not(hasItem("sandbox.magritte.validationgenerator.validations.maxsizevalidationmethod.validation.maxSize.natural.number.error"))
 
         [[maxSize: -10, expected: errorMatcher],
          [maxSize: -1, expected: errorMatcher],

@@ -1,10 +1,7 @@
-package sandbox.magritte.validationGenerator
+package sandbox.magritte.validationGenerator.validations
 
 import sandbox.magritte.methodGenerator.GeneratedMethod
-import sandbox.magritte.validationGenerator.methodGenerator.imp.BeNaturalValidation
-import sandbox.magritte.validationGenerator.methodGenerator.imp.BeNotBlankValidation
-import sandbox.magritte.validationGenerator.methodGenerator.imp.MaxSizeValidationMethod
-import sandbox.magritte.validationGenerator.methodGenerator.imp.RequiredValidation
+import sandbox.magritte.validationGenerator.ValidationFactory
 
 class DefaultValidationFactory implements ValidationFactory{
 
