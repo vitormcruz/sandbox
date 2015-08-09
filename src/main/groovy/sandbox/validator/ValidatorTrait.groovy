@@ -1,5 +1,4 @@
 package sandbox.validator
-
 import org.junit.runner.Result
 import org.junit.runner.notification.RunListener
 import org.junit.runner.notification.RunNotifier
@@ -10,13 +9,30 @@ import sandbox.validator.imp.ValidatorRunner
 
 trait ValidatorTrait implements GroovyInterceptable{
 
+    public static final String CONSTRUCTOR = "newInstance"
+
     protected ThreadLocal<Collection> validations = {
         def validations = new ThreadLocal<Collection>()
         validations.set(new ArrayList())
         return validations
     }()
 
+    private listeners = []
+
     def protected runNotifier = new RunNotifier()
+
+    def addListener(RunListener listener){
+        listeners.add(listener)
+    }
+
+    def removeListener(RunListener listener){
+        listeners.remove(listener)
+    }
+
+    //TODO CONSTRUCTOR cannot be used in others classes because this is a trait, probably an error
+    def constructor(){
+        return CONSTRUCTOR
+    }
 
     public RunNotifier getNotifier(){
         return runNotifier
@@ -54,6 +70,7 @@ trait ValidatorTrait implements GroovyInterceptable{
         Result result = new Result();
         RunListener listener = result.createListener();
         getNotifier().addFirstListener(listener);
+        listeners.each {getNotifier().addListener(it)}
         try {
             def validatorRunner = newValidatorRunner()
             getNotifier().fireTestRunStarted(validatorRunner.getDescription());
@@ -61,6 +78,7 @@ trait ValidatorTrait implements GroovyInterceptable{
             getNotifier().fireTestRunFinished(result);
         } finally {
             getNotifier().removeListener(listener);
+            listeners.each {getNotifier().removeListener(it)}
             validations.get().clear()
         }
 

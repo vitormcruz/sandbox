@@ -9,7 +9,7 @@ import sandbox.magritte.description.recordingDescription.MethodCallRecorder
  * implementations are used across an entire application. You should consider carefully doing it diferently since many
  * problems can arise and since it should't really be a common situation.
  */
-//TODO should I use an interface??? In code I would use new DescriptionFactory().New, the way it is I can make a static import
+//TODO Substitute for SmartFactory?
 class DescriptionFactory {
 
     static <T> T New(Class<T> aDescriptionType) {

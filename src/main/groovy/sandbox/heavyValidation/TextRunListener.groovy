@@ -21,7 +21,7 @@ public class TextRunListener extends RunListener{
 
     @Override
     void testRunFinished(Result result) throws Exception {
-        println("Validation of ${objectUnderTest} was ${result.wasSuccessful() ? "": "not"}sucecessful")
+        println("Validation of ${objectUnderTest} was ${result.wasSuccessful() ? "": "not "}sucecessful")
     }
 
     @Override

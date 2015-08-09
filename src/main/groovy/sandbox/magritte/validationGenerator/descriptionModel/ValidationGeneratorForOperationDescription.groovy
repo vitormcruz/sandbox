@@ -3,7 +3,6 @@ import sandbox.magritte.description.Description
 import sandbox.magritte.description.OperationDescription
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator
-import sandbox.magritte.validationGenerator.descriptionModel.ValidationForOperation
 
 class ValidationGeneratorForOperationDescription implements MethodGenerator, OperationDescription{
 
@@ -26,7 +25,7 @@ class ValidationGeneratorForOperationDescription implements MethodGenerator, Ope
 
     @Override
     OperationDescription forConstructor() {
-        named("constructor")
+        named("newInstance")
         return this
     }
 

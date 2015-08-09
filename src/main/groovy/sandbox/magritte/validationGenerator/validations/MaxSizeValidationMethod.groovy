@@ -15,11 +15,7 @@ class MaxSizeValidationMethod extends BasicGeneratedValidationMethod {
     }
 
     MaxSizeValidationMethod(maxSize) {
-        createCodeValidator(maxSize)
-    }
-
-    void createCodeValidator(maxSize) {
-        this.validateFailingOnErrorFor("createCodeValidator", maxSize)
+        this.validateFailingOnErrorFor(constructor(), maxSize)
         codeValidator = new CodeValidator("", 0, maxSize, null)
     }
 
@@ -40,7 +36,7 @@ class MaxSizeValidationMethod extends BasicGeneratedValidationMethod {
 
     @DescriptionModelDefinition
     public myDescription(){
-        return [New(OperationDescription).named("createCodeValidator")
+        return [New(OperationDescription).forConstructor()
                                          .withParameter(FIRST, "maxSize", New(NumberDescription).beRequired()
                                                                                                 .beNatural())]
     }

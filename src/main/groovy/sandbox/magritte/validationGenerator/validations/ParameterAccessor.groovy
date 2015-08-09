@@ -1,7 +1,4 @@
 package sandbox.magritte.validationGenerator.validations
-
-import sandbox.magritte.validationGenerator.validations.Accessor
-
 /**
  */
 class ParameterAccessor extends Accessor{

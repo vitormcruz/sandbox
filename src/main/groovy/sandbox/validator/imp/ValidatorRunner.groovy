@@ -53,7 +53,6 @@ class ValidatorRunner extends ParentRunner<FrameworkMethod> implements ParentVal
         return knownMethods
     }
 
-    //TODO use validation framework! How cool would be that?
     @Override
     protected void collectInitializationErrors(List<Throwable> errors) {
         super.collectInitializationErrors(errors);
