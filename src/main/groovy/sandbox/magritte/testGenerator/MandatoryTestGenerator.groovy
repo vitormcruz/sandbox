@@ -20,7 +20,7 @@ class MandatoryTestGenerator implements MethodGenerator {
         this.classUnderTest = classUnderTest
     }
 
-    def requiredAccessor(Object requiredAccessor) {
+    def requiredAccessor(requiredAccessor) {
         requiredAccessors.add(requiredAccessor)
         String error = "${classUnderTest.getName().toLowerCase()}.validation.${requiredAccessor}.mandatory.error"
 

@@ -50,4 +50,8 @@ class MethodCallRecorder<T> {
 
         return aDescriptorVisitor
     }
+
+    def T getTypeRecorded() {
+        return clazz
+    }
 }

@@ -15,10 +15,6 @@ class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForBaseD
         super.describedClass = describedClass
     }
 
-    Collection<GeneratedMethod> getGeneratedMethods(){
-        return super.testScenarios
-    }
-
     @Override
     BaseDescription accessor(String accessor) {
         super.accessor = accessor
@@ -54,13 +50,21 @@ class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForBaseD
 
     def testSizeTemplate(size, testVerificationMatcher){
         return {
-           def testSubject = describedClass.newInstance()
-            testSubject."${accessor}" = StringUtils.leftPad("", size, 'X')
-            def result = testSubject.validate()
-
-            assertThat(result.getFailures().collect {it.getException().getMessage()}, testVerificationMatcher)
+            def result = validate(size)
+            assertThat(result, testVerificationMatcher)
         }
 
+    }
+
+    def private validate(size) {
+        def valueToTest = StringUtils.leftPad("", size, 'X')
+        if(validationMethod != null){
+            return validationMethod(valueToTest)
+        }
+
+        def testSubject = describedClass.newInstance()
+        testSubject."${accessor}" = valueToTest
+        return testSubject.validate().getFailures().collect {it.getException().getMessage()}
     }
 
     @Override

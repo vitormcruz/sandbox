@@ -7,7 +7,8 @@ import sandbox.magritte.testGenerator.description.TestDescription
 class TestGeneratorForTestDescription implements TestDescription, MethodGenerator {
 
     Collection<GeneratedMethod> generatedMethods
-    def protected MandatoryTestGenerator mandatoryTestGenerator = MandatoryTestGenerator.smartNew(TestGeneratorForTestDescription);
+    def protected MandatoryTestGenerator mandatoryTestGenerator = MandatoryTestGenerator.smartNewFor(TestGeneratorForTestDescription);
+    private Closure validationMethod
 
     @Override
     def TestGeneratorForTestDescription descriptionsFor(Class classUnderTest, Description... descriptions) {
@@ -16,6 +17,12 @@ class TestGeneratorForTestDescription implements TestDescription, MethodGenerato
         mandatoryTestGenerator.setClassUnderTest(classUnderTest)
         generatedMethods = methodsGeneratedByDescriptions(classUnderTest, descriptions)
         generatedMethods.addAll(mandatoryTestGenerator.getGeneratedMethods())
+        return this
+    }
+
+    @Override
+    TestDescription usingThisValidationMethod(Closure validationMethod) {
+        this.validationMethod = validationMethod
         return this
     }
 

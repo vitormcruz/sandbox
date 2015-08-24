@@ -1,23 +1,35 @@
 package sandbox.magritte.validationGenerator.validations
+
 import org.junit.Test
+import org.junit.runner.RunWith
+import sandbox.magritte.description.DescriptionModelDefinition
+import sandbox.magritte.description.NumberDescription
+import sandbox.magritte.description.OperationDescription
+import sandbox.magritte.testGenerator.description.TestDescription
+import sandbox.magritte.testGenerator.junit.JUnit4TestGeneratorRunner
 import sandbox.validator.imp.ValidationException
 
-import static groovy.test.GroovyAssert.shouldFail
 import static org.hamcrest.CoreMatchers.hasItem
 import static org.hamcrest.CoreMatchers.not
 import static org.junit.Assert.assertThat
+import static sandbox.magritte.description.OperationDescription.FIRST
+import static sandbox.magritte.description.builder.DescriptionFactory.New
 
+@RunWith(JUnit4TestGeneratorRunner)
 class MaxSizeValidationMethodTest extends BasicValidationMethodTest{
 
     public static final Accessor tstAccessor = new Accessor(name: "tst")
 
-    @Test
-    def void "maxSize is required"(){
-        ValidationException ex = shouldFail(ValidationException, {new MaxSizeValidationMethod(null).newForAccessor(tstAccessor)})
-        assertThat(extractErrorMessagesFromResult(ex.result),
-                   hasItem("sandbox.magritte.validationgenerator.validations.maxsizevalidationmethod.validation.maxSize.mandatory.error"))
+    @DescriptionModelDefinition
+    public myDescription(){
+        return New(TestDescription)
+                .descriptionsFor(MaxSizeValidationMethod,
+                                 New(OperationDescription).forConstructor()
+                                                          .withParameter(FIRST, "maxSize",
+                                                                         New(NumberDescription).beRequired()))
     }
 
+    //TODO implement generation for these tests
     @Test
     def void "maxSize must be a natural number"(){
         def errorMatcher = hasItem("sandbox.magritte.validationgenerator.validations.maxsizevalidationmethod.validation.maxSize.natural.number.error")

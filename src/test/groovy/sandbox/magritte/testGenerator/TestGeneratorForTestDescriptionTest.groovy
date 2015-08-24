@@ -5,17 +5,24 @@ import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import sandbox.smartfactory.SmartFactory
+import org.junit.runner.RunWith
 import sandbox.magritte.description.Description
+import sandbox.magritte.description.DescriptionModelDefinition
+import sandbox.magritte.description.NumberDescription
+import sandbox.magritte.description.OperationDescription
+import sandbox.magritte.description.StringDescription
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator
+import sandbox.magritte.testGenerator.description.TestDescription
+import sandbox.magritte.testGenerator.junit.JUnit4TestGeneratorRunner
 
 import static groovy.test.GroovyAssert.shouldFail
 import static org.mockito.Mockito.mock
 import static org.mockito.Mockito.when
+import static sandbox.magritte.description.OperationDescription.FIRST
+import static sandbox.magritte.description.builder.DescriptionFactory.New
+import static sandbox.magritte.description.builder.DescriptionFactory.New
 
-/**
- * Tests the description of test suits.
- */
 class TestGeneratorForTestDescriptionTest {
     private MandatoryTestGenerator mandatoryTestGeneratorMock
 

@@ -11,8 +11,9 @@ abstract class JunitTestGeneratorForBaseDescription implements BaseDescription, 
     def protected accessor
     def protected Class describedClass
     protected MandatoryTestGenerator mandatoryTestGenerator
+    protected Closure validationMethod
 
-    
+
     BaseDescription accessor(String accessor) {
         this.accessor = accessor
         return this
@@ -32,5 +33,9 @@ abstract class JunitTestGeneratorForBaseDescription implements BaseDescription, 
     //TODO extract into an interface
     void setMandatoryTestGenerator(MandatoryTestGenerator mandatoryTestGenerator) {
         this.mandatoryTestGenerator = mandatoryTestGenerator
+    }
+
+    void setValidationMethod(Closure validationMethod){
+        this.validationMethod = validationMethod
     }
 }

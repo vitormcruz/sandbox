@@ -9,7 +9,7 @@ import sandbox.magritte.validationGenerator.validations.DefaultValidationFactory
 abstract class ValidationGeneratorForBaseDescription implements MethodGenerator, BaseDescription{
 
     //TODO Substitute for validation factory interface
-    protected ValidationFactory validationFactory = DefaultValidationFactory.smartNew(ValidationGeneratorForBaseDescription)
+    protected ValidationFactory validationFactory = DefaultValidationFactory.smartNewFor(ValidationGeneratorForBaseDescription)
     def protected Accessor accessor = new Accessor()
 
     private validations = []
