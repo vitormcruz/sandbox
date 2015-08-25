@@ -4,13 +4,11 @@ import org.junit.runners.model.FrameworkMethod
 import org.junit.runners.model.InitializationError
 import sandbox.magritte.description.builder.MagritteDescriptionModelBuilder
 import sandbox.magritte.methodGenerator.GeneratedMethod
-import sandbox.magritte.methodGenerator.imp.MethodTeacher
 
 class JUnit4TestGeneratorRunner extends BlockJUnit4ClassRunner{
 
-    def static private methodTeacher = new MethodTeacher()
+    static private MagritteDescriptionModelBuilder modelBuilder = MagritteDescriptionModelBuilder.smartNewFor(JUnit4TestGeneratorRunner);
 
-    //TODO somehow make it use other runner instead of extend. That way, this runner can be used with any other.
     /**
      * Constructs a new instance of the default runner
      */
@@ -21,13 +19,15 @@ class JUnit4TestGeneratorRunner extends BlockJUnit4ClassRunner{
     @Override
     protected List<FrameworkMethod> computeTestMethods() {
         def knownMethods = new ArrayList<>(super.computeTestMethods())
-        def teachMethods = methodTeacher.teach(getTestClass().getJavaClass().newInstance(), getGeneratedMethods())
-        teachMethods.each {knownMethods.add(new FrameworkMetaMethod(it))}
+        def testObject = getTestClass().getJavaClass().newInstance()
+        getGeneratedMethodsFor(testObject).each {
+            it.teachMyselfTo(testObject)
+            knownMethods.add(new FrameworkMetaMethod(testObject.class.metaClass.getMetaMethod(it.methodName)))
+        }
         return knownMethods
     }
 
-    private Collection<GeneratedMethod> getGeneratedMethods() {
-        return MagritteDescriptionModelBuilder.forObject(getTestClass().getJavaClass().newInstance()).asTestGenerator()
-                                                                                                     .getGeneratedMethods()
+    private Collection<GeneratedMethod> getGeneratedMethodsFor(testObject) {
+        return modelBuilder.forObject(testObject).asTestGenerator().getGeneratedMethods()
     }
 }

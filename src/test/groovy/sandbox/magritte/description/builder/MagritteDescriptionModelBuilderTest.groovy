@@ -85,7 +85,7 @@ class MagritteDescriptionModelBuilderTest {
     def void "Build a description model from a class with one non empty description model definition"() {    }
 
     private PlaybackVerifier descriptionModelShouldBeEmptyFor(descriptedClass) {
-        def playbackVerifier = new PlaybackVerifier(MagritteDescriptionModelBuilder.forObject(descriptedClass))
+        def playbackVerifier = new PlaybackVerifier(MagritteDescriptionModelBuilder.forObjectA(descriptedClass))
         assert playbackVerifier.nothingWasPlayed() : "Should receive an empty model."
     }
 

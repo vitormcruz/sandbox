@@ -6,7 +6,7 @@ import sandbox.magritte.description.OperationDescription
 import sandbox.magritte.description.StringDescription
 import sandbox.magritte.methodGenerator.description.MethodGenerator
 import sandbox.magritte.testGenerator.TestGeneratorForTestDescription
-import sandbox.magritte.testGenerator.description.TestDescription
+import sandbox.magritte.description.TestDescription
 import sandbox.magritte.testGenerator.junit.scenarioGenerator.JUnitTestsGeneratorForNumberDescription
 import sandbox.magritte.testGenerator.junit.scenarioGenerator.JUnitTestsGeneratorForOperationDescription
 import sandbox.magritte.testGenerator.junit.scenarioGenerator.JUnitTestsGeneratorForStringDescription

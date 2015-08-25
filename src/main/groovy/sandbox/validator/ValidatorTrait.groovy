@@ -86,7 +86,7 @@ trait ValidatorTrait implements GroovyInterceptable{
     }
 
     private Collection<GeneratedMethod> getGeneratedMethods() {
-        return MagritteDescriptionModelBuilder.forObject(this).asMethodGenerator().getGeneratedMethods()
+        return MagritteDescriptionModelBuilder.forObjectA(this).asMethodGenerator().getGeneratedMethods()
     }
 
     public ParentValidatorRunner newValidatorRunner(){

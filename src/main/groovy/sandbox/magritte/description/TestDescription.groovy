@@ -1,6 +1,4 @@
-package sandbox.magritte.testGenerator.description
-
-import sandbox.magritte.description.Description
+package sandbox.magritte.description
 
 interface TestDescription {
 
