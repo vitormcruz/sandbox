@@ -16,11 +16,11 @@ class MessageRecorder<T> {
     def final List<RecordedMessage> recordedMethods = []
 
     //TODO use validation framework? To do this, I must provide a way for the framework to fast fail with the actual exception instead of ValidationError
-    MessageRecorder(Class<T> interfaceBeenRecorded) {
-        checkArgument(interfaceBeenRecorded != null, "No interface to record was specified")
-        checkArgument(interfaceBeenRecorded.isInterface(), "You specified the class ${interfaceBeenRecorded.getSimpleName()}, " +
+    MessageRecorder(Class<T> interfaceToRecord) {
+        checkArgument(interfaceToRecord != null, "No interface to record was specified")
+        checkArgument(interfaceToRecord.isInterface(), "You specified the class ${interfaceToRecord.getSimpleName()}, " +
                                                            "but I can only record interfaces")
-        this.interfaceBeenRecorded = interfaceBeenRecorded
+        this.interfaceBeenRecorded = interfaceToRecord
     }
 
 
@@ -31,6 +31,10 @@ class MessageRecorder<T> {
 
     def T asTypeBeingRecorded() {
         return this.asType(interfaceBeenRecorded)
+    }
+
+    Class<T> getInterfaceBeenRecorded() {
+        return interfaceBeenRecorded
     }
 
     def playbackAt(aDescriptorVisitor){

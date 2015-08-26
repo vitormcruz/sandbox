@@ -17,8 +17,8 @@ class JUnitTestGenerationDescriptionsExtension {
         return aTestDescription.playbackAt(new TestGeneratorForTestDescription())
     }
 
-    public static JUnitTestsGeneratorForStringDescription asTestGenerator(Description aDescription, descriptedClass, mandatoryTestGenerator){
-        throw new UnsupportedOperationException("No asTestGenerator method was created for description ${aDescription.getTypeRecorded()}")
+    public static Description asTestGenerator(Description aDescription, descriptedClass, mandatoryTestGenerator){
+        throw new UnsupportedOperationException("No asTestGenerator method was created for description ${aDescription.getInterfaceBeenRecorded()}")
     }
 
     public static JUnitTestsGeneratorForStringDescription asTestGenerator(StringDescription aDescription, descriptedClass, mandatoryTestGenerator){
@@ -31,13 +31,13 @@ class JUnitTestGenerationDescriptionsExtension {
     public static JUnitTestsGeneratorForNumberDescription asTestGenerator(NumberDescription aDescription, descriptedClass, mandatoryTestGenerator){
         def testGenerator = new JUnitTestsGeneratorForNumberDescription(descriptedClass)
         testGenerator.setMandatoryTestGenerator(mandatoryTestGenerator)
-        aDescription.accept(testGenerator)
+        aDescription.playbackAt(testGenerator)
         return testGenerator
     }
 
     public static JUnitTestsGeneratorForOperationDescription asTestGenerator(OperationDescription aDescription, descriptedClass, mandatoryTestGenerator){
         def testGenerator = new JUnitTestsGeneratorForOperationDescription(descriptedClass)
-        aDescription.accept(testGenerator)
+        aDescription.playbackAt(testGenerator)
         return testGenerator
     }
 

@@ -2,14 +2,13 @@ package sandbox.magritte.testGenerator.junit.scenarioGenerator
 import org.apache.commons.lang.StringUtils
 import sandbox.magritte.description.ObjectDescription
 import sandbox.magritte.description.StringDescription
-import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
 
 import static org.hamcrest.CoreMatchers.hasItem
 import static org.hamcrest.CoreMatchers.not
 import static org.junit.Assert.assertThat
 
-class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForBaseDescription implements StringDescription{
+class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForObjectDescription implements StringDescription{
 
     JUnitTestsGeneratorForStringDescription(Class describedClass) {
         super.describedClass = describedClass

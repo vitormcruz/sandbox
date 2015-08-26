@@ -1,10 +1,11 @@
 package sandbox.magritte.testGenerator.junit.scenarioGenerator
 
-import sandbox.magritte.description.BaseDescription
+import sandbox.magritte.description.ObjectDescription
 import sandbox.magritte.description.NumberDescription
+import sandbox.magritte.description.ObjectDescription
 import sandbox.magritte.description.StringDescription
 
-class JUnitTestsGeneratorForNumberDescription extends JunitTestGeneratorForBaseDescription implements NumberDescription{
+class JUnitTestsGeneratorForNumberDescription extends JunitTestGeneratorForObjectDescription implements NumberDescription{
 
     private Object describedClass
 
@@ -18,12 +19,12 @@ class JUnitTestsGeneratorForNumberDescription extends JunitTestGeneratorForBaseD
     }
 
     @Override
-    BaseDescription defaultValue(Object defaultValue) {
+    ObjectDescription defaultValue(Object defaultValue) {
         return this
     }
 
     @Override
-    BaseDescription label(Object label) {
+    ObjectDescription label(Object label) {
         return this
     }
 }

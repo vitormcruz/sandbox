@@ -2,7 +2,7 @@ package sandbox.magritte.testGenerator.junit.scenarioGenerator
 
 import sandbox.magritte.description.Description
 import sandbox.magritte.description.OperationDescription
-import sandbox.magritte.description.recordingDescription.MethodCallRecorder
+import sandbox.magritte.description.recordingDescription.MessageRecorder
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator
 import sandbox.magritte.testGenerator.MandatoryTestGeneratorForMethod
@@ -43,9 +43,9 @@ class JUnitTestsGeneratorForOperationDescription implements MethodGenerator, Ope
 
     //TODO MUST change this. Implementation of models cannot depend upon the order of which descriptions are made.
     private Description getDescriptionWithAccessor(Description description, name) {
-        Description newDescription = new MethodCallRecorder(description.getTypeRecorded()).asTypeBeeingRecorded()
+        Description newDescription = new MessageRecorder(description.getInterfaceBeenRecorded()).asTypeBeingRecorded()
         newDescription.accessor(name)
-        description.accept(newDescription)
+        description.playbackAt(newDescription)
         newDescription
     }
 

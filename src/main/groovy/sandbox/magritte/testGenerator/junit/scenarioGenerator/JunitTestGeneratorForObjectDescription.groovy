@@ -4,7 +4,7 @@ import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator
 import sandbox.magritte.testGenerator.MandatoryTestGenerator
 
-abstract class JunitTestGeneratorForBaseDescription implements ObjectDescription, MethodGenerator {
+abstract class JunitTestGeneratorForObjectDescription implements ObjectDescription, MethodGenerator {
 
     //TODO this is used here and in MandatoryTestGenerator. There should be a higher level class with this and with the getter
     def protected testScenarios = []
