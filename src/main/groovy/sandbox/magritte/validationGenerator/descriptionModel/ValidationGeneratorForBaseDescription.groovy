@@ -1,12 +1,12 @@
 package sandbox.magritte.validationGenerator.descriptionModel
-import sandbox.magritte.description.BaseDescription
+import sandbox.magritte.description.ObjectDescription
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator
 import sandbox.magritte.validationGenerator.validations.Accessor
 import sandbox.magritte.validationGenerator.ValidationFactory
 import sandbox.magritte.validationGenerator.validations.DefaultValidationFactory
 
-abstract class ValidationGeneratorForBaseDescription implements MethodGenerator, BaseDescription{
+abstract class ValidationGeneratorForBaseDescription implements MethodGenerator, ObjectDescription{
 
     //TODO Substitute for validation factory interface
     protected ValidationFactory validationFactory = DefaultValidationFactory.smartNew(ValidationGeneratorForBaseDescription)
@@ -15,7 +15,7 @@ abstract class ValidationGeneratorForBaseDescription implements MethodGenerator,
     private validations = []
 
     @Override
-    BaseDescription accessor(String accessorName) {
+    ObjectDescription accessor(String accessorName) {
         accessor.name = accessorName
         return this
     }
@@ -25,18 +25,18 @@ abstract class ValidationGeneratorForBaseDescription implements MethodGenerator,
     }
 
     @Override
-    BaseDescription beRequired() {
+    ObjectDescription beRequired() {
         addValidation(validationFactory.getRequiredValidation(accessor))
         return this
     }
 
     @Override
-    BaseDescription defaultValue(Object defaultValue) {
+    ObjectDescription defaultValue(Object defaultValue) {
         return this
     }
 
     @Override
-    BaseDescription label(Object label) {
+    ObjectDescription label(Object label) {
         return this
     }
 

@@ -1,6 +1,6 @@
 package sandbox.magritte.vaadin.viewGenerator
 import com.vaadin.ui.TextField
-import sandbox.magritte.description.BaseDescription
+import sandbox.magritte.description.ObjectDescription
 import sandbox.magritte.description.StringDescription
 
 class VaadinStringComponent extends TextField implements StringDescription {
@@ -12,24 +12,24 @@ class VaadinStringComponent extends TextField implements StringDescription {
     }
 
     @Override
-    BaseDescription accessor(String accessor) {
+    ObjectDescription accessor(String accessor) {
         this.setValue(sourceObject."$accessor")
         return this
     }
 
     //TODO Test and implement all that is below.
     @Override
-    BaseDescription beRequired() {
+    ObjectDescription beRequired() {
         return this
     }
 
     @Override
-    BaseDescription defaultValue(Object defaultValue) {
+    ObjectDescription defaultValue(Object defaultValue) {
         return this
     }
 
     @Override
-    BaseDescription label(label) {
+    ObjectDescription label(label) {
         this.setCaption(label)
         return this
     }

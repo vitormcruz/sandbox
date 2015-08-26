@@ -1,10 +1,10 @@
 package sandbox.magritte.testGenerator.junit.scenarioGenerator
-import sandbox.magritte.description.BaseDescription
+import sandbox.magritte.description.ObjectDescription
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.description.MethodGenerator
 import sandbox.magritte.testGenerator.MandatoryTestGenerator
 
-abstract class JunitTestGeneratorForBaseDescription implements BaseDescription, MethodGenerator {
+abstract class JunitTestGeneratorForBaseDescription implements ObjectDescription, MethodGenerator {
 
     //TODO this is used here and in MandatoryTestGenerator. There should be a higher level class with this and with the getter
     def protected testScenarios = []
@@ -13,13 +13,13 @@ abstract class JunitTestGeneratorForBaseDescription implements BaseDescription, 
     protected MandatoryTestGenerator mandatoryTestGenerator
 
     
-    BaseDescription accessor(String accessor) {
+    ObjectDescription accessor(String accessor) {
         this.accessor = accessor
         return this
     }
     
     @Override
-    BaseDescription beRequired() {
+    ObjectDescription beRequired() {
         mandatoryTestGenerator.requiredAccessor(accessor)
         return this
     }

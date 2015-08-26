@@ -10,13 +10,13 @@ import static com.google.common.base.Preconditions.checkArgument
  *
  * @param <T> the type being recorded
  */
-class MethodCallRecorder<T> {
+class MessageRecorder<T> {
 
     private Class<T> interfaceBeenRecorded
     def final List<RecordedMessage> recordedMethods = []
 
     //TODO use validation framework? To do this, I must provide a way for the framework to fast fail with the actual exception instead of ValidationError
-    MethodCallRecorder(Class<T> interfaceBeenRecorded) {
+    MessageRecorder(Class<T> interfaceBeenRecorded) {
         checkArgument(interfaceBeenRecorded != null, "No interface to record was specified")
         checkArgument(interfaceBeenRecorded.isInterface(), "You specified the class ${interfaceBeenRecorded.getSimpleName()}, " +
                                                            "but I can only record interfaces")
