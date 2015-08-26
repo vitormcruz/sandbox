@@ -4,6 +4,7 @@ import sandbox.magritte.description.DescriptionModelDefinition
 
 import java.lang.reflect.Method
 
+//TODO create interface and make smart new consider it.
 /**
  */
 class MagritteDescriptionModelBuilder {
