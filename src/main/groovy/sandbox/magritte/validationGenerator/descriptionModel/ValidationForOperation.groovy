@@ -42,7 +42,7 @@ class ValidationForOperation extends GeneratedValidationMethod{
         accessor.setDelegate(methodBody.getDelegate())
         def validation = description.getMyValidationGenerator()
         validation.setAccessor(accessor)
-        description.accept(validation)
+        description.playbackAt(validation)
         validations.addAll(validation.getGeneratedMethods())
     }
 

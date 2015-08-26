@@ -1,6 +1,6 @@
 package sandbox.magritte.description
 
-interface NumberDescription extends BaseDescription{
+interface NumberDescription extends ObjectDescription{
 
     NumberDescription beNatural();
 

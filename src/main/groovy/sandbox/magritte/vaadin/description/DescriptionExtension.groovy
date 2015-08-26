@@ -20,7 +20,7 @@ class DescriptionExtension {
     public static Component asVaadinComponentFor(StringDescription aStringDescrition, descriptedObject){
         //TODO this will return a component that is not a layout. How to return a layout if it is not part of a container? (start doing this with tests)
         def component = new VaadinStringComponent(descriptedObject)
-        aStringDescrition.accept(component)
+        aStringDescrition.playbackAt(component)
         return component
     }
 }

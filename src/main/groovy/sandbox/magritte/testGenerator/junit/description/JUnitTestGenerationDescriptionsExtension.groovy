@@ -14,7 +14,7 @@ import sandbox.magritte.testGenerator.junit.scenarioGenerator.JUnitTestsGenerato
 class JUnitTestGenerationDescriptionsExtension {
 
     public static MethodGenerator asTestGenerator(TestDescription aTestDescription){
-        return aTestDescription.accept(new TestGeneratorForTestDescription())
+        return aTestDescription.playbackAt(new TestGeneratorForTestDescription())
     }
 
     public static JUnitTestsGeneratorForStringDescription asTestGenerator(Description aDescription, descriptedClass, mandatoryTestGenerator){
@@ -24,7 +24,7 @@ class JUnitTestGenerationDescriptionsExtension {
     public static JUnitTestsGeneratorForStringDescription asTestGenerator(StringDescription aDescription, descriptedClass, mandatoryTestGenerator){
         def testGenerator = new JUnitTestsGeneratorForStringDescription(descriptedClass)
         testGenerator.setMandatoryTestGenerator(mandatoryTestGenerator)
-        aDescription.accept(testGenerator)
+        aDescription.playbackAt(testGenerator)
         return testGenerator
     }
 

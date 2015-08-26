@@ -14,7 +14,7 @@ class ValidationGenerationDescriptionExtensions {
 
     public static MethodGenerator asMethodGenerator(Description aDescription){
         def validationGenerator = aDescription.getMyValidationGenerator()
-        return aDescription.accept(validationGenerator)
+        return aDescription.playbackAt(validationGenerator)
     }
 
     public static MethodGenerator asMethodGenerator(Collection descriptions){
