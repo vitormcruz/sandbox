@@ -3,26 +3,25 @@ import org.junit.Test
 import sandbox.magritte.description.util.*
 
 import static groovy.test.GroovyAssert.shouldFail
-import static sandbox.magritte.description.recordingDescription.MethodCallRecorder.METHOD_NAME
 
 class MethodCallRecorderTest {
 
     @Test
     def void "Create a MethodCallRecorder with null delegate class"(){
         def ex = shouldFail(IllegalArgumentException, {new MethodCallRecorder(null)})
-        assert ex.getMessage().equals("Cannot be created without specifying a class.")
+        assert ex.getMessage().equals("No interface to record was specified")
     }
 
     @Test
     def void "Create a MethodCallRecorder with concrete delegate class"(){
         def ex = shouldFail(IllegalArgumentException, {new MethodCallRecorder(String)})
-        assert ex.message.equals("I can be created for interfaces only.")
+        assert ex.message.equals("You specified the class String, but I can only record interfaces")
     }
 
     @Test
     def void "Create a MethodCallRecorder with abstract delegate class"(){
         def ex = shouldFail(IllegalArgumentException, {new MethodCallRecorder(AbstractClassForRecording)})
-        assert ex.message.equals("I can be created for interfaces only.")
+        assert ex.message.equals("You specified the class AbstractClassForRecording, but I can only record interfaces")
     }
 
     @Test
@@ -42,7 +41,7 @@ class MethodCallRecorderTest {
     def void "Record abstract methods from traits"(){
         def classRecorder = new MethodCallRecorder(TraitForRecording)
         classRecorder.trait_method1()
-        assert classRecorder.messagesSend.find {it[METHOD_NAME] == "trait_method1"} : "trait_method1 wasn't recorded"
+        assert classRecorder.recordedMethods.find {it.name == "trait_method1"} : "trait_method1 wasn't recorded"
     }
 
     @Test
@@ -50,8 +49,8 @@ class MethodCallRecorderTest {
         def classRecorder = new MethodCallRecorder(InterfaceWithHierarchyForRecording)
         classRecorder.interface_method1()
         classRecorder.trait_method1()
-        assert classRecorder.messagesSend.find {it[METHOD_NAME] == "interface_method1"} : "interface_method1 wasn't recorded"
-        assert classRecorder.messagesSend.find {it[METHOD_NAME] == "trait_method1"} : "trait_method1 wasn't recorded"
+        assert classRecorder.recordedMethods.find {it.name == "interface_method1"} : "interface_method1 wasn't recorded"
+        assert classRecorder.recordedMethods.find {it.name == "trait_method1"} : "trait_method1 wasn't recorded"
     }
 
     @Test
@@ -76,7 +75,7 @@ class MethodCallRecorderTest {
         playbackVerifier.expectedArgumentOrder([[], [], [], [], [], [],
                                                ["teste"], ["teste", 1], ["teste", expectedDate, 1, 2, 3]])
 
-        classRecorder.accept(playbackVerifier)
+        classRecorder.playbackAt(playbackVerifier)
         playbackVerifier.verifyPlayback()
     }
 
@@ -89,15 +88,13 @@ class MethodCallRecorderTest {
         classRecorder.interface_method3(2, 3);
         classRecorder.interface_method4("teste", new Date(), 1, 2, 3)
 
-        classRecorder.accept(new InterfaceForRecordingImpl())
+        classRecorder.playbackAt(new InterfaceForRecordingImpl())
     }
 
     @Test
     def void "asTypeBeeingRecorded should return a MethodCallRecorder disguised (proxy) as the type it is recording"(){
         def methodCallRecorder = new MethodCallRecorder(InterfaceForRecording)
-        assert methodCallRecorder.asTypeBeeingRecorded() instanceof InterfaceForRecording :
-        "The object returned by asTypeBeeingRecorded is not the correct one."
+        assert methodCallRecorder.asTypeBeingRecorded() instanceof InterfaceForRecording :
+        "The object returned by asTypeBeingRecorded is not the correct one."
     }
-
-    //TODO Calling a method more than once
 }

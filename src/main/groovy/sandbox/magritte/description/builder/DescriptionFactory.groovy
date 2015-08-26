@@ -14,6 +14,6 @@ class DescriptionFactory {
 
     static <T> T New(Class<T> aDescriptionType) {
         def recorder = new MethodCallRecorder(aDescriptionType)
-        return recorder.asTypeBeeingRecorded()
+        return recorder.asTypeBeingRecorded()
     }
 }

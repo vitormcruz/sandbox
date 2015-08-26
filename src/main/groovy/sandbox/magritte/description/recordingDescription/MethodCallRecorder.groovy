@@ -1,53 +1,40 @@
 package sandbox.magritte.description.recordingDescription
+
+import static com.google.common.base.Preconditions.checkArgument
+
 /**
+ * I am a implementation of the description model that behave like all description interfaces. I mimic the interface
+ * provided and then record each an every method call made to myself, After that I can be played back to any object that
+ * can respond to the interface I was recorded, so that a new specific model can be build upon the same calls that made
+ * the generic description model.
  *
- * @param <T> Type beeing recorded
+ * @param <T> the type being recorded
  */
 class MethodCallRecorder<T> {
 
-    public static final int METHOD_NAME = 0
-    public static final int METHOD_ARGUMENTS = 1
+    private Class<T> interfaceBeenRecorded
+    def final List<RecordedMessage> recordedMethods = []
 
-
-    /**
-     * A list of method calls. Each method call is represented by a list with a name and a list of arguments.
-     */
-    def final List messagesSend = []
-    private Class<T> clazz
-
-    MethodCallRecorder(Class<T> clazz) {
-        //TODo change for validation framework
-        if(clazz == null) throw new IllegalArgumentException("Cannot be created without specifying a class.")
-        if(!clazz.isInterface()) throw new IllegalArgumentException("I can be created for interfaces only.")
-        this.clazz = clazz
+    //TODO use validation framework? To do this, I must provide a way for the framework to fast fail with the actual exception instead of ValidationError
+    MethodCallRecorder(Class<T> interfaceBeenRecorded) {
+        checkArgument(interfaceBeenRecorded != null, "No interface to record was specified")
+        checkArgument(interfaceBeenRecorded.isInterface(), "You specified the class ${interfaceBeenRecorded.getSimpleName()}, " +
+                                                           "but I can only record interfaces")
+        this.interfaceBeenRecorded = interfaceBeenRecorded
     }
 
 
-    def T methodMissing(String methodName, args) {
-        def Object methodFound = clazz.methods.find { it.name == methodName }
-
-        //TODO use validation framework here
-        validateMethodFound(methodFound, methodName, args)
-
-        messagesSend.add([methodName, args])
-        return asTypeBeeingRecorded()
+    def T methodMissing(String nameOfMethodToRecord, args) {
+        recordedMethods.add(new RecordedMessage(nameOfMethodToRecord, args, interfaceBeenRecorded))
+        return asTypeBeingRecorded()
     }
 
-    private void validateMethodFound(methodFound, methodName, args) {
-        if (methodFound == null) {
-            throw new MissingMethodException(methodName, clazz, args)
-        }
+    def T asTypeBeingRecorded() {
+        return this.asType(interfaceBeenRecorded)
     }
 
-    def T asTypeBeeingRecorded() {
-        return this.asType(clazz)
-    }
-
-    def accept(aDescriptorVisitor){
-        messagesSend.each {
-            aDescriptorVisitor."${it[METHOD_NAME]}"(*it[METHOD_ARGUMENTS])
-        }
-
+    def playbackAt(aDescriptorVisitor){
+        recordedMethods.each { it.sendMyselfTo(aDescriptorVisitor) }
         return aDescriptorVisitor
     }
 }

@@ -13,7 +13,7 @@ class PlaybackVerifier {
 
     PlaybackVerifier(descriptions) {
         descriptions.each {
-            it.accept(this)
+            it.playbackAt(this)
         }
     }
 
