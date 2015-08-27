@@ -1,7 +1,7 @@
 package sandbox.magritte.testGenerator.junit.scenarioGenerator
 import sandbox.magritte.description.ObjectDescription
 import sandbox.magritte.methodGenerator.GeneratedMethod
-import sandbox.magritte.methodGenerator.description.MethodGenerator
+import sandbox.magritte.methodGenerator.MethodGenerator
 import sandbox.magritte.testGenerator.MandatoryTestGenerator
 
 abstract class JunitTestGeneratorForObjectDescription implements ObjectDescription, MethodGenerator {

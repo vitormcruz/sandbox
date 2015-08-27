@@ -4,7 +4,7 @@ import sandbox.magritte.description.Description
 import sandbox.magritte.description.OperationDescription
 import sandbox.magritte.description.recordingDescription.MessageRecorder
 import sandbox.magritte.methodGenerator.GeneratedMethod
-import sandbox.magritte.methodGenerator.description.MethodGenerator
+import sandbox.magritte.methodGenerator.MethodGenerator
 import sandbox.magritte.testGenerator.MandatoryTestGeneratorForMethod
 import sandbox.validator.imp.ValidationException
 

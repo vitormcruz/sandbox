@@ -4,7 +4,7 @@ import sandbox.magritte.description.Description
 import sandbox.magritte.description.NumberDescription
 import sandbox.magritte.description.OperationDescription
 import sandbox.magritte.description.StringDescription
-import sandbox.magritte.methodGenerator.description.MethodGenerator
+import sandbox.magritte.methodGenerator.MethodGenerator
 import sandbox.magritte.validationGenerator.descriptionModel.ValidationGeneratorCollection
 import sandbox.magritte.validationGenerator.descriptionModel.ValidationGeneratorForNumberDescription
 import sandbox.magritte.validationGenerator.descriptionModel.ValidationGeneratorForOperationDescription

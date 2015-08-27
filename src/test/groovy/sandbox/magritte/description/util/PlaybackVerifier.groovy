@@ -7,11 +7,13 @@ class PlaybackVerifier {
     private List<String> methodOrderObtained = []
     private List<List> argumentOrderExpected = []
     private List<List> argumentOrderObtained = []
+    private Boolean isModelempty
 
     PlaybackVerifier() {
     }
 
     PlaybackVerifier(descriptions) {
+        isModelempty = descriptions.isEmpty()
         descriptions.each {
             it.playbackAt(this)
         }
@@ -36,6 +38,6 @@ class PlaybackVerifier {
     }
 
     def nothingWasPlayed() {
-        return methodOrderObtained.isEmpty()
+        return methodOrderObtained.isEmpty() && isModelempty
     }
 }

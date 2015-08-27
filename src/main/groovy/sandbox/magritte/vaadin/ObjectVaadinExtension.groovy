@@ -5,7 +5,7 @@ import sandbox.magritte.description.builder.MagritteDescriptionModelBuilder
 class ObjectVaadinExtension {
 
     public static Component asVaadinComponent(Object anObject){
-        def description = MagritteDescriptionModelBuilder.forObjectA(anObject)
+        def description = MagritteDescriptionModelBuilder.myInstance.forObject(anObject)
         return description.asVaadinComponentFor(anObject)
 
     }

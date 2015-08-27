@@ -1,6 +1,6 @@
 package sandbox.magritte.validationGenerator.descriptionModel
 import sandbox.magritte.description.NumberDescription
-import sandbox.magritte.methodGenerator.description.MethodGenerator
+import sandbox.magritte.methodGenerator.MethodGenerator
 
 class ValidationGeneratorForNumberDescription extends ValidationGeneratorForBaseDescription
                                               implements MethodGenerator, NumberDescription{

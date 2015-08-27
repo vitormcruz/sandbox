@@ -4,7 +4,8 @@ import sandbox.magritte.description.Description
 import sandbox.magritte.description.NumberDescription
 import sandbox.magritte.description.OperationDescription
 import sandbox.magritte.description.StringDescription
-import sandbox.magritte.methodGenerator.description.MethodGenerator
+import sandbox.magritte.methodGenerator.MethodGenerator
+import sandbox.magritte.methodGenerator.imp.ComposedMethodGenerator
 import sandbox.magritte.testGenerator.TestGeneratorForTestDescription
 import sandbox.magritte.description.TestDescription
 import sandbox.magritte.testGenerator.junit.scenarioGenerator.JUnitTestsGeneratorForNumberDescription
@@ -13,12 +14,18 @@ import sandbox.magritte.testGenerator.junit.scenarioGenerator.JUnitTestsGenerato
 
 class JUnitTestGenerationDescriptionsExtension {
 
+    public static Description asTestGenerator(Description aDescription, descriptedClass, mandatoryTestGenerator){
+        throw new UnsupportedOperationException("No asTestGenerator method was created for description ${aDescription.getInterfaceBeenRecorded()}")
+    }
+
     public static MethodGenerator asTestGenerator(TestDescription aTestDescription){
         return aTestDescription.playbackAt(new TestGeneratorForTestDescription())
     }
 
-    public static Description asTestGenerator(Description aDescription, descriptedClass, mandatoryTestGenerator){
-        throw new UnsupportedOperationException("No asTestGenerator method was created for description ${aDescription.getInterfaceBeenRecorded()}")
+    public static MethodGenerator asTestGenerator(Collection aTestDescription){
+        def composedMethodGenerator = new ComposedMethodGenerator()
+        aTestDescription.each {composedMethodGenerator.addMethodGenerator(it.asTestGenerator())}
+        return composedMethodGenerator
     }
 
     public static JUnitTestsGeneratorForStringDescription asTestGenerator(StringDescription aDescription, descriptedClass, mandatoryTestGenerator){

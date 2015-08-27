@@ -1,7 +1,7 @@
 package sandbox.magritte.validationGenerator.descriptionModel
 import sandbox.magritte.description.ObjectDescription
 import sandbox.magritte.methodGenerator.GeneratedMethod
-import sandbox.magritte.methodGenerator.description.MethodGenerator
+import sandbox.magritte.methodGenerator.MethodGenerator
 import sandbox.magritte.validationGenerator.validations.Accessor
 import sandbox.magritte.validationGenerator.ValidationFactory
 import sandbox.magritte.validationGenerator.validations.DefaultValidationFactory

@@ -1,6 +1,4 @@
-package sandbox.magritte.methodGenerator.description;
-
-import sandbox.magritte.methodGenerator.GeneratedMethod;
+package sandbox.magritte.methodGenerator;
 
 import java.util.Collection;
 

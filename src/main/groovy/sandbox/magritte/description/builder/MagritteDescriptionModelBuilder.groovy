@@ -3,40 +3,21 @@ package sandbox.magritte.description.builder
 import sandbox.magritte.description.DescriptionModelDefinition
 
 import java.lang.reflect.Method
-
 //TODO create interface and make smart new consider it.
 /**
  */
 class MagritteDescriptionModelBuilder {
 
-    def static forObjectA(object){
-        Collection<Method> descriptionMethods = object.getClass()
-                                                      .methods.findAll {method ->
-            method.declaredAnnotations.find {it instanceof DescriptionModelDefinition} != null
-        }
-
-
-        if (descriptionMethods[0] == null) {
-            return []
-        }
-
-        def descriptionModel = descriptionMethods[0].invoke(object)
-        return descriptionModel == null ? [] : descriptionModel
-    }
+    def final static MagritteDescriptionModelBuilder myInstance = MagritteDescriptionModelBuilder.smartNewFor(MagritteDescriptionModelBuilder)
 
     def forObject(object){
-        Collection<Method> descriptionMethods = object.getClass()
-                .methods.findAll {method ->
+        Collection<Method> descriptionMethods = object.getClass().methods.findAll {method ->
             method.declaredAnnotations.find {it instanceof DescriptionModelDefinition} != null
         }
 
-
-        if (descriptionMethods[0] == null) {
-            return []
-        }
-
-        def descriptionModel = descriptionMethods[0].invoke(object)
-        return descriptionModel == null ? [] : descriptionModel
+        def descriptionModel = descriptionMethods.collect{ it.invoke(object) }.flatten()
+        descriptionModel.removeAll { it == null }
+        return descriptionModel
     }
 
 }

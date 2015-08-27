@@ -2,7 +2,7 @@ package sandbox.magritte.testGenerator
 
 import org.apache.commons.lang.StringUtils
 import sandbox.magritte.methodGenerator.GeneratedMethod
-import sandbox.magritte.methodGenerator.description.MethodGenerator
+import sandbox.magritte.methodGenerator.MethodGenerator
 import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
 
 import static org.hamcrest.CoreMatchers.hasItem
