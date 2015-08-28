@@ -1,10 +1,12 @@
 package sandbox.magritte.description.builder
-import org.junit.Ignore
+
 import org.junit.Test
 import sandbox.magritte.description.DescriptionModelDefinition
+import sandbox.magritte.description.NumberDescription
 import sandbox.magritte.description.StringDescription
 import sandbox.magritte.description.util.PlaybackVerifier
 
+import static groovy.test.GroovyAssert.shouldFail
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 
 class MagritteDescriptionModelBuilderTest {
@@ -26,6 +28,52 @@ class MagritteDescriptionModelBuilderTest {
     @Test
     def void "Build a description model from a class with one null description model definition"() {
         descriptionModelShouldBeEmptyFor(new ClassWithOneDescriptionModel(null))
+    }
+
+    @Test
+    def void "Build a description model from a class with N empty description model definition"() {
+        descriptionModelShouldBeEmptyFor(new ClassWithNDescriptionModels([], []))
+    }
+
+    @Test
+    def void "Build a description model from a class with N null description model definition"() {
+        descriptionModelShouldBeEmptyFor(new ClassWithNDescriptionModels(null, null))
+    }
+
+    @Test
+    def void "Build a description model from a class with one non empty description model definition"() {
+        def model = New(StringDescription).beNotBlank().maxSize(10)
+        def classParentWithDescription = new ClassWithOneDescriptionModel(model)
+        def expectedMessageSent = ["beNotBlank", "maxSize"]
+        def expectedArgumentOrder = [[], [10]]
+
+        descriptionModelForClassShouldHave(classParentWithDescription, expectedMessageSent, expectedArgumentOrder)
+    }
+
+    @Test
+    def void "Build a description model from a class with N description model definitions"() {
+        def model1 = New(StringDescription).beNotBlank().maxSize(10)
+        def model2 = New(NumberDescription).beNatural().beRequired()
+        def classParentWithDescription = new ClassWithNDescriptionModels(model1, model2)
+        def expectedMessageSent = ["beNatural", "beRequired", "beNotBlank", "maxSize"]
+        def expectedArgumentOrder = [[], [], [], [10]]
+
+        descriptionModelForClassShouldHave(classParentWithDescription, expectedMessageSent, expectedArgumentOrder)
+    }
+
+    @Test
+    def void "Build a description model from a class with N description model definitions, each with N descriptions"() {
+        def model1 = [New(StringDescription).beNotBlank().maxSize(10),
+                      New(StringDescription).accessor("testAccessor1").maxSize(20)]
+        def model2 = [New(NumberDescription).beNatural().beRequired(),
+                      New(StringDescription).accessor("testAccessor2").maxSize(40),
+                      New(StringDescription).maxSize(1000).beNotBlank()]
+        def classParentWithDescription = new ClassWithNDescriptionModels(model1, model2)
+        def expectedMessageSent = ["beNatural", "beRequired", "accessor", "maxSize", "maxSize", "beNotBlank",
+                                   "beNotBlank", "maxSize", "accessor", "maxSize"]
+        def expectedArgumentOrder = [[], [], ["testAccessor2"], [40], [1000], [], [], [10], ["testAccessor1"], [20]]
+
+        descriptionModelForClassShouldHave(classParentWithDescription, expectedMessageSent, expectedArgumentOrder)
     }
 
     @Test
@@ -70,30 +118,17 @@ class MagritteDescriptionModelBuilderTest {
     }
 
     @Test
-    def void "Build a description model from a class with N empty description model definition"() {
-        descriptionModelShouldBeEmptyFor(new ClassWithNDescriptionModels([], []))
+    def void "Build a description model from a class with a description model definition rising an exception"() {
+        shouldFail(IllegalArgumentException, {modelBuilder.forObject(new ClassThatThrowExceptionUponDescriptionModelCall())})
     }
 
-    @Test
-    def void "Build a description model from a class with N null description model definition"() {
-        descriptionModelShouldBeEmptyFor(new ClassWithNDescriptionModels(null, null))
+    public static class ClassThatThrowExceptionUponDescriptionModelCall{
+
+        @DescriptionModelDefinition
+        public myDescription(){
+            throw new IllegalArgumentException()
+        }
     }
-
-    @Test
-    @Ignore
-    def void "Build a description model from a class with one non empty description model definition"() {    }
-
-    @Test
-    @Ignore
-    def void "Build a description model from a class with N description model definitions"() {}
-
-    @Test
-    @Ignore
-    def void "Build a description model from a class with one description model definition from an extension method"() {}
-
-    @Test
-    @Ignore
-    def void "Build a description model from a class with a description model definition rising an exception"() {    }
 
     public static class ClassWithOneDescriptionModel{
 
