@@ -1,5 +1,8 @@
 package sandbox.magritte.description.recordingDescription
 
+import sandbox.validator.Validation
+import sandbox.validator.ValidatorTrait
+
 import static com.google.common.base.Preconditions.checkArgument
 
 /**
@@ -10,19 +13,22 @@ import static com.google.common.base.Preconditions.checkArgument
  *
  * @param <T> the type being recorded
  */
-class MessageRecorder<T> {
+class MessageRecorder<T> implements ValidatorTrait{
 
     private Class<T> interfaceBeenRecorded
     def final List<RecordedMessage> recordedMethods = []
 
-    //TODO use validation framework? To do this, I must provide a way for the framework to fast fail with the actual exception instead of ValidationError
     MessageRecorder(Class<T> interfaceToRecord) {
-        checkArgument(interfaceToRecord != null, "No interface to record was specified")
-        checkArgument(interfaceToRecord.isInterface(), "You specified the class ${interfaceToRecord.getSimpleName()}, " +
-                                                           "but I can only record interfaces")
         this.interfaceBeenRecorded = interfaceToRecord
+        validateFailingOnError()
     }
 
+    @Validation
+    def void validateInterfaceBeenRecorded(){
+        checkArgument(interfaceBeenRecorded != null, "No interface to record was specified")
+        checkArgument(interfaceBeenRecorded.isInterface(), "You specified the class ${interfaceBeenRecorded.getSimpleName()}, " +
+                "but I can only record interfaces")
+    }
 
     def T methodMissing(String nameOfMethodToRecord, args) {
         recordedMethods.add(new RecordedMessage(nameOfMethodToRecord, args, interfaceBeenRecorded))

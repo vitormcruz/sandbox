@@ -9,4 +9,8 @@ class ValidationException extends RuntimeException{
     ValidationException(ResultInterface result) {
         this.result = result
     }
+
+    def hasError(String errorMessage) {
+        return result.failures.find {it.message.equals(errorMessage)} != null
+    }
 }
