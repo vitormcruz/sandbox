@@ -1,8 +1,9 @@
 package sandbox.magritte.validationGenerator.validations
 /**
  */
-class ParameterAccessor extends Accessor{
+class ParameterAccessor implements Accessor{
 
+    private paramName
     private paramNumber
     private ThreadLocal<Collection> arguments = new ThreadLocal<Collection>()
 
@@ -12,6 +13,15 @@ class ParameterAccessor extends Accessor{
 
     void setArguments(Collection arguments) {
         this.arguments.set(arguments)
+    }
+
+    @Override
+    String getName() {
+        return paramName
+    }
+
+    void setName(paramName) {
+        this.paramName = paramName
     }
 
     @Override

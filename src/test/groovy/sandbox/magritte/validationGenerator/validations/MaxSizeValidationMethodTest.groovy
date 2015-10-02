@@ -18,7 +18,7 @@ import static sandbox.magritte.description.builder.DescriptionFactory.New
 @RunWith(JUnit4TestGeneratorRunner)
 class MaxSizeValidationMethodTest extends BasicValidationMethodTest{
 
-    public static final Accessor tstAccessor = new Accessor(name: "tst")
+    public static final InstanceAccessor tstAccessor = new InstanceAccessor(name: "tst")
 
     @DescriptionModelDefinition
     public myDescription(){
@@ -55,7 +55,7 @@ class MaxSizeValidationMethodTest extends BasicValidationMethodTest{
     }
 
     @Override
-    def getValidationMethodWith(Accessor accessor) {
+    def getValidationMethodWith(InstanceAccessor accessor) {
         return new MaxSizeValidationMethod(10).newForAccessor(accessor)
     }
 

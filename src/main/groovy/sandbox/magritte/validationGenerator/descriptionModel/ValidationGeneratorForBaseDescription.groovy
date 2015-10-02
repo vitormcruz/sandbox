@@ -1,18 +1,23 @@
 package sandbox.magritte.validationGenerator.descriptionModel
+
 import sandbox.magritte.description.ObjectDescription
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.MethodGenerator
-import sandbox.magritte.validationGenerator.validations.Accessor
 import sandbox.magritte.validationGenerator.ValidationFactory
+import sandbox.magritte.validationGenerator.validations.Accessor
 import sandbox.magritte.validationGenerator.validations.DefaultValidationFactory
+import sandbox.magritte.validationGenerator.validations.InstanceAccessor
 
 abstract class ValidationGeneratorForBaseDescription implements MethodGenerator, ObjectDescription{
 
     //TODO Substitute for validation factory interface
     protected ValidationFactory validationFactory = DefaultValidationFactory.smartNewFor(ValidationGeneratorForBaseDescription)
-    def protected Accessor accessor = new Accessor()
-
+    protected Accessor accessor = new InstanceAccessor()
     private validations = []
+
+    ValidationGeneratorForBaseDescription(describedObject) {
+        accessor = new InstanceAccessor(describedObject)
+    }
 
     @Override
     ObjectDescription accessor(String accessorName) {

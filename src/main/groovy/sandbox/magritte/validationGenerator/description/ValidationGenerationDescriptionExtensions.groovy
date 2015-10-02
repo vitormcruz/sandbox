@@ -9,27 +9,34 @@ import sandbox.magritte.validationGenerator.descriptionModel.ValidationGenerator
 import sandbox.magritte.validationGenerator.descriptionModel.ValidationGeneratorForNumberDescription
 import sandbox.magritte.validationGenerator.descriptionModel.ValidationGeneratorForOperationDescription
 import sandbox.magritte.validationGenerator.descriptionModel.ValidationGeneratorForStringDescription
+import sandbox.magritte.validationGenerator.validations.Accessor
 
 class ValidationGenerationDescriptionExtensions {
 
-    public static MethodGenerator asMethodGenerator(Description aDescription){
-        def validationGenerator = aDescription.getMyValidationGenerator()
+    public static MethodGenerator asMethodGenerator(Description aDescription, Object describedObject, Accessor accessor){
+        def validationGenerator = aDescription.getMyValidationGenerator(describedObject)
+        validationGenerator.setAccessor(accessor)
         return aDescription.playbackAt(validationGenerator)
     }
 
-    public static MethodGenerator asMethodGenerator(Collection descriptions){
-        return new ValidationGeneratorCollection(descriptions)
+    public static MethodGenerator asMethodGenerator(Description aDescription, Object describedObject){
+        def validationGenerator = aDescription.getMyValidationGenerator(describedObject)
+        return aDescription.playbackAt(validationGenerator)
     }
 
-    public static MethodGenerator getMyValidationGenerator(StringDescription aDescription){
-        return new ValidationGeneratorForStringDescription()
+    public static MethodGenerator asMethodGenerator(Collection descriptions, Object describedObject){
+        return new ValidationGeneratorCollection(descriptions, describedObject)
     }
 
-    public static MethodGenerator getMyValidationGenerator(NumberDescription aDescription){
-        return new ValidationGeneratorForNumberDescription()
+    public static MethodGenerator getMyValidationGenerator(StringDescription aDescription, Object describedObject){
+        return new ValidationGeneratorForStringDescription(describedObject)
     }
 
-    public static MethodGenerator getMyValidationGenerator(OperationDescription aDescription){
+    public static MethodGenerator getMyValidationGenerator(NumberDescription aDescription, Object describedObject){
+        return new ValidationGeneratorForNumberDescription(describedObject)
+    }
+
+    public static MethodGenerator getMyValidationGenerator(OperationDescription aDescription, Object describedObject){
         return new ValidationGeneratorForOperationDescription()
     }
 }

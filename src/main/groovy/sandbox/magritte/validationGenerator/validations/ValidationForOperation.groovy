@@ -1,32 +1,13 @@
-package sandbox.magritte.validationGenerator.descriptionModel
+package sandbox.magritte.validationGenerator.validations
 import sandbox.magritte.description.Description
 import sandbox.magritte.methodGenerator.GeneratedMethod
-import sandbox.magritte.validationGenerator.validations.ParameterAccessor
-import sandbox.magritte.validationGenerator.validations.GeneratedValidationMethod
-
 /**
  */
 class ValidationForOperation extends GeneratedValidationMethod{
 
     def private String operationName
     def private Collection<GeneratedMethod> validations = []
-    //TODO I think thread local must be here and not inside ParameterAccessor
     private Map<Integer, ParameterAccessor> parametersMap = [:]
-
-
-    ValidationForOperation() {
-        methodBody = {grasshopper, args ->
-            parametersMap.values().each {
-                it.setArguments([args].flatten())
-            }
-
-            setDelegate(grasshopper)
-            getValidations().each {
-                it.getMethodBody().setDelegate(grasshopper)
-                delegate.withValidation(it.getMethodName(), it.getMethodBody(), operationName)
-            }
-        }
-    }
 
     void setOperationName(String operationName){
         this.operationName = operationName
@@ -39,10 +20,7 @@ class ValidationForOperation extends GeneratedValidationMethod{
 
     def setValidation(Integer paramNumber, String paramName, Description description){
         def accessor = getParameterAccessorFor(paramNumber, paramName)
-        accessor.setDelegate(methodBody.getDelegate())
-        def validation = description.getMyValidationGenerator()
-        validation.setAccessor(accessor)
-        description.playbackAt(validation)
+        def validation = description.asMethodGenerator(null, accessor)
         validations.addAll(validation.getGeneratedMethods())
     }
 
@@ -64,7 +42,15 @@ class ValidationForOperation extends GeneratedValidationMethod{
     @Override
     void teachMyselfToInContext(Object grasshopper, String context, paramsContext) {
         if(operationName.equals(context)){
-            methodBody(grasshopper, paramsContext)
+
+            parametersMap.values().each {
+                it.setArguments([paramsContext].flatten())
+            }
+
+            getValidations().each {
+                it.getMethodBody().setDelegate(grasshopper)
+                grasshopper.withValidation(it.getMethodName(), it.getMethodBody(), operationName)
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ class GeneratedValidationMethod extends SimpleGeneratedMethod{
 
     @Override
     void teachMyselfTo(Object grasshopper) {
-        getMethodBody().setDelegate(grasshopper)
+        getMethodBody().setDelegate(grasshopper) //TODO remove this. I woll have to apply the same alterations done with validations to the tests generation
         grasshopper.withValidation(getMethodName(), getMethodBody())
     }
 

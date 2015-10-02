@@ -5,6 +5,10 @@ import sandbox.magritte.methodGenerator.MethodGenerator
 class ValidationGeneratorForStringDescription extends ValidationGeneratorForBaseDescription
                                               implements MethodGenerator, StringDescription{
 
+    ValidationGeneratorForStringDescription(Object describedObject) {
+        super(describedObject)
+    }
+
     @Override
     StringDescription beNotBlank() {
         addValidation(validationFactory.getBeNotBlankValidation(accessor))

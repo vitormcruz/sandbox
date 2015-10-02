@@ -5,6 +5,10 @@ import sandbox.magritte.methodGenerator.MethodGenerator
 class ValidationGeneratorForNumberDescription extends ValidationGeneratorForBaseDescription
                                               implements MethodGenerator, NumberDescription{
 
+    ValidationGeneratorForNumberDescription(describedObject) {
+        super(describedObject)
+    }
+
     @Override
     NumberDescription beNatural() {
         addValidation(validationFactory.getBeNaturalValidation(accessor))

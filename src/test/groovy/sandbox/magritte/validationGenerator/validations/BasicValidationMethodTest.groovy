@@ -21,5 +21,5 @@ abstract class BasicValidationMethodTest{
         result.getFailures().collect { it.getException().getMessage() }
     }
 
-    abstract def getValidationMethodWith(Accessor accessor)
+    abstract def getValidationMethodWith(InstanceAccessor accessor)
 }

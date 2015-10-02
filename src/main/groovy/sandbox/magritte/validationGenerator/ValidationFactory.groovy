@@ -1,8 +1,6 @@
 package sandbox.magritte.validationGenerator
-
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.validationGenerator.validations.Accessor
-
 /**
  *
  */
