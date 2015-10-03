@@ -31,8 +31,8 @@ class JUnitTestsGeneratorForOperationDescription implements MethodGenerator, Ope
     }
 
     @Override
-    OperationDescription withParameter(Object number, Object name, Description description) {
-        Description newDescription = getDescriptionWithAccessor(description, name)
+    OperationDescription withParameter(Object number, Description description) {
+        Description newDescription = getDescriptionWithAccessor(description)
         def testGenerator = newDescription.asTestGenerator(describedClass, mandatoryTestGenerator)
         testGenerator.setValidationMethod(validation)
 
@@ -42,9 +42,13 @@ class JUnitTestsGeneratorForOperationDescription implements MethodGenerator, Ope
     }
 
     //TODO MUST change this. Implementation of models cannot depend upon the order of which descriptions are made.
-    private Description getDescriptionWithAccessor(Description description, name) {
+    private Description getDescriptionWithAccessor(Description description) {
         Description newDescription = new MessageRecorder(description.getInterfaceBeenRecorded()).asTypeBeingRecorded()
-        newDescription.accessor(name)
+        def recorder = new MessageRecorder(description.getInterfaceBeenRecorded())
+        description.playbackAt(recorder)
+        def accessor = recorder.recordedMethods.find {it.name == "accessor"}.args[0]
+
+        newDescription.accessor(accessor)
         description.playbackAt(newDescription)
         newDescription
     }

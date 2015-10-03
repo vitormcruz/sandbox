@@ -37,10 +37,10 @@ class ValidationForOperation extends GeneratedValidationMethod{
         return validations
     }
 
-    def setValidation(Integer paramNumber, String paramName, Description description){
-        def accessor = getParameterAccessorFor(paramNumber, paramName)
-        accessor.setDelegate(methodBody.getDelegate())
+    def setValidation(Integer paramNumber, Description description){
         def validation = description.getMyValidationGenerator()
+        def accessor = getParameterAccessorFor(paramNumber, validation.getAccessor().getName())
+        accessor.setDelegate(methodBody.getDelegate())
         validation.setAccessor(accessor)
         description.playbackAt(validation)
         validations.addAll(validation.getGeneratedMethods())

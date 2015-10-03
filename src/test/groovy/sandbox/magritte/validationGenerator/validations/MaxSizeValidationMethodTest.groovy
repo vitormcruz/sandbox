@@ -1,11 +1,7 @@
 package sandbox.magritte.validationGenerator.validations
-
 import org.junit.Test
 import org.junit.runner.RunWith
 import sandbox.magritte.description.DescriptionModelDefinition
-import sandbox.magritte.description.NumberDescription
-import sandbox.magritte.description.OperationDescription
-import sandbox.magritte.description.TestDescription
 import sandbox.magritte.testGenerator.junit.JUnit4TestGeneratorRunner
 import sandbox.validator.imp.ValidationException
 
@@ -13,7 +9,6 @@ import static org.hamcrest.CoreMatchers.hasItem
 import static org.hamcrest.CoreMatchers.not
 import static org.junit.Assert.assertThat
 import static sandbox.magritte.description.OperationDescription.FIRST
-import static sandbox.magritte.description.builder.DescriptionFactory.New
 
 @RunWith(JUnit4TestGeneratorRunner)
 class MaxSizeValidationMethodTest extends BasicValidationMethodTest{
@@ -22,11 +17,9 @@ class MaxSizeValidationMethodTest extends BasicValidationMethodTest{
 
     @DescriptionModelDefinition
     public myDescription(){
-        return New(TestDescription)
-                .descriptionsFor(MaxSizeValidationMethod,
-                                 New(OperationDescription).forConstructor()
-                                                          .withParameter(FIRST, "maxSize",
-                                                                         New(NumberDescription).beRequired()))
+        return MaxSizeValidationMethod.testsValidatesThat(MaxSizeValidationMethod.constructorDescribed()
+                                                                                 .withParameter(FIRST, "maxSize".isANumber()
+                                                                                                                .beRequired()))
     }
 
     //TODO implement generation for these tests

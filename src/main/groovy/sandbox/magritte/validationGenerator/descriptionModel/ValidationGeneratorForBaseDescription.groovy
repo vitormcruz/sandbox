@@ -20,6 +20,10 @@ abstract class ValidationGeneratorForBaseDescription implements MethodGenerator,
         return this
     }
 
+    Accessor getAccessor(){
+        return accessor
+    }
+
     void setAccessor(Accessor accessor) {
         this.accessor = accessor
     }

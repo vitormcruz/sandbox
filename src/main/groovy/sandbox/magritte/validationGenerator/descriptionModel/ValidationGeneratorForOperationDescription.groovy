@@ -30,8 +30,8 @@ class ValidationGeneratorForOperationDescription implements MethodGenerator, Ope
     }
 
     @Override
-    OperationDescription withParameter(number, name, Description description) {
-        generatedMethod.setValidation(number, name, description)
+    OperationDescription withParameter(number, Description description) {
+        generatedMethod.setValidation(number, description)
         return this
     }
 }

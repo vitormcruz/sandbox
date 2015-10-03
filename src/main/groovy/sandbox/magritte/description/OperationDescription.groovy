@@ -9,5 +9,5 @@ interface OperationDescription extends Description{
 
     OperationDescription named(String methodName);
     OperationDescription forConstructor();
-    OperationDescription withParameter(number, name, Description description);
+    OperationDescription withParameter(number, Description description);
 }
