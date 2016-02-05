@@ -1,4 +1,4 @@
-package sandbox.payroll
+package sandbox.payroll.business.entity
 
 import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.description.StringDescription

@@ -6,6 +6,7 @@ import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.description.StringDescription
 import sandbox.magritte.description.TestDescription
 import sandbox.magritte.testGenerator.junit.JUnit4TestGeneratorRunner
+import sandbox.payroll.business.entity.Employee
 
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 

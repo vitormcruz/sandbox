@@ -3,7 +3,7 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="sandbox.payroll">
+<hibernate-mapping package="sandbox.payroll.business.entity">
 
         <class name="Employee" table="EMPLOYEE">
                 <id name="id" column="ID">
