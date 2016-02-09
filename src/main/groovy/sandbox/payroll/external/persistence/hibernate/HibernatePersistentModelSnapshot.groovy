@@ -1,18 +1,12 @@
 package sandbox.payroll.external.persistence.hibernate
 
-import org.springframework.transaction.PlatformTransactionManager
-import sandbox.payroll.business.ModelSnapshot
 import sandbox.concurrency.AtomicBlock
-import sandbox.concurrency.dbBased.hibernate.HibernateAtomicBlock
+import sandbox.payroll.business.ModelSnapshot
 
 class HibernatePersistentModelSnapshot implements ModelSnapshot{
 
+    private AtomicBlock atomicBlock = AtomicBlock.smartNewFor(HibernatePersistentModelSnapshot)
     private modelObjects = []
-    private AtomicBlock atomicBlock
-
-    HibernatePersistentModelSnapshot(PlatformTransactionManager transactionManager ) {
-        atomicBlock = new HibernateAtomicBlock(transactionManager)
-    }
 
     @Override
     def void save() {

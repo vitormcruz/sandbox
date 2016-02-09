@@ -1,30 +1,29 @@
 package sandbox.magritte.testGenerator.junit
 
 import groovy.test.GroovyAssert
-import org.junit.After
 import org.junit.Before
+import org.junit.BeforeClass
 import org.junit.Test
 import org.junit.runners.model.InitializationError
 import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
 import sandbox.smartfactory.SmartFactory
 
 import static org.mockito.Matchers.anyObject
-import static org.mockito.Mockito.mock
-import static org.mockito.Mockito.when
+import static org.mockito.Mockito.*
 
 class JUnit4TestGeneratorRunnerTest {
 
-    private TestGenerator testGeneratorMock
+    private static TestGenerator testGeneratorMock = mock(TestGenerator)
+
+    @BeforeClass
+    def static void setupAll(){
+        SmartFactory.instance().configurationFor(JUnit4TestGeneratorRunner.getName()).put(TestGenerator, testGeneratorMock)
+    }
 
     @Before
     def void setup(){
-        testGeneratorMock = mock(TestGenerator)
-        SmartFactory.configureForTest().configurationFor(JUnit4TestGeneratorRunner).put(TestGenerator, testGeneratorMock)
-    }
+        reset(testGeneratorMock)
 
-    @After
-    def void cleanup(){
-        SmartFactory.resetConfigForTest()
     }
 
     @Test

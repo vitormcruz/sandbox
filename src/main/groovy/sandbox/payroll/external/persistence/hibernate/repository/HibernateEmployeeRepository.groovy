@@ -2,26 +2,16 @@ package sandbox.payroll.external.persistence.hibernate.repository
 
 import com.querydsl.jpa.hibernate.HibernateQueryFactory
 import org.hibernate.SessionFactory
-import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.support.TransactionTemplate
-import sandbox.concurrency.AtomicBlock
 import sandbox.payroll.business.entity.Employee
 import sandbox.payroll.business.entity.repository.EmployeeRepository
 import sandbox.payroll.business.entity.repository.entityQuery.QEmployee
-import sandbox.concurrency.dbBased.hibernate.HibernateAtomicBlock
 
 class HibernateEmployeeRepository implements EmployeeRepository{
 
-    private SessionFactory sessionFactory
+    private SessionFactory sessionFactory = SessionFactory.smartNewFor(HibernateEmployeeRepository)
+    private TransactionTemplate transactionTemplate = TransactionTemplate.smartNewFor(HibernateEmployeeRepository)
     private pending = []
-    private AtomicBlock atomicBlock
-    private TransactionTemplate transactionTemplate
-
-    HibernateEmployeeRepository(SessionFactory sessionFactory, PlatformTransactionManager transactionManager) {
-        this.sessionFactory = sessionFactory
-        atomicBlock = new HibernateAtomicBlock(transactionManager)
-        transactionTemplate = new TransactionTemplate(transactionManager)
-    }
 
     @Override
     public void update(Employee employee) {

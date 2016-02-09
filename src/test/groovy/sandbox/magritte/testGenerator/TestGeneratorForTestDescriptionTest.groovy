@@ -1,10 +1,7 @@
 package sandbox.magritte.testGenerator
 
-import org.junit.After
-import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
-import sandbox.smartfactory.SmartFactory
 import sandbox.magritte.description.Description
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.MethodGenerator
@@ -14,18 +11,6 @@ import static org.mockito.Mockito.mock
 import static org.mockito.Mockito.when
 
 class TestGeneratorForTestDescriptionTest {
-    private MandatoryTestGenerator mandatoryTestGeneratorMock
-
-    @Before
-    def void setup(){
-        mandatoryTestGeneratorMock = mock(MandatoryTestGenerator)
-        SmartFactory.configureForTest().configurationFor(TestGeneratorForTestDescription).put(MandatoryTestGenerator, mandatoryTestGeneratorMock)
-    }
-
-    @After
-    def void cleanup(){
-        SmartFactory.resetConfigForTest()
-    }
 
     @Test
     def void "Create a test description for null class"(){
@@ -38,16 +23,6 @@ class TestGeneratorForTestDescriptionTest {
     def void "Create a test description without specify any definition for the class under test"(){
         def testDescription = new TestGeneratorForTestDescription().descriptionsFor(ClassUnderTest, [] as Description[])
         assert testDescription.getGeneratedMethods().isEmpty() : "No definition test suit description should not generate any test methods."
-    }
-
-    @Test
-    def void "Create a test description specifying no definition but mandatory test generator generating N methods"(){
-        def generatedMethodMock = mock(GeneratedMethod)
-        def generatedMethodMock2 = mock(GeneratedMethod)
-        when(mandatoryTestGeneratorMock.getGeneratedMethods()).thenReturn([generatedMethodMock, generatedMethodMock2])
-
-        def descriptions = [createMockDescriptionReturning([])] as Description[]
-        assert [generatedMethodMock, generatedMethodMock2] as Set == generatedMethodsFor(descriptions) as Set
     }
 
     @Test
@@ -74,19 +49,15 @@ class TestGeneratorForTestDescriptionTest {
     }
 
     @Test
-    def void "Create a test description specifying N definition and a mandatory test generator, each returning N generated methods."(){
+    def void "Create a test description specifying N definition each returning N generated methods."(){
         def generatedMethodMock = mock(GeneratedMethod)
         def generatedMethodMock2 = mock(GeneratedMethod)
         def generatedMethodMock3 = mock(GeneratedMethod)
         def generatedMethodMock4 = mock(GeneratedMethod)
-        def generatedMethodMock5 = mock(GeneratedMethod)
-        def generatedMethodMock6 = mock(GeneratedMethod)
         def mockDescription = createMockDescriptionReturning([generatedMethodMock, generatedMethodMock2])
         def mockDescription2 = createMockDescriptionReturning([generatedMethodMock3, generatedMethodMock4])
-        when(mandatoryTestGeneratorMock.getGeneratedMethods()).thenReturn([generatedMethodMock5, generatedMethodMock6])
         def descriptions = [mockDescription, mockDescription2] as Description[]
-        assert [generatedMethodMock, generatedMethodMock2, generatedMethodMock3, generatedMethodMock4,
-                generatedMethodMock5, generatedMethodMock6] as Set == generatedMethodsFor(descriptions) as Set
+        assert [generatedMethodMock, generatedMethodMock2, generatedMethodMock3, generatedMethodMock4] as Set == generatedMethodsFor(descriptions) as Set
     }
 
 
