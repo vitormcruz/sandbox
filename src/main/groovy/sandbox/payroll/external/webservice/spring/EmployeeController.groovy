@@ -1,12 +1,13 @@
 package sandbox.payroll.external.webservice.spring
-
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.querydsl.core.support.QueryBase
 import org.modelmapper.ModelMapper
 import org.springframework.web.bind.annotation.*
 import sandbox.payroll.business.ModelSnapshot
 import sandbox.payroll.business.entity.Employee
 import sandbox.payroll.business.entity.repository.EmployeeRepository
+import sandbox.payroll.business.entity.repository.entityQuery.QEmployee
 
 @RequestMapping(value = "payroll")
 @RestController
@@ -25,7 +26,9 @@ class EmployeeController{
 
     @RequestMapping(value = "/employee/{employeeId}", method = RequestMethod.PATCH)
     Employee changeEmployee(@PathVariable Long employeeId, @RequestBody String changedAttributes) {
-        def changedEmployee = employeeRepository.find { it.id == employeeId }
+        def changedEmployee = employeeRepository.find { QueryBase query, QEmployee qEmployee ->
+            query.where(qEmployee.id.eq(employeeId))
+        }
         JsonNode changedAttributesNode = new ObjectMapper().readTree(changedAttributes)
         modelMapper.map(changedAttributesNode, changedEmployee)
         employeeRepository.update(changedEmployee)

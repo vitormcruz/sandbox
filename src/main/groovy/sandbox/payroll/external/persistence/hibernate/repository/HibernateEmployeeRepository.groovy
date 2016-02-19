@@ -1,5 +1,6 @@
 package sandbox.payroll.external.persistence.hibernate.repository
 
+import com.querydsl.jpa.hibernate.HibernateQuery
 import com.querydsl.jpa.hibernate.HibernateQueryFactory
 import org.hibernate.SessionFactory
 import org.springframework.transaction.support.TransactionTemplate
@@ -18,6 +19,16 @@ class HibernateEmployeeRepository implements EmployeeRepository{
         pending.add({
             sessionFactory.getCurrentSession().merge(employee)
         })
+    }
+
+    @Override
+    Employee find(Closure closure) {
+        def qEmployee = QEmployee.employee
+        transactionTemplate.execute {
+            HibernateQuery<Employee> employeeQuery = new HibernateQueryFactory(this.sessionFactory.getCurrentSession()).from(qEmployee)
+            closure(employeeQuery, qEmployee)
+            return employeeQuery.fetchOne()
+        }
     }
 
     public void executeAllPending(){
