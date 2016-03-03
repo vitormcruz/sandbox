@@ -1,14 +1,11 @@
 package sandbox.magritte.testGenerator.junit.scenarioGenerator
-import org.apache.commons.lang.StringUtils
+
 import sandbox.magritte.description.ObjectDescription
 import sandbox.magritte.description.StringDescription
-import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
-
-import static org.hamcrest.CoreMatchers.hasItem
-import static org.hamcrest.CoreMatchers.not
-import static org.junit.Assert.assertThat
+import sandbox.magritte.methodGenerator.GeneratedMethod
 
 class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForObjectDescription implements StringDescription{
+    private StringMaxSizeTestGenerator maxSizeTestGenerator
 
     JUnitTestsGeneratorForStringDescription(Class describedClass) {
         super.describedClass = describedClass
@@ -28,42 +25,8 @@ class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForObjec
 
     @Override
     StringDescription maxSize(Integer maxSize) {
-        String error = "${describedClass.getName().toLowerCase()}.validation.${accessor}.maxsize.error"
-
-        //TODO the implementation of the actual method should be specific of the test framework
-        def errorMatcher = hasItem(error)
-        def successMatcher = not(hasItem(error))
-        [[size: maxSize -1, testVerificationMatcher: successMatcher],
-         [size: maxSize, testVerificationMatcher: successMatcher],
-         [size: maxSize + 1, testVerificationMatcher: errorMatcher]].each {
-
-            testScenarios.add(new SimpleGeneratedMethod("The ${accessor} of ${describedClass.getSimpleName()} should have " +
-                                               "at max ${maxSize} characters. Testing with ${it.size} characters.",
-                                                testSizeTemplate(it.size, it.testVerificationMatcher)))
-
-        }
-
-
+        maxSizeTestGenerator = new StringMaxSizeTestGenerator(label, maxSize, describedClass, validationMethod)
         return this
-    }
-
-    def testSizeTemplate(size, testVerificationMatcher){
-        return {
-            def result = validate(size)
-            assertThat(result, testVerificationMatcher)
-        }
-
-    }
-
-    def private validate(size) {
-        def valueToTest = StringUtils.leftPad("", size, 'X')
-        if(validationMethod != null){
-            return validationMethod(valueToTest)
-        }
-
-        def testSubject = describedClass.newInstance()
-        testSubject."${accessor}" = valueToTest
-        return testSubject.validate().getFailures().collect {it.getException().getMessage()}
     }
 
     @Override
@@ -72,7 +35,7 @@ class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForObjec
     }
 
     @Override
-    ObjectDescription label(Object label) {
-        return this
+    Collection<GeneratedMethod> getGeneratedMethods() {
+        return super.getGeneratedMethods() + maxSizeTestGenerator.getGeneratedMethods()
     }
 }

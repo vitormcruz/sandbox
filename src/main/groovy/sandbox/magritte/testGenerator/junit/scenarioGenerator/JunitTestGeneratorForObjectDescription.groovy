@@ -12,16 +12,23 @@ abstract class JunitTestGeneratorForObjectDescription implements ObjectDescripti
     def protected Class describedClass
     protected MandatoryTestGenerator mandatoryTestGenerator
     protected Closure validationMethod
+    protected String label
 
     
     ObjectDescription accessor(String accessor) {
         this.accessor = accessor
         return this
     }
+
+    @Override
+    ObjectDescription label(String label) {
+        this.label = label
+        return this
+    }
     
     @Override
     ObjectDescription beRequired() {
-        mandatoryTestGenerator.requiredAccessor(accessor)
+        mandatoryTestGenerator.requiredAccessor(label)
         return this
     }
 

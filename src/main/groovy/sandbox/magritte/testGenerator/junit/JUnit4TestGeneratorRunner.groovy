@@ -34,8 +34,7 @@ class JUnit4TestGeneratorRunner extends BlockJUnit4ClassRunner{
         def knownMethods = new ArrayList<>(super.computeTestMethods())
         def testObject = getTestClass().getJavaClass().newInstance()
         testGenerator.getGeneratedMethodsFor(testObject).each {
-            it.teachMyselfTo(testObject)
-            knownMethods.add(new FrameworkMetaMethod(testObject.class.metaClass.getMetaMethod(it.methodName)))
+            knownMethods.add(new FrameworkMetaMethod(it))
         }
         return knownMethods
     }

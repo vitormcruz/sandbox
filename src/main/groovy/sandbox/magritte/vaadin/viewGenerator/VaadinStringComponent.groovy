@@ -29,7 +29,7 @@ class VaadinStringComponent extends TextField implements StringDescription {
     }
 
     @Override
-    ObjectDescription label(label) {
+    ObjectDescription label(String label) {
         this.setCaption(label)
         return this
     }

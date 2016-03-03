@@ -54,7 +54,7 @@ class MandatoryTestGeneratorForMethod extends MandatoryTestGenerator{
             testScenarios.add(new SimpleGeneratedMethod("The ${it} parameter of ${classUnderTest.getSimpleName()}#${methodUnderTest} is required. " +
                     "Testing providing null for it.",
                     {
-                        def result = validationMethod(params)
+                        def result = validationMethod(*params)
                         assertThat(result, hasItem(error))
                     }))
 
@@ -66,7 +66,7 @@ class MandatoryTestGeneratorForMethod extends MandatoryTestGenerator{
 
         finalRequiredTests.add(new SimpleGeneratedMethod("Testing providing valid values to all required params of ${classUnderTest.getSimpleName()}#${methodUnderTest}(${StringUtils.join(requiredParams, ", ")}) ",
                 {
-                    def result = validationMethod(requiredParams.collect{1}) //TODO how to get a valid value here?
+                    def result = validationMethod(requiredParams.collect{"X"}) //TODO how to get a valid value here?
                     requiredParams.each {
                         def error = "${classUnderTest.getName().toLowerCase()}.validation.${it}.mandatory.error"
                         assertThat(result, not(hasItem(error)))

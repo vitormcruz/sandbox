@@ -45,6 +45,7 @@ class Employee implements ValidatorTrait {
 
 
 
+"name".isAccessor().isAString()
 
 
 

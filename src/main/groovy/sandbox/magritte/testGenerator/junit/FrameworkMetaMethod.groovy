@@ -1,23 +1,23 @@
 package sandbox.magritte.testGenerator.junit
 import org.junit.internal.runners.model.ReflectiveCallable
 import org.junit.runners.model.FrameworkMethod
+import sandbox.magritte.methodGenerator.GeneratedMethod
 
 import java.lang.annotation.Annotation
 import java.lang.reflect.Method
-import java.lang.reflect.Modifier
 /**
  * Class created to hack BlockJUnit4ClassRunner in order to provide groovy dynamic meta methods to be executed by test
  * cases.
  */
 class FrameworkMetaMethod extends FrameworkMethod{
 
-    protected MetaMethod metaMethod
+    protected GeneratedMethod metaMethod
 
     FrameworkMetaMethod(Method method) {
         super(method)
     }
 
-    FrameworkMetaMethod(MetaMethod metaMethod) {
+    FrameworkMetaMethod(GeneratedMethod metaMethod) {
         super(metaMethod.class.getMethods()[0]) //TODO just pass some object so that FrameworkMethod does not complain.
         this.metaMethod = metaMethod
     }
@@ -27,84 +27,59 @@ class FrameworkMetaMethod extends FrameworkMethod{
         return new ReflectiveCallable() {
                     @Override
                     protected Object runReflectiveCall() throws Throwable {
-                        return metaMethod.invoke(target, params);
+                        return metaMethod.methodBody(params);
                     }
                 }.run();
     }
 
     @Override
     String getName() {
-        return metaMethod.getName()
+        return metaMethod.getMethodName()
     }
 
     @Override
     void validatePublicVoidNoArg(boolean isStatic, List<Throwable> errors) {
-        validatePublicVoid(isStatic, errors);
-        if (metaMethod.getParameterTypes().length != 0) {
-            errors.add(new Exception("Method " + metaMethod.getName() + " should have no parameters"));
-        }
+        //Do nothing, these are generated method, not created by users
     }
 
     @Override
     void validatePublicVoid(boolean isStatic, List<Throwable> errors) {
-        if (Modifier.isStatic(metaMethod.getModifiers()) != isStatic) {
-            String state = isStatic ? "should" : "should not";
-            errors.add(new Exception("Method " + metaMethod.getName() + "() " + state + " be static"));
-        }
-        if (!Modifier.isPublic(metaMethod.getDeclaringClass().getModifiers())) {
-            errors.add(new Exception("Class " + metaMethod.getDeclaringClass().getName() + " should be public"));
-        }
-        if (!Modifier.isPublic(metaMethod.getModifiers())) {
-            errors.add(new Exception("Method " + metaMethod.getName() + "() should be public"));
-        }
-        if (method.getReturnType() != Void.TYPE) {
-            errors.add(new Exception("Method " + metaMethod.getName() + "() should be void"));
-        }
+        //Do nothing, these are generated method, not created by users
     }
 
     @Override
     boolean isStatic() {
-        return Modifier.isStatic(metaMethod.getModifiers());
+        return false
     }
 
     @Override
     boolean isPublic() {
-        return Modifier.isStatic(metaMethod.getModifiers());
+        return true
     }
 
     @Override
     Class<?> getReturnType() {
-        return metaMethod.getReturnType();
+        return Object
     }
 
     @Override
     Class<?> getType() {
-        return metaMethod.getReturnType();
+        return Object
     }
 
     @Override
     void validateNoTypeParametersOnArgs(List<Throwable> errors) {
-        //TODO don't know what to do here.
+        //Do nothing, these are generated method, not created by users
     }
 
     @Override
     boolean isShadowedBy(FrameworkMethod other) {
-        if (!other.getName().equals(getName())) {
-            return false;
-        }
-        if (other.getParameterTypes().length != getParameterTypes().length) {
-            return false;
-        }
-        for (int i = 0; i < other.getParameterTypes().length; i++) {
-            if (!other.getParameterTypes()[i].equals(getParameterTypes()[i])) {
-                return false;
-            }
-        }
-        return true;
+        //Do nothing, these are generated method, not created by users and should not shadow anything
+        return false
     }
 
     private Class<?>[] getParameterTypes() {
-        return metaMethod.getParameterTypes();
+        return Collections.emptyList().toArray()
     }
 
     @Override
@@ -122,7 +97,7 @@ class FrameworkMetaMethod extends FrameworkMethod{
 
     @Override
     Annotation[] getAnnotations() {
-        //MetMethod does not have get annottion method
+        //MetMethod does not have get annotation method
         return new Annotation[0]
     }
 }

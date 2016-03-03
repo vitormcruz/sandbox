@@ -41,7 +41,7 @@ abstract class ValidationGeneratorForBaseDescription implements MethodGenerator,
     }
 
     @Override
-    ObjectDescription label(Object label) {
+    ObjectDescription label(String label) {
         return this
     }
 
