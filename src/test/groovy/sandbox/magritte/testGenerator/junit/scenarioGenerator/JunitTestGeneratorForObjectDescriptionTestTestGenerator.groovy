@@ -3,7 +3,7 @@ import org.junit.Ignore
 import org.junit.Test
 import sandbox.magritte.description.ObjectDescription
 
-class JunitTestGeneratorForObjectDescriptionTest {
+class JunitTestGeneratorForObjectDescriptionTestTestGenerator {
 
     @Test
     @Ignore
@@ -12,7 +12,7 @@ class JunitTestGeneratorForObjectDescriptionTest {
     @Test
     @Ignore
     def void "Generate no tests for no required field"(){
-        assert new JunitTestGeneratorForObjectDescriptionPartial().accessor("test")
+        assert new JunitObjectDescriptionTestGeneratorPartial().accessor("test")
                                                                 .beRequired()
                                                                 .getGeneratedMethods().isEmpty()
     }
@@ -29,7 +29,7 @@ class JunitTestGeneratorForObjectDescriptionTest {
     @Ignore
     def void "Generate four tests for three required field"(){}
 
-    class JunitTestGeneratorForObjectDescriptionPartial extends JunitTestGeneratorForObjectDescription{
+    class JunitObjectDescriptionTestGeneratorPartial extends JunitObjectDescriptionTestGenerator{
 
         @Override
         ObjectDescription accessor(String accessor) {

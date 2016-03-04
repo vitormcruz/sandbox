@@ -5,8 +5,8 @@ import sandbox.magritte.methodGenerator.MethodGenerator
 import sandbox.magritte.methodGenerator.imp.ComposedMethodGenerator
 import sandbox.magritte.testGenerator.TestGeneratorForTestDescription
 import sandbox.magritte.testGenerator.junit.scenarioGenerator.JUnitTestsGeneratorForNumberDescription
-import sandbox.magritte.testGenerator.junit.scenarioGenerator.JUnitTestsGeneratorForOperationDescription
-import sandbox.magritte.testGenerator.junit.scenarioGenerator.JUnitTestsGeneratorForStringDescription
+import sandbox.magritte.testGenerator.junit.scenarioGenerator.JUnitOperationDescriptionTestGenerator
+import sandbox.magritte.testGenerator.junit.scenarioGenerator.JUnitStringDescriptionTestGenerator
 
 class JUnitTestGenerationDescriptionsExtension {
 
@@ -24,15 +24,15 @@ class JUnitTestGenerationDescriptionsExtension {
         return composedMethodGenerator
     }
 
-    public static JUnitTestsGeneratorForStringDescription asTestGenerator(StringDescription aDescription, descriptedClass, mandatoryTestGenerator){
-        def testGenerator = new JUnitTestsGeneratorForStringDescription(descriptedClass)
+    public static JUnitStringDescriptionTestGenerator asTestGenerator(StringDescription aDescription, descriptedClass, mandatoryTestGenerator){
+        def testGenerator = new JUnitStringDescriptionTestGenerator(descriptedClass)
         testGenerator.setMandatoryTestGenerator(mandatoryTestGenerator)
         aDescription.playbackAt(testGenerator)
         return testGenerator
     }
 
-    public static JUnitTestsGeneratorForStringDescription asTestGenerator(StringDescription aDescription, descriptedClass, mandatoryTestGenerator, validationMethod){
-        def testGenerator = new JUnitTestsGeneratorForStringDescription(descriptedClass)
+    public static JUnitStringDescriptionTestGenerator asTestGenerator(StringDescription aDescription, descriptedClass, mandatoryTestGenerator, validationMethod){
+        def testGenerator = new JUnitStringDescriptionTestGenerator(descriptedClass)
         testGenerator.setMandatoryTestGenerator(mandatoryTestGenerator)
         testGenerator.setValidationMethod(validationMethod)
         aDescription.playbackAt(testGenerator)
@@ -46,8 +46,8 @@ class JUnitTestGenerationDescriptionsExtension {
         return testGenerator
     }
 
-    public static JUnitTestsGeneratorForOperationDescription asTestGenerator(NewOperationDescription aDescription, descriptedClass, mandatoryTestGenerator){
-        def testGenerator = new JUnitTestsGeneratorForOperationDescription(descriptedClass)
+    public static JUnitOperationDescriptionTestGenerator asTestGenerator(NewOperationDescription aDescription, descriptedClass, mandatoryTestGenerator){
+        def testGenerator = new JUnitOperationDescriptionTestGenerator(descriptedClass)
         aDescription.playbackAt(testGenerator)
         return testGenerator
     }

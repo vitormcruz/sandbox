@@ -5,11 +5,11 @@ import sandbox.magritte.description.StringDescription
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.testGenerator.MandatoryTestGeneratorForMethod
 
-class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForObjectDescription implements StringDescription{
+class JUnitStringDescriptionTestGenerator extends JunitObjectDescriptionTestGenerator implements StringDescription{
     private ValidationFactory validationFactory = new ValidationFactory()
     private StringMaxSizeTestGenerator maxSizeTestGenerator
 
-    JUnitTestsGeneratorForStringDescription(Class describedClass) {
+    JUnitStringDescriptionTestGenerator(Class describedClass) {
         super.describedClass = describedClass
     }
 
@@ -18,7 +18,7 @@ class JUnitTestsGeneratorForStringDescription extends JunitTestGeneratorForObjec
         def setter = "set" + StringUtils.capitalize(accessor)
         def validationMethod = validationFactory.getValidationMethodFor(setter, describedClass)
         setValidationMethod(validationMethod)
-        MandatoryTestGeneratorForMethod mandatoryTestGenerator = MandatoryTestGeneratorForMethod.smartNewFor(JUnitTestsGeneratorForStringDescription);
+        MandatoryTestGeneratorForMethod mandatoryTestGenerator = MandatoryTestGeneratorForMethod.smartNewFor(JUnitStringDescriptionTestGenerator);
         mandatoryTestGenerator.setClassUnderTest(describedClass)
         mandatoryTestGenerator.setMethodUnderTest(setter)
         mandatoryTestGenerator.setValidationMethod(validationMethod)

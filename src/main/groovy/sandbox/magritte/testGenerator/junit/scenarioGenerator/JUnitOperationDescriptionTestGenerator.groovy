@@ -5,16 +5,16 @@ import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.MethodGenerator
 import sandbox.magritte.testGenerator.MandatoryTestGeneratorForMethod
 
-class JUnitTestsGeneratorForOperationDescription implements MethodGenerator, NewOperationDescription {
+class JUnitOperationDescriptionTestGenerator implements MethodGenerator, NewOperationDescription {
 
     private ValidationFactory validationFactory = new ValidationFactory()
     private Object describedClass
     private String methodName
     private Collection<GeneratedMethod> generatedTests = []
-    MandatoryTestGeneratorForMethod mandatoryTestGenerator = MandatoryTestGeneratorForMethod.smartNewFor(JUnitTestsGeneratorForOperationDescription);
+    MandatoryTestGeneratorForMethod mandatoryTestGenerator = MandatoryTestGeneratorForMethod.smartNewFor(JUnitOperationDescriptionTestGenerator);
     def validation
 
-    JUnitTestsGeneratorForOperationDescription(def describedClass) {
+    JUnitOperationDescriptionTestGenerator(def describedClass) {
         this.describedClass = describedClass
         mandatoryTestGenerator.setClassUnderTest(describedClass)
     }
