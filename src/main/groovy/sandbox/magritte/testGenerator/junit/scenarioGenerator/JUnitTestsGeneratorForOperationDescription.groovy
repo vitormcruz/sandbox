@@ -4,10 +4,10 @@ import sandbox.magritte.description.NewOperationDescription
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.MethodGenerator
 import sandbox.magritte.testGenerator.MandatoryTestGeneratorForMethod
-import sandbox.validator.imp.ValidationException
 
 class JUnitTestsGeneratorForOperationDescription implements MethodGenerator, NewOperationDescription {
 
+    private ValidationFactory validationFactory = new ValidationFactory()
     private Object describedClass
     private String methodName
     private Collection<GeneratedMethod> generatedTests = []
@@ -23,26 +23,12 @@ class JUnitTestsGeneratorForOperationDescription implements MethodGenerator, New
     NewOperationDescription method(String methodName, Description... descriptions) {
         this.methodName = methodName
         mandatoryTestGenerator.setMethodUnderTest(methodName)
-        this.validation = getValidationMethodFor(methodName)
+        this.validation = validationFactory.getValidationMethodFor(methodName, describedClass)
         mandatoryTestGenerator.setValidationMethod(validation)
         descriptions.each { description ->
             generatedTests.addAll(description.asTestGenerator(describedClass, mandatoryTestGenerator, validation).getGeneratedMethods())
         }
         return this
-    }
-
-    private Closure<List<String>> getValidationMethodFor(name) {
-        { params ->
-            def testSubject = "newInstance".equals(name) ? describedClass : describedClass.newInstance()
-
-            try {
-                testSubject."${name}"(params)
-                testSubject.validateFailingOnError()
-                return []
-            } catch (ValidationException e) {
-                return e.result.getFailures().collect { it.getException().getMessage() }
-            }
-        }
     }
 
     @Override

@@ -17,6 +17,14 @@ class EmployeeTest {
         assert true : "bloblo"
     }
 
+//    @DescriptionModelDefinition
+//    def myTestDescription(){
+//        return  New(TestDescription).descriptionsFor(getEmployeeClass(),
+//                                                     New(StringDescription).accessor("name").maxSize(50).beRequired(),
+//                                                     New(StringDescription).accessor("address").maxSize(200).beRequired(),
+//                                                     New(StringDescription).accessor("email").maxSize(100).beRequired())
+//    }
+
     @DescriptionModelDefinition
     def myTestDescription(){
         return New(TestDescription).descriptionsFor(getEmployeeClass(),

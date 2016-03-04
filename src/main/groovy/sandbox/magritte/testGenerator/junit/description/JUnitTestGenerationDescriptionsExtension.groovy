@@ -24,6 +24,13 @@ class JUnitTestGenerationDescriptionsExtension {
         return composedMethodGenerator
     }
 
+    public static JUnitTestsGeneratorForStringDescription asTestGenerator(StringDescription aDescription, descriptedClass, mandatoryTestGenerator){
+        def testGenerator = new JUnitTestsGeneratorForStringDescription(descriptedClass)
+        testGenerator.setMandatoryTestGenerator(mandatoryTestGenerator)
+        aDescription.playbackAt(testGenerator)
+        return testGenerator
+    }
+
     public static JUnitTestsGeneratorForStringDescription asTestGenerator(StringDescription aDescription, descriptedClass, mandatoryTestGenerator, validationMethod){
         def testGenerator = new JUnitTestsGeneratorForStringDescription(descriptedClass)
         testGenerator.setMandatoryTestGenerator(mandatoryTestGenerator)

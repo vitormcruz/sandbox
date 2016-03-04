@@ -10,9 +10,9 @@ abstract class JunitTestGeneratorForObjectDescription implements ObjectDescripti
     def protected testScenarios = []
     def protected accessor
     def protected Class describedClass
+    def protected String label
     protected MandatoryTestGenerator mandatoryTestGenerator
     protected Closure validationMethod
-    protected String label
 
     
     ObjectDescription accessor(String accessor) {
@@ -38,11 +38,11 @@ abstract class JunitTestGeneratorForObjectDescription implements ObjectDescripti
     }
 
     //TODO extract into an interface
-    void setMandatoryTestGenerator(MandatoryTestGenerator mandatoryTestGenerator) {
+    public void setMandatoryTestGenerator(MandatoryTestGenerator mandatoryTestGenerator) {
         this.mandatoryTestGenerator = mandatoryTestGenerator
     }
 
-    void setValidationMethod(Closure validationMethod){
+    public void setValidationMethod(Closure validationMethod){
         this.validationMethod = validationMethod
     }
 }

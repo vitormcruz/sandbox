@@ -61,12 +61,6 @@ class StringMaxSizeTestGenerator implements MethodGenerator{
 
     def private validate(size) {
         def valueToTest = StringUtils.leftPad("", size, 'X')
-        if(validationMethod != null){
-            return validationMethod(valueToTest)
-        }
-
-        def testSubject = describedClass.newInstance()
-        testSubject."${accessorProvider()}" = valueToTest
-        return testSubject.validate().getFailures().collect {it.getException().getMessage()}
+        return validationMethod(valueToTest)
     }
 }
