@@ -13,7 +13,7 @@ class TestGeneratorForTestDescription implements TestDescription, MethodGenerato
     def TestGeneratorForTestDescription descriptionsFor(Class classUnderTest, Description... descriptions) {
         //TODO use validation framework
         validate(classUnderTest)
-        generatedMethods = methodsGeneratedByDescriptions(classUnderTest, descriptions)
+        generatedMethods = generateMethodsFor(classUnderTest, descriptions)
         return this
     }
 
@@ -29,9 +29,9 @@ class TestGeneratorForTestDescription implements TestDescription, MethodGenerato
         }
     }
 
-    private List<GeneratedMethod> methodsGeneratedByDescriptions(classUnderTest, Description... descriptions) {
+    private List<GeneratedMethod> generateMethodsFor(classUnderTest, Description... descriptions) {
         descriptions.collectMany {
-            it.asTestGenerator(classUnderTest, null).getGeneratedMethods()
+            it.asTestGenerator(classUnderTest).getGeneratedMethods()
         }
     }
 

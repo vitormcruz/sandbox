@@ -28,7 +28,7 @@ abstract class JunitObjectDescriptionTestGenerator implements ObjectDescription,
     
     @Override
     ObjectDescription beRequired() {
-        mandatoryTestGenerator.requiredAccessor(label)
+        mandatoryTestGenerator?.requiredAccessor(label)
         return this
     }
 
@@ -40,6 +40,7 @@ abstract class JunitObjectDescriptionTestGenerator implements ObjectDescription,
     //TODO extract into an interface
     public void setMandatoryTestGenerator(MandatoryTestGenerator mandatoryTestGenerator) {
         this.mandatoryTestGenerator = mandatoryTestGenerator
+        this.mandatoryTestGenerator.requiredAccessor(label)
     }
 
     public void setValidationMethod(Closure validationMethod){

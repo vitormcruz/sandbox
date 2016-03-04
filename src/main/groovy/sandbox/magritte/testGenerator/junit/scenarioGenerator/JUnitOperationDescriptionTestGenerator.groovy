@@ -26,7 +26,9 @@ class JUnitOperationDescriptionTestGenerator implements MethodGenerator, NewOper
         this.validation = validationFactory.getValidationMethodFor(methodName, describedClass)
         mandatoryTestGenerator.setValidationMethod(validation)
         descriptions.each { description ->
-            generatedTests.addAll(description.asTestGenerator(describedClass, mandatoryTestGenerator, validation).getGeneratedMethods())
+            def testGenerator = description.asTestGenerator(describedClass, validation)
+            testGenerator.setMandatoryTestGenerator(mandatoryTestGenerator)
+            generatedTests.addAll(testGenerator.getGeneratedMethods())
         }
         return this
     }
