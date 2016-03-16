@@ -2,48 +2,40 @@ package sandbox.magritte.testGenerator.junit.scenarioGenerator
 import sandbox.magritte.description.ObjectDescription
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.MethodGenerator
-import sandbox.magritte.testGenerator.MandatoryTestGenerator
+import sandbox.magritte.testGenerator.TestContext
 
 abstract class JunitObjectDescriptionTestGenerator implements ObjectDescription, MethodGenerator {
 
-    //TODO this is used here and in MandatoryTestGenerator. There should be a higher level class with this and with the getter
-    def protected testScenarios = []
-    def protected accessor
-    def protected Class describedClass
     def protected String label
-    protected MandatoryTestGenerator mandatoryTestGenerator
-    protected Closure validationMethod
+    protected TestContext testContext
+    protected generators = []
 
-    
+    TestContext getTestContext() {
+        return testContext
+    }
+
     ObjectDescription accessor(String accessor) {
-        this.accessor = accessor
+        if(testContext.getTestTargetName() == null){
+            testContext = testContext.withAliasForTestTarget(accessor)
+        }
         return this
     }
 
     @Override
     ObjectDescription label(String label) {
-        this.label = label
+        testContext = testContext.withAliasForTestTarget(label)
         return this
     }
-    
+
     @Override
     ObjectDescription beRequired() {
-        mandatoryTestGenerator?.requiredAccessor(label)
+        testContext.getMandatoryTestGenerator().requiredAccessor(testContext.get)
         return this
     }
 
     @Override
     public Collection<GeneratedMethod> getGeneratedMethods() {
-        return testScenarios
+        return generators.collectMany {it.generateMethods(testContext)}
     }
 
-    //TODO extract into an interface
-    public void setMandatoryTestGenerator(MandatoryTestGenerator mandatoryTestGenerator) {
-        this.mandatoryTestGenerator = mandatoryTestGenerator
-        this.mandatoryTestGenerator.requiredAccessor(label)
-    }
-
-    public void setValidationMethod(Closure validationMethod){
-        this.validationMethod = validationMethod
-    }
 }

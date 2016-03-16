@@ -3,36 +3,25 @@ import org.apache.commons.lang.StringUtils
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.MethodGenerator
 import sandbox.magritte.methodGenerator.imp.SimpleGeneratedMethod
+import sandbox.magritte.testGenerator.TestContext
 
 import static org.hamcrest.CoreMatchers.hasItem
 import static org.hamcrest.CoreMatchers.not
 import static org.junit.Assert.assertThat
 
-class StringMaxSizeTestGenerator implements MethodGenerator{
+class StringMaxSizeTestGenerator implements TestMethodGenerator{
 
-    private String label
     private int maxSize
-    private Object describedClass
-    private Collection<MethodGenerator> testMethods
-    private cachedGeneratedMethods = {return generateMethods()}
-    private Closure validationMethod
 
-    StringMaxSizeTestGenerator(String label, Integer maxSize, Class describedClass, Closure validationMethod) {
-        this.validationMethod = validationMethod
-        this.describedClass = describedClass
+    StringMaxSizeTestGenerator(Integer maxSize) {
         this.maxSize = maxSize
-        this.label = label
     }
 
     @Override
-    Collection<GeneratedMethod> getGeneratedMethods() {
-        return cachedGeneratedMethods()
-    }
+    Collection<GeneratedMethod> generateMethods(TestContext testContext) {
+        def testMethods = []
 
-    def generateMethods(){
-        testMethods = []
-
-        String error = "${describedClass.getName().toLowerCase()}.validation.${label}.maxsize.error"
+        String error = "${testContext.getTestedClassName().toLowerCase()}.validation.${testContext.getTestTargetName()}.maxsize.error"
         //TODO the implementation of the actual method should be specific of the test framework
 
         def errorMatcher = hasItem(error)
@@ -41,26 +30,24 @@ class StringMaxSizeTestGenerator implements MethodGenerator{
          [size: maxSize, testVerificationMatcher: successMatcher],
          [size: maxSize + 1, testVerificationMatcher: errorMatcher]].each {
 
-            testMethods.add(new SimpleGeneratedMethod("The ${label} of ${describedClass.getSimpleName()} should have " +
-                    "at max ${maxSize} characters. Testing with ${it.size} characters.",
-                    testSizeTemplate(it.size, it.testVerificationMatcher)))
+            testMethods.add(createMaxSizeMethodWith(it.size, it.testVerificationMatcher, testContext))
 
         }
 
-        cachedGeneratedMethods = {return testMethods}
         return testMethods
     }
 
-    def testSizeTemplate(size, testVerificationMatcher){
+    MethodGenerator createMaxSizeMethodWith(stringSize, testVerificationMatcher, TestContext testContext) {
+        return new SimpleGeneratedMethod("The ${testContext.getTestTargetName()} of ${testContext.getTestedClassSimpleName()} should have " +
+                                         "at max ${maxSize} characters. Testing with ${stringSize} characters.",
+                                         testSizeTemplate(stringSize, testVerificationMatcher, testContext))
+    }
+
+    def testSizeTemplate(size, testVerificationMatcher, TestContext testContext){
         return {
-            def result = validate(size)
+            def result = testContext.applyContextValidationTo(StringUtils.leftPad("", size, 'X'))
             assertThat(result, testVerificationMatcher)
         }
 
-    }
-
-    def private validate(size) {
-        def valueToTest = StringUtils.leftPad("", size, 'X')
-        return validationMethod(valueToTest)
     }
 }

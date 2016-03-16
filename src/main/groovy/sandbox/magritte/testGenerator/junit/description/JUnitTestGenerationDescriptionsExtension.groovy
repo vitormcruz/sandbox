@@ -4,6 +4,7 @@ import sandbox.magritte.description.NewOperationDescription
 import sandbox.magritte.description.StringDescription
 import sandbox.magritte.description.TestDescription
 import sandbox.magritte.methodGenerator.imp.ComposedMethodGenerator
+import sandbox.magritte.testGenerator.TestContext
 import sandbox.magritte.testGenerator.TestGeneratorForTestDescription
 import sandbox.magritte.testGenerator.junit.scenarioGenerator.JUnitOperationDescriptionTestGenerator
 import sandbox.magritte.testGenerator.junit.scenarioGenerator.JUnitStringDescriptionTestGenerator
@@ -11,7 +12,7 @@ import sandbox.magritte.testGenerator.junit.scenarioGenerator.JunitObjectDescrip
 
 class JUnitTestGenerationDescriptionsExtension {
 
-    public static JunitObjectDescriptionTestGenerator asTestGenerator(Description aDescription, descriptedClass){
+    public static JunitObjectDescriptionTestGenerator asTestGenerator(Description aDescription, TestContext testContext){
         throw new UnsupportedOperationException("No asTestGenerator method was created for description ${aDescription.getInterfaceBeenRecorded()}")
     }
 
@@ -25,21 +26,14 @@ class JUnitTestGenerationDescriptionsExtension {
         return composedMethodGenerator
     }
 
-    public static JUnitStringDescriptionTestGenerator asTestGenerator(StringDescription aDescription, describedClass){
-        def testGenerator = new JUnitStringDescriptionTestGenerator(describedClass)
+    public static JUnitStringDescriptionTestGenerator asTestGenerator(StringDescription aDescription, TestContext testContext){
+        def testGenerator = new JUnitStringDescriptionTestGenerator(testContext)
         aDescription.playbackAt(testGenerator)
         return testGenerator
     }
 
-    public static JUnitStringDescriptionTestGenerator asTestGenerator(StringDescription aDescription, describedClass, validationMethod){
-        def testGenerator = new JUnitStringDescriptionTestGenerator(describedClass)
-        testGenerator.setValidationMethod(validationMethod)
-        aDescription.playbackAt(testGenerator)
-        return testGenerator
-    }
-
-    public static JUnitOperationDescriptionTestGenerator asTestGenerator(NewOperationDescription aDescription, describedClass){
-        def testGenerator = new JUnitOperationDescriptionTestGenerator(describedClass)
+    public static JUnitOperationDescriptionTestGenerator asTestGenerator(NewOperationDescription aDescription, TestContext testContext){
+        def testGenerator = new JUnitOperationDescriptionTestGenerator(testContext)
         aDescription.playbackAt(testGenerator)
         return testGenerator
     }

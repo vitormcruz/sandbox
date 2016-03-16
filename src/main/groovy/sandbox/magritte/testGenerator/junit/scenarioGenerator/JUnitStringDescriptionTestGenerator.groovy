@@ -2,31 +2,28 @@ package sandbox.magritte.testGenerator.junit.scenarioGenerator
 import org.apache.commons.lang.StringUtils
 import sandbox.magritte.description.ObjectDescription
 import sandbox.magritte.description.StringDescription
-import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.testGenerator.MandatoryTestGeneratorForMethod
+import sandbox.magritte.testGenerator.TestContext
 
-class JUnitStringDescriptionTestGenerator extends JunitObjectDescriptionTestGenerator implements StringDescription{
-    private ValidationFactory validationFactory = new ValidationFactory()
-    private StringMaxSizeTestGenerator maxSizeTestGenerator
+class JUnitStringDescriptionTestGenerator extends JunitObjectDescriptionTestGenerator implements StringDescription, ScenarioGenerator{
 
-    JUnitStringDescriptionTestGenerator(Class describedClass) {
-        super.describedClass = describedClass
+    def getScenariosStrategy = {throw new UnsupportedOperationException()}
+
+    JUnitStringDescriptionTestGenerator(TestContext testContext) {
+        super.testContext = testContext
     }
 
     @Override
     ObjectDescription accessor(String accessor) {
+        super.accessor(accessor)
         def setter = "set" + StringUtils.capitalize(accessor)
-        def validationMethod = validationFactory.getValidationMethodFor(setter, describedClass)
-        setValidationMethod(validationMethod)
-        MandatoryTestGeneratorForMethod mandatoryTestGenerator = MandatoryTestGeneratorForMethod.smartNewFor(JUnitStringDescriptionTestGenerator);
-        mandatoryTestGenerator.setClassUnderTest(describedClass)
-        mandatoryTestGenerator.setMethodUnderTest(setter)
-        mandatoryTestGenerator.setValidationMethod(validationMethod)
-        setMandatoryTestGenerator(mandatoryTestGenerator)
-        super.accessor = accessor
-        if (!label) {
-            label = accessor
-        }
+        testContext = testContext.withMethodUnderTest(setter)
+        setMandatoryTestGenerator(MandatoryTestGeneratorForMethod.smartNewFor(JUnitStringDescriptionTestGenerator))
+        generators.add({stringTestGenerator ->
+            stringTestGenerator.getMandatoryTestGenerator().setTestContext(stringTestGenerator.getTestContext())
+            stringTestGenerator.getMandatoryTestGenerator()
+        })
+
         return this
     }
     
@@ -37,7 +34,7 @@ class JUnitStringDescriptionTestGenerator extends JunitObjectDescriptionTestGene
 
     @Override
     StringDescription maxSize(Integer maxSize) {
-        maxSizeTestGenerator = new StringMaxSizeTestGenerator(label, maxSize, describedClass, validationMethod)
+        generators.add(new StringMaxSizeTestGenerator(maxSize))
         return this
     }
 
@@ -47,8 +44,7 @@ class JUnitStringDescriptionTestGenerator extends JunitObjectDescriptionTestGene
     }
 
     @Override
-    Collection<GeneratedMethod> getGeneratedMethods() {
-        def mandatoryGeneratedMethods = accessor ? mandatoryTestGenerator.getGeneratedMethods() : []
-        return super.getGeneratedMethods() + maxSizeTestGenerator.getGeneratedMethods() + mandatoryGeneratedMethods
+    Collection<Scenario> getScenarios() {
+        return getScenariosStrategy()
     }
 }

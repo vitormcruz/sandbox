@@ -9,7 +9,7 @@ class ValidationFactory {
             def testSubject = "newInstance".equals(name) ? describedClass : describedClass.newInstance()
 
             try {
-                testSubject."${name}"(params)
+                testSubject."${name}"(*params)
                 testSubject.validateFailingOnError()
                 return []
             } catch (ValidationException e) {

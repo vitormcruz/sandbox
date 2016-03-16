@@ -16,9 +16,6 @@ class MandatoryTestGenerator implements MethodGenerator {
     private requiredAccessors = []
     def protected testScenarios = []
 
-    public void setClassUnderTest(Class classUnderTest) {
-        this.classUnderTest = classUnderTest
-    }
 
     def requiredAccessor(requiredAccessor) {
         requiredAccessors.add(requiredAccessor)

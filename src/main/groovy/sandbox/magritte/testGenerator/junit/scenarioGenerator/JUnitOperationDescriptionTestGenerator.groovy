@@ -4,6 +4,7 @@ import sandbox.magritte.description.NewOperationDescription
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.MethodGenerator
 import sandbox.magritte.testGenerator.MandatoryTestGeneratorForMethod
+import sandbox.magritte.testGenerator.TestContext
 
 class JUnitOperationDescriptionTestGenerator implements MethodGenerator, NewOperationDescription {
 
@@ -13,18 +14,20 @@ class JUnitOperationDescriptionTestGenerator implements MethodGenerator, NewOper
     private Collection<GeneratedMethod> generatedTests = []
     MandatoryTestGeneratorForMethod mandatoryTestGenerator = MandatoryTestGeneratorForMethod.smartNewFor(JUnitOperationDescriptionTestGenerator);
     def validation
+    private TestContext testContext
 
-    JUnitOperationDescriptionTestGenerator(def describedClass) {
-        this.describedClass = describedClass
-        mandatoryTestGenerator.setClassUnderTest(describedClass)
+    JUnitOperationDescriptionTestGenerator(TestContext testContext) {
+        this.testContext = testContext
     }
 
     @Override
     NewOperationDescription method(String methodName, Description... descriptions) {
+        descriptions.collectMany { it.asTestGenerator().getScenarios()}
+
+
         this.methodName = methodName
-        mandatoryTestGenerator.setMethodUnderTest(methodName)
-        this.validation = validationFactory.getValidationMethodFor(methodName, describedClass)
-        mandatoryTestGenerator.setValidationMethod(validation)
+        testContext = testContext.withMethodUnderTest(methodName)
+        mandatoryTestGenerator.setTestContext(testContext)
         descriptions.each { description ->
             def testGenerator = description.asTestGenerator(describedClass, validation)
             testGenerator.setMandatoryTestGenerator(mandatoryTestGenerator)
