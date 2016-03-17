@@ -15,6 +15,13 @@ class HibernateEmployeeRepository implements EmployeeRepository{
     private pending = []
 
     @Override
+    Employee get(id) {
+        transactionTemplate.execute {
+            return sessionFactory.getCurrentSession().get(Employee, id)
+        }
+    }
+
+    @Override
     public void update(Employee employee) {
         pending.add({
             sessionFactory.getCurrentSession().merge(employee)
@@ -81,8 +88,11 @@ class HibernateEmployeeRepository implements EmployeeRepository{
     }
 
     @Override
-    boolean remove(Object o) {
-        return false
+    boolean remove(employee) {
+        transactionTemplate.execute {
+            sessionFactory.getCurrentSession().delete(employee)
+            return true
+        }
     }
 
     @Override

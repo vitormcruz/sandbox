@@ -1,13 +1,13 @@
 package sandbox.payroll.external.webservice.spring
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.querydsl.core.support.QueryBase
 import org.modelmapper.ModelMapper
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException
 import sandbox.payroll.business.ModelSnapshot
 import sandbox.payroll.business.entity.Employee
 import sandbox.payroll.business.entity.repository.EmployeeRepository
-import sandbox.payroll.business.entity.repository.entityQuery.QEmployee
 
 @RequestMapping(value = "payroll")
 @RestController
@@ -26,14 +26,30 @@ class EmployeeController{
 
     @RequestMapping(value = "/employee/{employeeId}", method = RequestMethod.PATCH)
     Employee changeEmployee(@PathVariable Long employeeId, @RequestBody String changedAttributes) {
-        def changedEmployee = employeeRepository.find { QueryBase query, QEmployee qEmployee ->
-            query.where(qEmployee.id.eq(employeeId))
-        }
-        JsonNode changedAttributesNode = new ObjectMapper().readTree(changedAttributes)
-        modelMapper.map(changedAttributesNode, changedEmployee)
+        def changedEmployee = GET(employeeId)
+        patchChangedAttributesInto(changedEmployee, changedAttributes)
         employeeRepository.update(changedEmployee)
         model.save()
         return changedEmployee;
+    }
+
+    @RequestMapping(value = "/employee/{employeeId}", method = RequestMethod.DELETE)
+    ResponseEntity<Employee> deleteEmployee(@PathVariable Long employeeId) {
+        Employee changedEmployee = GET(employeeId)
+        employeeRepository.remove(changedEmployee)
+        model.save()
+        return ResponseEntity.ok(changedEmployee);
+    }
+
+    private Employee GET(long employeeId) {
+        def changedEmployee = employeeRepository.get(employeeId)
+        if (!changedEmployee) throw new NoSuchRequestHandlingMethodException()
+        changedEmployee
+    }
+
+    private void patchChangedAttributesInto(Employee changedEmployee, String changedAttributes) {
+        JsonNode changedAttributesNode = new ObjectMapper().readTree(changedAttributes)
+        modelMapper.map(changedAttributesNode, changedEmployee)
     }
 
     @RequestMapping(value = "/employee", method = RequestMethod.GET)
