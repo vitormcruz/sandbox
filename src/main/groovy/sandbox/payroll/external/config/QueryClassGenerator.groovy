@@ -1,7 +1,8 @@
-package sandbox
+package sandbox.payroll.external.config
 
 import com.querydsl.jpa.codegen.HibernateDomainExporter
 import org.hibernate.cfg.Configuration
+import sandbox.sandboxapp.external.config.SandboxApplication
 
 class QueryClassGenerator {
 

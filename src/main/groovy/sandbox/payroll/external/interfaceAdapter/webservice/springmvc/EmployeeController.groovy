@@ -1,10 +1,10 @@
-package sandbox.payroll.external.webservice.spring
+package sandbox.payroll.external.interfaceAdapter.webservice.springmvc
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.modelmapper.ModelMapper
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException
 import sandbox.payroll.business.ModelSnapshot
 import sandbox.payroll.business.entity.Employee
 import sandbox.payroll.business.entity.repository.EmployeeRepository
@@ -26,7 +26,7 @@ class EmployeeController{
 
     @RequestMapping(value = "/employee/{employeeId}", method = RequestMethod.PATCH)
     Employee changeEmployee(@PathVariable Long employeeId, @RequestBody String changedAttributes) {
-        def changedEmployee = GET(employeeId)
+        def changedEmployee = getResource(employeeId)
         patchChangedAttributesInto(changedEmployee, changedAttributes)
         employeeRepository.update(changedEmployee)
         model.save()
@@ -35,16 +35,16 @@ class EmployeeController{
 
     @RequestMapping(value = "/employee/{employeeId}", method = RequestMethod.DELETE)
     ResponseEntity<Employee> deleteEmployee(@PathVariable Long employeeId) {
-        Employee changedEmployee = GET(employeeId)
+        Employee changedEmployee = getResource(employeeId)
         employeeRepository.remove(changedEmployee)
         model.save()
         return ResponseEntity.ok(changedEmployee);
     }
 
-    private Employee GET(long employeeId) {
+    private Employee getResource(long employeeId) {
         def changedEmployee = employeeRepository.get(employeeId)
-        if (!changedEmployee) throw new NoSuchRequestHandlingMethodException()
-        changedEmployee
+        if (!changedEmployee) throw new ResourceNotFoundException()
+        return changedEmployee
     }
 
     private void patchChangedAttributesInto(Employee changedEmployee, String changedAttributes) {
@@ -56,4 +56,10 @@ class EmployeeController{
     Collection<Employee> listEmployees() {
         return employeeRepository
     }
+
+    @ResponseStatus(value=HttpStatus.NOT_FOUND) //It is a lame that spring mvc do not provide such general exception
+    public static class ResourceNotFoundException extends RuntimeException{
+
+    }
+
 }

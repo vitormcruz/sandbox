@@ -1,4 +1,4 @@
-package sandbox
+package sandbox.sandboxapp.external.config
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.vaadin.server.VaadinServlet
@@ -23,14 +23,15 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import org.springframework.transaction.support.TransactionTemplate
+import sandbox.sandboxapp.external.interfaceAdapter.jms.MessageReceiver
 import sandbox.concurrency.AtomicBlock
 import sandbox.concurrency.dbBased.hibernate.HibernateAtomicBlock
 import sandbox.heavyValidation.AsyncHeavyValidation
 import sandbox.heavyValidation.JMSAsyncHeavyValidation
 import sandbox.payroll.business.ModelSnapshot
 import sandbox.payroll.business.entity.repository.EmployeeRepository
-import sandbox.payroll.external.persistence.hibernate.HibernatePersistentModelSnapshot
-import sandbox.payroll.external.persistence.hibernate.repository.HibernateEmployeeRepository
+import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.HibernatePersistentModelSnapshot
+import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.repository.HibernateEmployeeRepository
 import sandbox.smartfactory.SmartFactory
 import sandbox.validator.ValidatorTrait
 
@@ -43,7 +44,7 @@ import javax.servlet.http.HttpSessionListener
 @Configuration
 @EnableAutoConfiguration
 @EnableTransactionManagement
-@ComponentScan
+@ComponentScan("sandbox")
 class SandboxApplication extends SpringBootServletInitializer{
 
     def static receiver = new MessageReceiver()
@@ -134,7 +135,7 @@ class SandboxApplication extends SpringBootServletInitializer{
         ServletRegistrationBean registration = new ServletRegistrationBean(new VaadinServlet(), "/sandbox/*", "/VAADIN/*");
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("UI", "sandbox.SandboxUI");
+        params.put("UI", "sandbox.sandboxapp.external.interfaceAdapter.vaadin.SandboxUI");
         params.put("async-supported", "true")
         params.put("org.atmosphere.useWebSocketAndServlet3", "true")
 
