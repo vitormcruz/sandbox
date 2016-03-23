@@ -4,7 +4,7 @@ import com.vaadin.data.util.ObjectProperty
 import com.vaadin.ui.Button
 import com.vaadin.ui.CssLayout
 import com.vaadin.ui.ProgressBar
-import sandbox.sandboxapp.external.config.SandboxApplication
+import sandbox.sandboxapp.external.config.main.SandboxApplication
 
 /**
  */

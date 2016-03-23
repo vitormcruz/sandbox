@@ -1,4 +1,4 @@
-package sandbox.sandboxapp.external.config
+package sandbox.sandboxapp.external.config.main
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.vaadin.server.VaadinServlet
