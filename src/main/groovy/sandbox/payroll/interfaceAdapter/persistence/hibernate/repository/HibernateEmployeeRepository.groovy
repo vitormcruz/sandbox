@@ -1,4 +1,4 @@
-package sandbox.payroll.external.interfaceAdapter.persistence.hibernate.repository
+package sandbox.payroll.interfaceAdapter.persistence.hibernate.repository
 
 import com.querydsl.jpa.hibernate.HibernateQuery
 import com.querydsl.jpa.hibernate.HibernateQueryFactory

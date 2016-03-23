@@ -1,4 +1,4 @@
-package sandbox.sandboxapp.external.interfaceAdapter.vaadin
+package sandbox.sandboxapp.interfaceAdapter.vaadin
 
 import com.vaadin.annotations.Push
 import com.vaadin.annotations.Theme
@@ -12,7 +12,7 @@ import com.vaadin.server.VaadinRequest
 import com.vaadin.ui.*
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode
 import sandbox.heavyValidation.HeavyValidationPage
-import sandbox.payroll.external.interfaceAdapter.vaadin.PayrollPage
+import sandbox.payroll.interfaceAdapter.vaadin.PayrollPage
 /**
  * Copied from Vaadin tutorial to have a working example of it on this project. I will change its contents over time.
  * (https://github.com/vaadin/addressbook/blob/master/src/main/java/com/vaadin/tutorial/addressbook/AddressbookUI.java)

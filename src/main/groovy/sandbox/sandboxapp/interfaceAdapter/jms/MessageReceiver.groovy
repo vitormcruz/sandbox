@@ -1,4 +1,4 @@
-package sandbox.sandboxapp.external.interfaceAdapter.jms
+package sandbox.sandboxapp.interfaceAdapter.jms
 /**
  */
 class MessageReceiver {

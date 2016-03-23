@@ -1,4 +1,4 @@
-package sandbox.sandboxapp.external.interfaceAdapter.webservice.springmvc
+package sandbox.sandboxapp.interfaceAdapter.webservice.springmvc
 
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
