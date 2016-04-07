@@ -6,7 +6,7 @@ import sandbox.magritte.description.recordingDescription.MessageRecorder
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.MethodGenerator
 import sandbox.magritte.testGenerator.MandatoryTestGeneratorForMethod
-import sandbox.validator.imp.ValidationException
+import sandbox.validatorJunit.imp.ValidationException
 
 class JUnitTestsGeneratorForOperationDescription implements MethodGenerator, OperationDescription {
 

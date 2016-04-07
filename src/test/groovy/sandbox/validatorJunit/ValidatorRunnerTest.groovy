@@ -1,9 +1,9 @@
-package sandbox.validator
+package sandbox.validatorJunit
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.Result
 import org.junit.runner.notification.RunNotifier
-import sandbox.validator.imp.ValidatorRunner
+import sandbox.validatorJunit.imp.ValidatorRunner
 
 class ValidatorRunnerTest {
     private RunNotifier notifier

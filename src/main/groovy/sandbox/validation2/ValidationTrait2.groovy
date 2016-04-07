@@ -1,28 +1,13 @@
-package sandbox.validator.imp
+package sandbox.validation2
 
 import org.apache.commons.lang.StringUtils
-import org.junit.Test
 
-import static sandbox.validator.imp.EntityExperiment.ValidationUtils.validate
+import static sandbox.validation2.ValidationTrait2.ValidationUtils.validate
 
-class EntityExperiment implements GroovyInterceptable{
+class ValidationTrait2 implements GroovyInterceptable{
 
     private methodValidations = [:]
-    private ApplicationValidationNotifier errorNotifier = new ApplicationValidationNotifier()
-
-    def name
-    def address
-
-    EntityExperiment() {
-        methodValidations.put("setName", { name ->
-            if(name == null) throw new IllegalArgumentException("name cannot be null")
-        })
-
-        methodValidations.put("setAddress", { address ->
-            if(address == null) throw new IllegalArgumentException("address cannot be null")
-        })
-
-    }
+    protected ApplicationValidationNotifier validationNotifier = new ApplicationValidationNotifier()
 
     @Override
     Object invokeMethod(String name, Object args) {
@@ -42,21 +27,6 @@ class EntityExperiment implements GroovyInterceptable{
         metaClass.getMetaProperty(property).setProperty(this, newValue)
     }
 
-    def void doStuff(){
-
-    }
-
-    @Test
-    def void sdsdsd(){
-        def emp = new EntityExperiment()
-        emp.doStuff()
-        emp.name = null
-        emp.address = "sasas"
-        System.out.println(emp.name)
-        System.out.println(emp.address)
-        assert emp != null
-    }
-
     public static class ValidationUtils{
         private static void validate(methodValidations, String methodName, args) {
             def validation = methodValidations.get(methodName)
@@ -65,10 +35,5 @@ class EntityExperiment implements GroovyInterceptable{
             }
         }
     }
-
-    public static class ApplicationValidationNotifier{
-
-    }
-
 
 }

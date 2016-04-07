@@ -1,11 +1,11 @@
-package sandbox.validator
+package sandbox.validatorJunit
 import org.junit.runner.Result
 import org.junit.runner.notification.RunListener
 import org.junit.runner.notification.RunNotifier
 import sandbox.magritte.description.builder.MagritteDescriptionModelBuilder
 import sandbox.magritte.methodGenerator.GeneratedMethod
-import sandbox.validator.imp.ValidationException
-import sandbox.validator.imp.ValidatorRunner
+import sandbox.validatorJunit.imp.ValidationException
+import sandbox.validatorJunit.imp.ValidatorRunner
 
 trait ValidatorTrait implements GroovyInterceptable{
 

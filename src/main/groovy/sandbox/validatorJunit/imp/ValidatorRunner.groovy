@@ -1,4 +1,4 @@
-package sandbox.validator.imp
+package sandbox.validatorJunit.imp
 import org.junit.After
 import org.junit.Before
 import org.junit.Ignore
@@ -13,9 +13,9 @@ import org.junit.runners.model.InitializationError
 import org.junit.runners.model.Statement
 import org.junit.runners.model.TestClass
 import sandbox.magritte.testGenerator.junit.FrameworkClosureMethod
-import sandbox.validator.ValidatorTrait
-import sandbox.validator.ParentValidatorRunner
-import sandbox.validator.Validation
+import sandbox.validatorJunit.ValidatorTrait
+import sandbox.validatorJunit.ParentValidatorRunner
+import sandbox.validatorJunit.Validation
 
 import static org.junit.internal.runners.rules.RuleMemberValidator.RULE_METHOD_VALIDATOR
 import static org.junit.internal.runners.rules.RuleMemberValidator.RULE_VALIDATOR

@@ -1,7 +1,7 @@
 package sandbox.magritte.description.recordingDescription
 import org.junit.Test
 import sandbox.magritte.description.util.*
-import sandbox.validator.imp.ValidationException
+import sandbox.validatorJunit.imp.ValidationException
 
 import static groovy.test.GroovyAssert.shouldFail
 

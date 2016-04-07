@@ -7,7 +7,7 @@ import sandbox.magritte.description.NumberDescription
 import sandbox.magritte.description.OperationDescription
 import sandbox.magritte.description.TestDescription
 import sandbox.magritte.testGenerator.junit.JUnit4TestGeneratorRunner
-import sandbox.validator.imp.ValidationException
+import sandbox.validatorJunit.imp.ValidationException
 
 import static org.hamcrest.CoreMatchers.hasItem
 import static org.hamcrest.CoreMatchers.not

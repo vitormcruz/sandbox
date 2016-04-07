@@ -1,6 +1,6 @@
 package sandbox.magritte.validationGenerator.validations
 
-import sandbox.validator.ValidatorTrait
+import sandbox.validatorJunit.ValidatorTrait
 /**
  */
 abstract class BasicGeneratedValidationMethod extends GeneratedValidationMethod implements ValidatorTrait{

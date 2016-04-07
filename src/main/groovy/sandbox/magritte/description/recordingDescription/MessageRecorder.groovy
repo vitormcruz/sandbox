@@ -1,7 +1,7 @@
 package sandbox.magritte.description.recordingDescription
 
-import sandbox.validator.Validation
-import sandbox.validator.ValidatorTrait
+import sandbox.validatorJunit.Validation
+import sandbox.validatorJunit.ValidatorTrait
 
 import static com.google.common.base.Preconditions.checkArgument
 

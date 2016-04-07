@@ -1,4 +1,4 @@
-package sandbox.validator
+package sandbox.validatorJunit
 
 
 interface ParentValidatorRunner {

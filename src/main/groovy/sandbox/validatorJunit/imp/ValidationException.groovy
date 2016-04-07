@@ -1,6 +1,6 @@
-package sandbox.validator.imp
+package sandbox.validatorJunit.imp
 
-import sandbox.validator.ResultInterface
+import sandbox.validatorJunit.ResultInterface
 
 class ValidationException extends RuntimeException{
 
