@@ -5,17 +5,17 @@ import org.modelmapper.ModelMapper
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import sandbox.payroll.business.ModelSnapshot
-import sandbox.payroll.business.entity.Employee
-import sandbox.payroll.business.entity.repository.EmployeeRepository
+import sandbox.payroll.ModelSnapshot
+import sandbox.payroll.Employee
+import sandbox.payroll.EmployeeRepository
 
 @RequestMapping(value = "payroll")
 @RestController
-class EmployeeController{
+class EmployeeRestController {
 
-    private EmployeeRepository employeeRepository = EmployeeRepository.smartNewFor(EmployeeController)
-    private ModelSnapshot model = ModelSnapshot.smartNewFor(EmployeeController)
-    private ModelMapper modelMapper = ModelMapper.smartNewFor(EmployeeController)
+    private EmployeeRepository employeeRepository = EmployeeRepository.smartNewFor(EmployeeRestController)
+    private ModelSnapshot model = ModelSnapshot.smartNewFor(EmployeeRestController)
+    private ModelMapper modelMapper = ModelMapper.smartNewFor(EmployeeRestController)
 
     @RequestMapping(value = "/employee", method = RequestMethod.POST)
     Employee newEmployee(@RequestBody Employee newEmployee) {

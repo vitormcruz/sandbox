@@ -1,11 +1,11 @@
-package sandbox.payroll.business.entity.repository.entityQuery;
+package sandbox.payroll.interfaceAdapter.querydsl.entity;
 
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.PathMetadata;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.core.types.dsl.StringPath;
-import sandbox.payroll.business.entity.Employee;
+import sandbox.payroll.Employee;
 
 import javax.annotation.Generated;
 

@@ -1,6 +1,4 @@
-package sandbox.payroll.business.entity.repository
-
-import sandbox.payroll.business.entity.Employee
+package sandbox.payroll
 
 interface EmployeeRepository extends Collection<Employee>{
 

@@ -1,4 +1,4 @@
-package sandbox.payroll.business
+package sandbox.payroll
 
 interface ModelSnapshot {
 

@@ -28,8 +28,8 @@ import sandbox.concurrency.AtomicBlock
 import sandbox.concurrency.dbBased.hibernate.HibernateAtomicBlock
 import sandbox.heavyValidation.AsyncHeavyValidation
 import sandbox.heavyValidation.JMSAsyncHeavyValidation
-import sandbox.payroll.business.ModelSnapshot
-import sandbox.payroll.business.entity.repository.EmployeeRepository
+import sandbox.payroll.ModelSnapshot
+import sandbox.payroll.EmployeeRepository
 import sandbox.payroll.interfaceAdapter.persistence.hibernate.HibernatePersistentModelSnapshot
 import sandbox.payroll.interfaceAdapter.persistence.hibernate.repository.HibernateEmployeeRepository
 import sandbox.smartfactory.SmartFactory
