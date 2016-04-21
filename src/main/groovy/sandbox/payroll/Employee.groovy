@@ -2,11 +2,11 @@ package sandbox.payroll
 
 import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.description.StringDescription
-import sandbox.validatorJunit.ValidatorTrait
+import sandbox.validation2.ValidationTrait2
 
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 
-class Employee implements ValidatorTrait {
+class Employee extends ValidationTrait2 {
 
     def Long id
     def String name
