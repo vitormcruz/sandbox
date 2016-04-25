@@ -1,4 +1,4 @@
-package sandbox.validation2
+package sandbox.validationNotification
 
 interface ValidationObserver {
     void startValidation(String validationName)

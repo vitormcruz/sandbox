@@ -1,12 +1,10 @@
 package sandbox.payroll
-
 import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.description.StringDescription
-import sandbox.validation2.ValidationTrait2
 
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 
-class Employee extends ValidationTrait2 {
+class Employee {
 
     def Long id
     def String name

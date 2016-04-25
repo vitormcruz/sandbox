@@ -1,4 +1,4 @@
-package sandbox.validation2
+package sandbox.validationNotification
 
 class ApplicationValidationNotifier {
 
@@ -32,7 +32,7 @@ class ApplicationValidationNotifier {
         observers.get().each {it.finishValidation(validationName)}
     }
 
-    private void issueError(String error) {
+    public void issueError(String error) {
         observers.get().each {it.issueError(error)}
     }
 
