@@ -1,12 +1,10 @@
 package sandbox.payroll
-
 import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.description.StringDescription
-import sandbox.validator.ValidatorTrait
 
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 
-class Employee implements ValidatorTrait {
+class Employee {
 
     def Long id
     def String name
@@ -50,7 +48,27 @@ class Employee implements ValidatorTrait {
 
         */
 
-        return [New(StringDescription).accessor("name").maxSize(50).label("employee.name").beRequired(),
+
+
+//        return [New(StringDescription).accessor("name").maxSize(50).label("employee.name").beRequired(),
+//                New(StringDescription).accessor("address").maxSize(200).label("employee.address").beRequired(),
+//                New(StringDescription).accessor("email").maxSize(100).label("employee.email").beRequired()]
+
+        /**
+         * "setName".parameters(
+         *         FIRST.isAString().required()
+         *         SECOND.isAString().required().maxSize(200))
+         *
+         * "setName".parameters(
+         *         FIRST.isAString().required()
+         *         SECOND.isAString().required().maxSize(200)
+         *
+         *
+         * setName message has
+         *
+         */
+
+        return ["setName".maxSize(50).label("employee.name").beRequired(),
                 New(StringDescription).accessor("address").maxSize(200).label("employee.address").beRequired(),
                 New(StringDescription).accessor("email").maxSize(100).label("employee.email").beRequired()]
     }

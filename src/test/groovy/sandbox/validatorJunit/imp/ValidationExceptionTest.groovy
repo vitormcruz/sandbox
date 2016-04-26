@@ -1,8 +1,8 @@
-package sandbox.validator.imp
+package sandbox.validatorJunit.imp
 import org.junit.Test
 import org.junit.runner.Result
 import org.junit.runner.notification.Failure
-import sandbox.validator.ResultInterface
+import sandbox.validatorJunit.ResultInterface
 
 class ValidationExceptionTest {
 

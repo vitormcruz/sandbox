@@ -1,4 +1,4 @@
-package sandbox.validator
+package sandbox.validatorJunit
 import org.junit.Test
 
 class DefaultAbstractValidatorTraitTest {

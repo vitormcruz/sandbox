@@ -1,7 +1,7 @@
 package sandbox.magritte.validationGenerator.validations
 import org.junit.Test
-import sandbox.validator.ResultInterface
-import sandbox.validator.imp.ValidationException
+import sandbox.validatorJunit.ResultInterface
+import sandbox.validatorJunit.imp.ValidationException
 
 import static groovy.test.GroovyAssert.shouldFail
 import static org.hamcrest.CoreMatchers.hasItem

@@ -1,4 +1,4 @@
-package sandbox.validator
+package sandbox.validatorJunit
 
 import org.junit.runner.notification.Failure
 import org.junit.runner.notification.RunListener

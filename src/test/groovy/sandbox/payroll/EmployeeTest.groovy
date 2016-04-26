@@ -14,6 +14,9 @@ class EmployeeTest {
 
     @Test
     public void "ahaaa!!!!"(){
+
+        def emp = new Employee()
+        emp.setName("vitor")
         assert true : "bloblo"
     }
 

@@ -1,4 +1,4 @@
-package sandbox.validator.imp
+package sandbox.validatorJunit.imp
 
 import org.junit.runners.model.FrameworkField
 import org.junit.runners.model.FrameworkMethod
