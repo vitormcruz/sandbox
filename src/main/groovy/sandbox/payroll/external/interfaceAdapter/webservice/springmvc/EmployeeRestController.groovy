@@ -1,4 +1,4 @@
-package sandbox.payroll.interfaceAdapter.webservice.springmvc
+package sandbox.payroll.external.interfaceAdapter.webservice.springmvc
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.modelmapper.ModelMapper

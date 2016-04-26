@@ -1,4 +1,4 @@
-package sandbox.payroll.interfaceAdapter.querydsl.entity;
+package sandbox.payroll.external.interfaceAdapter.querydsl.entity;
 
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.PathMetadata;

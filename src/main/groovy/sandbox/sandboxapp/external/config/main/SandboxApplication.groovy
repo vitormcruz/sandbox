@@ -1,4 +1,4 @@
-package sandbox.sandboxapp.config.main
+package sandbox.sandboxapp.external.config.main
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.vaadin.server.VaadinServlet
@@ -23,15 +23,15 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import org.springframework.transaction.support.TransactionTemplate
-import sandbox.sandboxapp.interfaceAdapter.jms.MessageReceiver
+import sandbox.sandboxapp.external.interfaceAdapter.jms.MessageReceiver
 import sandbox.concurrency.AtomicBlock
 import sandbox.concurrency.dbBased.hibernate.HibernateAtomicBlock
 import sandbox.heavyValidation.AsyncHeavyValidation
 import sandbox.heavyValidation.JMSAsyncHeavyValidation
 import sandbox.payroll.ModelSnapshot
 import sandbox.payroll.EmployeeRepository
-import sandbox.payroll.interfaceAdapter.persistence.hibernate.HibernatePersistentModelSnapshot
-import sandbox.payroll.interfaceAdapter.persistence.hibernate.repository.HibernateEmployeeRepository
+import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.HibernatePersistentModelSnapshot
+import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.repository.HibernateEmployeeRepository
 import sandbox.smartfactory.SmartFactory
 import sandbox.validator.ValidatorTrait
 
@@ -135,7 +135,7 @@ class SandboxApplication extends SpringBootServletInitializer{
         ServletRegistrationBean registration = new ServletRegistrationBean(new VaadinServlet(), "/sandbox/*", "/VAADIN/*");
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("UI", "sandbox.sandboxapp.interfaceAdapter.vaadin.SandboxUI");
+        params.put("UI", "sandbox.sandboxapp.external.interfaceAdapter.vaadin.SandboxUI");
         params.put("async-supported", "true")
         params.put("org.atmosphere.useWebSocketAndServlet3", "true")
 

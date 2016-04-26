@@ -120,7 +120,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>sandbox.sandboxapp.config.main.SandboxApplication</mainClass>
+                    <mainClass>sandbox.sandboxapp.external.config.main.SandboxApplication</mainClass>
                     <jvmArguments>-Dserver.port=7003</jvmArguments>
                 </configuration>
             </plugin>

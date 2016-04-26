@@ -1,4 +1,4 @@
-package sandbox.payroll.interfaceAdapter.vaadin
+package sandbox.payroll.external.interfaceAdapter.vaadin
 import com.vaadin.ui.AbsoluteLayout
 import com.vaadin.ui.Button
 import sandbox.payroll.Employee

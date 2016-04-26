@@ -1,4 +1,4 @@
-package sandbox.payroll.interfaceAdapter.persistence.hibernate.repository
+package sandbox.payroll.external.interfaceAdapter.persistence.hibernate.repository
 
 import com.querydsl.jpa.hibernate.HibernateQuery
 import com.querydsl.jpa.hibernate.HibernateQueryFactory
@@ -6,7 +6,7 @@ import org.hibernate.SessionFactory
 import org.springframework.transaction.support.TransactionTemplate
 import sandbox.payroll.Employee
 import sandbox.payroll.EmployeeRepository
-import sandbox.payroll.interfaceAdapter.querydsl.entity.QEmployee
+import sandbox.payroll.external.interfaceAdapter.querydsl.entity.QEmployee
 
 class HibernateEmployeeRepository implements EmployeeRepository{
 

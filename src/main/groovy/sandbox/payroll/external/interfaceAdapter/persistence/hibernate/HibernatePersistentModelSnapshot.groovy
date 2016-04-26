@@ -1,4 +1,4 @@
-package sandbox.payroll.interfaceAdapter.persistence.hibernate
+package sandbox.payroll.external.interfaceAdapter.persistence.hibernate
 
 import sandbox.concurrency.AtomicBlock
 import sandbox.payroll.ModelSnapshot
