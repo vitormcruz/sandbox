@@ -4,6 +4,9 @@ class ApplicationValidationNotifier {
 
     private static ThreadLocal<Collection<ValidationObserver>> observers
 
+    ApplicationValidationNotifier() {
+    }
+
     public static createCurrentListOfListeners(){
         observers = new ThreadLocal<Collection<ValidationObserver>>()
         observers.set([])
@@ -16,6 +19,10 @@ class ApplicationValidationNotifier {
 
     public static addObserver(ValidationObserver validationObserver){
         observers.get().add(validationObserver)
+    }
+
+    public static removeObserver(ValidationObserver validationObserver){
+        observers.get().remove(validationObserver)
     }
 
     void executeNamedValidation(String validationName, Closure validation) {
@@ -36,4 +43,43 @@ class ApplicationValidationNotifier {
         observers.get().each {it.issueError(error)}
     }
 
+    public void issueError(String instantValidationName, String error) {
+        startValidation(instantValidationName)
+        observers.get().each {it.issueError(error)}
+        finishValidation(instantValidationName)
+    }
+
+    def getValidationSession() {
+        def session = new ValidationSession()
+        addObserver(session)
+        return session
+    }
+
+    public static class ValidationSession implements ValidationObserver{
+        private Boolean successful = true
+
+        @Override
+        void startValidation(String validationName) {
+
+        }
+
+        @Override
+        void issueError(String error) {
+            successful = false
+        }
+
+        @Override
+        void finishValidation(String validationName) {
+
+        }
+
+        @Override
+        public Boolean successful(){
+            return successful
+        }
+
+        public void stopSession() {
+            removeObserver(this)
+        }
+    }
 }

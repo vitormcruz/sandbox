@@ -1,5 +1,4 @@
 package sandbox.sandboxapp.external.config.main
-
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.vaadin.server.VaadinServlet
 import org.hibernate.SessionFactory
@@ -23,17 +22,17 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.annotation.EnableTransactionManagement
 import org.springframework.transaction.support.TransactionTemplate
-import sandbox.sandboxapp.external.interfaceAdapter.jms.MessageReceiver
 import sandbox.concurrency.AtomicBlock
 import sandbox.concurrency.dbBased.hibernate.HibernateAtomicBlock
 import sandbox.heavyValidation.AsyncHeavyValidation
 import sandbox.heavyValidation.JMSAsyncHeavyValidation
-import sandbox.payroll.ModelSnapshot
 import sandbox.payroll.EmployeeRepository
+import sandbox.payroll.ModelSnapshot
 import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.HibernatePersistentModelSnapshot
 import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.repository.HibernateEmployeeRepository
+import sandbox.sandboxapp.external.interfaceAdapter.jms.MessageReceiver
 import sandbox.smartfactory.SmartFactory
-import sandbox.validator.ValidatorTrait
+import sandbox.validatorJunit.ValidatorTrait
 
 import javax.jms.ConnectionFactory
 import javax.servlet.ServletContext
@@ -144,12 +143,18 @@ class SandboxApplication extends SpringBootServletInitializer{
     }
 
     @Bean
+    public ValidationNotifierFilter validationNotifierFilter(){
+        return new ValidationNotifierFilter()
+    }
+
+
+    @Bean
     public SessionFactory sessionFactory() {
         return sessionFactory
     }
 
     public static org.hibernate.cfg.Configuration addResources(org.hibernate.cfg.Configuration configuration) {
-        configuration.addResource("sandbox/payroll/interfaceAdapter/persistence/hibernate/mapping/Employee.hbm.xml")
+        configuration.addResource("sandbox/payroll/external/interfaceAdapter/persistence/hibernate/mapping/Employee.hbm.xml")
     }
 
     @Bean
