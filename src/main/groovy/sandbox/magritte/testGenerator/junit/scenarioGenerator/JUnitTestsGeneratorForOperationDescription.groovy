@@ -1,12 +1,12 @@
 package sandbox.magritte.testGenerator.junit.scenarioGenerator
-
 import sandbox.magritte.description.Description
 import sandbox.magritte.description.OperationDescription
 import sandbox.magritte.description.recordingDescription.MessageRecorder
 import sandbox.magritte.methodGenerator.GeneratedMethod
 import sandbox.magritte.methodGenerator.MethodGenerator
 import sandbox.magritte.testGenerator.MandatoryTestGeneratorForMethod
-import sandbox.validatorJunit.imp.ValidationException
+import sandbox.validationNotification.ApplicationValidationNotifier
+import sandbox.validationNotification.ValidationObserver
 
 class JUnitTestsGeneratorForOperationDescription implements MethodGenerator, OperationDescription {
 
@@ -52,13 +52,10 @@ class JUnitTestsGeneratorForOperationDescription implements MethodGenerator, Ope
     private Closure<List<String>> getValidationMethodFor(name) {
         { params ->
             def testSubject = "newInstance".equals(name) ? describedClass : describedClass.newInstance()
-
-            try {
-                testSubject."${name}"(*params)
-                return []
-            } catch (ValidationException e) {
-                return e.result.getFailures().collect { it.getException().getMessage() }
-            }
+            def validationObserver = new SimpleValidationObserver()
+            ApplicationValidationNotifier.addObserver(validationObserver)
+            testSubject."${name}"(*params)
+            return validationObserver.getErrors()
         }
     }
 
@@ -71,5 +68,34 @@ class JUnitTestsGeneratorForOperationDescription implements MethodGenerator, Ope
     @Override
     Collection<GeneratedMethod> getGeneratedMethods() {
         return [generatedTests, mandatoryTestGenerator.getGeneratedMethods()].flatten()
+    }
+
+    public static class SimpleValidationObserver implements ValidationObserver{
+
+        private errors = []
+
+        @Override
+        void startValidation(String validationName) {
+
+        }
+
+        @Override
+        void issueError(String error) {
+            errors.add(error)
+        }
+
+        def getErrors() {
+            return new ArrayList(errors)
+        }
+
+        @Override
+        void finishValidation(String validationName) {
+
+        }
+
+        @Override
+        Boolean successful() {
+            return errors.isEmpty()
+        }
     }
 }

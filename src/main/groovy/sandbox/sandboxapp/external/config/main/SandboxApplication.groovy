@@ -1,8 +1,7 @@
 package sandbox.sandboxapp.external.config.main
-import com.fasterxml.jackson.annotation.JsonIgnore
+
 import com.vaadin.server.VaadinServlet
 import org.hibernate.SessionFactory
-import org.junit.runner.notification.RunNotifier
 import org.modelmapper.ModelMapper
 import org.modelmapper.jackson.JsonNodeValueReader
 import org.springframework.boot.SpringApplication
@@ -14,7 +13,6 @@ import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.listener.SimpleMessageListenerContainer
 import org.springframework.jms.listener.adapter.MessageListenerAdapter
@@ -32,7 +30,6 @@ import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.Hibernate
 import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.repository.HibernateEmployeeRepository
 import sandbox.sandboxapp.external.interfaceAdapter.jms.MessageReceiver
 import sandbox.smartfactory.SmartFactory
-import sandbox.validatorJunit.ValidatorTrait
 
 import javax.jms.ConnectionFactory
 import javax.servlet.ServletContext
@@ -177,17 +174,19 @@ class SandboxApplication extends SpringBootServletInitializer{
         return container;
     }
 
-    @Bean
-    public Jackson2ObjectMapperBuilder objectMapperBuilder() {
-        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-        builder.failOnEmptyBeans(false)
-        builder.mixIn(ValidatorTrait, MixInIgnoreValidatorTrait)
-        return builder;
-    }
 
-    public static interface MixInIgnoreValidatorTrait {
-        @JsonIgnore public RunNotifier getNotifier();
-        @JsonIgnore public Collection getValidations();
-    }
+    //TODO will neeed when new validation generator has been made
+//    @Bean
+//    public Jackson2ObjectMapperBuilder objectMapperBuilder() {
+//        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+//        builder.failOnEmptyBeans(false)
+//        builder.mixIn(ValidatorTrait, MixInIgnoreValidatorTrait)
+//        return builder;
+//    }
+//
+//    public static interface MixInIgnoreValidatorTrait {
+//        @JsonIgnore public RunNotifier getNotifier();
+//        @JsonIgnore public Collection getValidations();
+//    }
 
 }

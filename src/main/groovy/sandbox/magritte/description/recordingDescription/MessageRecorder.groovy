@@ -1,10 +1,6 @@
 package sandbox.magritte.description.recordingDescription
 
-import sandbox.validatorJunit.Validation
-import sandbox.validatorJunit.ValidatorTrait
-
 import static com.google.common.base.Preconditions.checkArgument
-
 /**
  * I am a implementation of the description model that behave like all description interfaces. I mimic the interface
  * provided and then record each an every method call made to myself, After that I can be played back to any object that
@@ -13,17 +9,16 @@ import static com.google.common.base.Preconditions.checkArgument
  *
  * @param <T> the type being recorded
  */
-class MessageRecorder<T> implements ValidatorTrait{
+class MessageRecorder<T> {
 
     private Class<T> interfaceBeenRecorded
     def final List<RecordedMessage> recordedMethods = []
 
     MessageRecorder(Class<T> interfaceToRecord) {
         this.interfaceBeenRecorded = interfaceToRecord
-        validateFailingOnError()
+        validateInterfaceBeenRecorded()
     }
 
-    @Validation
     def void validateInterfaceBeenRecorded(){
         checkArgument(interfaceBeenRecorded != null, "No interface to record was specified")
         checkArgument(interfaceBeenRecorded.isInterface(), "You specified the class ${interfaceBeenRecorded.getSimpleName()}, " +

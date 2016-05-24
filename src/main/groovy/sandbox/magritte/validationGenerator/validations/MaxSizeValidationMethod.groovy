@@ -1,11 +1,5 @@
 package sandbox.magritte.validationGenerator.validations
 import org.apache.commons.validator.routines.CodeValidator
-import sandbox.magritte.description.DescriptionModelDefinition
-import sandbox.magritte.description.NumberDescription
-import sandbox.magritte.description.OperationDescription
-
-import static sandbox.magritte.description.OperationDescription.FIRST
-import static sandbox.magritte.description.builder.DescriptionFactory.New
 
 class MaxSizeValidationMethod extends BasicGeneratedValidationMethod {
 
@@ -15,7 +9,6 @@ class MaxSizeValidationMethod extends BasicGeneratedValidationMethod {
     }
 
     MaxSizeValidationMethod(maxSize) {
-        this.validateFailingOnErrorFor(constructor(), maxSize)
         codeValidator = new CodeValidator("", 0, maxSize, null)
     }
 
@@ -33,10 +26,4 @@ class MaxSizeValidationMethod extends BasicGeneratedValidationMethod {
         }
     }
 
-    @DescriptionModelDefinition
-    public myDescription(){
-        return [New(OperationDescription).forConstructor()
-                                         .withParameter(FIRST, "maxSize", New(NumberDescription).beRequired()
-                                                                                                .beNatural())]
-    }
 }

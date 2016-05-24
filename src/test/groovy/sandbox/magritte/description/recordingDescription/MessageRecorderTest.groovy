@@ -1,7 +1,6 @@
 package sandbox.magritte.description.recordingDescription
 import org.junit.Test
 import sandbox.magritte.description.util.*
-import sandbox.validatorJunit.imp.ValidationException
 
 import static groovy.test.GroovyAssert.shouldFail
 
@@ -9,20 +8,20 @@ class MessageRecorderTest {
 
     @Test
     def void "Create a MessageRecorder with null delegate class"(){
-        ValidationException ex = shouldFail(ValidationException, {new MessageRecorder(null)})
-        assert ex.hasError("No interface to record was specified")
+        IllegalArgumentException ex = shouldFail(IllegalArgumentException, {new MessageRecorder(null)})
+        assert ex.message == ("No interface to record was specified")
     }
 
     @Test
     def void "Create a MessageRecorder with concrete delegate class"(){
-        ValidationException ex = shouldFail(ValidationException, {new MessageRecorder(String)})
-        assert ex.hasError("You specified the class String, but I can only record interfaces")
+        IllegalArgumentException ex = shouldFail(IllegalArgumentException, {new MessageRecorder(String)})
+        assert ex.message == "You specified the class String, but I can only record interfaces"
     }
 
     @Test
     def void "Create a MessageRecorder with abstract delegate class"(){
-        ValidationException ex = shouldFail(ValidationException, {new MessageRecorder(AbstractClassForRecording)})
-        assert ex.hasError("You specified the class AbstractClassForRecording, but I can only record interfaces")
+        IllegalArgumentException ex = shouldFail(IllegalArgumentException, {new MessageRecorder(AbstractClassForRecording)})
+        assert ex.message == "You specified the class AbstractClassForRecording, but I can only record interfaces"
     }
 
     @Test

@@ -1,54 +1,48 @@
 package sandbox.heavyValidation
-
 import org.joda.time.DateTime
 import org.junit.runner.Description
 import org.junit.runner.Result
-import org.junit.runner.notification.Failure
-import org.junit.runner.notification.RunListener
-
+import sandbox.validationNotification.ValidationObserver
 /**
  */
-public class TextRunListener extends RunListener{
+public class TextRunListener implements ValidationObserver {
 
     def DateTime testStartTime
     def String objectUnderTest
+    private Boolean successful
 
-    @Override
     void testRunStarted(Description description) throws Exception {
         objectUnderTest = description.displayName
         println("Validation of ${objectUnderTest} initiated")
     }
 
-    @Override
     void testRunFinished(Result result) throws Exception {
         println("Validation of ${objectUnderTest} was ${result.wasSuccessful() ? "": "not "}sucecessful")
     }
 
     @Override
-    void testStarted(Description description) throws Exception {
-        println("Validation of ${description.displayName} initiated")
+    void startValidation(String validationName) {
+        println("Validation of ${validationName} initiated")
         testStartTime = new DateTime()
     }
 
+
     @Override
-    void testFinished(Description description) throws Exception {
+    void finishValidation(String validationName) {
         def timeElapsed = new DateTime().getMillis() - testStartTime.getMillis()
-        println("Validation of ${description.displayName} finished. Elapsed time: ${timeElapsed} mls")
+        println("Validation of ${validationName} finished. Elapsed time: ${timeElapsed} mls")
     }
 
     @Override
-    void testFailure(Failure failure) throws Exception {
-        super.testFailure(failure)
+    Boolean successful() {
+        return successful
     }
 
     @Override
-    void testAssumptionFailure(Failure failure) {
-        super.testAssumptionFailure(failure)
+    void issueError(String error) {
+        successful = false
+        println(error)
     }
 
-    @Override
-    void testIgnored(Description description) throws Exception {
-        super.testIgnored(description)
-    }
 }
 

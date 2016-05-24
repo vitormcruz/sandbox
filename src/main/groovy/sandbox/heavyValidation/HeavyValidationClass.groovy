@@ -1,113 +1,94 @@
 package sandbox.heavyValidation
-import sandbox.validatorJunit.ValidatorTrait
-import sandbox.validatorJunit.Validation
+import sandbox.validationNotification.ApplicationValidationNotifier
 /**
  */
-class HeavyValidationClass implements ValidatorTrait{
+class HeavyValidationClass {
+
+    private static ApplicationValidationNotifier notifier = ApplicationValidationNotifier.smartNewFor(HeavyValidationClass)
 
     def Long smallWait = 100
     def Long mediumWait = 800
     def Long longWait = 2000
 
 
-    @Validation
     def void validate1(){
-        sleep(smallWait)
+        notifier.executeNamedValidation("validate1", {sleep(smallWait)})
     }
 
-    @Validation
     def void validate2(){
-        sleep(smallWait)
+        notifier.executeNamedValidation("validate2", {sleep(smallWait)})
     }
 
-    @Validation
     def void validate3(){
-        sleep(mediumWait)
+        notifier.executeNamedValidation("validate3", {sleep(mediumWait)})
     }
 
-    @Validation
     def void validate4(){
-        sleep(smallWait)
+        notifier.executeNamedValidation("validate3", {sleep(smallWait)})
     }
 
-    @Validation
     def void validate5(){
-        sleep(mediumWait)
+        notifier.executeNamedValidation("validate3", {sleep(mediumWait)})
     }
 
-    @Validation
     def void validate6(){
-        sleep(smallWait)
+        notifier.executeNamedValidation("validate3", {sleep(smallWait)})
     }
 
-    @Validation
     def void validate7(){
-        sleep(smallWait)
+        notifier.executeNamedValidation("validate3", {sleep(smallWait)})
     }
 
-    @Validation
     def void validate8(){
-        sleep(smallWait)
+        notifier.executeNamedValidation("validate3", {sleep(smallWait)})
     }
 
-    @Validation
     def void validate9(){
-        sleep(smallWait)
+        notifier.executeNamedValidation("validate3", {sleep(smallWait)})
     }
 
-    @Validation
     def void validate10(){
-        sleep(longWait)
+        notifier.executeNamedValidation("validate3", {sleep(longWait)})
     }
 
-    @Validation
     def void validate11(){
-        sleep(mediumWait)
+        notifier.executeNamedValidation("validate3", {sleep(mediumWait)})
     }
 
-    @Validation
     def void validate12(){
-        sleep(smallWait)
+        notifier.executeNamedValidation("validate3", {sleep(smallWait)})
     }
 
-    @Validation
     def void validate13(){
-        sleep(mediumWait)
+        notifier.executeNamedValidation("validate3", {sleep(mediumWait)})
     }
 
-    @Validation
     def void validate14(){
-        sleep(smallWait)
+        notifier.executeNamedValidation("validate3", {sleep(smallWait)})
     }
 
-    @Validation
     def void validate15(){
-        sleep(smallWait)
+        notifier.executeNamedValidation("validate3", {sleep(smallWait)})
     }
 
-    @Validation
     def void validate16(){
-        sleep(smallWait)
+        notifier.executeNamedValidation("validate3", {sleep(smallWait)})
     }
 
-    @Validation
     def void validate17(){
-        sleep(mediumWait)
+        notifier.executeNamedValidation("validate3", {sleep(mediumWait)})
     }
 
-    @Validation
     def void validate18(){
-        sleep(smallWait)
+        notifier.executeNamedValidation("validate3", {sleep(smallWait)})
     }
 
-    @Validation
     def void validate19(){
-        sleep(smallWait)
+        notifier.executeNamedValidation("validate3", {sleep(smallWait)})
     }
 
-    @Validation
     def void validate20(){
-        sleep(longWait)
+        notifier.executeNamedValidation("validate3", {sleep(longWait)})
     }
 
 }

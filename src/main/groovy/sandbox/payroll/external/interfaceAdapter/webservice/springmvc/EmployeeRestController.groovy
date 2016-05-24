@@ -75,7 +75,7 @@ class EmployeeRestController {
         modelMapper.map(changedAttributesNode, changedEmployee)
     }
 
-    @ResponseStatus(value=HttpStatus.NOT_FOUND) //It is a lame that spring mvc do not provide such general exception
+    @ResponseStatus(value=HttpStatus.NOT_FOUND) //It is lame that spring mvc do not provide such general exception
     public static class ResourceNotFoundException extends RuntimeException{
 
     }
