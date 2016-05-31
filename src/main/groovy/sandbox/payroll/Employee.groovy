@@ -11,6 +11,7 @@ class Employee {
     def String name
     def String address
     def String email
+    def PaymentMethod paymentMethod
 
     private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
 
@@ -18,17 +19,20 @@ class Employee {
         newEmployee(mandatoryProperties.get("name"), mandatoryProperties.get("address"), mandatoryProperties.get("email"))
     }
 
-    public static newEmployee(String name, String address, String email) {
+    public static newEmployee(String name, String address, String email, PaymentMethod paymentMethod) {
         def validationSession = notifier.getValidationSession()
         def employee = new Employee()
         employee.setName(name)
         employee.setAddress(address)
         employee.setEmail(email)
+        employee.setPaymentMethod(paymentMethod)
         return validationSession.successful() ? employee : null
     }
 
     Employee() {
     }
+
+
 
     Long getId() {
         return id
@@ -49,6 +53,10 @@ class Employee {
 
     void setEmail(String email) {
         this.email = email
+    }
+
+    void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod
     }
 
     public ApplicationValidationNotifier.ValidationSession instantiationResult(){

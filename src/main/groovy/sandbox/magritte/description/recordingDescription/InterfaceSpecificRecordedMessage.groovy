@@ -7,11 +7,11 @@ import java.lang.reflect.Method
  * receiverInterface. If receiverInterface cannot respond to the message then my creation fail with a
  * MissingMethodException.
  */
-class RecordedMessage {
+class InterfaceSpecificRecordedMessage {
     def final name
     def final args
 
-    RecordedMessage(name, args, Class receiverInterface) {
+    InterfaceSpecificRecordedMessage(name, args, Class receiverInterface) {
         this.name = name
         this.args = args == null ? [] : args
         validateInterfaceRespondsToMessage(receiverInterface)

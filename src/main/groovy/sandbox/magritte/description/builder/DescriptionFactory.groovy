@@ -1,5 +1,5 @@
 package sandbox.magritte.description.builder
-import sandbox.magritte.description.recordingDescription.MessageRecorder
+import sandbox.magritte.description.recordingDescription.InterfaceRecorder
 /**
  * I am kind of a Monostate/Service Locator that can provide for you a default set of descriptions implementationss, that
  * you can change if, for example, for you own optimized set of descriptions implementations. If you, however, change it
@@ -13,7 +13,7 @@ import sandbox.magritte.description.recordingDescription.MessageRecorder
 class DescriptionFactory {
 
     static <T> T New(Class<T> aDescriptionType) {
-        def recorder = new MessageRecorder(aDescriptionType)
+        def recorder = new InterfaceRecorder(aDescriptionType)
         return recorder.asTypeBeingRecorded()
     }
 }
