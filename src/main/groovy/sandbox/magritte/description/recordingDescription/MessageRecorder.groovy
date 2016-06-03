@@ -9,12 +9,12 @@ import static com.google.common.base.Preconditions.checkArgument
  *
  * @param <T> the type being recorded
  */
-class DescriptionRecorder<T> {
+class MessageRecorder<T> {
 
     private Class<T> interfaceBeenRecorded
-    def final List<InterfaceSpecificRecordedMessage> recordedMethods = []
+    def final List<RecordedMessage> recordedMethods = []
 
-    DescriptionRecorder(Class<T> interfaceToRecord) {
+    MessageRecorder(Class<T> interfaceToRecord) {
         this.interfaceBeenRecorded = interfaceToRecord
         validateInterfaceBeenRecorded()
     }
@@ -26,7 +26,7 @@ class DescriptionRecorder<T> {
     }
 
     def T methodMissing(String nameOfMethodToRecord, args) {
-        recordedMethods.add(new InterfaceSpecificRecordedMessage(nameOfMethodToRecord, args, interfaceBeenRecorded))
+        recordedMethods.add(new RecordedMessage(nameOfMethodToRecord, args, interfaceBeenRecorded))
         return asTypeBeingRecorded()
     }
 

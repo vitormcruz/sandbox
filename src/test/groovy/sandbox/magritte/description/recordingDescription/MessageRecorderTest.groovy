@@ -4,49 +4,49 @@ import sandbox.magritte.description.util.*
 
 import static groovy.test.GroovyAssert.shouldFail
 
-class DescriptionRecorderTest {
+class MessageRecorderTest {
 
     @Test
     def void "Create a MessageRecorder with null delegate class"(){
-        IllegalArgumentException ex = shouldFail(IllegalArgumentException, {new DescriptionRecorder(null)})
+        IllegalArgumentException ex = shouldFail(IllegalArgumentException, {new MessageRecorder(null)})
         assert ex.message == ("No interface to record was specified")
     }
 
     @Test
     def void "Create a MessageRecorder with concrete delegate class"(){
-        IllegalArgumentException ex = shouldFail(IllegalArgumentException, {new DescriptionRecorder(String)})
+        IllegalArgumentException ex = shouldFail(IllegalArgumentException, {new MessageRecorder(String)})
         assert ex.message == "You specified the class String, but I can only record interfaces"
     }
 
     @Test
     def void "Create a MessageRecorder with abstract delegate class"(){
-        IllegalArgumentException ex = shouldFail(IllegalArgumentException, {new DescriptionRecorder(AbstractClassForRecording)})
+        IllegalArgumentException ex = shouldFail(IllegalArgumentException, {new MessageRecorder(AbstractClassForRecording)})
         assert ex.message == "You specified the class AbstractClassForRecording, but I can only record interfaces"
     }
 
     @Test
     def void "Call an inexistent method throw common error"(){
-        def MissingMethodException ex = shouldFail(MissingMethodException, {new DescriptionRecorder(InterfaceForRecording).inexistentMethod()})
+        def MissingMethodException ex = shouldFail(MissingMethodException, {new MessageRecorder(InterfaceForRecording).inexistentMethod()})
         assert ex.method == "inexistentMethod"
         assert ex.type == InterfaceForRecording
     }
 
     @Test
     def void "Record should return an instance of the recorded class"(){
-        def classRecorder = new DescriptionRecorder(InterfaceForRecording).interface_method1()
+        def classRecorder = new MessageRecorder(InterfaceForRecording).interface_method1()
         assert classRecorder instanceof InterfaceForRecording
     }
 
     @Test
     def void "Record abstract methods from traits"(){
-        def classRecorder = new DescriptionRecorder(TraitForRecording)
+        def classRecorder = new MessageRecorder(TraitForRecording)
         classRecorder.trait_method1()
         assert classRecorder.recordedMethods.find {it.name == "trait_method1"} : "trait_method1 wasn't recorded"
     }
 
     @Test
     def void "Record abstract methods from a varied hierachy of interfaces (traits and interfaces)"(){
-        def classRecorder = new DescriptionRecorder(InterfaceWithHierarchyForRecording)
+        def classRecorder = new MessageRecorder(InterfaceWithHierarchyForRecording)
         classRecorder.interface_method1()
         classRecorder.trait_method1()
         assert classRecorder.recordedMethods.find {it.name == "interface_method1"} : "interface_method1 wasn't recorded"
@@ -55,7 +55,7 @@ class DescriptionRecorderTest {
 
     @Test
     def void "Playback methods in the called order with the right arguments"(){
-        def classRecorder = new DescriptionRecorder(InterfaceWithHierarchyForRecording)
+        def classRecorder = new MessageRecorder(InterfaceWithHierarchyForRecording)
         classRecorder.interface_method1()
         classRecorder.trait_method1()
         classRecorder.interface_method1()
@@ -81,7 +81,7 @@ class DescriptionRecorderTest {
 
     @Test
     def void "Playback methods in a concrete class"(){
-        def classRecorder = new DescriptionRecorder(InterfaceForRecording)
+        def classRecorder = new MessageRecorder(InterfaceForRecording)
 
         classRecorder.interface_method1();
         classRecorder.interface_method2(1);
@@ -93,7 +93,7 @@ class DescriptionRecorderTest {
 
     @Test
     def void "asTypeBeeingRecorded should return a MessageRecorder disguised (proxy) as the type it is recording"(){
-        def messageCallRecorder = new DescriptionRecorder(InterfaceForRecording)
+        def messageCallRecorder = new MessageRecorder(InterfaceForRecording)
         assert messageCallRecorder.asTypeBeingRecorded() instanceof InterfaceForRecording :
         "The object returned by asTypeBeingRecorded is not the correct one."
     }
