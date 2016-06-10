@@ -2,65 +2,56 @@ package sandbox.payroll
 import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.description.StringDescription
 import sandbox.validationNotification.ApplicationValidationNotifier
+import sandbox.validationNotification.MandatorySetterValidation
 
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 
 class Employee {
 
-    private Long id
-    def String name
-    def String address
-    def String email
-    def PaymentMethod paymentMethod
-
     private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
 
-    public static newEmployee(Map<String, Object> mandatoryProperties) {
-        newEmployee(mandatoryProperties.get("name"), mandatoryProperties.get("address"), mandatoryProperties.get("email"))
-    }
+    private Long id
+    def String name
+    private MandatorySetterValidation mandatoryNameValidation = new MandatorySetterValidation("employee.name", "payroll.employee.name.mandatory")
 
-    public static newEmployee(String name, String address, String email, PaymentMethod paymentMethod) {
-        def validationSession = notifier.getValidationSession()
-        def employee = new Employee()
-        employee.setName(name)
-        employee.setAddress(address)
-        employee.setEmail(email)
-        employee.setPaymentMethod(paymentMethod)
-        return validationSession.successful() ? employee : null
-    }
+    def String address
+    private MandatorySetterValidation mandatoryAddressValidation = new MandatorySetterValidation("employee.address", "payroll.employee.address.mandatory")
+
+    def String email
+    private MandatorySetterValidation mandatoryEmailValidation = new MandatorySetterValidation("employee.email", "payroll.employee.email.mandatory")
+
+    def PaymentMethod paymentMethod
 
     Employee() {
+        notifier.issueMandatoryObligation("employee.name", "payroll.employee.name.mandatory")
+        notifier.issueMandatoryObligation("employee.address", "payroll.employee.address.mandatory")
+        notifier.issueMandatoryObligation("employee.email", "payroll.employee.email.mandatory")
     }
-
-
 
     Long getId() {
         return id
     }
 
     void setName(String name) {
-        if(!name){
-            notifier.issueError("employee.name", "payroll.employee.name.mandatory")
-            return
+        if(mandatoryNameValidation.canSet(name)){
+            this.name = name
         }
-
-        this.name = name
     }
 
     void setAddress(String address) {
-        this.address = address
+        if(mandatoryAddressValidation.canSet(address)){
+            this.address = address
+        }
     }
 
     void setEmail(String email) {
-        this.email = email
+        if(mandatoryEmailValidation.canSet(email)){
+            this.email = email
+        }
     }
 
     void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod
-    }
-
-    public ApplicationValidationNotifier.ValidationSession instantiationResult(){
-        return instantiationResult
     }
 
     @DescriptionModelDefinition

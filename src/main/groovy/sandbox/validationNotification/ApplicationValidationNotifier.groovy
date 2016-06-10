@@ -39,6 +39,10 @@ class ApplicationValidationNotifier {
         observers.get().each {it.finishValidation(validationName)}
     }
 
+    public void issueMandatoryObligation(String mandatoryValidationName, String error) {
+        observers.get().each {it.issueMandatoryObligation(mandatoryValidationName, error)}
+    }
+
     public void issueError(String error) {
         observers.get().each {it.issueError(error)}
     }
@@ -55,11 +59,25 @@ class ApplicationValidationNotifier {
         return session
     }
 
+    public void issueMandatoryObligationComplied(String mandatoryValidationName) {
+        observers.get().each {it.issueMandatoryObligationComplied(mandatoryValidationName)}
+    }
+
     public static class ValidationSession implements ValidationObserver{
         private Boolean successful = true
 
         @Override
         void startValidation(String validationName) {
+
+        }
+
+        @Override
+        void issueMandatoryObligation(String mandatoryValidationName, String error) {
+
+        }
+
+        @Override
+        void issueMandatoryObligationComplied(String mandatoryValidationName) {
 
         }
 

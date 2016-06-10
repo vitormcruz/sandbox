@@ -80,6 +80,16 @@ class JUnitTestsGeneratorForOperationDescription implements MethodGenerator, Ope
         }
 
         @Override
+        void issueMandatoryObligation(String mandatoryValidationName, String error) {
+
+        }
+
+        @Override
+        void issueMandatoryObligationComplied(String mandatoryValidationName) {
+
+        }
+
+        @Override
         void issueError(String error) {
             errors.add(error)
         }

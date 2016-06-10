@@ -26,6 +26,15 @@ public class TextRunListener implements ValidationObserver {
         testStartTime = new DateTime()
     }
 
+    @Override
+    void issueMandatoryObligation(String mandatoryValidationName, String error) {
+        println(/Mandatory obligation registered for ${mandatoryValidationName} with error:  "$error"/)
+    }
+
+    @Override
+    void issueMandatoryObligationComplied(String mandatoryValidationName) {
+        println(/Mandatory obligation complied for ${mandatoryValidationName} /)
+    }
 
     @Override
     void finishValidation(String validationName) {

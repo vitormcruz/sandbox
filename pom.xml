@@ -171,13 +171,13 @@
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
-            <version>0.7.5</version>
+            <version>0.7.6</version>
         </dependency>
 
         <dependency>
             <groupId>org.modelmapper.extensions</groupId>
             <artifactId>modelmapper-jackson</artifactId>
-            <version>0.7.5</version>
+            <version>0.7.6</version>
         </dependency>
 
         <dependency>

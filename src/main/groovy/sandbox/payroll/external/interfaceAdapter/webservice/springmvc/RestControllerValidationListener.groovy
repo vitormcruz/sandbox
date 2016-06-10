@@ -7,6 +7,7 @@ public class RestControllerValidationListener implements ValidationObserver{
 
     private Map<String, Collection> errorsByValidation
     private currentErrors
+    private mandatoryObligations = [:]
     private Boolean successful = true
     def private generateResponseStrategy
     def private issueErrorStrategy
@@ -29,6 +30,16 @@ public class RestControllerValidationListener implements ValidationObserver{
     }
 
     @Override
+    void issueMandatoryObligation(String mandatoryValidationName, String error) {
+        mandatoryObligations.put(mandatoryValidationName, error)
+    }
+
+    @Override
+    void issueMandatoryObligationComplied(String mandatoryValidationName) {
+        mandatoryObligations.remove(mandatoryValidationName)
+    }
+
+    @Override
     void issueError(String error) {
         issueErrorStrategy(error)
     }
@@ -41,7 +52,6 @@ public class RestControllerValidationListener implements ValidationObserver{
     }
 
     def private issueErrorOnly = { error ->
-        println(error)
         currentErrors.add(error)
     }
 
@@ -52,10 +62,12 @@ public class RestControllerValidationListener implements ValidationObserver{
 
     @Override
     Boolean successful() {
-        return successful
+        return successful && mandatoryObligations.isEmpty()
     }
 
     public generateResponse(body){
+        mandatoryObligations.each {issueError(it.value)}
+        mandatoryObligations.clear()
         return generateResponseStrategy(body)
     }
 

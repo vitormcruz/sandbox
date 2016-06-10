@@ -15,9 +15,11 @@ class ValidationNotifierFilter implements Filter{
     void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         ApplicationValidationNotifier.createCurrentListOfListeners()
 
-        chain.doFilter(request,response)
-
-        ApplicationValidationNotifier.destroyCurrentListOfListeners()
+        try {
+            chain.doFilter(request,response)
+        } finally {
+            ApplicationValidationNotifier.destroyCurrentListOfListeners()
+        }
     }
 
     @Override
