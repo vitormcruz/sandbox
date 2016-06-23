@@ -5,7 +5,7 @@ import com.querydsl.core.types.PathMetadata;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.core.types.dsl.StringPath;
-import sandbox.payroll.Employee;
+import sandbox.payroll.EmployeeImp;
 
 import javax.annotation.Generated;
 
@@ -16,7 +16,7 @@ import static com.querydsl.core.types.PathMetadataFactory.forVariable;
  * QEmployee is a Querydsl query type for Employee
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QEmployee extends EntityPathBase<Employee> {
+public class QEmployee extends EntityPathBase<EmployeeImp> {
 
     private static final long serialVersionUID = -771407557L;
 
@@ -31,15 +31,15 @@ public class QEmployee extends EntityPathBase<Employee> {
     public final StringPath name = createString("name");
 
     public QEmployee(String variable) {
-        super(Employee.class, forVariable(variable));
+        super(EmployeeImp.class, forVariable(variable));
     }
 
-    public QEmployee(Path<? extends Employee> path) {
+    public QEmployee(Path<? extends EmployeeImp> path) {
         super(path.getType(), path.getMetadata());
     }
 
     public QEmployee(PathMetadata metadata) {
-        super(Employee.class, metadata);
+        super(EmployeeImp.class, metadata);
     }
 
 }

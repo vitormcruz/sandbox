@@ -1,7 +1,7 @@
 package sandbox.payroll.external.interfaceAdapter.webservice.springmvc
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import sandbox.payroll.Employee
+import sandbox.payroll.EmployeeImp
 import sandbox.payroll.EmployeeRepository
 import sandbox.payroll.ModelSnapshot
 
@@ -13,42 +13,45 @@ class EmployeeRestController implements BasicControllerOperationsTrait{
     private ModelSnapshot model = ModelSnapshot.smartNewFor(EmployeeRestController)
 
     @RequestMapping(value = "/employee", method = RequestMethod.POST)
-    ResponseEntity<Employee> newEmployee(@RequestBody String newEmployeeJson) {
+    ResponseEntity<EmployeeImp> newEmployee(@RequestBody String newEmployeeJson) {
         RestControllerValidationListener listener = getValidationListener()
-        def newEmployee = mapEntityFromJson(Employee, newEmployeeJson)
-        if(listener.successful()){
+        EmployeeImp.EmployeeBuilder employeeBuilder = mapEntityFromJson(EmployeeImp.EmployeeBuilder, newEmployeeJson)
+        employeeBuilder.onSuccessDoWithBuiltEmployee { newEmployee ->
             employeeRepository.add(newEmployee)
+            listener.setBody(newEmployee)
             model.save()
         }
-        return listener.generateResponse(newEmployee);
+        return listener.generateResponse();
     }
 
     @RequestMapping(value = "/employee/{employeeId}", method = RequestMethod.PATCH)
-    ResponseEntity<Employee> changeEmployee(@PathVariable Long employeeId, @RequestBody String changedAttributes) {
+    ResponseEntity<EmployeeImp> changeEmployee(@PathVariable Long employeeId, @RequestBody String changedAttributes) {
         RestControllerValidationListener listener = getValidationListener()
         def changedEmployee = getResource(employeeId, employeeRepository)
         mapEntityFromJson(changedEmployee, changedAttributes)
         if(listener.successful()){
             employeeRepository.update(changedEmployee)
+            listener.setBody(changedEmployee)
             model.save()
         }
 
-        return listener.generateResponse(changedEmployee)
+        return listener.generateResponse()
     }
 
     @RequestMapping(value = "/employee/{employeeId}", method = RequestMethod.DELETE)
-    ResponseEntity<Employee> deleteEmployee(@PathVariable Long employeeId) {
+    ResponseEntity<EmployeeImp> deleteEmployee(@PathVariable Long employeeId) {
         RestControllerValidationListener listener = getValidationListener()
-        Employee changedEmployee = getResource(employeeId, employeeRepository)
+        EmployeeImp employeeSubjectedRemoval = getResource(employeeId, employeeRepository)
         if(listener.successful()) {
-            employeeRepository.remove(changedEmployee)
+            employeeRepository.remove(employeeSubjectedRemoval)
+            listener.setBody(employeeSubjectedRemoval)
             model.save()
         }
-        return listener.generateResponse(changedEmployee);
+        return listener.generateResponse();
     }
 
     @RequestMapping(value = "/employee", method = RequestMethod.GET)
-    Collection<Employee> listEmployees() {
+    Collection<EmployeeImp> listEmployees() {
         return employeeRepository
     }
 

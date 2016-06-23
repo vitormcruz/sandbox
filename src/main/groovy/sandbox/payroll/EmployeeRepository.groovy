@@ -1,10 +1,10 @@
 package sandbox.payroll
 
-interface EmployeeRepository extends Collection<Employee>{
+interface EmployeeRepository extends Collection<EmployeeImp>{
 
-    Employee get(id)
+    EmployeeImp get(id)
 
-    void update(Employee employee)
+    void update(EmployeeImp employee)
 
     /**
      * Find the first a single employee QueryBase qEmployee
@@ -17,7 +17,7 @@ interface EmployeeRepository extends Collection<Employee>{
      * @param closure a closure condition
      * @return
      */
-    public Employee find(Closure closure);
+    public EmployeeImp find(Closure closure);
 
 
 }

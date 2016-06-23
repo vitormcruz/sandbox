@@ -11,6 +11,7 @@ public class RestControllerValidationListener implements ValidationObserver{
     private Boolean successful = true
     def private generateResponseStrategy
     def private issueErrorStrategy
+    def body
 
     RestControllerValidationListener() {
         currentErrors = new ArrayList()
@@ -65,13 +66,13 @@ public class RestControllerValidationListener implements ValidationObserver{
         return successful && mandatoryObligations.isEmpty()
     }
 
-    public generateResponse(body){
+    public generateResponse(){
         mandatoryObligations.each {issueError(it.value)}
         mandatoryObligations.clear()
-        return generateResponseStrategy(body)
+        return generateResponseStrategy()
     }
 
-    def private responseOkStrategy = { body ->
+    def private responseOkStrategy = {
         return ResponseEntity.ok(body)
     }
 

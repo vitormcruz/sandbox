@@ -5,7 +5,7 @@
 
 <hibernate-mapping package="sandbox.payroll">
 
-        <class name="Employee" table="EMPLOYEE">
+        <class name="EmployeeImp" table="EMPLOYEE">
                 <id name="id" column="ID" access="field">
                     <generator class="native"/>
                 </id>

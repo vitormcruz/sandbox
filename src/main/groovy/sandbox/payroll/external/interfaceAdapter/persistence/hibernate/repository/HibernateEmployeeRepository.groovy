@@ -4,7 +4,7 @@ import com.querydsl.jpa.hibernate.HibernateQuery
 import com.querydsl.jpa.hibernate.HibernateQueryFactory
 import org.hibernate.SessionFactory
 import org.springframework.transaction.support.TransactionTemplate
-import sandbox.payroll.Employee
+import sandbox.payroll.EmployeeImp
 import sandbox.payroll.EmployeeRepository
 import sandbox.payroll.external.interfaceAdapter.querydsl.entity.QEmployee
 
@@ -15,24 +15,24 @@ class HibernateEmployeeRepository implements EmployeeRepository{
     private pending = []
 
     @Override
-    Employee get(id) {
+    EmployeeImp get(id) {
         transactionTemplate.execute {
-            return sessionFactory.getCurrentSession().get(Employee, id)
+            return sessionFactory.getCurrentSession().get(EmployeeImp, id)
         }
     }
 
     @Override
-    public void update(Employee employee) {
+    public void update(EmployeeImp employee) {
         pending.add({
             sessionFactory.getCurrentSession().merge(employee)
         })
     }
 
     @Override
-    Employee find(Closure closure) {
+    EmployeeImp find(Closure closure) {
         def qEmployee = QEmployee.employee
         transactionTemplate.execute {
-            HibernateQuery<Employee> employeeQuery = new HibernateQueryFactory(this.sessionFactory.getCurrentSession()).from(qEmployee)
+            HibernateQuery<EmployeeImp> employeeQuery = new HibernateQueryFactory(this.sessionFactory.getCurrentSession()).from(qEmployee)
             closure(employeeQuery, qEmployee)
             return employeeQuery.fetchOne()
         }
@@ -59,9 +59,9 @@ class HibernateEmployeeRepository implements EmployeeRepository{
     }
 
     @Override
-    Iterator<Employee> iterator() {
+    Iterator<EmployeeImp> iterator() {
         //TODO use pagination
-        Collection<Employee> employees
+        Collection<EmployeeImp> employees
         transactionTemplate.execute{
             employees = new HibernateQueryFactory(this.sessionFactory.getCurrentSession()).selectFrom(QEmployee.employee).fetch()
         }
@@ -80,7 +80,7 @@ class HibernateEmployeeRepository implements EmployeeRepository{
     }
 
     @Override
-    boolean add(Employee employee) {
+    boolean add(EmployeeImp employee) {
         pending.add({
             sessionFactory.getCurrentSession().persist(employee)
         })
@@ -101,7 +101,7 @@ class HibernateEmployeeRepository implements EmployeeRepository{
     }
 
     @Override
-    boolean addAll(Collection<? extends Employee> c) {
+    boolean addAll(Collection<? extends EmployeeImp> c) {
         return false
     }
 

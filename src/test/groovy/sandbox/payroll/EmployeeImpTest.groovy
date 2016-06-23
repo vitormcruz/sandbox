@@ -10,7 +10,7 @@ import sandbox.magritte.testGenerator.junit.JUnit4TestGeneratorRunner
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 
 @RunWith(JUnit4TestGeneratorRunner)
-class EmployeeTest {
+class EmployeeImpTest {
 
     @Test
     public void "ahaaa!!!!"(){
@@ -25,7 +25,7 @@ class EmployeeTest {
                                                     New(StringDescription).accessor("email").maxSize(100).beRequired())
     }
 
-    Class<Employee> getEmployeeClass() {
-        return Employee
+    Class<EmployeeImp> getEmployeeClass() {
+        return EmployeeImp
     }
 }
