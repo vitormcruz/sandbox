@@ -1,4 +1,5 @@
 package sandbox.payroll.external.interfaceAdapter.webservice.springmvc
+
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import sandbox.payroll.EmployeeImp
@@ -13,9 +14,9 @@ class EmployeeRestController implements BasicControllerOperationsTrait{
     private ModelSnapshot model = ModelSnapshot.smartNewFor(EmployeeRestController)
 
     @RequestMapping(value = "/employee", method = RequestMethod.POST)
-    ResponseEntity<EmployeeImp> newEmployee(@RequestBody String newEmployeeJson) {
+    ResponseEntity<EmployeeImp> newEmployee(@RequestBody Map newEmployeeMap) {
         RestControllerValidationListener listener = getValidationListener()
-        EmployeeImp.EmployeeBuilder employeeBuilder = mapEntityFromJson(EmployeeImp.EmployeeBuilder, newEmployeeJson)
+        EmployeeImp.EmployeeBuilder employeeBuilder = new EmployeeImp.EmployeeBuilder().applyMap(newEmployeeMap)
         employeeBuilder.onSuccessDoWithBuiltEmployee { newEmployee ->
             employeeRepository.add(newEmployee)
             listener.setBody(newEmployee)
@@ -25,10 +26,10 @@ class EmployeeRestController implements BasicControllerOperationsTrait{
     }
 
     @RequestMapping(value = "/employee/{employeeId}", method = RequestMethod.PATCH)
-    ResponseEntity<EmployeeImp> changeEmployee(@PathVariable Long employeeId, @RequestBody String changedAttributes) {
+    ResponseEntity<EmployeeImp> changeEmployee(@PathVariable Long employeeId, @RequestBody Map changedAttributes) {
         RestControllerValidationListener listener = getValidationListener()
         def changedEmployee = getResource(employeeId, employeeRepository)
-        mapEntityFromJson(changedEmployee, changedAttributes)
+        changedEmployee.applyMap(changedAttributes)
         if(listener.successful()){
             employeeRepository.update(changedEmployee)
             listener.setBody(changedEmployee)

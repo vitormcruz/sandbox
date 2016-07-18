@@ -1,16 +1,18 @@
 package sandbox.sandboxapp.external.config.main
+
 import org.hibernate.SessionFactory
-import org.modelmapper.ModelMapper
-import org.modelmapper.jackson.JsonNodeValueReader
 import org.springframework.orm.hibernate4.HibernateTransactionManager
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.support.TransactionTemplate
 import sandbox.concurrency.AtomicBlock
 import sandbox.concurrency.dbBased.hibernate.HibernateAtomicBlock
+import sandbox.payroll.EmployeeImp
 import sandbox.payroll.EmployeeRepository
 import sandbox.payroll.ModelSnapshot
+import sandbox.payroll.Salary
 import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.HibernatePersistentModelSnapshot
 import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.repository.HibernateEmployeeRepository
+import sandbox.payroll.external.interfaceAdapter.webservice.springmvc.ObjectMapping
 import sandbox.smartfactory.SmartFactory
 import sandbox.validationNotification.ApplicationValidationNotifier
 
@@ -35,11 +37,17 @@ class SandboxContextListener implements ServletContextListener {
         globalConfiguration.put(PlatformTransactionManager, transactionFactory)
         globalConfiguration.put(TransactionTemplate, new TransactionTemplate(transactionFactory))
         globalConfiguration.put(AtomicBlock, new HibernateAtomicBlock())
+        ObjectMapping objectMapping = new ObjectMapping()
+
+        def objectMappingForBuilder = objectMapping.getObjectMappingFor(EmployeeImp.EmployeeBuilder)
+        objectMappingForBuilder.put("paymentMethod", {employeeBuilder, paymentMethodMap ->
+            employeeBuilder.setPaymentMethod(new Salary(Integer.valueOf(paymentMethodMap.get("salary"))))
+        })
+
+        globalConfiguration.put(ObjectMapping, objectMapping)
 
 
         def sandBoxConfiguration = smartFactory.configurationFor("sandbox.payroll.**")
-        sandBoxConfiguration.put(ModelMapper, getConfiguredModelMapper())
-
 
         def employeeRepository = new HibernateEmployeeRepository()
         sandBoxConfiguration.put(EmployeeRepository, employeeRepository)
@@ -48,6 +56,8 @@ class SandboxContextListener implements ServletContextListener {
             modelSnapshot.add(employeeRepository)
             return modelSnapshot
         }())
+
+
     }
 
     private SessionFactory getConfiguredSessionFactory() {
@@ -72,16 +82,8 @@ class SandboxContextListener implements ServletContextListener {
         new HibernateTransactionManager(SessionFactory.smartNewFor(SandboxContextListener))
     }
 
-    private ModelMapper getConfiguredModelMapper() {
-        def mapper = new ModelMapper()
-        mapper.getConfiguration().addValueReader(new JsonNodeValueReader())
-
-        return mapper
-    }
-
     @Override
     void contextDestroyed(ServletContextEvent sce) {
-        println("destroy")
         ApplicationValidationNotifier.destroyCurrentListOfListeners()
     }
 }

@@ -1,4 +1,5 @@
 package sandbox.sandboxapp.external.config.main
+
 import com.vaadin.server.VaadinServlet
 import org.hibernate.SessionFactory
 import org.springframework.boot.SpringApplication
@@ -112,20 +113,4 @@ class SandboxApplication extends SpringBootServletInitializer{
         asyncHeavyValidation = new JMSAsyncHeavyValidation()
         return container;
     }
-
-
-    //TODO will neeed when new validation generator has been made
-//    @Bean
-//    public Jackson2ObjectMapperBuilder objectMapperBuilder() {
-//        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-//        builder.failOnEmptyBeans(false)
-//        builder.mixIn(ValidatorTrait, MixInIgnoreValidatorTrait)
-//        return builder;
-//    }
-//
-//    public static interface MixInIgnoreValidatorTrait {
-//        @JsonIgnore public RunNotifier getNotifier();
-//        @JsonIgnore public Collection getValidations();
-//    }
-
 }

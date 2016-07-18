@@ -21,11 +21,13 @@ class EmployeeImp implements IEmployee{
     private MandatorySetterValidation mandatoryEmailValidation = new MandatorySetterValidation("employee.email", "payroll.employee.email.mandatory")
 
     def PaymentMethod paymentMethod
+    private MandatorySetterValidation mandatoryPaymentMethodValidation = new MandatorySetterValidation("employee.paymentMethod", "payroll.employee.paymentMethod.mandatory")
 
-    EmployeeImp() {
+    protected EmployeeImp() {
         notifier.issueMandatoryObligation("employee.name", "payroll.employee.name.mandatory")
         notifier.issueMandatoryObligation("employee.address", "payroll.employee.address.mandatory")
         notifier.issueMandatoryObligation("employee.email", "payroll.employee.email.mandatory")
+        notifier.issueMandatoryObligation("employee.paymentMethod", "payroll.employee.paymentMethod.mandatory")
     }
 
     @Override
@@ -56,7 +58,9 @@ class EmployeeImp implements IEmployee{
 
     @Override
     void setPaymentMethod(PaymentMethod paymentMethod) {
-        this.paymentMethod = paymentMethod
+        if(mandatoryPaymentMethodValidation.canSet(paymentMethod)){
+            this.paymentMethod = paymentMethod
+        }
     }
 
     @DescriptionModelDefinition
