@@ -12,7 +12,7 @@ import sandbox.payroll.ModelSnapshot
 import sandbox.payroll.Salary
 import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.HibernatePersistentModelSnapshot
 import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.repository.HibernateEmployeeRepository
-import sandbox.payroll.external.interfaceAdapter.webservice.springmvc.ObjectMapping
+import sandbox.simpleConverter.SimpleObjectMapping
 import sandbox.smartfactory.SmartFactory
 import sandbox.validationNotification.ApplicationValidationNotifier
 
@@ -37,14 +37,14 @@ class SandboxContextListener implements ServletContextListener {
         globalConfiguration.put(PlatformTransactionManager, transactionFactory)
         globalConfiguration.put(TransactionTemplate, new TransactionTemplate(transactionFactory))
         globalConfiguration.put(AtomicBlock, new HibernateAtomicBlock())
-        ObjectMapping objectMapping = new ObjectMapping()
+        SimpleObjectMapping objectMapping = new SimpleObjectMapping()
 
         def objectMappingForBuilder = objectMapping.getObjectMappingFor(EmployeeImp.EmployeeBuilder)
         objectMappingForBuilder.put("paymentMethod", {employeeBuilder, paymentMethodMap ->
             employeeBuilder.setPaymentMethod(new Salary(Integer.valueOf(paymentMethodMap.get("salary"))))
         })
 
-        globalConfiguration.put(ObjectMapping, objectMapping)
+        globalConfiguration.put(SimpleObjectMapping, objectMapping)
 
 
         def sandBoxConfiguration = smartFactory.configurationFor("sandbox.payroll.**")

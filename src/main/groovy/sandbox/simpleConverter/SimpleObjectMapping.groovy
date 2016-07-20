@@ -1,7 +1,7 @@
-package sandbox.payroll.external.interfaceAdapter.webservice.springmvc
+package sandbox.simpleConverter
 
 //TODO Tests
-class ObjectMapping {
+class SimpleObjectMapping {
 
     private static Map<Class, Map<String, Closure>> objectMappings = [:]
 

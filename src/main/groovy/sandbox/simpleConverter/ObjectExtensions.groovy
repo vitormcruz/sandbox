@@ -1,9 +1,9 @@
-package sandbox.payroll.external.interfaceAdapter.webservice.springmvc
+package sandbox.simpleConverter
 
 class ObjectExtensions {
 
     public static Object applyMap(Object anObject, Map map){
-        ObjectMapping objectMapping = ObjectMapping.smartNewFor(ObjectExtensions)
+        SimpleObjectMapping objectMapping = SimpleObjectMapping.smartNewFor(ObjectExtensions)
         objectMapping.map(anObject, map)
         return anObject
     }
