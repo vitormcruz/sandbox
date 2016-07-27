@@ -8,7 +8,7 @@ import sandbox.concurrency.AtomicBlock
 import sandbox.concurrency.dbBased.hibernate.HibernateAtomicBlock
 import sandbox.payroll.EmployeeImp
 import sandbox.payroll.EmployeeRepository
-import sandbox.payroll.ModelSnapshot
+import sandbox.concurrency.ModelSnapshot
 import sandbox.payroll.Salary
 import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.HibernatePersistentModelSnapshot
 import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.repository.HibernateEmployeeRepository

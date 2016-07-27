@@ -1,4 +1,4 @@
-package sandbox.payroll
+package sandbox.validationNotification.builder
 
 import sandbox.validationNotification.ValidationObserver
 
@@ -6,9 +6,10 @@ class BuilderObserver implements ValidationObserver{
 
     private BuilderStrategy builderStrategy = new BuilderSuccessStrategy()
     private mandatoryObligations = [:]
+    private Object builtEntity
 
-    public void doOnSuccess(builtObject, aSuccessClosure) {
-        builderStrategy.doOnSuccess(builtObject, aSuccessClosure)
+    public buildAndDo(aSuccessClosure, aFailureClosure) {
+        return builderStrategy.doWithBuiltEntity(builtEntity, aSuccessClosure, aFailureClosure)
     }
 
     @Override
@@ -41,5 +42,9 @@ class BuilderObserver implements ValidationObserver{
     @Override
     Boolean successful() {
         return builderStrategy.successful()
+    }
+
+    public void setBuiltEntity(builtEntity) {
+        this.builtEntity = builtEntity
     }
 }

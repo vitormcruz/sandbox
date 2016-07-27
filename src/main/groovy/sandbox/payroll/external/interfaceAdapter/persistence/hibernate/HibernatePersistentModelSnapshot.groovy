@@ -1,7 +1,7 @@
 package sandbox.payroll.external.interfaceAdapter.persistence.hibernate
 
 import sandbox.concurrency.AtomicBlock
-import sandbox.payroll.ModelSnapshot
+import sandbox.concurrency.ModelSnapshot
 
 class HibernatePersistentModelSnapshot implements ModelSnapshot{
 

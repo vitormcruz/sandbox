@@ -1,4 +1,4 @@
-package sandbox.payroll
+package sandbox.concurrency
 
 interface ModelSnapshot {
 

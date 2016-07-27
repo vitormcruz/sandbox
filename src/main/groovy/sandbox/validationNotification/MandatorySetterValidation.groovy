@@ -2,13 +2,14 @@ package sandbox.validationNotification
 
 class MandatorySetterValidation {
 
+    private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
+
     private String attrLabel
     private String errorIfNull
     private Closure resetMandatoryObligation = {
         notifier.issueMandatoryObligationComplied(attrLabel)
         resetMandatoryObligation = {}
     }
-    private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
 
     MandatorySetterValidation(String attrLabel, String errorIfNull) {
         this.attrLabel = attrLabel

@@ -3,6 +3,7 @@ import sandbox.magritte.description.DescriptionModelDefinition
 import sandbox.magritte.description.StringDescription
 import sandbox.validationNotification.ApplicationValidationNotifier
 import sandbox.validationNotification.MandatorySetterValidation
+import sandbox.validationNotification.builder.GenericValidationNotifierBasedBuilder
 
 import static sandbox.magritte.description.builder.DescriptionFactory.New
 
@@ -85,18 +86,13 @@ class EmployeeImp implements IEmployee{
                 New(StringDescription).accessor("email").maxSize(100).label("employee.email").beRequired()]
     }
 
-    public static class EmployeeBuilder implements IEmployee{
+    public static class EmployeeBuilder extends GenericValidationNotifierBasedBuilder implements IEmployee{
 
         @Delegate
         private EmployeeImp builtEmployee = new EmployeeImp()
-        private builderObserver = new BuilderObserver()
 
         EmployeeBuilder() {
-            ApplicationValidationNotifier.addObserver(this.builderObserver)
-        }
-
-        public void onSuccessDoWithBuiltEmployee(aClosure){
-            builderObserver.doOnSuccess(builtEmployee, aClosure)
+            builderObserver.setBuiltEntity(builtEmployee)
         }
     }
 }

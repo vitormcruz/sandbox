@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import sandbox.payroll.EmployeeImp
 import sandbox.payroll.EmployeeRepository
-import sandbox.payroll.ModelSnapshot
+import sandbox.concurrency.ModelSnapshot
 
 @RequestMapping(value = "payroll")
 @RestController
@@ -17,7 +17,7 @@ class EmployeeRestController implements BasicControllerOperationsTrait{
     ResponseEntity<EmployeeImp> newEmployee(@RequestBody Map newEmployeeMap) {
         RestControllerValidationListener listener = getValidationListener()
         EmployeeImp.EmployeeBuilder employeeBuilder = new EmployeeImp.EmployeeBuilder().applyMap(newEmployeeMap)
-        employeeBuilder.onSuccessDoWithBuiltEmployee { newEmployee ->
+        employeeBuilder.buildAndDoOnSuccess { newEmployee ->
             employeeRepository.add(newEmployee)
             listener.setBody(newEmployee)
             model.save()
