@@ -18,7 +18,7 @@ class MandatorySetterValidation {
 
     public Boolean canSet(value){
         resetMandatoryObligation()
-        if (!value) {
+        if (value == null) {
             notifier.issueError(attrLabel, errorIfNull)
             return
         }

@@ -5,16 +5,16 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.support.TransactionTemplate
 import sandbox.concurrency.AtomicBlock
-import sandbox.concurrency.dbBased.hibernate.HibernateAtomicBlock
-import sandbox.payroll.EmployeeImp
-import sandbox.payroll.EmployeeRepository
 import sandbox.concurrency.ModelSnapshot
+import sandbox.concurrency.dbBased.hibernate.HibernateAtomicBlock
+import sandbox.payroll.EmployeeRepository
 import sandbox.payroll.Salary
 import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.HibernatePersistentModelSnapshot
 import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.repository.HibernateEmployeeRepository
 import sandbox.simpleConverter.SimpleObjectMapping
 import sandbox.smartfactory.SmartFactory
 import sandbox.validationNotification.ApplicationValidationNotifier
+import sandbox.validationNotification.builder.GenericValidationNotifierBuilder
 
 import javax.servlet.ServletContextEvent
 import javax.servlet.ServletContextListener
@@ -39,16 +39,12 @@ class SandboxContextListener implements ServletContextListener {
         globalConfiguration.put(AtomicBlock, new HibernateAtomicBlock())
         SimpleObjectMapping objectMapping = new SimpleObjectMapping()
 
-        def objectMappingForBuilder = objectMapping.getObjectMappingFor(EmployeeImp.EmployeeBuilder)
-        objectMappingForBuilder.put("paymentMethod", {employeeBuilder, paymentMethodMap ->
-            employeeBuilder.setPaymentMethod(new Salary(Integer.valueOf(paymentMethodMap.get("salary"))))
-        })
-
+        def objectMappingForBuilder = objectMapping.getObjectMappingFor(GenericValidationNotifierBuilder)
+        dynamicMappingForEmployee(objectMappingForBuilder)
         globalConfiguration.put(SimpleObjectMapping, objectMapping)
 
 
         def sandBoxConfiguration = smartFactory.configurationFor("sandbox.payroll.**")
-
         def employeeRepository = new HibernateEmployeeRepository()
         sandBoxConfiguration.put(EmployeeRepository, employeeRepository)
         sandBoxConfiguration.put(ModelSnapshot, {
@@ -58,6 +54,12 @@ class SandboxContextListener implements ServletContextListener {
         }())
 
 
+    }
+
+    private Object dynamicMappingForEmployee(LinkedHashMap objectMappingForBuilder) {
+        objectMappingForBuilder.put("paymentMethod", { employeeBuilder, paymentMethodMap ->
+            employeeBuilder.setPaymentMethod(new Salary(Integer.valueOf(paymentMethodMap.get("salary"))))
+        })
     }
 
     private SessionFactory getConfiguredSessionFactory() {
