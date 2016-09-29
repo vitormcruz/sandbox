@@ -25,6 +25,14 @@ class ApplicationValidationNotifier {
         observers.get().remove(validationObserver)
     }
 
+    public static removeAllObservers(){
+        observers.get().clear()
+    }
+
+    public static boolean isInitialized(){
+        return observers != null
+    }
+
     void executeNamedValidation(String validationName, Closure validation) {
         startValidation(validationName)
         validation(this)
@@ -53,51 +61,7 @@ class ApplicationValidationNotifier {
         finishValidation(instantValidationName)
     }
 
-    def getValidationSession() {
-        def session = new ValidationSession()
-        addObserver(session)
-        return session
-    }
-
     public void issueMandatoryObligationComplied(String mandatoryValidationName) {
         observers.get().each {it.issueMandatoryObligationComplied(mandatoryValidationName)}
-    }
-
-    public static class ValidationSession implements ValidationObserver{
-        private Boolean successful = true
-
-        @Override
-        void startValidation(String validationName) {
-
-        }
-
-        @Override
-        void issueMandatoryObligation(String mandatoryValidationName, String error) {
-
-        }
-
-        @Override
-        void issueMandatoryObligationComplied(String mandatoryValidationName) {
-
-        }
-
-        @Override
-        void issueError(String error) {
-            successful = false
-        }
-
-        @Override
-        void finishValidation(String validationName) {
-
-        }
-
-        @Override
-        public Boolean successful(){
-            return successful
-        }
-
-        public void stopSession() {
-            removeObserver(this)
-        }
     }
 }

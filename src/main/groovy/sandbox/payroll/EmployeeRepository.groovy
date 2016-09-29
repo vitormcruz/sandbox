@@ -1,5 +1,7 @@
 package sandbox.payroll
 
+import sandbox.payroll.imp.EmployeeImp
+
 interface EmployeeRepository extends Collection<EmployeeImp>{
 
     EmployeeImp get(id)

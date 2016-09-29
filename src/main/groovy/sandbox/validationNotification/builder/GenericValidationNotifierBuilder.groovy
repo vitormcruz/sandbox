@@ -1,6 +1,6 @@
 package sandbox.validationNotification.builder
 
-import sandbox.payroll.CommonBuilder
+import sandbox.validationNotification.CommonBuilder
 import sandbox.validationNotification.ApplicationValidationNotifier
 
 /**

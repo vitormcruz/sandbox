@@ -1,4 +1,4 @@
-package sandbox.payroll
+package sandbox.validationNotification
 
 /**
  * Builder with common and useful protocols to deal with success and failure scenarios

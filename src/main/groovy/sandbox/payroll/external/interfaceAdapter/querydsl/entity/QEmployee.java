@@ -5,7 +5,7 @@ import com.querydsl.core.types.PathMetadata;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.core.types.dsl.StringPath;
-import sandbox.payroll.EmployeeImp;
+import sandbox.payroll.imp.EmployeeImp;
 
 import javax.annotation.Generated;
 

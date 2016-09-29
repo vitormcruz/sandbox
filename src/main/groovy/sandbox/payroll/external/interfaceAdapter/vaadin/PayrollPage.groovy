@@ -1,7 +1,7 @@
 package sandbox.payroll.external.interfaceAdapter.vaadin
 import com.vaadin.ui.AbsoluteLayout
 import com.vaadin.ui.Button
-import sandbox.payroll.EmployeeImp
+import sandbox.payroll.imp.EmployeeImp
 
 class PayrollPage extends AbsoluteLayout {
 

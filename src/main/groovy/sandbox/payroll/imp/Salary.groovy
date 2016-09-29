@@ -1,4 +1,6 @@
-package sandbox.payroll
+package sandbox.payroll.imp
+
+import sandbox.payroll.PaymentMethod
 
 class Salary implements PaymentMethod {
 

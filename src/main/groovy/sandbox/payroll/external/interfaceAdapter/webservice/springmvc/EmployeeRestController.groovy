@@ -3,7 +3,7 @@ package sandbox.payroll.external.interfaceAdapter.webservice.springmvc
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import sandbox.concurrency.ModelSnapshot
-import sandbox.payroll.EmployeeImp
+import sandbox.payroll.imp.EmployeeImp
 import sandbox.payroll.EmployeeRepository
 import sandbox.validationNotification.builder.GenericValidationNotifierBuilder
 
