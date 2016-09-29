@@ -13,6 +13,7 @@ class ApplicationValidationNotifier {
     }
 
     public static destroyCurrentListOfListeners(){
+        if(observers == null) return
         observers.remove()
         observers = null
     }
