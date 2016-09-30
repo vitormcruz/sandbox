@@ -1,10 +1,10 @@
-package sandbox.payroll.external.interfaceAdapter.webservice.springmvc
+package sandbox.payroll.external.interfaceAdapter.presentation.webservice.springmvc
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import sandbox.concurrency.ModelSnapshot
-import sandbox.payroll.imp.EmployeeImp
 import sandbox.payroll.EmployeeRepository
+import sandbox.payroll.imp.EmployeeImp
 import sandbox.validationNotification.builder.GenericValidationNotifierBuilder
 
 @RequestMapping(value = "payroll")

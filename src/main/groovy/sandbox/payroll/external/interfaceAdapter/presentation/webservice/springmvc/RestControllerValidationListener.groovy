@@ -1,4 +1,4 @@
-package sandbox.payroll.external.interfaceAdapter.webservice.springmvc
+package sandbox.payroll.external.interfaceAdapter.presentation.webservice.springmvc
 
 import org.springframework.http.ResponseEntity
 import sandbox.validationNotification.ValidationObserver

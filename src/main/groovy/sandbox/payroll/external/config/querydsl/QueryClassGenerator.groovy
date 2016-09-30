@@ -2,7 +2,7 @@ package sandbox.payroll.external.config.querydsl
 
 import com.querydsl.jpa.codegen.HibernateDomainExporter
 import org.hibernate.cfg.Configuration
-import sandbox.sandboxapp.external.config.main.SandboxApplication
+import sandbox.payroll.external.config.persistence.hibernate.HibernateResources
 
 class QueryClassGenerator {
 
@@ -10,7 +10,7 @@ class QueryClassGenerator {
         HibernateDomainExporter exporter = new HibernateDomainExporter(
                 "Q",
                 new File("target/generatedQueries"),
-                SandboxApplication.addResources(new Configuration()));
+                {new Configuration().addResource(HibernateResources.listOfMappings())}())
 
         exporter.execute();
     }

@@ -6,7 +6,7 @@ import sandbox.payroll.imp.EmployeeImp
 import sandbox.validationNotification.ValidationNotificationTestSetup
 import sandbox.validationNotification.builder.GenericValidationNotifierBuilder
 
-class EmployeeTest implements ValidationNotificationTestSetup{
+class EmployeeUnitTest implements ValidationNotificationTestSetup{
 
     private Employee employeeForChange
     private static EXPECTED_PAYMENT_METHOD = [] as PaymentMethod

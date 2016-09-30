@@ -81,17 +81,12 @@ class SandboxApplication extends SpringBootServletInitializer{
 
     @Bean
     public ServletContextListener sandboxContextListener(){
-        return new SandboxContextListener()
+        return new SandboxContextConfigListener()
     }
 
     @Bean
     public SessionFactory sessionFactory() {
         return SessionFactory.smartNewFor(SandboxApplication)
-    }
-
-    //TODO remove this from here, put in payroll external
-    public static org.hibernate.cfg.Configuration addResources(org.hibernate.cfg.Configuration configuration) {
-        configuration.addResource("sandbox/payroll/external/interfaceAdapter/persistence/hibernate/mapping/Employee.hbm.xml")
     }
 
     @Bean

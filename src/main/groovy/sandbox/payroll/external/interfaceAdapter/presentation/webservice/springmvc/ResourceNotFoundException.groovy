@@ -1,4 +1,4 @@
-package sandbox.payroll.external.interfaceAdapter.webservice.springmvc
+package sandbox.payroll.external.interfaceAdapter.presentation.webservice.springmvc
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus
