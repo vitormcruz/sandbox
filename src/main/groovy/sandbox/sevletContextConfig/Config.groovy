@@ -1,4 +1,4 @@
-package sandbox.sandboxapp
+package sandbox.sevletContextConfig
 
 interface Config {
 

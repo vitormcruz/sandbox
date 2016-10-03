@@ -2,8 +2,8 @@ package sandbox.heavyValidation
 
 import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.core.MessageCreator
-import sandbox.sandboxapp.external.interfaceAdapter.jms.MessageReceiver
-import sandbox.sandboxapp.external.config.main.SandboxApplication
+import sandbox.allapps.external.config.SandboxApplication
+import sandbox.allapps.external.interfaceAdapter.jms.MessageReceiver
 
 import javax.jms.JMSException
 import javax.jms.Message

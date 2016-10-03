@@ -5,7 +5,7 @@ import com.querydsl.jpa.hibernate.HibernateQueryFactory
 import org.hibernate.SessionFactory
 import org.springframework.transaction.support.TransactionTemplate
 import sandbox.payroll.EmployeeRepository
-import sandbox.payroll.external.interfaceAdapter.persistence.querydsl.entity.QEmployee
+import sandbox.payroll.external.interfaceAdapter.persistence.querydsl.entity.QEmployeeImp
 import sandbox.payroll.imp.EmployeeImp
 
 class HibernateEmployeeRepository implements EmployeeRepository{
@@ -30,7 +30,7 @@ class HibernateEmployeeRepository implements EmployeeRepository{
 
     @Override
     EmployeeImp find(Closure closure) {
-        def qEmployee = QEmployee.employee
+        def qEmployee = QEmployeeImp.employeeImp
         transactionTemplate.execute {
             HibernateQuery<EmployeeImp> employeeQuery = new HibernateQueryFactory(this.sessionFactory.getCurrentSession()).from(qEmployee)
             closure(employeeQuery, qEmployee)

@@ -1,8 +1,11 @@
 package sandbox.payroll
 
-import sandbox.validationNotification.ValidationNotificationTestSetup
+import org.junit.Test
 
-class EmployeeIntTest implements ValidationNotificationTestSetup{
+class EmployeeIntTest implements IntegrationTestBase{
 
-
+    @Test
+    def void "asas"(){
+        assert true
+    }
 }

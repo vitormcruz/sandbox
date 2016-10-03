@@ -1,12 +1,13 @@
-package sandbox.sandboxapp.external.config.main
+package sandbox.allapps.external.config
 
 import com.vaadin.server.VaadinServlet
 import org.hibernate.SessionFactory
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.builder.SpringApplicationBuilder
-import org.springframework.boot.context.embedded.ServletRegistrationBean
-import org.springframework.boot.context.web.SpringBootServletInitializer
+import org.springframework.boot.web.servlet.FilterRegistrationBean
+import org.springframework.boot.web.servlet.ServletRegistrationBean
+import org.springframework.boot.web.support.SpringBootServletInitializer
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
@@ -15,13 +16,16 @@ import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.listener.SimpleMessageListenerContainer
 import org.springframework.jms.listener.adapter.MessageListenerAdapter
 import org.springframework.transaction.annotation.EnableTransactionManagement
+import sandbox.allapps.external.interfaceAdapter.jms.MessageReceiver
 import sandbox.heavyValidation.AsyncHeavyValidation
 import sandbox.heavyValidation.JMSAsyncHeavyValidation
-import sandbox.sandboxapp.external.interfaceAdapter.jms.MessageReceiver
+import sandbox.payroll.external.config.HibernateInMemoryConfig
+import sandbox.payroll.external.config.SmartFactoryConfig
+import sandbox.sevletContextConfig.ContextConfigListener
+import sandbox.validationNotification.servlet.ValidationNotifierFilter
 
 import javax.jms.ConnectionFactory
 import javax.servlet.ServletContext
-import javax.servlet.ServletContextListener
 import javax.servlet.ServletException
 import javax.servlet.http.HttpSessionEvent
 import javax.servlet.http.HttpSessionListener
@@ -56,9 +60,17 @@ class SandboxApplication extends SpringBootServletInitializer{
     void onStartup(ServletContext servletContext) throws ServletException {
         super.onStartup(servletContext)
         servletContext.setInitParameter("productionMode", "false")
+        servletContext.addListener(getConfigListener())
         servletContext.addListener([sessionCreated : {HttpSessionEvent se -> se.getSession().setMaxInactiveInterval(60*60*24)} ,
                                     sessionDestroyed : {}] as HttpSessionListener)
 
+    }
+
+    private ContextConfigListener getConfigListener() {
+        def configListener = new ContextConfigListener()
+        configListener.addConfig(SmartFactoryConfig)
+        configListener.addConfig(HibernateInMemoryConfig)
+        configListener
     }
 
     @Bean
@@ -66,7 +78,7 @@ class SandboxApplication extends SpringBootServletInitializer{
         ServletRegistrationBean registration = new ServletRegistrationBean(new VaadinServlet(), "/sandbox/*", "/VAADIN/*");
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("UI", "sandbox.sandboxapp.external.interfaceAdapter.vaadin.SandboxUI");
+        params.put("UI", "sandbox.allapps.external.interfaceAdapter.vaadin.SandboxUI");
         params.put("async-supported", "true")
         params.put("org.atmosphere.useWebSocketAndServlet3", "true")
 
@@ -75,13 +87,11 @@ class SandboxApplication extends SpringBootServletInitializer{
     }
 
     @Bean
-    public ValidationNotifierFilter validationNotifierFilter(){
-        return new ValidationNotifierFilter()
-    }
-
-    @Bean
-    public ServletContextListener sandboxContextListener(){
-        return new SandboxContextConfigListener()
+    public FilterRegistrationBean filterRegistrationBean() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(new ValidationNotifierFilter());
+        registrationBean.setOrder(0);
+        return registrationBean;
     }
 
     @Bean

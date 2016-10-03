@@ -1,4 +1,4 @@
-package sandbox.sandboxapp.external.config.main
+package sandbox.validationNotification.servlet
 
 import sandbox.validationNotification.ApplicationValidationNotifier
 

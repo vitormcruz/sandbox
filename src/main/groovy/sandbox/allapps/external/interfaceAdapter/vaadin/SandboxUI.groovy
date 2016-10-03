@@ -1,4 +1,4 @@
-package sandbox.sandboxapp.external.interfaceAdapter.vaadin
+package sandbox.allapps.external.interfaceAdapter.vaadin
 
 import com.vaadin.annotations.Push
 import com.vaadin.annotations.Theme

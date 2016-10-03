@@ -2,7 +2,7 @@ package sandbox.payroll.external.interfaceAdapter.presentation.webservice.spring
 
 import org.junit.Ignore
 import org.junit.Test
-import sandbox.sandboxapp.external.config.main.SandboxContextConfigListener
+import sandbox.sevletContextConfig.ContextConfigListener
 import sandbox.validationNotification.ApplicationValidationNotifier
 
 /**
@@ -14,7 +14,7 @@ class EmployeeRestControllerTest {
     @Test
     def void abc(){
         ApplicationValidationNotifier.createCurrentListOfListeners()
-        new SandboxContextConfigListener().contextInitialized(null)
+        new ContextConfigListener().contextInitialized(null)
         ApplicationValidationNotifier.destroyCurrentListOfListeners()
 
         ApplicationValidationNotifier.createCurrentListOfListeners()

@@ -1,4 +1,4 @@
-package sandbox.payroll.external.config.persistence.hibernate
+package sandbox.payroll.external.config
 
 abstract class HibernateResources {
 

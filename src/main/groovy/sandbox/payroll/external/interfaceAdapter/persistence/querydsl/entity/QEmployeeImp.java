@@ -13,14 +13,14 @@ import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
- * QEmployee is a Querydsl query type for Employee
+ * QEmployeeImp is a Querydsl query type for EmployeeImp
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QEmployee extends EntityPathBase<EmployeeImp> {
+public class QEmployeeImp extends EntityPathBase<EmployeeImp> {
 
-    private static final long serialVersionUID = -771407557L;
+    private static final long serialVersionUID = 63049228L;
 
-    public static final QEmployee employee = new QEmployee("employee");
+    public static final QEmployeeImp employeeImp = new QEmployeeImp("employeeImp");
 
     public final StringPath address = createString("address");
 
@@ -30,15 +30,15 @@ public class QEmployee extends EntityPathBase<EmployeeImp> {
 
     public final StringPath name = createString("name");
 
-    public QEmployee(String variable) {
+    public QEmployeeImp(String variable) {
         super(EmployeeImp.class, forVariable(variable));
     }
 
-    public QEmployee(Path<? extends EmployeeImp> path) {
+    public QEmployeeImp(Path<? extends EmployeeImp> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QEmployee(PathMetadata metadata) {
+    public QEmployeeImp(PathMetadata metadata) {
         super(EmployeeImp.class, metadata);
     }
 

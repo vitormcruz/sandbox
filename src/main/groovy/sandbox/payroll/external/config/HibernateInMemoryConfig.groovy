@@ -1,4 +1,4 @@
-package sandbox.sandboxapp.external.config.persistence.hibernate
+package sandbox.payroll.external.config
 
 import org.hibernate.SessionFactory
 import org.springframework.orm.hibernate4.HibernateTransactionManager
@@ -6,8 +6,7 @@ import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.support.TransactionTemplate
 import sandbox.concurrency.AtomicBlock
 import sandbox.concurrency.dbBased.hibernate.HibernateAtomicBlock
-import sandbox.payroll.external.config.persistence.hibernate.HibernateResources
-import sandbox.sandboxapp.Config
+import sandbox.sevletContextConfig.Config
 import sandbox.smartfactory.SmartFactory
 
 
@@ -17,6 +16,7 @@ class HibernateInMemoryConfig implements Config{
 
     @Override
     public void  configure() {
+        //TODO change to sandbox
         def globalConfiguration = smartFactory.configurationFor("**")
         globalConfiguration.put(SessionFactory, getConfiguredSessionFactory())
         def transactionFactory = getTransactionFactory()
