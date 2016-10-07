@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*
 import sandbox.concurrency.ModelSnapshot
 import sandbox.payroll.EmployeeRepository
 import sandbox.payroll.imp.EmployeeImp
-import sandbox.validationNotification.builder.GenericValidationNotifierBuilder
+import sandbox.validationNotification.builder.GenericBuilder
 
 @RequestMapping(value = "payroll")
 @RestController
@@ -17,7 +17,7 @@ class EmployeeRestController implements BasicControllerOperationsTrait{
     @RequestMapping(value = "/employee", method = RequestMethod.POST)
     ResponseEntity<EmployeeImp> newEmployee(@RequestBody Map newEmployeeMap) {
         RestControllerValidationListener listener = getValidationListener()
-        GenericValidationNotifierBuilder employeeBuilder = new GenericValidationNotifierBuilder(EmployeeImp).applyMap(newEmployeeMap)
+        GenericBuilder employeeBuilder = new GenericBuilder(EmployeeImp).applyMap(newEmployeeMap)
         employeeBuilder.buildAndDoOnSuccess { newEmployee ->
             employeeRepository.add(newEmployee)
             listener.setBody(newEmployee)

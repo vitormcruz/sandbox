@@ -1,19 +1,23 @@
 package sandbox.validationNotification
 
 import org.junit.Before
+import org.junit.BeforeClass
 import sandbox.validationNotification.imp.SimpleValidationObserver
 
 trait ValidationNotificationTestSetup {
 
     def SimpleValidationObserver validationObserver = new SimpleValidationObserver()
 
-    @Before
-    public void setUp(){
+    @BeforeClass
+    public static void setUpAll(){
         if(!ApplicationValidationNotifier.isInitialized()){
             ApplicationValidationNotifier.createCurrentListOfListeners()
             Thread.addShutdownHook {ApplicationValidationNotifier.destroyCurrentListOfListeners()}
         }
+    }
 
+    @Before
+    public void setUp(){
         ApplicationValidationNotifier.removeAllObservers()
         validationObserver = new SimpleValidationObserver()
         ApplicationValidationNotifier.addObserver(validationObserver)

@@ -2,9 +2,9 @@ package sandbox.payroll
 
 import sandbox.payroll.imp.EmployeeImp
 
-interface EmployeeRepository extends Collection<EmployeeImp>{
+interface EmployeeRepository extends Collection<Employee>{
 
-    EmployeeImp get(id)
+    Employee get(id)
 
     void update(EmployeeImp employee)
 

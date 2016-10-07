@@ -5,10 +5,13 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.support.TransactionTemplate
 import sandbox.concurrency.AtomicBlock
+import sandbox.concurrency.ModelSnapshot
 import sandbox.concurrency.dbBased.hibernate.HibernateAtomicBlock
+import sandbox.payroll.EmployeeRepository
+import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.HibernatePersistentModelSnapshot
+import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.repository.HibernateEmployeeRepository
 import sandbox.sevletContextConfig.Config
 import sandbox.smartfactory.SmartFactory
-
 
 class HibernateInMemoryConfig implements Config{
     private smartFactory = SmartFactory.instance()
@@ -16,13 +19,22 @@ class HibernateInMemoryConfig implements Config{
 
     @Override
     public void  configure() {
-        //TODO change to sandbox
+        //TODO using sandbox.** causes an error that must be fixed at smart factory
         def globalConfiguration = smartFactory.configurationFor("**")
         globalConfiguration.put(SessionFactory, getConfiguredSessionFactory())
         def transactionFactory = getTransactionFactory()
         globalConfiguration.put(PlatformTransactionManager, transactionFactory)
         globalConfiguration.put(TransactionTemplate, new TransactionTemplate(transactionFactory))
         globalConfiguration.put(AtomicBlock, new HibernateAtomicBlock())
+        def employeeRepository = new HibernateEmployeeRepository()
+        globalConfiguration.put(EmployeeRepository, employeeRepository)
+        globalConfiguration.put(ModelSnapshot, {
+            def modelSnapshot = new HibernatePersistentModelSnapshot()
+            modelSnapshot.add(employeeRepository)
+            return modelSnapshot
+        }())
+
+
     }
 
     private SessionFactory getConfiguredSessionFactory() {

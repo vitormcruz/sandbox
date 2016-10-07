@@ -1,7 +1,7 @@
 package sandbox.validationNotification.builder
 
-import sandbox.validationNotification.CommonBuilder
 import sandbox.validationNotification.ApplicationValidationNotifier
+import sandbox.validationNotification.CommonBuilder
 
 /**
  * Provides a generic builder for a given class with basic with* methods mapped to setters of the built object. It also
@@ -13,15 +13,15 @@ import sandbox.validationNotification.ApplicationValidationNotifier
  *
  *
  */
-class GenericValidationNotifierBuilder implements CommonBuilder{
+class GenericBuilder implements CommonBuilder{
 
     protected builderObserver = new BuilderObserver()
     protected builtEntity
 
-    GenericValidationNotifierBuilder(){
+    GenericBuilder(){
     }
 
-    GenericValidationNotifierBuilder(aClass) {
+    GenericBuilder(aClass) {
         ApplicationValidationNotifier.addObserver(this.builderObserver)
         builtEntity = aClass.newInstance()
         builderObserver.setBuiltEntity(builtEntity)

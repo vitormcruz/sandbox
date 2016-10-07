@@ -4,7 +4,7 @@ import org.junit.Before
 import org.junit.Test
 import sandbox.payroll.imp.EmployeeImp
 import sandbox.validationNotification.ValidationNotificationTestSetup
-import sandbox.validationNotification.builder.GenericValidationNotifierBuilder
+import sandbox.validationNotification.builder.GenericBuilder
 
 class EmployeeUnitTest implements ValidationNotificationTestSetup{
 
@@ -19,22 +19,22 @@ class EmployeeUnitTest implements ValidationNotificationTestSetup{
     }
 
     Employee getEmployeeForChange(){
-        return new GenericValidationNotifierBuilder(getEmployeeClass()).withName("test name")
-                                                                       .withAddress("test address")
-                                                                       .withEmail("test email")
-                                                                       .withPaymentMethod(EXPECTED_PAYMENT_METHOD)
-                                                                       .buildEntity()
+        return new GenericBuilder(getEmployeeClass()).withName("test name")
+                                                     .withAddress("test address")
+                                                     .withEmail("test email")
+                                                     .withPaymentMethod(EXPECTED_PAYMENT_METHOD)
+                                                     .buildEntity()
     }
 
     @Test
     public void "Create employee not providing mandatory information"(){
-        new GenericValidationNotifierBuilder(getEmployeeClass()).buildEntity()
+        new GenericBuilder(getEmployeeClass()).buildEntity()
         verifyMandatoryErrorsMessagesWereIssued()
     }
 
     @Test
     public void "Create employee providing mandatory information"(){
-        def EmployeeBuilder = new GenericValidationNotifierBuilder(getEmployeeClass())
+        def EmployeeBuilder = new GenericBuilder(getEmployeeClass())
         def builtEmployee = EmployeeBuilder.withName("test name")
                                            .withAddress("test address")
                                            .withEmail("test email")
@@ -77,7 +77,7 @@ class EmployeeUnitTest implements ValidationNotificationTestSetup{
         assert builtEmployee.getPaymentMethod() == paymentMethod
     }
 
-    Class<EmployeeImp> getEmployeeClass() {
+    Class<Employee> getEmployeeClass() {
         return EmployeeImp
     }
 }

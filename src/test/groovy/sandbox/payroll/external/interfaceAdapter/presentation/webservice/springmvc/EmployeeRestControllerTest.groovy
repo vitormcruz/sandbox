@@ -29,7 +29,7 @@ class EmployeeRestControllerTest {
             put("name", "Joao1")
             put("address", "Rua2")
             put("email", "blabla@gmail.com")
-            put("paymentMethod", ["salary": "5000"])
+            put("paymentMethod", ["value": "5000"])
         }})
 
         ApplicationValidationNotifier.destroyCurrentListOfListeners()

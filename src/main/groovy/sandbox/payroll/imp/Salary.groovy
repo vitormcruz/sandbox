@@ -1,18 +1,16 @@
 package sandbox.payroll.imp
 
-import sandbox.payroll.PaymentMethod
+class Salary extends GenericPaymentMethod {
 
-class Salary implements PaymentMethod {
-
-    private Integer salary;
+    private Integer value;
 
     protected Salary() {}
 
-    public Salary(Integer salary) {
-        this.salary = salary
+    public Salary(Integer value) {
+        this.value = value
     }
 
-    Integer getSalary() {
-        return salary
+    Integer getValue() {
+        return value
     }
 }

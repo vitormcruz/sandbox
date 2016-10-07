@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="sandbox.payroll.imp.EmployeeImp" table="EMPLOYEE">
+        <id name="id" column="EMPLOYEE_ID" access="field">
+            <generator class="native"/>
+        </id>
+        <property name="name" type="java.lang.String" column="NAME"/>
+        <property name="address" type="java.lang.String" column="ADDRESS"/>
+        <property name="email" type="java.lang.String" column="EMAIL"/>
+
+        <many-to-one name="paymentMethod" class="sandbox.payroll.imp.GenericPaymentMethod" unique="true"
+                     not-null="true" cascade="all,delete-orphan" lazy="false"/>
+    </class>
+
+    <class name="sandbox.payroll.imp.GenericPaymentMethod" >
+        <id name="id" column="PAYMENT_ID" access="field">
+            <generator class="sequence"/>
+        </id>
+
+        <joined-subclass name="sandbox.payroll.imp.Salary" table="SALARY">
+            <key column="PAYMENT_ID"/>
+            <property name="value" type="java.lang.Integer" column="VALUE" access="field"/>
+        </joined-subclass>
+    </class>
+
+
+</hibernate-mapping>

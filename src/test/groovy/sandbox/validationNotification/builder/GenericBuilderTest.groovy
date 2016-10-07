@@ -7,7 +7,7 @@ import sandbox.validationNotification.ApplicationValidationNotifier
 
 import static org.junit.Assert.fail
 
-class GenericValidationNotifierBuilderTest {
+class GenericBuilderTest {
 
     @BeforeClass
     def static void setup(){
@@ -21,7 +21,7 @@ class GenericValidationNotifierBuilderTest {
 
     @Test
     def void "Call onSuccessDoWithBuiltEntity with a success built entity "(){
-        def builderForTest = new GenericValidationNotifierBuilder(TestEntity)
+        def builderForTest = new GenericBuilder(TestEntity)
         builderForTest.setAttribute("ok")
         TestEntity builtEntity
         builderForTest.buildAndDoOnSuccess { builtEntity = it }
@@ -31,7 +31,7 @@ class GenericValidationNotifierBuilderTest {
 
     @Test
     def void "Call onSuccessDoWithBuiltEntity with a failed built entity "(){
-        def builderForTest = new GenericValidationNotifierBuilder(TestEntity)
+        def builderForTest = new GenericBuilder(TestEntity)
         builderForTest.setAttribute("fail")
         builderForTest.buildAndDoOnSuccess {fail("Issued success but the entity was created with an error.")}
         assert builderForTest.buildEntity() == null : "null should be returned upon build failure"
@@ -39,7 +39,7 @@ class GenericValidationNotifierBuilderTest {
 
     @Test
     def void "Call onSuccessDoWithBuiltEntity should return null with a failed built entity"(){
-        def builderForTest = new GenericValidationNotifierBuilder(TestEntity)
+        def builderForTest = new GenericBuilder(TestEntity)
         builderForTest.setAttribute("fail")
         def result = builderForTest.buildAndDoOnSuccess {}
         assert result == null : "Call onSuccessDoWithBuiltEntity should return null with a failed built entity"
@@ -47,7 +47,7 @@ class GenericValidationNotifierBuilderTest {
 
     @Test
     def void "Call onSuccessDoWithBuiltEntity should return the built entity when build was successful"(){
-        def builderForTest = new GenericValidationNotifierBuilder(TestEntity)
+        def builderForTest = new GenericBuilder(TestEntity)
         builderForTest.setAttribute("ok")
         def result = builderForTest.buildAndDoOnSuccess {}
         assert result != null : "Call onSuccessDoWithBuiltEntity should return the built entity when build was successful"
@@ -56,7 +56,7 @@ class GenericValidationNotifierBuilderTest {
 
     @Test
     def void "Call buildAndDo with a success built entity"(){
-        def builderForTest = new GenericValidationNotifierBuilder(TestEntity)
+        def builderForTest = new GenericBuilder(TestEntity)
         builderForTest.setAttribute("ok")
         builderForTest.buildAndDo({ assert it.getAttribute() == "ok" },
                                   { fail("Issued success but the entity was created with an error.")})
@@ -64,7 +64,7 @@ class GenericValidationNotifierBuilderTest {
 
     @Test
     def void "Call buildAndDoOnSuccess with a failed built entity "(){
-        def builderForTest = new GenericValidationNotifierBuilder(TestEntity)
+        def builderForTest = new GenericBuilder(TestEntity)
         builderForTest.setAttribute("fail")
         builderForTest.buildAndDoOnSuccess {fail("Issued success but the entity was created with an error.")}
         assert builderForTest.buildEntity() == null : "null should be returned upon build failure"
@@ -74,7 +74,7 @@ class GenericValidationNotifierBuilderTest {
 
     @Test
     def void "Call buildAndDo should return null with a failed built entity"(){
-        def builderForTest = new GenericValidationNotifierBuilder(TestEntity)
+        def builderForTest = new GenericBuilder(TestEntity)
         builderForTest.setAttribute("fail")
         def result = builderForTest.buildAndDo ({}, {})
         assert result == null : "Call buildAndDo should return null with a failed built entity"
@@ -82,7 +82,7 @@ class GenericValidationNotifierBuilderTest {
 
     @Test
     def void "Call buildAndDo should return the built entity when build was successful"(){
-        def builderForTest = new GenericValidationNotifierBuilder(TestEntity)
+        def builderForTest = new GenericBuilder(TestEntity)
         builderForTest.setAttribute("ok")
         def result = builderForTest.buildAndDo ({}, {})
         assert result != null : "Call buildAndDo should return the built entity when build was successful"

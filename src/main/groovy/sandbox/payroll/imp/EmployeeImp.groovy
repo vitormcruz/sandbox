@@ -10,6 +10,7 @@ class EmployeeImp implements Employee{
     private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
 
     private Long id
+
     def String name
     private MandatoryValidation mandatoryNameValidation = new MandatoryValidation("employee.name", "payroll.employee.name.mandatory")
 

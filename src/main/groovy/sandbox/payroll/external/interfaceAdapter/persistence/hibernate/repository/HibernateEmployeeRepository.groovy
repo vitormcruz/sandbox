@@ -4,6 +4,7 @@ import com.querydsl.jpa.hibernate.HibernateQuery
 import com.querydsl.jpa.hibernate.HibernateQueryFactory
 import org.hibernate.SessionFactory
 import org.springframework.transaction.support.TransactionTemplate
+import sandbox.payroll.Employee
 import sandbox.payroll.EmployeeRepository
 import sandbox.payroll.external.interfaceAdapter.persistence.querydsl.entity.QEmployeeImp
 import sandbox.payroll.imp.EmployeeImp
@@ -15,7 +16,7 @@ class HibernateEmployeeRepository implements EmployeeRepository{
     private pending = []
 
     @Override
-    EmployeeImp get(id) {
+    Employee get(id) {
         transactionTemplate.execute {
             return sessionFactory.getCurrentSession().get(EmployeeImp, id)
         }
@@ -80,7 +81,7 @@ class HibernateEmployeeRepository implements EmployeeRepository{
     }
 
     @Override
-    boolean add(EmployeeImp employee) {
+    boolean add(Employee employee) {
         pending.add({
             sessionFactory.getCurrentSession().persist(employee)
         })
@@ -101,7 +102,7 @@ class HibernateEmployeeRepository implements EmployeeRepository{
     }
 
     @Override
-    boolean addAll(Collection<? extends EmployeeImp> c) {
+    boolean addAll(Collection<? extends Employee> c) {
         return false
     }
 
