@@ -19,7 +19,8 @@ interface EmployeeRepository extends Collection<Employee>{
      * @param closure a closure condition
      * @return
      */
-    public EmployeeImp find(Closure closure);
+    public Employee find(Closure closure);
 
+    public Set<Employee> findAll(Closure closure)
 
 }

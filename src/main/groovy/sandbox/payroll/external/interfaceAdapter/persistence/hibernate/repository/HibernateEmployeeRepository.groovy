@@ -6,7 +6,7 @@ import org.hibernate.SessionFactory
 import org.springframework.transaction.support.TransactionTemplate
 import sandbox.payroll.Employee
 import sandbox.payroll.EmployeeRepository
-import sandbox.payroll.external.interfaceAdapter.persistence.querydsl.entity.QEmployeeImp
+import sandbox.payroll.external.interfaceAdapter.persistence.querydsl.entity.QEmployee
 import sandbox.payroll.imp.EmployeeImp
 
 class HibernateEmployeeRepository implements EmployeeRepository{
@@ -31,11 +31,21 @@ class HibernateEmployeeRepository implements EmployeeRepository{
 
     @Override
     EmployeeImp find(Closure closure) {
-        def qEmployee = QEmployeeImp.employeeImp
+        def qEmployee = QEmployee.employee
         transactionTemplate.execute {
-            HibernateQuery<EmployeeImp> employeeQuery = new HibernateQueryFactory(this.sessionFactory.getCurrentSession()).from(qEmployee)
+            HibernateQuery<Employee> employeeQuery = new HibernateQueryFactory(this.sessionFactory.getCurrentSession()).from(qEmployee)
             closure(employeeQuery, qEmployee)
             return employeeQuery.fetchOne()
+        }
+    }
+
+    @Override
+    Set<Employee> findAll(Closure closure) {
+        def qEmployee = QEmployee.employee
+        transactionTemplate.execute {
+            HibernateQuery<Employee> employeeQuery = new HibernateQueryFactory(this.sessionFactory.getCurrentSession()).from(qEmployee)
+            closure(employeeQuery, qEmployee)
+            return employeeQuery.fetch()
         }
     }
 
