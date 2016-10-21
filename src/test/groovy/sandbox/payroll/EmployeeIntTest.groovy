@@ -5,8 +5,10 @@ import org.junit.Before
 import org.junit.Test
 import sandbox.concurrency.ModelSnapshot
 import sandbox.payroll.external.interfaceAdapter.persistence.querydsl.entity.QEmployee
+import sandbox.payroll.imp.Commission
 import sandbox.payroll.imp.EmployeeImp
-import sandbox.payroll.imp.Salary
+import sandbox.payroll.imp.Hourly
+import sandbox.payroll.imp.Monthly
 import sandbox.validationNotification.builder.GenericBuilder
 
 class EmployeeIntTest implements IntegrationTestBase{
@@ -22,34 +24,35 @@ class EmployeeIntTest implements IntegrationTestBase{
     @Before
     public void setUp(){
         IntegrationTestBase.super.setUp()
-        employee1 = createNewEmployee("Heloísa", "Street 1", "heloisa@bla.com", new Salary(2000))
-        employee2 = createNewEmployee("Heloísa Medina", "test address", "test email", new Salary(2000))
-        employee3 = createNewEmployee("Sofia", "test address", "test email", new Salary(2000))
-        employee4 = createNewEmployee("Sofia Medina", "test address", "test email", new Salary(2000))
-        employee5 = createNewEmployee("Sofia Medina Carvalho", "test address", "test email", new Salary(2000))
-        model.save()
+        employee1 = createNewEmployee("Heloísa", "Street 1", "heloisa@bla.com", new Monthly(2000))
+        employee2 = createNewEmployee("Heloísa Medina", "test address", "test email", new Monthly(2000))
+        employee3 = createNewEmployee("Sofia", "test address", "test email", new Monthly(2000))
+        employee4 = createNewEmployee("Sofia Medina", "test address", "test email", new Monthly(2000))
+        employee5 = createNewEmployee("Sofia Medina Carvalho", "test address", "test email", new Monthly(2000))
     }
 
     @Test
     def void "Get an Employee"(){
         def retrievedEmployee = employeeRepository.get(employee1.id)
-        assert retrievedEmployee != null
-        assert retrievedEmployee.name == "Heloísa"
-        assert retrievedEmployee.address == "Street 1"
-        assert retrievedEmployee.email == "heloisa@bla.com"
-        assert retrievedEmployee.paymentMethod.value == 2000
+        assertMonthlyPaidEmployeeIs(retrievedEmployee, "Heloísa", "Street 1", "heloisa@bla.com", 2000)
     }
 
     @Test
-    def void "Add a new Employee"(){
-        def addedEmployee = createNewEmployee("New Employee", "test adress", "test email", new Salary(1000))
-        model.save()
-        assert addedEmployee != null
-        assert addedEmployee.id != null
-        assert addedEmployee.name == "New Employee"
-        assert addedEmployee.address == "test adress"
-        assert addedEmployee.email == "test email"
-        assert addedEmployee.paymentMethod.value == 1000
+    def void "Add a new monthly paid Employee"(){
+        def addedEmployee = createNewEmployee("New Employee", "test adress", "test email", new Monthly(1000))
+        assertMonthlyPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 1000)
+    }
+
+    @Test
+    def void "Add a new hourly paid Employee"(){
+        def addedEmployee = createNewEmployee("New Employee", "test adress", "test email", new Hourly(50))
+        assertHourlyPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 50)
+    }
+
+    @Test
+    def void "Add a new commission paid Employee"(){
+        def addedEmployee = createNewEmployee("New Employee", "test adress", "test email", new Commission(1000, 20))
+        assertCommissionPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 1000, 20)
     }
 
     @Test
@@ -58,20 +61,16 @@ class EmployeeIntTest implements IntegrationTestBase{
         employeeToChange.name = "Change Test"
         employeeToChange.address = "Change Test adress"
         employeeToChange.email = "Change Test email"
-        employeeToChange.paymentMethod = new Salary(5000)
+        employeeToChange.paymentMethod = new Monthly(5000)
         employeeRepository.update(employeeToChange)
         model.save()
         def changedEmployee = employeeRepository.get(employeeToChange.id)
-        assert changedEmployee.name == "Change Test"
-        assert changedEmployee.address == "Change Test adress"
-        assert changedEmployee.email == "Change Test email"
-        assert changedEmployee.paymentMethod.value == 5000
+        assertMonthlyPaidEmployeeIs(changedEmployee, "Change Test", "Change Test adress", "Change Test email", 5000)
     }
 
     @Test
     def void "Remove an Employee"(){
         employeeRepository.remove(employee1)
-        model.save()
         assert employeeRepository.get(employee1.id) == null
     }
 
@@ -90,7 +89,45 @@ class EmployeeIntTest implements IntegrationTestBase{
                 .withEmail(email)
                 .withPaymentMethod(paymentMethod)
 
-        return employeeBuilder.buildAndDoOnSuccess({ employeeRepository.add(it) })
+        return employeeBuilder.buildAndDoOnSuccess({ employeeRepository.add(it)
+                                                     model.save()
+        })
+    }
+
+    private void assertMonthlyPaidEmployeeIs(Employee retrievedEmployee, String expectedEmployeeName,
+                                             String expectedEmployeeAddress,
+                                             String expectedEmployeeEmail,
+                                             Integer expectedSalary) {
+
+        assertBasicEmployeeIs(retrievedEmployee, expectedEmployeeName, expectedEmployeeAddress, expectedEmployeeEmail)
+        assert retrievedEmployee.paymentMethod.salary == expectedSalary
+    }
+
+    private void assertHourlyPaidEmployeeIs(Employee retrievedEmployee, String expectedEmployeeName,
+                                            String expectedEmployeeAddress,
+                                            String expectedEmployeeEmail,
+                                            Integer expectedHourRate) {
+
+        assertBasicEmployeeIs(retrievedEmployee, expectedEmployeeName, expectedEmployeeAddress, expectedEmployeeEmail)
+        assert retrievedEmployee.paymentMethod.hourRate == expectedHourRate
+    }
+
+    private void assertCommissionPaidEmployeeIs(Employee retrievedEmployee, String expectedEmployeeName,
+                                               String expectedEmployeeAddress,
+                                               String expectedEmployeeEmail,
+                                               Integer expectedSalary, Integer expectedCommissionRate) {
+
+        assertBasicEmployeeIs(retrievedEmployee, expectedEmployeeName, expectedEmployeeAddress, expectedEmployeeEmail)
+        assert retrievedEmployee.paymentMethod.salary == expectedSalary
+        assert retrievedEmployee.paymentMethod.commissionRate == expectedCommissionRate
+    }
+
+    private void assertBasicEmployeeIs(Employee retrievedEmployee, String expectedEmployeeName, String expectedEmployeeAddress, String expectedEmployeeEmail) {
+        assert retrievedEmployee != null
+        assert retrievedEmployee.id != null
+        assert retrievedEmployee.name == expectedEmployeeName
+        assert retrievedEmployee.address == expectedEmployeeAddress
+        assert retrievedEmployee.email == expectedEmployeeEmail
     }
 
     Class<Employee> getEmployeeClass() {

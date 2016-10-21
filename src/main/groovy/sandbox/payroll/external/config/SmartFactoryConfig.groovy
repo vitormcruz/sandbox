@@ -1,6 +1,6 @@
 package sandbox.payroll.external.config
 
-import sandbox.payroll.imp.Salary
+import sandbox.payroll.imp.Monthly
 import sandbox.sevletContextConfig.Config
 import sandbox.simpleConverter.SimpleObjectMapping
 import sandbox.smartfactory.SmartFactory
@@ -26,7 +26,7 @@ class SmartFactoryConfig implements Config {
 
     private Object dynamicMappingForEmployee(LinkedHashMap objectMappingForBuilder) {
         objectMappingForBuilder.put("paymentMethod", { employeeBuilder, paymentMethodMap ->
-            employeeBuilder.setPaymentMethod(new Salary(Integer.valueOf(paymentMethodMap.get("salary"))))
+            employeeBuilder.setPaymentMethod(new Monthly(Integer.valueOf(paymentMethodMap.get("salary"))))
         })
     }
 

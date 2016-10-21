@@ -22,9 +22,19 @@
             <generator class="sequence"/>
         </id>
 
-        <joined-subclass name="sandbox.payroll.imp.Salary" table="SALARY">
+        <joined-subclass name="sandbox.payroll.imp.Monthly" table="MONTHLY">
             <key column="PAYMENT_ID"/>
-            <property name="value" type="java.lang.Integer" column="VALUE" access="field"/>
+            <property name="salary" type="java.lang.Integer" column="SALARY" access="field"/>
+        </joined-subclass>
+
+        <joined-subclass name="sandbox.payroll.imp.Hourly" table="HOURLY">
+            <key column="PAYMENT_ID"/>
+            <property name="hourRate" type="java.lang.Integer" column="HOUR_RATE" access="field"/>
+        </joined-subclass>
+
+        <joined-subclass name="sandbox.payroll.imp.Commission" table="COMMISSION" extends="sandbox.payroll.imp.Hourly">
+            <key column="PAYMENT_ID"/>
+            <property name="commissionRate" type="java.lang.Integer" column="COMMISSION" access="field"/>
         </joined-subclass>
     </class>
 
