@@ -5,37 +5,61 @@
 
 <hibernate-mapping>
 
-    <class name="sandbox.payroll.imp.EmployeeImp" table="EMPLOYEE">
-        <id name="id" column="EMPLOYEE_ID" access="field">
+    <class name="sandbox.payroll.imp.EmployeeImp">
+        <id name="id" access="field">
             <generator class="native"/>
         </id>
-        <property name="name" type="java.lang.String" column="NAME"/>
-        <property name="address" type="java.lang.String" column="ADDRESS"/>
-        <property name="email" type="java.lang.String" column="EMAIL"/>
+        <property name="name" type="java.lang.String" access="field"/>
+        <property name="address" type="java.lang.String" access="field"/>
+        <property name="email" type="java.lang.String" access="field"/>
 
-        <many-to-one name="paymentMethod" class="sandbox.payroll.imp.GenericPaymentMethod" unique="true"
-                     not-null="true" cascade="all,delete-orphan" lazy="false"/>
+        <many-to-one name="paymentData" class="sandbox.payroll.imp.GenericPaymentData" unique="true" not-null="true"
+                     cascade="all,delete-orphan" lazy="false"/>
     </class>
 
-    <class name="sandbox.payroll.imp.GenericPaymentMethod" >
-        <id name="id" column="PAYMENT_ID" access="field">
+    <class name="sandbox.payroll.imp.GenericPaymentData" >
+        <id name="id" column="payment_id" access="field">
             <generator class="sequence"/>
         </id>
 
-        <joined-subclass name="sandbox.payroll.imp.Monthly" table="MONTHLY">
-            <key column="PAYMENT_ID"/>
-            <property name="salary" type="java.lang.Integer" column="SALARY" access="field"/>
+        <joined-subclass name="sandbox.payroll.imp.Monthly">
+            <key column="payment_id"/>
+            <property name="salary" type="java.lang.Integer" access="field"/>
         </joined-subclass>
 
-        <joined-subclass name="sandbox.payroll.imp.Hourly" table="HOURLY">
-            <key column="PAYMENT_ID"/>
-            <property name="hourRate" type="java.lang.Integer" column="HOUR_RATE" access="field"/>
+        <joined-subclass name="sandbox.payroll.imp.Hourly">
+            <key column="payment_id"/>
+            <property name="hourRate" type="java.lang.Integer" access="field"/>
+            <set name="paymentInfos" access="field" cascade="all,delete-orphan" inverse="false">
+                <key column="payment_id" not-null="true"/>
+                <one-to-many class="sandbox.payroll.imp.TimeCard" />
+            </set>
         </joined-subclass>
 
-        <joined-subclass name="sandbox.payroll.imp.Commission" table="COMMISSION" extends="sandbox.payroll.imp.Hourly">
-            <key column="PAYMENT_ID"/>
-            <property name="commissionRate" type="java.lang.Integer" column="COMMISSION" access="field"/>
+        <joined-subclass name="sandbox.payroll.imp.Commission" extends="sandbox.payroll.imp.Hourly">
+            <key column="payment_id"/>
+            <property name="commissionRate" type="java.lang.Integer" access="field"/>
+
+            <set name="paymentInfos" access="field" cascade="all,delete-orphan" inverse="false">
+                <key column="payment_id" not-null="true"/>
+                <one-to-many class="sandbox.payroll.imp.SalesReceipt" />
+            </set>
         </joined-subclass>
+    </class>
+
+    <class name="sandbox.payroll.imp.SalesReceipt">
+        <id name="id" access="field">
+            <generator class="native"/>
+        </id>
+    </class>
+
+    <class name="sandbox.payroll.imp.TimeCard">
+        <id name="id" access="field">
+            <generator class="native"/>
+        </id>
+
+        <property name="date" type="org.jadira.usertype.dateandtime.joda.PersistentDateTime" access="field"/>
+        <property name="hours" type="java.lang.Integer" access="field"/>
     </class>
 
 

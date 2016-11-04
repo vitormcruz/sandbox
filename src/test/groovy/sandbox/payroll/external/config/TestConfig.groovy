@@ -1,6 +1,5 @@
 package sandbox.payroll.external.config
 
-import sandbox.sevletContextConfig.Config
 import sandbox.smartfactory.SmartFactory
 
 

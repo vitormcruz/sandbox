@@ -1,11 +1,9 @@
 package sandbox.payroll
 
+import org.junit.After
 import org.junit.Before
 import org.junit.BeforeClass
-import sandbox.payroll.external.config.DatabaseCleaner
-import sandbox.payroll.external.config.HibernateInMemoryConfig
-import sandbox.payroll.external.config.SmartFactoryConfig
-import sandbox.payroll.external.config.TestConfig
+import sandbox.payroll.external.config.*
 import sandbox.validationNotification.ApplicationValidationNotifier
 import sandbox.validationNotification.ValidationNotificationTestSetup
 
@@ -14,8 +12,8 @@ trait IntegrationTestBase extends ValidationNotificationTestSetup{
     static private SmartFactoryConfig smartFactoryConfig = new SmartFactoryConfig()
     static private HibernateInMemoryConfig hibernateInMemoryConfig = new HibernateInMemoryConfig()
     static private TestConfig testConfig = new TestConfig()
-
     private DatabaseCleaner databaseCleaner = DatabaseCleaner.smartNewFor(IntegrationTestBase)
+    private SpringOpenSessionInTest openSessionInTest = new SpringOpenSessionInTest()
 
     def static oneTimeConfiguration = {
         smartFactoryConfig.configure()
@@ -43,6 +41,12 @@ trait IntegrationTestBase extends ValidationNotificationTestSetup{
     public void setUp(){
         ValidationNotificationTestSetup.super.setUp()
         databaseCleaner.cleanDatabase()
+        openSessionInTest.configure()
+    }
+
+    @After
+    public void tearDown(){
+        openSessionInTest.tearDown()
     }
 
 }

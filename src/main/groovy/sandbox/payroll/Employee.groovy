@@ -16,7 +16,7 @@ interface Employee {
 
     void setEmail(String email)
 
-    PaymentMethod getPaymentMethod()
+    PaymentData getPaymentData()
 
-    void setPaymentMethod(PaymentMethod paymentMethod)
+    void setPaymentData(PaymentData payment)
 }

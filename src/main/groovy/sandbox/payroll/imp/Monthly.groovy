@@ -1,6 +1,8 @@
 package sandbox.payroll.imp
 
-class Monthly extends GenericPaymentMethod {
+import sandbox.payroll.PaymentInfo
+
+class Monthly extends GenericPaymentData {
 
     private Integer salary;
 
@@ -12,5 +14,10 @@ class Monthly extends GenericPaymentMethod {
 
     Integer getSalary() {
         return salary
+    }
+
+    @Override
+    void postPaymentInfo(PaymentInfo paymentInfo) {
+        notifier.issueError("employee.payment.monthly.do.not.have.additional.payment.info")
     }
 }

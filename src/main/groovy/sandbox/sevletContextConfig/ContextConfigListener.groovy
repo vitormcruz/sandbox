@@ -1,5 +1,7 @@
 package sandbox.sevletContextConfig
 
+import sandbox.payroll.external.config.Config
+
 import javax.servlet.ServletContextEvent
 import javax.servlet.ServletContextListener
 

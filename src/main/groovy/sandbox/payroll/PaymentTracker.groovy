@@ -1,5 +1,5 @@
 package sandbox.payroll
 
-interface PaymentMethod {
+interface PaymentTracker {
 
 }

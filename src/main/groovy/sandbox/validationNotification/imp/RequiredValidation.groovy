@@ -5,7 +5,7 @@ import sandbox.validationNotification.ApplicationValidationNotifier
 /**
  * Utility to validate mandatory fields
  */
-class MandatoryValidation {
+class RequiredValidation {
 
     private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
 
@@ -16,7 +16,7 @@ class MandatoryValidation {
         resetMandatoryObligation = {}
     }
 
-    MandatoryValidation(String attrLabel, String errorIfNull) {
+    RequiredValidation(String attrLabel, String errorIfNull) {
         this.attrLabel = attrLabel
         this.errorIfNull = errorIfNull
         notifier.issueMandatoryObligation(attrLabel, errorIfNull)

@@ -10,7 +10,6 @@ import sandbox.concurrency.dbBased.hibernate.HibernateAtomicBlock
 import sandbox.payroll.EmployeeRepository
 import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.HibernatePersistentModelSnapshot
 import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.repository.HibernateEmployeeRepository
-import sandbox.sevletContextConfig.Config
 import sandbox.smartfactory.SmartFactory
 
 class HibernateInMemoryConfig implements Config{

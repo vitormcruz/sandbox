@@ -9,8 +9,8 @@ import sandbox.validationNotification.builder.GenericBuilder
 class EmployeeUnitTest implements ValidationNotificationTestSetup{
 
     private Employee employeeForChange
-    private static EXPECTED_PAYMENT_METHOD = [] as PaymentMethod
-    private static EXPECTED_PAYMENT_METHOD_2 = [] as PaymentMethod
+    private static EXPECTED_PAYMENT_DATA = [] as PaymentData
+    private static EXPECTED_PAYMENT_DATA_2 = [] as PaymentData
 
     @Before
     public void setUp(){
@@ -22,7 +22,7 @@ class EmployeeUnitTest implements ValidationNotificationTestSetup{
         return new GenericBuilder(getEmployeeClass()).withName("test name")
                                                      .withAddress("test address")
                                                      .withEmail("test email")
-                                                     .withPaymentMethod(EXPECTED_PAYMENT_METHOD)
+                                                     .withPaymentData(EXPECTED_PAYMENT_DATA)
                                                      .buildEntity()
     }
 
@@ -38,10 +38,10 @@ class EmployeeUnitTest implements ValidationNotificationTestSetup{
         def builtEmployee = EmployeeBuilder.withName("test name")
                                            .withAddress("test address")
                                            .withEmail("test email")
-                                           .withPaymentMethod(EXPECTED_PAYMENT_METHOD)
+                                           .withPaymentData(EXPECTED_PAYMENT_DATA)
                                            .buildEntity()
 
-        verifyEmployeeWithExpectedData(builtEmployee, "test name", "test address", "test email", EXPECTED_PAYMENT_METHOD)
+        verifyEmployeeWithExpectedData(builtEmployee, "test name", "test address", "test email", EXPECTED_PAYMENT_DATA)
     }
 
     @Test
@@ -49,7 +49,7 @@ class EmployeeUnitTest implements ValidationNotificationTestSetup{
         employeeForChange.setName(null)
         employeeForChange.setEmail(null)
         employeeForChange.setAddress(null)
-        employeeForChange.setPaymentMethod(null)
+        employeeForChange.setPaymentData(null)
         verifyMandatoryErrorsMessagesWereIssued()
     }
 
@@ -58,23 +58,23 @@ class EmployeeUnitTest implements ValidationNotificationTestSetup{
         employeeForChange.setName("test name 2")
         employeeForChange.setEmail("test email 2")
         employeeForChange.setAddress("test address 2")
-        employeeForChange.setPaymentMethod(EXPECTED_PAYMENT_METHOD_2)
-        verifyEmployeeWithExpectedData(employeeForChange, "test name 2", "test address 2", "test email 2", EXPECTED_PAYMENT_METHOD_2)
+        employeeForChange.setPaymentData(EXPECTED_PAYMENT_DATA_2)
+        verifyEmployeeWithExpectedData(employeeForChange, "test name 2", "test address 2", "test email 2", EXPECTED_PAYMENT_DATA_2)
     }
 
     private void verifyMandatoryErrorsMessagesWereIssued() {
         assert validationObserver.getErrors().contains("payroll.employee.name.mandatory")
         assert validationObserver.getErrors().contains("payroll.employee.address.mandatory")
         assert validationObserver.getErrors().contains("payroll.employee.email.mandatory")
-        assert validationObserver.getErrors().contains("payroll.employee.paymentMethod.mandatory")
+        assert validationObserver.getErrors().contains("payroll.employee.payment.basic.info.mandatory")
     }
 
-    private void verifyEmployeeWithExpectedData(builtEmployee, String name, String address, String email, paymentMethod) {
+    private void verifyEmployeeWithExpectedData(builtEmployee, String name, String address, String email, paymentData) {
         assert validationObserver.successful()
         assert builtEmployee.getName() == name
         assert builtEmployee.getAddress() == address
         assert builtEmployee.getEmail() == email
-        assert builtEmployee.getPaymentMethod() == paymentMethod
+        assert builtEmployee.getPaymentData() == paymentData
     }
 
     Class<Employee> getEmployeeClass() {
