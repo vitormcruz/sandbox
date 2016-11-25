@@ -13,11 +13,7 @@ class SmartFactory {
     def <T> T instanceForCallerOf(Class caller, Class<T> aClass) {
         def configuration = configurationFor(caller.getName())
         if(!configuration || !configuration.get(aClass)){
-            try {
-                return aClass.newInstance()
-            } catch (GroovyRuntimeException e) {
-                return null
-            }
+            return null
         }
 
         return configuration.get(aClass)
