@@ -94,6 +94,8 @@ class EmployeeIntTest implements IntegrationTestBase{
                [expectedDate.toString() + "_" + 6]
     }
 
+    //TODO post a commission
+
     private void assertMonthlyPaidEmployeeIs(Employee retrievedEmployee, String expectedEmployeeName,
                                              String expectedEmployeeAddress,
                                              String expectedEmployeeEmail,

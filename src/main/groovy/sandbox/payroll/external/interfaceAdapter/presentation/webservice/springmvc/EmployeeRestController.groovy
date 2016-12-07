@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*
 import sandbox.concurrency.ModelSnapshot
 import sandbox.payroll.EmployeeRepository
 import sandbox.payroll.imp.EmployeeImp
-import sandbox.validationNotification.builder.GenericBuilder
+import sandbox.validationNotification.builder.imp.GenericBuilder
 
 @RequestMapping(value = "payroll")
 @RestController

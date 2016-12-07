@@ -4,7 +4,7 @@ import org.junit.Before
 import org.junit.Test
 import sandbox.payroll.imp.EmployeeImp
 import sandbox.validationNotification.ValidationNotificationTestSetup
-import sandbox.validationNotification.builder.GenericBuilder
+import sandbox.validationNotification.builder.imp.GenericBuilder
 
 class EmployeeUnitTest implements ValidationNotificationTestSetup{
 
@@ -19,27 +19,27 @@ class EmployeeUnitTest implements ValidationNotificationTestSetup{
     }
 
     Employee getEmployeeForChange(){
-        return new GenericBuilder(getEmployeeClass()).withName("test name")
-                                                     .withAddress("test address")
-                                                     .withEmail("test email")
-                                                     .withPaymentData(EXPECTED_PAYMENT_DATA)
-                                                     .buildEntity()
+        return new GenericBuilder(getEmployeeClass()).setName("test name")
+                                                     .setAddress("test address")
+                                                     .setEmail("test email")
+                                                     .setPaymentData(EXPECTED_PAYMENT_DATA)
+                                                     .build()
     }
 
     @Test
     public void "Create employee not providing mandatory information"(){
-        new GenericBuilder(getEmployeeClass()).buildEntity()
+        new GenericBuilder(getEmployeeClass()).build()
         verifyMandatoryErrorsMessagesWereIssued()
     }
 
     @Test
     public void "Create employee providing mandatory information"(){
         def EmployeeBuilder = new GenericBuilder(getEmployeeClass())
-        def builtEmployee = EmployeeBuilder.withName("test name")
-                                           .withAddress("test address")
-                                           .withEmail("test email")
-                                           .withPaymentData(EXPECTED_PAYMENT_DATA)
-                                           .buildEntity()
+        def builtEmployee = EmployeeBuilder.setName("test name")
+                                           .setAddress("test address")
+                                           .setEmail("test email")
+                                           .setPaymentData(EXPECTED_PAYMENT_DATA)
+                                           .build()
 
         verifyEmployeeWithExpectedData(builtEmployee, "test name", "test address", "test email", EXPECTED_PAYMENT_DATA)
     }

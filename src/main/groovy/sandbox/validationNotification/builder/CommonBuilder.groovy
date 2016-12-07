@@ -1,4 +1,4 @@
-package sandbox.validationNotification
+package sandbox.validationNotification.builder
 
 /**
  * Builder with common and useful protocols to deal with success and failure scenarios
@@ -22,7 +22,7 @@ interface CommonBuilder {
     public buildAndDoOnFailure(aFailureClosure)
 
     /**
-     * Return the successfully built entity or null otherwise
+     * Return the successfully built object or null otherwise
      */
-    public buildEntity()
+    public build()
 }

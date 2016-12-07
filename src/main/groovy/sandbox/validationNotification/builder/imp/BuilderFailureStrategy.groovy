@@ -1,4 +1,4 @@
-package sandbox.validationNotification.builder
+package sandbox.validationNotification.builder.imp
 
 class BuilderFailureStrategy implements BuilderStrategy{
 

@@ -3,7 +3,7 @@ package sandbox.payroll.external.config
 import sandbox.payroll.imp.Monthly
 import sandbox.simpleConverter.SimpleObjectMapping
 import sandbox.smartfactory.SmartFactory
-import sandbox.validationNotification.builder.GenericBuilder
+import sandbox.validationNotification.builder.imp.GenericBuilder
 
 class SmartFactoryConfig implements Config {
 

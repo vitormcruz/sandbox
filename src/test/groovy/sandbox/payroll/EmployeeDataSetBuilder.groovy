@@ -1,7 +1,7 @@
 package sandbox.payroll
 
 import sandbox.concurrency.ModelSnapshot
-import sandbox.validationNotification.builder.GenericBuilder
+import sandbox.validationNotification.builder.imp.GenericBuilder
 
 class EmployeeDataSetBuilder {
 
@@ -14,10 +14,10 @@ class EmployeeDataSetBuilder {
     }
 
     public Employee createNewEmployee(String name, String address, String email, paymentMethod) {
-        GenericBuilder employeeBuilder = new GenericBuilder(employeeClass).withName(name)
-                .withAddress(address)
-                .withEmail(email)
-                .withPaymentData(paymentMethod)
+        GenericBuilder employeeBuilder = new GenericBuilder(employeeClass).setName(name)
+                                                                          .setAddress(address)
+                                                                          .setEmail(email)
+                                                                          .setPaymentData(paymentMethod)
 
         return employeeBuilder.buildAndDoOnSuccess({
             employeeRepository.add(it)

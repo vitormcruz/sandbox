@@ -1,4 +1,4 @@
-package sandbox.validationNotification.builder
+package sandbox.validationNotification.builder.imp
 
 interface BuilderStrategy {
     Boolean successful()
