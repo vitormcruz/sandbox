@@ -1,4 +1,4 @@
-package sandbox.payroll.imp
+package sandbox.payroll.payment
 
 class SalesReceipt {
 

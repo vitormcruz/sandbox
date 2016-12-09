@@ -5,7 +5,7 @@
 
 <hibernate-mapping>
 
-    <class name="sandbox.payroll.imp.EmployeeImp">
+    <class name="sandbox.payroll.Employee">
         <id name="id" access="field">
             <generator class="native"/>
         </id>
@@ -13,47 +13,47 @@
         <property name="address" type="java.lang.String" access="field"/>
         <property name="email" type="java.lang.String" access="field"/>
 
-        <many-to-one name="paymentData" class="sandbox.payroll.imp.GenericPaymentData" unique="true" not-null="true"
+        <many-to-one name="paymentData" class="sandbox.payroll.payment.GenericPaymentStyle" unique="true" not-null="true"
                      cascade="all,delete-orphan" lazy="false"/>
     </class>
 
-    <class name="sandbox.payroll.imp.GenericPaymentData" >
+    <class name="sandbox.payroll.payment.GenericPaymentStyle" >
         <id name="id" column="payment_id" access="field">
             <generator class="sequence"/>
         </id>
 
-        <joined-subclass name="sandbox.payroll.imp.Monthly">
+        <joined-subclass name="sandbox.payroll.payment.Monthly">
             <key column="payment_id"/>
             <property name="salary" type="java.lang.Integer" access="field"/>
         </joined-subclass>
 
-        <joined-subclass name="sandbox.payroll.imp.Hourly">
+        <joined-subclass name="sandbox.payroll.payment.Hourly">
             <key column="payment_id"/>
             <property name="hourRate" type="java.lang.Integer" access="field"/>
             <set name="paymentInfos" access="field" cascade="all,delete-orphan" inverse="false">
                 <key column="payment_id" not-null="true"/>
-                <one-to-many class="sandbox.payroll.imp.TimeCard" />
+                <one-to-many class="sandbox.payroll.payment.TimeCard" />
             </set>
         </joined-subclass>
 
-        <joined-subclass name="sandbox.payroll.imp.Commission" extends="sandbox.payroll.imp.Hourly">
+        <joined-subclass name="sandbox.payroll.payment.Commission" extends="sandbox.payroll.payment.Hourly">
             <key column="payment_id"/>
             <property name="commissionRate" type="java.lang.Integer" access="field"/>
 
             <set name="paymentInfos" access="field" cascade="all,delete-orphan" inverse="false">
                 <key column="payment_id" not-null="true"/>
-                <one-to-many class="sandbox.payroll.imp.SalesReceipt" />
+                <one-to-many class="sandbox.payroll.payment.SalesReceipt" />
             </set>
         </joined-subclass>
     </class>
 
-    <class name="sandbox.payroll.imp.SalesReceipt">
+    <class name="sandbox.payroll.payment.SalesReceipt">
         <id name="id" access="field">
             <generator class="native"/>
         </id>
     </class>
 
-    <class name="sandbox.payroll.imp.TimeCard">
+    <class name="sandbox.payroll.payment.TimeCard">
         <id name="id" access="field">
             <generator class="native"/>
         </id>

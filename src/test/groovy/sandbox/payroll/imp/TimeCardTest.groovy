@@ -2,6 +2,7 @@ package sandbox.payroll.imp
 
 import org.joda.time.DateTime
 import org.junit.Test
+import sandbox.payroll.payment.TimeCard
 import sandbox.validationNotification.ValidationNotificationTestSetup
 import sandbox.validationNotification.builder.imp.GenericBuilder
 

@@ -1,11 +1,10 @@
-package sandbox.payroll.imp
+package sandbox.payroll.payment
 
 import org.joda.time.DateTime
-import sandbox.payroll.PaymentInfo
 import sandbox.validationNotification.ApplicationValidationNotifier
 import sandbox.validationNotification.builder.BuilderAwareness
 
-class TimeCard implements PaymentInfo, BuilderAwareness{
+class TimeCard implements PaymentAddendum, BuilderAwareness{
 
     private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
 

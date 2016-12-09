@@ -6,8 +6,8 @@ import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.core.types.dsl.PathInits;
 import com.querydsl.core.types.dsl.SetPath;
-import sandbox.payroll.imp.Hourly;
-import sandbox.payroll.imp.TimeCard;
+import sandbox.payroll.payment.Hourly;
+import sandbox.payroll.payment.TimeCard;
 
 import javax.annotation.Generated;
 

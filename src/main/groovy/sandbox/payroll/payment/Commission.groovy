@@ -1,6 +1,4 @@
-package sandbox.payroll.imp
-
-import sandbox.payroll.PaymentInfo
+package sandbox.payroll.payment
 
 class Commission extends Monthly{
 
@@ -20,7 +18,7 @@ class Commission extends Monthly{
     }
 
     @Override
-    void postPaymentInfo(PaymentInfo paymentInfo) {
+    void postPaymentInfo(PaymentAddendum paymentInfo) {
         if(!paymentInfo instanceof SalesReceipt){
             notifier.issueError("employee.payment.commission.sales.receipt.payment.info.only")
         }

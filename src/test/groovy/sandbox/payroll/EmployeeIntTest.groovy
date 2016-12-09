@@ -6,7 +6,10 @@ import org.junit.Before
 import org.junit.Test
 import sandbox.concurrency.ModelSnapshot
 import sandbox.payroll.external.interfaceAdapter.persistence.querydsl.entity.QEmployee
-import sandbox.payroll.imp.*
+import sandbox.payroll.payment.Commission
+import sandbox.payroll.payment.Hourly
+import sandbox.payroll.payment.Monthly
+import sandbox.payroll.payment.TimeCard
 
 class EmployeeIntTest implements IntegrationTestBase{
 
@@ -133,6 +136,6 @@ class EmployeeIntTest implements IntegrationTestBase{
     }
 
     Class<Employee> getEmployeeClass() {
-        return EmployeeImp
+        return Employee
     }
 }

@@ -1,12 +1,10 @@
 package sandbox.payroll
 
-import sandbox.payroll.imp.EmployeeImp
-
 interface EmployeeRepository extends Collection<Employee>{
 
     Employee get(id)
 
-    void update(EmployeeImp employee)
+    void update(Employee employee)
 
     /**
      * Find the first a single employee QueryBase qEmployee

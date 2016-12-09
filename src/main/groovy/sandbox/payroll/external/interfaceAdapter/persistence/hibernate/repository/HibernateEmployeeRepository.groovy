@@ -7,7 +7,6 @@ import org.springframework.transaction.support.TransactionTemplate
 import sandbox.payroll.Employee
 import sandbox.payroll.EmployeeRepository
 import sandbox.payroll.external.interfaceAdapter.persistence.querydsl.entity.QEmployee
-import sandbox.payroll.imp.EmployeeImp
 
 class HibernateEmployeeRepository implements EmployeeRepository{
 
@@ -18,19 +17,19 @@ class HibernateEmployeeRepository implements EmployeeRepository{
     @Override
     Employee get(id) {
         transactionTemplate.execute {
-            return sessionFactory.getCurrentSession().get(EmployeeImp, id)
+            return sessionFactory.getCurrentSession().get(Employee, id)
         }
     }
 
     @Override
-    public void update(EmployeeImp employee) {
+    public void update(Employee employee) {
         pending.add({
             sessionFactory.getCurrentSession().merge(employee)
         })
     }
 
     @Override
-    EmployeeImp find(Closure closure) {
+    Employee find(Closure closure) {
         def qEmployee = QEmployee.employee
         transactionTemplate.execute {
             HibernateQuery<Employee> employeeQuery = new HibernateQueryFactory(this.sessionFactory.getCurrentSession()).from(qEmployee)
@@ -70,9 +69,9 @@ class HibernateEmployeeRepository implements EmployeeRepository{
     }
 
     @Override
-    Iterator<EmployeeImp> iterator() {
+    Iterator<Employee> iterator() {
         //TODO use pagination
-        Collection<EmployeeImp> employees
+        Collection<Employee> employees
         transactionTemplate.execute{
             employees = new HibernateQueryFactory(this.sessionFactory.getCurrentSession()).selectFrom(QEmployee.employee).fetch()
         }

@@ -3,8 +3,8 @@ package sandbox.payroll.external.interfaceAdapter.presentation.webservice.spring
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import sandbox.concurrency.ModelSnapshot
+import sandbox.payroll.Employee
 import sandbox.payroll.EmployeeRepository
-import sandbox.payroll.imp.EmployeeImp
 import sandbox.validationNotification.builder.imp.GenericBuilder
 
 @RequestMapping(value = "payroll")
@@ -15,9 +15,9 @@ class EmployeeRestController implements BasicControllerOperationsTrait{
     private ModelSnapshot model = ModelSnapshot.smartNewFor(EmployeeRestController)
 
     @RequestMapping(value = "/employee", method = RequestMethod.POST)
-    ResponseEntity<EmployeeImp> newEmployee(@RequestBody Map newEmployeeMap) {
+    ResponseEntity<Employee> newEmployee(@RequestBody Map newEmployeeMap) {
         RestControllerValidationListener listener = getValidationListener()
-        GenericBuilder employeeBuilder = new GenericBuilder(EmployeeImp).applyMap(newEmployeeMap)
+        GenericBuilder employeeBuilder = new GenericBuilder(Employee).applyMap(newEmployeeMap)
         employeeBuilder.buildAndDoOnSuccess { newEmployee ->
             employeeRepository.add(newEmployee)
             listener.setBody(newEmployee)
@@ -27,7 +27,7 @@ class EmployeeRestController implements BasicControllerOperationsTrait{
     }
 
     @RequestMapping(value = "/employee/{employeeId}", method = RequestMethod.PATCH)
-    ResponseEntity<EmployeeImp> changeEmployee(@PathVariable Long employeeId, @RequestBody Map changedAttributes) {
+    ResponseEntity<Employee> changeEmployee(@PathVariable Long employeeId, @RequestBody Map changedAttributes) {
         RestControllerValidationListener listener = getValidationListener()
         def changedEmployee = getResource(employeeId, employeeRepository)
         changedEmployee.applyMap(changedAttributes)
@@ -41,9 +41,9 @@ class EmployeeRestController implements BasicControllerOperationsTrait{
     }
 
     @RequestMapping(value = "/employee/{employeeId}", method = RequestMethod.DELETE)
-    ResponseEntity<EmployeeImp> deleteEmployee(@PathVariable Long employeeId) {
+    ResponseEntity<Employee> deleteEmployee(@PathVariable Long employeeId) {
         RestControllerValidationListener listener = getValidationListener()
-        EmployeeImp employeeSubjectedRemoval = getResource(employeeId, employeeRepository)
+        Employee employeeSubjectedRemoval = getResource(employeeId, employeeRepository)
         if(listener.successful()) {
             employeeRepository.remove(employeeSubjectedRemoval)
             listener.setBody(employeeSubjectedRemoval)
@@ -53,7 +53,7 @@ class EmployeeRestController implements BasicControllerOperationsTrait{
     }
 
     @RequestMapping(value = "/employee", method = RequestMethod.GET)
-    Collection<EmployeeImp> listEmployees() {
+    Collection<Employee> listEmployees() {
         return employeeRepository
     }
 

@@ -2,15 +2,15 @@ package sandbox.payroll
 
 import org.junit.Before
 import org.junit.Test
-import sandbox.payroll.imp.EmployeeImp
+import sandbox.payroll.payment.PaymentStyle
 import sandbox.validationNotification.ValidationNotificationTestSetup
 import sandbox.validationNotification.builder.imp.GenericBuilder
 
 class EmployeeUnitTest implements ValidationNotificationTestSetup{
 
     private Employee employeeForChange
-    private static EXPECTED_PAYMENT_DATA = [] as PaymentData
-    private static EXPECTED_PAYMENT_DATA_2 = [] as PaymentData
+    private static EXPECTED_PAYMENT_DATA = [] as PaymentStyle
+    private static EXPECTED_PAYMENT_DATA_2 = [] as PaymentStyle
 
     @Before
     public void setUp(){
@@ -78,6 +78,6 @@ class EmployeeUnitTest implements ValidationNotificationTestSetup{
     }
 
     Class<Employee> getEmployeeClass() {
-        return EmployeeImp
+        return Employee
     }
 }

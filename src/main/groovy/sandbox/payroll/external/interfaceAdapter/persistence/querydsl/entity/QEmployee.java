@@ -6,7 +6,7 @@ import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.core.types.dsl.PathInits;
 import com.querydsl.core.types.dsl.StringPath;
-import sandbox.payroll.imp.EmployeeImp;
+import sandbox.payroll.Employee;
 
 import javax.annotation.Generated;
 
@@ -14,10 +14,10 @@ import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
 
 /**
- * QEmployeeImp is a Querydsl query type for EmployeeImp
+ * QEmployeeImp is a Querydsl query type for Employee
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QEmployee extends EntityPathBase<EmployeeImp> {
+public class QEmployee extends EntityPathBase<Employee> {
 
     private static final long serialVersionUID = 63049228L;
 
@@ -36,10 +36,10 @@ public class QEmployee extends EntityPathBase<EmployeeImp> {
     public final QGenericPayment payment;
 
     public QEmployee(String variable) {
-        this(EmployeeImp.class, forVariable(variable), INITS);
+        this(Employee.class, forVariable(variable), INITS);
     }
 
-    public QEmployee(Path<? extends EmployeeImp> path) {
+    public QEmployee(Path<? extends Employee> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
@@ -48,10 +48,10 @@ public class QEmployee extends EntityPathBase<EmployeeImp> {
     }
 
     public QEmployee(PathMetadata metadata, PathInits inits) {
-        this(EmployeeImp.class, metadata, inits);
+        this(Employee.class, metadata, inits);
     }
 
-    public QEmployee(Class<? extends EmployeeImp> type, PathMetadata metadata, PathInits inits) {
+    public QEmployee(Class<? extends Employee> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.payment = inits.isInitialized("payment") ? new QGenericPayment(forProperty("payment")) : null;
     }
