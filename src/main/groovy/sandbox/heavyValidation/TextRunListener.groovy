@@ -1,7 +1,6 @@
 package sandbox.heavyValidation
+
 import org.joda.time.DateTime
-import org.junit.runner.Description
-import org.junit.runner.Result
 import sandbox.validationNotification.ValidationObserver
 /**
  */
@@ -10,15 +9,6 @@ public class TextRunListener implements ValidationObserver {
     def DateTime testStartTime
     def String objectUnderTest
     private Boolean successful
-
-    void testRunStarted(Description description) throws Exception {
-        objectUnderTest = description.displayName
-        println("Validation of ${objectUnderTest} initiated")
-    }
-
-    void testRunFinished(Result result) throws Exception {
-        println("Validation of ${objectUnderTest} was ${result.wasSuccessful() ? "": "not "}sucecessful")
-    }
 
     @Override
     void startValidation(String validationName) {
