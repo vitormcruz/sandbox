@@ -9,9 +9,9 @@ import sandbox.validationNotification.ValidationNotificationTestSetup
 
 trait IntegrationTestBase extends ValidationNotificationTestSetup{
 
-    static private SmartFactoryConfig smartFactoryConfig = new SmartFactoryConfig()
-    static private HibernateInMemoryConfig hibernateInMemoryConfig = new HibernateInMemoryConfig()
-    static private TestConfig testConfig = new TestConfig()
+    private static SmartFactoryConfig smartFactoryConfig = new SmartFactoryConfig()
+    private static HibernateInMemoryConfig hibernateInMemoryConfig = new HibernateInMemoryConfig()
+    private static TestConfig testConfig = new TestConfig()
     private DatabaseCleaner databaseCleaner = DatabaseCleaner.smartNewFor(IntegrationTestBase)
     private SpringOpenSessionInTest openSessionInTest = new SpringOpenSessionInTest()
 

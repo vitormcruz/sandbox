@@ -9,26 +9,25 @@
         <id name="id" access="field">
             <generator class="native"/>
         </id>
+
         <property name="name" type="java.lang.String" access="field"/>
         <property name="address" type="java.lang.String" access="field"/>
         <property name="email" type="java.lang.String" access="field"/>
 
-        <many-to-one name="paymentData" class="sandbox.payroll.payment.GenericPaymentStyle" unique="true" not-null="true"
-                     cascade="all,delete-orphan" lazy="false"/>
+        <one-to-one name="paymentData" class="sandbox.payroll.payment.GenericPaymentStyle" constrained="false"
+                    lazy="false"/>
     </class>
 
     <class name="sandbox.payroll.payment.GenericPaymentStyle" >
-        <id name="id" column="payment_id" access="field">
-            <generator class="sequence"/>
-        </id>
+        <id name="id" access="field"/>
 
         <joined-subclass name="sandbox.payroll.payment.Monthly">
-            <key column="payment_id"/>
+            <key column="id"/>
             <property name="salary" type="java.lang.Integer" access="field"/>
         </joined-subclass>
 
         <joined-subclass name="sandbox.payroll.payment.Hourly">
-            <key column="payment_id"/>
+            <key column="id"/>
             <property name="hourRate" type="java.lang.Integer" access="field"/>
             <set name="paymentInfos" access="field" cascade="all,delete-orphan" inverse="false">
                 <key column="payment_id" not-null="true"/>
@@ -36,12 +35,12 @@
             </set>
         </joined-subclass>
 
-        <joined-subclass name="sandbox.payroll.payment.Commission" extends="sandbox.payroll.payment.Hourly">
-            <key column="payment_id"/>
+        <joined-subclass name="sandbox.payroll.payment.Commission">
+            <key column="id"/>
             <property name="commissionRate" type="java.lang.Integer" access="field"/>
 
             <set name="paymentInfos" access="field" cascade="all,delete-orphan" inverse="false">
-                <key column="payment_id" not-null="true"/>
+                <key column="paymentTypeId" not-null="true"/>
                 <one-to-many class="sandbox.payroll.payment.SalesReceipt" />
             </set>
         </joined-subclass>
