@@ -17,7 +17,7 @@ class EmployeeDataSetBuilder {
         GenericBuilder employeeBuilder = new GenericBuilder(employeeClass).setName(name)
                                                                           .setAddress(address)
                                                                           .setEmail(email)
-                                                                          .setPaymentData(paymentMethod)
+                                                                          .setPaymentType(paymentMethod)
 
         return employeeBuilder.buildAndDoOnSuccess({
             employeeRepository.add(it)

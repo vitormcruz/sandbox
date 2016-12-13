@@ -25,7 +25,7 @@ class SmartFactoryConfig implements Config {
 
     private Object dynamicMappingForEmployee(LinkedHashMap objectMappingForBuilder) {
         objectMappingForBuilder.put("paymentMethod", { employeeBuilder, paymentMethodMap ->
-            employeeBuilder.setPaymentData(new Monthly(Integer.valueOf(paymentMethodMap.get("salary"))))
+            employeeBuilder.setPaymentType(new Monthly(Integer.valueOf(paymentMethodMap.get("salary"))))
         })
     }
 

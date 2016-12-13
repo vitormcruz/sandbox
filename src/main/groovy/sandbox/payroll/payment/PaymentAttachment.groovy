@@ -1,5 +1,5 @@
 package sandbox.payroll.payment
 
-interface PaymentAddendum {
+interface PaymentAttachment {
 
 }

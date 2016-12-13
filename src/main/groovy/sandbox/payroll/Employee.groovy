@@ -1,6 +1,6 @@
 package sandbox.payroll
 
-import sandbox.payroll.payment.PaymentStyle
+import sandbox.payroll.payment.PaymentType
 import sandbox.validationNotification.ApplicationValidationNotifier
 import sandbox.validationNotification.imp.RequiredValidation
 
@@ -19,35 +19,27 @@ class Employee {
     def String email
     private RequiredValidation requiredEmailValidation = new RequiredValidation("employee.email", "payroll.employee.email.mandatory")
 
-    def PaymentStyle paymentData
-    private RequiredValidation requiredPaymentBasicInfoValidation = new RequiredValidation("employee.payment", "payroll.employee.payment.basic.info.mandatory")
+    def PaymentType paymentType
+    private RequiredValidation requiredPaymentTypeValidation = new RequiredValidation("employee.payment", "payroll.employee.payment.type.mandatory")
 
     Long getId() {
         return id
     }
 
     public void setName(String name) {
-        requiredNameValidation.set(name, {
-            this.@name = name
-        })
+        requiredNameValidation.set(name, { this.@name = name })
     }
 
     public void setAddress(String address) {
-        requiredAddressValidation.set(address, {
-            this.@address = address
-        })
+        requiredAddressValidation.set(address, { this.@address = address })
     }
 
     public void setEmail(String email) {
-        requiredEmailValidation.set(email, {
-            this.@email = email
-        })
+        requiredEmailValidation.set(email, { this.@email = email })
     }
 
 
-    public void setPaymentData(PaymentStyle paymentData) {
-        requiredPaymentBasicInfoValidation.set(paymentData, {
-            this.@paymentData = paymentData
-        })
+    public void setPaymentType(PaymentType paymentType) {
+        requiredPaymentTypeValidation.set(paymentType, { this.@paymentType = paymentType })
     }
 }

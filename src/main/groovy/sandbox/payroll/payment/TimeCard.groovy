@@ -4,7 +4,7 @@ import org.joda.time.DateTime
 import sandbox.validationNotification.ApplicationValidationNotifier
 import sandbox.validationNotification.builder.BuilderAwareness
 
-class TimeCard implements PaymentAddendum, BuilderAwareness{
+class TimeCard implements PaymentAttachment, BuilderAwareness{
 
     private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
 

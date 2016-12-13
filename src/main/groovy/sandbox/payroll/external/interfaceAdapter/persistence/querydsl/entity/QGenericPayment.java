@@ -4,7 +4,7 @@ import com.querydsl.core.types.Path;
 import com.querydsl.core.types.PathMetadata;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.NumberPath;
-import sandbox.payroll.payment.GenericPaymentStyle;
+import sandbox.payroll.payment.GenericPaymentType;
 
 import javax.annotation.Generated;
 
@@ -15,7 +15,7 @@ import static com.querydsl.core.types.PathMetadataFactory.forVariable;
  * QGenericPayment is a Querydsl query type for GenericPayment
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QGenericPayment extends EntityPathBase<GenericPaymentStyle> {
+public class QGenericPayment extends EntityPathBase<GenericPaymentType> {
 
     private static final long serialVersionUID = 485333409L;
 
@@ -24,15 +24,15 @@ public class QGenericPayment extends EntityPathBase<GenericPaymentStyle> {
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public QGenericPayment(String variable) {
-        super(GenericPaymentStyle.class, forVariable(variable));
+        super(GenericPaymentType.class, forVariable(variable));
     }
 
-    public QGenericPayment(Path<? extends GenericPaymentStyle> path) {
+    public QGenericPayment(Path<? extends GenericPaymentType> path) {
         super(path.getType(), path.getMetadata());
     }
 
     public QGenericPayment(PathMetadata metadata) {
-        super(GenericPaymentStyle.class, metadata);
+        super(GenericPaymentType.class, metadata);
     }
 
 }

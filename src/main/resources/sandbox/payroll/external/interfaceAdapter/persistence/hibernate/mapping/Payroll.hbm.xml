@@ -14,11 +14,11 @@
         <property name="address" type="java.lang.String" access="field"/>
         <property name="email" type="java.lang.String" access="field"/>
 
-        <one-to-one name="paymentData" class="sandbox.payroll.payment.GenericPaymentStyle" constrained="false"
+        <one-to-one name="paymentType" class="sandbox.payroll.payment.GenericPaymentType" constrained="false"
                     lazy="false"/>
     </class>
 
-    <class name="sandbox.payroll.payment.GenericPaymentStyle" >
+    <class name="sandbox.payroll.payment.GenericPaymentType" >
         <id name="id" access="field"/>
 
         <joined-subclass name="sandbox.payroll.payment.Monthly">

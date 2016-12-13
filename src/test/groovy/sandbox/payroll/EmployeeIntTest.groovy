@@ -62,7 +62,7 @@ class EmployeeIntTest implements IntegrationTestBase{
         employeeToChange.name = "Change Test"
         employeeToChange.address = "Change Test adress"
         employeeToChange.email = "Change Test email"
-        employeeToChange.paymentData = new Monthly(5000)
+        employeeToChange.paymentType = new Monthly(5000)
         employeeRepository.update(employeeToChange)
         model.save()
         def changedEmployee = employeeRepository.get(employeeToChange.id)
@@ -88,12 +88,12 @@ class EmployeeIntTest implements IntegrationTestBase{
     def void "Post a time card"(){
         def expectedDate = new DateTime()
         def expectedTimeCard = new TimeCard(expectedDate, 6)
-        employee5.paymentData.postPaymentInfo(expectedTimeCard)
+        employee5.paymentType.postPaymentInfo(expectedTimeCard)
         employeeRepository.update(employee5)
         model.save()
         def employeeChanged = employeeRepository.get(employee5.id)
         assert validationObserver.successful()
-        assert employeeChanged.paymentData.getPaymentInfos().collect{ it.getDate().toString() + "_" + it.getHours()} ==
+        assert employeeChanged.paymentType.getPaymentInfos().collect{ it.getDate().toString() + "_" + it.getHours()} ==
                [expectedDate.toString() + "_" + 6]
     }
 
@@ -105,7 +105,7 @@ class EmployeeIntTest implements IntegrationTestBase{
                                              Integer expectedSalary) {
 
         assertBasicEmployeeIs(retrievedEmployee, expectedEmployeeName, expectedEmployeeAddress, expectedEmployeeEmail)
-        assert retrievedEmployee.paymentData.salary == expectedSalary
+        assert retrievedEmployee.paymentType.salary == expectedSalary
     }
 
     private void assertHourlyPaidEmployeeIs(Employee retrievedEmployee, String expectedEmployeeName,
@@ -114,7 +114,7 @@ class EmployeeIntTest implements IntegrationTestBase{
                                             Integer expectedHourRate) {
 
         assertBasicEmployeeIs(retrievedEmployee, expectedEmployeeName, expectedEmployeeAddress, expectedEmployeeEmail)
-        assert retrievedEmployee.paymentData.hourRate == expectedHourRate
+        assert retrievedEmployee.paymentType.hourRate == expectedHourRate
     }
 
     private void assertCommissionPaidEmployeeIs(Employee retrievedEmployee, String expectedEmployeeName,
@@ -123,8 +123,8 @@ class EmployeeIntTest implements IntegrationTestBase{
                                                Integer expectedSalary, Integer expectedCommissionRate) {
 
         assertBasicEmployeeIs(retrievedEmployee, expectedEmployeeName, expectedEmployeeAddress, expectedEmployeeEmail)
-        assert retrievedEmployee.paymentData.salary == expectedSalary
-        assert retrievedEmployee.paymentData.commissionRate == expectedCommissionRate
+        assert retrievedEmployee.paymentType.salary == expectedSalary
+        assert retrievedEmployee.paymentType.commissionRate == expectedCommissionRate
     }
 
     private void assertBasicEmployeeIs(Employee retrievedEmployee, String expectedEmployeeName, String expectedEmployeeAddress, String expectedEmployeeEmail) {
