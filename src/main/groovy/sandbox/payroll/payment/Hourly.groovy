@@ -21,6 +21,6 @@ class Hourly extends GenericPaymentType{
             notifier.issueError("employee.payment.hourly.time.card.payment.info.only")
         }
 
-        super.@paymentInfos.add(paymentInfo)
+        super.@paymentAttachments.add(paymentInfo)
     }
 }

@@ -31,7 +31,7 @@ public class QCommission extends EntityPathBase<Commission> {
     //inherited
     public final NumberPath<Long> id = _super.id;
 
-    public final SetPath<SalesReceipt, QSalesReceipt> paymentInfos = this.<SalesReceipt, QSalesReceipt>createSet("paymentInfos", SalesReceipt.class, QSalesReceipt.class, PathInits.DIRECT2);
+    public final SetPath<SalesReceipt, QSalesReceipt> paymentInfos = this.<SalesReceipt, QSalesReceipt>createSet("paymentAttachments", SalesReceipt.class, QSalesReceipt.class, PathInits.DIRECT2);
 
     //inherited
     public final NumberPath<Integer> salary = _super.salary;

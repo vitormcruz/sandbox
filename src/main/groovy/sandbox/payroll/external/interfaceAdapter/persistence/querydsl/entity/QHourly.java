@@ -31,7 +31,7 @@ public class QHourly extends EntityPathBase<Hourly> {
     //inherited
     public final NumberPath<Long> id = _super.id;
 
-    public final SetPath<TimeCard, QTimeCard> paymentInfos = this.<TimeCard, QTimeCard>createSet("paymentInfos", TimeCard.class, QTimeCard.class, PathInits.DIRECT2);
+    public final SetPath<TimeCard, QTimeCard> paymentInfos = this.<TimeCard, QTimeCard>createSet("paymentAttachments", TimeCard.class, QTimeCard.class, PathInits.DIRECT2);
 
     public QHourly(String variable) {
         super(Hourly.class, forVariable(variable));

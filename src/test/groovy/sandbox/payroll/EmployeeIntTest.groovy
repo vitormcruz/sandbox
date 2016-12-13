@@ -93,7 +93,7 @@ class EmployeeIntTest implements IntegrationTestBase{
         model.save()
         def employeeChanged = employeeRepository.get(employee5.id)
         assert validationObserver.successful()
-        assert employeeChanged.paymentType.getPaymentInfos().collect{ it.getDate().toString() + "_" + it.getHours()} ==
+        assert employeeChanged.paymentType.getPaymentAttachments().collect{ it.getDate().toString() + "_" + it.getHours()} ==
                [expectedDate.toString() + "_" + 6]
     }
 

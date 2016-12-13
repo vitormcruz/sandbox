@@ -4,5 +4,5 @@ interface PaymentType {
 
     void postPaymentInfo(PaymentAttachment paymentInfo)
 
-    Set<PaymentAttachment> getPaymentInfos()
+    Set<PaymentAttachment> getPaymentAttachments()
 }

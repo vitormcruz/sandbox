@@ -29,7 +29,7 @@
         <joined-subclass name="sandbox.payroll.payment.Hourly">
             <key column="id"/>
             <property name="hourRate" type="java.lang.Integer" access="field"/>
-            <set name="paymentInfos" access="field" cascade="all,delete-orphan" inverse="false">
+            <set name="paymentAttachments" access="field" cascade="all,delete-orphan" inverse="false">
                 <key column="payment_id" not-null="true"/>
                 <one-to-many class="sandbox.payroll.payment.TimeCard" />
             </set>
@@ -39,7 +39,7 @@
             <key column="id"/>
             <property name="commissionRate" type="java.lang.Integer" access="field"/>
 
-            <set name="paymentInfos" access="field" cascade="all,delete-orphan" inverse="false">
+            <set name="paymentAttachments" access="field" cascade="all,delete-orphan" inverse="false">
                 <key column="paymentTypeId" not-null="true"/>
                 <one-to-many class="sandbox.payroll.payment.SalesReceipt" />
             </set>
