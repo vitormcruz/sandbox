@@ -1,6 +1,6 @@
 package sandbox.payroll
 
-import sandbox.payroll.payment.PaymentType
+import sandbox.payroll.payment.type.PaymentType
 import sandbox.validationNotification.ApplicationValidationNotifier
 import sandbox.validationNotification.imp.RequiredValidation
 

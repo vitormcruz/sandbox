@@ -6,8 +6,8 @@ import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.core.types.dsl.PathInits;
 import com.querydsl.core.types.dsl.SetPath;
-import sandbox.payroll.payment.Commission;
-import sandbox.payroll.payment.SalesReceipt;
+import sandbox.payroll.payment.attachment.SalesReceipt;
+import sandbox.payroll.payment.type.Commission;
 
 import javax.annotation.Generated;
 

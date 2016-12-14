@@ -6,10 +6,10 @@ import org.junit.Before
 import org.junit.Test
 import sandbox.concurrency.ModelSnapshot
 import sandbox.payroll.external.interfaceAdapter.persistence.querydsl.entity.QEmployee
-import sandbox.payroll.payment.Commission
-import sandbox.payroll.payment.Hourly
-import sandbox.payroll.payment.Monthly
-import sandbox.payroll.payment.TimeCard
+import sandbox.payroll.payment.attachment.TimeCard
+import sandbox.payroll.payment.type.Commission
+import sandbox.payroll.payment.type.Hourly
+import sandbox.payroll.payment.type.Monthly
 
 class EmployeeIntTest implements IntegrationTestBase{
 
@@ -88,7 +88,7 @@ class EmployeeIntTest implements IntegrationTestBase{
     def void "Post a time card"(){
         def expectedDate = new DateTime()
         def expectedTimeCard = new TimeCard(expectedDate, 6)
-        employee5.paymentType.postPaymentInfo(expectedTimeCard)
+        employee5.paymentType.postPaymentAttachment(expectedTimeCard)
         employeeRepository.update(employee5)
         model.save()
         def employeeChanged = employeeRepository.get(employee5.id)

@@ -1,4 +1,7 @@
-package sandbox.payroll.payment
+package sandbox.payroll.payment.type
+
+import sandbox.payroll.payment.attachment.PaymentAttachment
+import sandbox.payroll.payment.attachment.TimeCard
 
 class Hourly extends GenericPaymentType{
 
@@ -16,7 +19,7 @@ class Hourly extends GenericPaymentType{
     }
 
     @Override
-    void postPaymentInfo(PaymentAttachment paymentInfo) {
+    void postPaymentAttachment(PaymentAttachment paymentInfo) {
         if(!paymentInfo instanceof TimeCard){
             notifier.issueError("employee.payment.hourly.time.card.payment.info.only")
         }

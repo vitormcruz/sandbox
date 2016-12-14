@@ -1,5 +1,6 @@
-package sandbox.payroll.payment
+package sandbox.payroll.payment.type
 
+import sandbox.payroll.payment.attachment.PaymentAttachment
 import sandbox.validationNotification.ApplicationValidationNotifier
 
 abstract class GenericPaymentType implements PaymentType{

@@ -14,45 +14,45 @@
         <property name="address" type="java.lang.String" access="field"/>
         <property name="email" type="java.lang.String" access="field"/>
 
-        <one-to-one name="paymentType" class="sandbox.payroll.payment.GenericPaymentType" constrained="false"
+        <one-to-one name="paymentType" class="sandbox.payroll.payment.type.GenericPaymentType" constrained="false"
                     lazy="false"/>
     </class>
 
-    <class name="sandbox.payroll.payment.GenericPaymentType" >
+    <class name="sandbox.payroll.payment.type.GenericPaymentType" >
         <id name="id" access="field"/>
 
-        <joined-subclass name="sandbox.payroll.payment.Monthly">
+        <joined-subclass name="sandbox.payroll.payment.type.Monthly">
             <key column="id"/>
             <property name="salary" type="java.lang.Integer" access="field"/>
         </joined-subclass>
 
-        <joined-subclass name="sandbox.payroll.payment.Hourly">
+        <joined-subclass name="sandbox.payroll.payment.type.Hourly">
             <key column="id"/>
             <property name="hourRate" type="java.lang.Integer" access="field"/>
             <set name="paymentAttachments" access="field" cascade="all,delete-orphan" inverse="false">
                 <key column="payment_id" not-null="true"/>
-                <one-to-many class="sandbox.payroll.payment.TimeCard" />
+                <one-to-many class="sandbox.payroll.payment.attachment.TimeCard" />
             </set>
         </joined-subclass>
 
-        <joined-subclass name="sandbox.payroll.payment.Commission">
+        <joined-subclass name="sandbox.payroll.payment.type.Commission">
             <key column="id"/>
             <property name="commissionRate" type="java.lang.Integer" access="field"/>
 
             <set name="paymentAttachments" access="field" cascade="all,delete-orphan" inverse="false">
                 <key column="paymentTypeId" not-null="true"/>
-                <one-to-many class="sandbox.payroll.payment.SalesReceipt" />
+                <one-to-many class="sandbox.payroll.payment.attachment.SalesReceipt" />
             </set>
         </joined-subclass>
     </class>
 
-    <class name="sandbox.payroll.payment.SalesReceipt">
+    <class name="sandbox.payroll.payment.attachment.SalesReceipt">
         <id name="id" access="field">
             <generator class="native"/>
         </id>
     </class>
 
-    <class name="sandbox.payroll.payment.TimeCard">
+    <class name="sandbox.payroll.payment.attachment.TimeCard">
         <id name="id" access="field">
             <generator class="native"/>
         </id>

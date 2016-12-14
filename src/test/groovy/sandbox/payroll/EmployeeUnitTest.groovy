@@ -2,7 +2,7 @@ package sandbox.payroll
 
 import org.junit.Before
 import org.junit.Test
-import sandbox.payroll.payment.PaymentType
+import sandbox.payroll.payment.type.PaymentType
 import sandbox.validationNotification.ValidationNotificationTestSetup
 import sandbox.validationNotification.builder.imp.GenericBuilder
 

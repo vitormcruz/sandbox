@@ -5,7 +5,7 @@ import com.querydsl.core.types.PathMetadata;
 import com.querydsl.core.types.dsl.DateTimePath;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.NumberPath;
-import sandbox.payroll.payment.TimeCard;
+import sandbox.payroll.payment.attachment.TimeCard;
 
 import javax.annotation.Generated;
 

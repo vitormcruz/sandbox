@@ -1,6 +1,6 @@
 package sandbox.payroll.external.config
 
-import sandbox.payroll.payment.Monthly
+import sandbox.payroll.payment.type.Monthly
 import sandbox.simpleConverter.SimpleObjectMapping
 import sandbox.smartfactory.SmartFactory
 import sandbox.validationNotification.builder.imp.GenericBuilder

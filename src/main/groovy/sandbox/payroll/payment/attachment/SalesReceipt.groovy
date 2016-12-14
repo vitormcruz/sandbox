@@ -1,4 +1,4 @@
-package sandbox.payroll.payment
+package sandbox.payroll.payment.attachment
 
 class SalesReceipt {
 

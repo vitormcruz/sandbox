@@ -4,7 +4,7 @@ import com.querydsl.core.types.Path;
 import com.querydsl.core.types.PathMetadata;
 import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.NumberPath;
-import sandbox.payroll.payment.SalesReceipt;
+import sandbox.payroll.payment.attachment.SalesReceipt;
 
 import javax.annotation.Generated;
 
