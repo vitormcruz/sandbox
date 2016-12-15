@@ -1,5 +1,6 @@
 package sandbox.payroll
 
+import sandbox.payroll.payment.attachment.PaymentAttachment
 import sandbox.payroll.payment.type.PaymentType
 import sandbox.validationNotification.ApplicationValidationNotifier
 import sandbox.validationNotification.imp.RequiredValidation
@@ -42,4 +43,8 @@ class Employee {
     public void setPaymentType(PaymentType paymentType) {
         requiredPaymentTypeValidation.set(paymentType, { this.@paymentType = paymentType })
     }
-}
+
+    void postPaymentAttachment(PaymentAttachment paymentAttachment){
+        paymentType.postPaymentAttachment(paymentAttachment)
+    }
+    }

@@ -17,7 +17,7 @@ class Monthly extends GenericPaymentType {
     }
 
     @Override
-    void postPaymentAttachment(PaymentAttachment paymentInfo) {
+    void postPaymentAttachment(PaymentAttachment paymentAttachment) {
         throw new UnsupportedOperationException("Monthly payment does not have payment attachments")
     }
 }

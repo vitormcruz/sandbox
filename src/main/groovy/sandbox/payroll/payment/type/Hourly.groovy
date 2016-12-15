@@ -19,11 +19,11 @@ class Hourly extends GenericPaymentType{
     }
 
     @Override
-    void postPaymentAttachment(PaymentAttachment paymentInfo) {
-        if(!paymentInfo instanceof TimeCard){
+    void postPaymentAttachment(PaymentAttachment paymentAttachment) {
+        if(!paymentAttachment instanceof TimeCard){
             notifier.issueError("employee.payment.hourly.time.card.payment.info.only")
         }
 
-        this.@paymentAttachments.add(paymentInfo)
+        this.@paymentAttachments.add(paymentAttachment)
     }
 }

@@ -21,11 +21,11 @@ class Commission extends Monthly{
     }
 
     @Override
-    void postPaymentAttachment(PaymentAttachment paymentInfo) {
-        if(!paymentInfo instanceof SalesReceipt){
+    void postPaymentAttachment(PaymentAttachment paymentAttachment) {
+        if(!paymentAttachment instanceof SalesReceipt){
             notifier.issueError("employee.payment.commission.sales.receipt.payment.info.only")
         }
 
-        this.@paymentAttachments.add(paymentInfo)
+        this.@paymentAttachments.add(paymentAttachment)
     }
 }
