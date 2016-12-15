@@ -4,7 +4,7 @@ import sandbox.payroll.payment.attachment.PaymentAttachment
 
 class Monthly extends GenericPaymentType {
 
-    private Integer salary;
+    private Integer salary
 
     protected Monthly() {}
 
@@ -18,6 +18,6 @@ class Monthly extends GenericPaymentType {
 
     @Override
     void postPaymentAttachment(PaymentAttachment paymentInfo) {
-        notifier.issueError("employee.payment.monthly.do.not.have.additional.payment.info")
+        throw new UnsupportedOperationException("Monthly payment does not have payment attachments")
     }
 }

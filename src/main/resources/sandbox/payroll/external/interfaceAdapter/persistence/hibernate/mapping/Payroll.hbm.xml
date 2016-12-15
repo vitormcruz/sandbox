@@ -50,6 +50,9 @@
         <id name="id" access="field">
             <generator class="native"/>
         </id>
+
+        <property name="date" type="org.jadira.usertype.dateandtime.joda.PersistentDateTime" access="field"/>
+        <property name="amount" type="java.lang.Integer" access="field"/>
     </class>
 
     <class name="sandbox.payroll.payment.attachment.TimeCard">

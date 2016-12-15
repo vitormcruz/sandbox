@@ -26,6 +26,6 @@ class Commission extends Monthly{
             notifier.issueError("employee.payment.commission.sales.receipt.payment.info.only")
         }
 
-        paymentAttachments.add(paymentInfo)
+        this.@paymentAttachments.add(paymentInfo)
     }
 }

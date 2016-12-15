@@ -6,10 +6,13 @@ import org.junit.Before
 import org.junit.Test
 import sandbox.concurrency.ModelSnapshot
 import sandbox.payroll.external.interfaceAdapter.persistence.querydsl.entity.QEmployee
+import sandbox.payroll.payment.attachment.SalesReceipt
 import sandbox.payroll.payment.attachment.TimeCard
 import sandbox.payroll.payment.type.Commission
 import sandbox.payroll.payment.type.Hourly
 import sandbox.payroll.payment.type.Monthly
+
+import static groovy.test.GroovyAssert.shouldFail
 
 class EmployeeIntTest implements IntegrationTestBase{
 
@@ -97,7 +100,26 @@ class EmployeeIntTest implements IntegrationTestBase{
                [expectedDate.toString() + "_" + 6]
     }
 
-    //TODO post a commission
+    @Test
+    def void "Post a sales receipt"(){
+        def expectedDate = new DateTime()
+        def expectedSalesReceipt = new SalesReceipt(expectedDate, 200)
+        employee2.paymentType.postPaymentAttachment(expectedSalesReceipt)
+        employeeRepository.update(employee2)
+        model.save()
+        def employeeChanged = employeeRepository.get(employee2.id)
+        assert validationObserver.successful()
+        assert employeeChanged.paymentType.getPaymentAttachments().collect{ it.getDate().toString() + "_" + it.getAmount()} ==
+               [expectedDate.toString() + "_" + 200]
+    }
+
+    @Test
+    def void "Post attachment to monthly paid employee"(){
+        def e = shouldFail UnsupportedOperationException,
+                           {employee1.paymentType.postPaymentAttachment(new SalesReceipt(new DateTime(), 200))}
+
+        assert e.getMessage() == "Monthly payment does not have payment attachments"
+    }
 
     private void assertMonthlyPaidEmployeeIs(Employee retrievedEmployee, String expectedEmployeeName,
                                              String expectedEmployeeAddress,
