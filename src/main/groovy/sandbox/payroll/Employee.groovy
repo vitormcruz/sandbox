@@ -5,11 +5,9 @@ import sandbox.payroll.payment.type.PaymentType
 import sandbox.validationNotification.ApplicationValidationNotifier
 import sandbox.validationNotification.imp.RequiredValidation
 
-class Employee {
+class Employee implements IdentifiableTrait{
 
     private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
-
-    private Long id
 
     def String name
     private RequiredValidation requiredNameValidation = new RequiredValidation("employee.name", "payroll.employee.name.mandatory")
@@ -23,10 +21,6 @@ class Employee {
     def PaymentType paymentType
     private RequiredValidation requiredPaymentTypeValidation = new RequiredValidation("employee.payment", "payroll.employee.payment.type.mandatory")
 
-    Long getId() {
-        return id
-    }
-
     public void setName(String name) {
         requiredNameValidation.set(name, { this.@name = name })
     }
@@ -39,7 +33,6 @@ class Employee {
         requiredEmailValidation.set(email, { this.@email = email })
     }
 
-
     public void setPaymentType(PaymentType paymentType) {
         requiredPaymentTypeValidation.set(paymentType, { this.@paymentType = paymentType })
     }
@@ -47,4 +40,4 @@ class Employee {
     void postPaymentAttachment(PaymentAttachment paymentAttachment){
         paymentType.postPaymentAttachment(paymentAttachment)
     }
-    }
+}

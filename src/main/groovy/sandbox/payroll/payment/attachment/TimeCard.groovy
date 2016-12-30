@@ -1,14 +1,14 @@
 package sandbox.payroll.payment.attachment
 
 import org.joda.time.DateTime
+import sandbox.payroll.IdentifiableTrait
 import sandbox.validationNotification.ApplicationValidationNotifier
 import sandbox.validationNotification.builder.BuilderAwareness
 
-class TimeCard implements PaymentAttachment, BuilderAwareness{
+class TimeCard implements PaymentAttachment, BuilderAwareness, IdentifiableTrait{
 
     private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
 
-    private Long id
     private DateTime date
     private Integer hours
 
@@ -26,10 +26,6 @@ class TimeCard implements PaymentAttachment, BuilderAwareness{
     public void validateRequiredFields() {
         if (date == null) notifier.issueError("payroll.timecard.date.required")
         if (hours == null) notifier.issueError("payroll.timecard.hours.required")
-    }
-
-    Long getId() {
-        return id
     }
 
     DateTime getDate() {

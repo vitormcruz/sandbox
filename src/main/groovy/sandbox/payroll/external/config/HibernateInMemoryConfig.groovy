@@ -9,6 +9,7 @@ import sandbox.concurrency.ModelSnapshot
 import sandbox.concurrency.dbBased.hibernate.HibernateAtomicBlock
 import sandbox.payroll.EmployeeRepository
 import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.HibernatePersistentModelSnapshot
+import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.entity.EntitiesHibernateGenericAdaptation
 import sandbox.payroll.external.interfaceAdapter.persistence.hibernate.repository.HibernateEmployeeRepository
 import sandbox.smartfactory.SmartFactory
 
@@ -20,7 +21,9 @@ class HibernateInMemoryConfig implements Config{
     public void  configure() {
         //TODO using sandbox.** causes an error that must be fixed at smart factory
         def globalConfiguration = smartFactory.configurationFor("**")
-        globalConfiguration.put(SessionFactory, getConfiguredSessionFactory())
+        def sessionFactory = getConfiguredSessionFactory()
+        globalConfiguration.put(SessionFactory, sessionFactory)
+        EntitiesHibernateGenericAdaptation.adaptIdentifiableEntities(sessionFactory)
         def transactionFactory = getTransactionFactory()
         globalConfiguration.put(PlatformTransactionManager, transactionFactory)
         globalConfiguration.put(TransactionTemplate, new TransactionTemplate(transactionFactory))
@@ -32,7 +35,6 @@ class HibernateInMemoryConfig implements Config{
             modelSnapshot.add(employeeRepository)
             return modelSnapshot
         }())
-
 
     }
 

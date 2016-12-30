@@ -6,7 +6,7 @@
 <hibernate-mapping>
 
     <class name="sandbox.payroll.Employee">
-        <id name="id" access="field">
+        <id name="sandbox_payroll_IdentifiableTrait__id" type="java.lang.Long" access="field">
             <generator class="native"/>
         </id>
 
@@ -19,24 +19,24 @@
     </class>
 
     <class name="sandbox.payroll.payment.type.GenericPaymentType" >
-        <id name="id" access="field"/>
+        <id name="sandbox_payroll_IdentifiableTrait__id" type="java.lang.Long" access="field"/>
 
         <joined-subclass name="sandbox.payroll.payment.type.Monthly">
-            <key column="id"/>
+            <key column="sandbox_payroll_Identifiable__id" />
             <property name="salary" type="java.lang.Integer" access="field"/>
         </joined-subclass>
 
         <joined-subclass name="sandbox.payroll.payment.type.Hourly">
-            <key column="id"/>
+            <key column="sandbox_payroll_IdentifiableTrait__id"/>
             <property name="hourRate" type="java.lang.Integer" access="field"/>
             <set name="paymentAttachments" access="field" cascade="all,delete-orphan" inverse="false">
-                <key column="payment_id" not-null="true"/>
+                <key column="paymentTypeId" not-null="true"/>
                 <one-to-many class="sandbox.payroll.payment.attachment.TimeCard" />
             </set>
         </joined-subclass>
 
         <joined-subclass name="sandbox.payroll.payment.type.Commission">
-            <key column="id"/>
+            <key column="sandbox_payroll_IdentifiableTrait__id"/>
             <property name="commissionRate" type="java.lang.Integer" access="field"/>
 
             <set name="paymentAttachments" access="field" cascade="all,delete-orphan" inverse="false">
@@ -47,7 +47,7 @@
     </class>
 
     <class name="sandbox.payroll.payment.attachment.SalesReceipt">
-        <id name="id" access="field">
+        <id name="sandbox_payroll_IdentifiableTrait__id" type="java.lang.Long" access="field">
             <generator class="native"/>
         </id>
 
@@ -56,7 +56,7 @@
     </class>
 
     <class name="sandbox.payroll.payment.attachment.TimeCard">
-        <id name="id" access="field">
+        <id name="sandbox_payroll_IdentifiableTrait__id" type="java.lang.Long" access="field">
             <generator class="native"/>
         </id>
 
