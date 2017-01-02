@@ -1,7 +1,7 @@
 Sandbox
 =======
 
-![Build Status](https://travis-ci.org/vitormcruz/sandbox.svg?branch=master)
+![Build Status](https://travis-ci.org/vitormcruz/com.vmc.sandbox.svg?branch=master)
 
 Project in which I experiment various technologies and techniques.
 
@@ -19,8 +19,8 @@ No XML, please.
 
 Experimenting Vaadin and exploring how I could use it alongside Spring MVC.
 
-* Vaadin UI is mapped to /sandbox/*
-* Spring "/" redirects to sandbox/
+* Vaadin UI is mapped to /com.vmc.sandbox/*
+* Spring "/" redirects to com.vmc.sandbox/
 * Spring responds to /hello.do with a hello world message :)
 
 ####Validation using an uniform notification pattern

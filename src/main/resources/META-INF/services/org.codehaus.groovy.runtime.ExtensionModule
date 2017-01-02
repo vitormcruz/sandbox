@@ -1,4 +1,0 @@
-moduleName=sandbox-module
-moduleVersion=1.0
-extensionClasses=sandbox.smartfactory.ClassExtensions, sandbox.simpleConverter.ObjectExtensions
-staticExtensionClasses=
