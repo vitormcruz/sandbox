@@ -1,7 +1,8 @@
 Sandbox
 =======
 
-![Build Status](https://travis-ci.org/vitormcruz/com.vmc.sandbox.svg?branch=master)
+![Build Status](https://travis-ci.org/vitormcruz/sandbox.svg?branch=master)
+                
 
 Project in which I experiment various technologies and techniques.
 
