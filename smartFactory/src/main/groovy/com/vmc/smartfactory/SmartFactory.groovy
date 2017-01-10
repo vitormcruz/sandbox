@@ -1,4 +1,8 @@
 package com.vmc.smartfactory
+
+//TODO shouldn't use sun, but I could'nt find better API for glob
+import sun.nio.fs.Globs
+
 /**
  */
 class SmartFactory {
@@ -11,44 +15,29 @@ class SmartFactory {
     }
 
     def <T> T instanceForCallerOf(Class caller, Class<T> aClass) {
-        def configuration = configurationFor(caller.getName())
-        if(!configuration || !configuration.get(aClass)){
+        def configuration = getConfigurationThatMatches(caller.getName())
+        if(configuration == null){
             return null
         }
 
         return configuration.get(aClass)
     }
 
-    def Configuration configurationFor(String context) {
-        def configuration = getConfigurationThatMatches(context)
+    def Configuration configurationFor(String glob) {
+        def regexGlob = Globs.toUnixRegexPattern(glob)
+        def configuration = configurations.get(regexGlob)
         if(configuration == null){
             configuration = new Configuration()
-            configurations.put(context, configuration)
+            configurations.put(regexGlob, configuration)
         }
 
         return configuration
     }
 
-    private Configuration getConfigurationThatMatches(String context) {
+    def Configuration getConfigurationThatMatches(String context) {
+        configurations.com
         return configurations.entrySet().find {
-            return new WildcardMatcher(it.key).match(context)
+            return context ==~ it.key
         }?.value
-    }
-
-    static public class WildcardMatcher {
-
-        private String matcherString
-
-        WildcardMatcher(String matcherString) {
-            if(matcherString == "**"){
-                this.matcherString = ".*"
-            }else{
-                this.matcherString = matcherString.replace(".*", "\\.?[\\w]*").replace("\\.?[\\w]**", "\\.?[\\w\\.]*")
-            }
-        }
-
-        def Boolean match(String aString){
-            return aString ==~ matcherString
-        }
     }
 }
