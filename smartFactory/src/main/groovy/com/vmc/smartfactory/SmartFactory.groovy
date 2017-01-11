@@ -16,11 +16,7 @@ class SmartFactory {
 
     def <T> T instanceForCallerOf(Class caller, Class<T> aClass) {
         def configuration = getConfigurationThatMatches(caller.getName())
-        if(configuration == null){
-            return null
-        }
-
-        return configuration.get(aClass)
+        return configuration?.get(aClass)?.call()
     }
 
     def Configuration configurationFor(String glob) {
@@ -35,9 +31,6 @@ class SmartFactory {
     }
 
     def Configuration getConfigurationThatMatches(String context) {
-        configurations.com
-        return configurations.entrySet().find {
-            return context ==~ it.key
-        }?.value
+        return configurations.entrySet().find { context ==~ it.key }?.value
     }
 }
