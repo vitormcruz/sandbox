@@ -1,4 +1,0 @@
-moduleName=smartfactory-module
-moduleVersion=1.0
-extensionClasses=com.vmc.smartfactory.ClassExtensions
-staticExtensionClasses=

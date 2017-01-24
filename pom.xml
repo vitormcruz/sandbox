@@ -10,8 +10,7 @@
     <name>SandboxParent</name>
 
     <modules>
-        <module>sandbox</module>
-        <module>smartFactory</module>
+        <module>sandbox-app</module>
     </modules>
 
 </project>
