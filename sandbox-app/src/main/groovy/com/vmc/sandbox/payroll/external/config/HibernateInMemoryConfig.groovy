@@ -20,7 +20,6 @@ class HibernateInMemoryConfig implements Config{
     //TODO change, don't know how... yet.
     @Override
     public void  configure() {
-        def globalConfiguration = smartFactory.configurationFor("**")
         def payRollConfiguration = smartFactory.configurationFor("com.vmc.sandbox.payroll.**")
         def concurrencyConfiguration = smartFactory.configurationFor("com.vmc.sandbox.concurrency.**")
         def sessionFactory = getConfiguredSessionFactory()

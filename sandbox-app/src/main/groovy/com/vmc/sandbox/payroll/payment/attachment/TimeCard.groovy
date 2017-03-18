@@ -8,9 +8,7 @@ class TimeCard implements PaymentAttachment, BuilderAwareness{
 
     private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
 
-    //TODO remover
-    def Long id
-
+    private id
     private DateTime date
     private Integer hours
 
@@ -28,6 +26,10 @@ class TimeCard implements PaymentAttachment, BuilderAwareness{
     public void validateRequiredFields() {
         if (date == null) notifier.issueError("payroll.timecard.date.required")
         if (hours == null) notifier.issueError("payroll.timecard.hours.required")
+    }
+
+    def getId() {
+        return id
     }
 
     DateTime getDate() {

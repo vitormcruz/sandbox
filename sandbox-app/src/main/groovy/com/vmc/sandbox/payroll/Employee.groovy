@@ -7,10 +7,9 @@ import com.vmc.sandbox.validationNotification.imp.RequiredValidation
 
 class Employee {
 
-    //TODO remover
-    def Long id
-
     private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
+
+    private id
 
     def String name
     private RequiredValidation requiredNameValidation = new RequiredValidation("employee.name", "payroll.employee.name.mandatory")
@@ -23,6 +22,10 @@ class Employee {
 
     def PaymentType paymentType
     private RequiredValidation requiredPaymentTypeValidation = new RequiredValidation("employee.payment", "payroll.employee.payment.type.mandatory")
+
+    def getId() {
+        return id
+    }
 
     public void setName(String name) {
         requiredNameValidation.set(name, { this.@name = name })

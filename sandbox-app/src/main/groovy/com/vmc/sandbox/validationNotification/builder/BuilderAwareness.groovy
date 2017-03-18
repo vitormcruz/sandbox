@@ -1,12 +1,12 @@
 package com.vmc.sandbox.validationNotification.builder
 
 /**
- * Provides functionality that give the objects awareness of it's possible (new still can be used) build process and
- * interfere with it.
+ * Provides functionality that give the objects awareness of it's possible build process and interfere with it
+ * (new still can be used).
  */
 trait BuilderAwareness {
 
-    protected Boolean builtWithValidBuilder = true
+    private Boolean builtWithValidBuilder = true
 
     /**
      * Tells if a construction is invalid for the builder. Useful to provide constructor used in reflection magic but

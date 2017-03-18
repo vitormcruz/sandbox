@@ -8,8 +8,7 @@ class SalesReceipt implements PaymentAttachment, BuilderAwareness{
 
     private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
 
-    //TODO remover
-    def Long id
+    private id
     private DateTime date
     private Integer amount
 
@@ -27,6 +26,10 @@ class SalesReceipt implements PaymentAttachment, BuilderAwareness{
     public void validateRequiredFields() {
         if (date == null) notifier.issueError("payroll.salesreceipt.date.required")
         if (amount == null) notifier.issueError("payroll.salesreceipt.amount.required")
+    }
+
+    def getId() {
+        return id
     }
 
     DateTime getDate() {
