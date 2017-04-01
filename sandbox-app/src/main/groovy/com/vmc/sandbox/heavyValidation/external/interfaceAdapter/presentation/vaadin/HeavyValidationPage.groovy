@@ -1,18 +1,17 @@
-package com.vmc.sandbox.heavyValidation
+package com.vmc.sandbox.heavyValidation.external.interfaceAdapter.presentation.vaadin
+
 import com.vaadin.data.Property
 import com.vaadin.data.util.ObjectProperty
 import com.vaadin.ui.Button
 import com.vaadin.ui.CssLayout
 import com.vaadin.ui.ProgressBar
-import com.vmc.sandbox.allapps.external.config.SandboxApplication
+import com.vmc.sandbox.heavyValidation.AsyncHeavyValidation
 
-/**
- */
 class HeavyValidationPage extends CssLayout{
     private ProgressBar progressBar
     private Property<Float> progressBarDataSource
     private Button button
-    private AsyncHeavyValidation asyncHeavyValidation = SandboxApplication.asyncHeavyValidation
+    private AsyncHeavyValidation asyncHeavyValidation = AsyncHeavyValidation.smartNewFor(HeavyValidationPage)
 
     HeavyValidationPage() {
         button = new Button("Validate")
@@ -29,8 +28,6 @@ class HeavyValidationPage extends CssLayout{
 
 
             asyncHeavyValidation.doValidation([ notifyProgress: { progress ->
-
-                //            new HeavyValidationClass().validate()
                 UI.access({
                     progressBarDataSource.setValue(progress as Float)
                 })
@@ -48,7 +45,6 @@ class HeavyValidationPage extends CssLayout{
 
             progressBarDataSource.setValue(0 as Float)
             button.setEnabled(true)
-
         })
 
     }

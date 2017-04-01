@@ -1,19 +1,18 @@
-package com.vmc.sandbox.heavyValidation
+package com.vmc.sandbox.heavyValidation.external.interfaceAdapter.messaging.jms
 
+import com.vmc.sandbox.allapps.external.interfaceAdapter.jms.MessageReceiver
+import com.vmc.sandbox.heavyValidation.AsyncHeavyValidation
+import com.vmc.sandbox.heavyValidation.external.config.HeavyValidationApplication
 import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.core.MessageCreator
-import com.vmc.sandbox.allapps.external.config.SandboxApplication
-import com.vmc.sandbox.allapps.external.interfaceAdapter.jms.MessageReceiver
 
 import javax.jms.JMSException
 import javax.jms.Message
 import javax.jms.Session
 
-/**
- */
 class JMSAsyncHeavyValidation implements AsyncHeavyValidation {
 
-    private JmsTemplate jmsTemplate = SandboxApplication.jmsTemplate
+    private JmsTemplate jmsTemplate = JmsTemplate.smartNewFor(JMSAsyncHeavyValidation)
 
     @Override
     def doValidation(AsyncHeavyValidation.NotifyProgress notifyFunction) {
@@ -26,7 +25,7 @@ class JMSAsyncHeavyValidation implements AsyncHeavyValidation {
             }
         };
         System.out.println("Sending a new message.");
-        jmsTemplate.send(SandboxApplication.MAIL_BOX, messageCreator);
+        jmsTemplate.send(HeavyValidationApplication.MAIL_BOX, messageCreator);
     }
 
 }

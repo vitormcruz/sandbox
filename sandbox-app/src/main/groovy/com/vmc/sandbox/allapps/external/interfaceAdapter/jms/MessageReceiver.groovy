@@ -1,6 +1,5 @@
 package com.vmc.sandbox.allapps.external.interfaceAdapter.jms
-/**
- */
+
 class MessageReceiver {
 
     /**

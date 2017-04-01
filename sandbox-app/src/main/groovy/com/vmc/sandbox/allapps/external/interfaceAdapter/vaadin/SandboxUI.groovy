@@ -11,7 +11,7 @@ import com.vaadin.server.Sizeable
 import com.vaadin.server.VaadinRequest
 import com.vaadin.ui.*
 import com.vaadin.ui.AbstractTextField.TextChangeEventMode
-import com.vmc.sandbox.heavyValidation.HeavyValidationPage
+import com.vmc.sandbox.heavyValidation.external.interfaceAdapter.presentation.vaadin.HeavyValidationPage
 import com.vmc.sandbox.payroll.external.interfaceAdapter.presentation.vaadin.PayrollPage
 /**
  * Copied from Vaadin tutorial to have a working example of it on this project. I will change its contents over time.
@@ -49,7 +49,7 @@ public class SandboxUI extends UI {
      * up your user interface here.
      */
     protected void init(VaadinRequest request) {
-//        this.setPollInterval(200)
+        this.setPollInterval(200)
         initLayout();
         initContactList();
         initEditor();

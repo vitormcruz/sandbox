@@ -1,33 +1,44 @@
-package com.vmc.sandbox.allapps.external.config
+package com.vmc.sandbox.heavyValidation.external.config
 
 import com.vaadin.server.VaadinServlet
-import com.vmc.sandbox.payroll.external.config.HibernateInMemoryConfig
+import com.vmc.sandbox.allapps.external.interfaceAdapter.jms.MessageReceiver
+import com.vmc.sandbox.heavyValidation.AsyncHeavyValidation
+import com.vmc.sandbox.heavyValidation.external.interfaceAdapter.messaging.jms.JMSAsyncHeavyValidation
 import com.vmc.sandbox.payroll.external.config.SpringMVCConfig
 import com.vmc.sandbox.sevletContextConfig.ContextConfigListener
 import com.vmc.sandbox.validationNotification.servlet.ValidationNotifierFilter
+import org.detangle.smartfactory.SmartFactory
 import org.hibernate.SessionFactory
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.boot.web.servlet.ServletRegistrationBean
 import org.springframework.boot.web.support.SpringBootServletInitializer
+import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
+import org.springframework.jms.core.JmsTemplate
+import org.springframework.jms.listener.SimpleMessageListenerContainer
 import org.springframework.jms.listener.adapter.MessageListenerAdapter
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
+import javax.jms.ConnectionFactory
 import javax.servlet.ServletContext
 import javax.servlet.ServletException
 import javax.servlet.http.HttpSessionEvent
 import javax.servlet.http.HttpSessionListener
 
 @Configuration
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration)
 @EnableTransactionManagement
-@ComponentScan("com.vmc.sandbox")
-class SandboxApplication extends SpringBootServletInitializer{
+@ComponentScan("com.vmc.sandbox.heavyValidation")
+class HeavyValidationApplication extends SpringBootServletInitializer{
+
+    def static receiver = new MessageReceiver()
+    public static final String MAIL_BOX = "com.vmc.sandbox.heavyValidation_message-box"
 
     /**
      * The first method, configure, is used to define this class as the configuration class of spring in a normal
@@ -37,11 +48,11 @@ class SandboxApplication extends SpringBootServletInitializer{
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        application.sources(SandboxApplication.class);
+        application.sources(HeavyValidationApplication.class);
     }
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(SandboxApplication, args);
+        SpringApplication.run(HeavyValidationApplication, args);
     }
 
     @Override
@@ -57,16 +68,15 @@ class SandboxApplication extends SpringBootServletInitializer{
     private ContextConfigListener getConfigListener() {
         def configListener = new ContextConfigListener()
         configListener.addConfig(SpringMVCConfig)
-        configListener.addConfig(HibernateInMemoryConfig)
-        configListener
+        return configListener
     }
 
     @Bean
     public ServletRegistrationBean vaadinServlet(){
-        ServletRegistrationBean registration = new ServletRegistrationBean(new VaadinServlet(), "/com.vmc.sandbox/*", "/VAADIN/*");
+        ServletRegistrationBean registration = new ServletRegistrationBean(new VaadinServlet(), "/heavyValidation/*", "/VAADIN/*");
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("UI", "com.vmc.sandbox.allapps.external.interfaceAdapter.vaadin.SandboxUI");
+        params.put("UI", "com.vmc.sandbox.heavyValidation.external.interfaceAdapter.presentation.vaadin.HeavyValidationUI");
         params.put("async-supported", "true")
         params.put("org.atmosphere.useWebSocketAndServlet3", "true")
 
@@ -84,7 +94,7 @@ class SandboxApplication extends SpringBootServletInitializer{
 
     @Bean
     public SessionFactory sessionFactory() {
-        return SessionFactory.smartNewFor(SandboxApplication)
+        return SessionFactory.smartNewFor(HeavyValidationApplication)
     }
 
     @Bean
@@ -92,5 +102,20 @@ class SandboxApplication extends SpringBootServletInitializer{
         MessageListenerAdapter messageListener = new MessageListenerAdapter(receiver);
         messageListener.setDefaultListenerMethod("receiveMessage");
         return messageListener;
+    }
+
+    @Bean
+    SimpleMessageListenerContainer container(MessageListenerAdapter messageListener,
+                                             ConnectionFactory connectionFactory,
+                                             ConfigurableApplicationContext context) {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setMessageListener(messageListener);
+        container.setConnectionFactory(connectionFactory);
+        container.setDestinationName(MAIL_BOX);
+
+        def heavyValidationConfig = SmartFactory.instance().configurationFor("com.vmc.sandbox.heavyValidation.**")
+        heavyValidationConfig.put(JmsTemplate, context.getBean(JmsTemplate.class))
+        heavyValidationConfig.put(AsyncHeavyValidation, new JMSAsyncHeavyValidation())
+        return container;
     }
 }

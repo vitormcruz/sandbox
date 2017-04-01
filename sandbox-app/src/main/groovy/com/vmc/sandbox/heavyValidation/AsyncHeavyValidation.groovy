@@ -1,7 +1,5 @@
 package com.vmc.sandbox.heavyValidation
 
-/**
- */
 interface AsyncHeavyValidation {
 
     def doValidation(NotifyProgress notifyFunction)
