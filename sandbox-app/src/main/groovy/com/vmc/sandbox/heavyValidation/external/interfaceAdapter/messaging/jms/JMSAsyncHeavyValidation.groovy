@@ -1,8 +1,8 @@
 package com.vmc.sandbox.heavyValidation.external.interfaceAdapter.messaging.jms
 
-import com.vmc.sandbox.allapps.external.interfaceAdapter.jms.MessageReceiver
 import com.vmc.sandbox.heavyValidation.AsyncHeavyValidation
 import com.vmc.sandbox.heavyValidation.external.config.HeavyValidationApplication
+import com.vmc.sandbox.heavyValidation.external.interfaceAdapter.messaging.MessageReceiver
 import org.springframework.jms.core.JmsTemplate
 import org.springframework.jms.core.MessageCreator
 

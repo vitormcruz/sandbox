@@ -1,15 +1,15 @@
 package com.vmc.sandbox.payroll.external.interfaceAdapter.presentation.vaadin
+
 import com.vaadin.ui.AbsoluteLayout
 import com.vaadin.ui.Button
-import com.vmc.sandbox.payroll.Employee
+import com.vaadin.ui.Notification
 
 class PayrollPage extends AbsoluteLayout {
 
     PayrollPage() {
-        def employee = new Employee(name: "Vitor", address: "rua 1", email: "bla@bla.com")
-        this.addComponent(employee.asVaadinComponent())
         def button = new Button("Save")
-        button.addClickListener({employee.teste()})
+        button.addClickListener({Notification.show("Alert", "To be implemented",
+                                 Notification.Type.ERROR_MESSAGE)})
         this.addComponent(button)
     }
 }

@@ -1,11 +1,7 @@
-package com.vmc.sandbox.allapps.external.interfaceAdapter.jms
+package com.vmc.sandbox.heavyValidation.external.interfaceAdapter.messaging
 
 class MessageReceiver {
 
-    /**
-     * When you receive a message, print it out, then shut down the application.
-     * Finally, clean up any ActiveMQ server stuff.
-     */
     static def listerners = []
 
     public void receiveMessage(String message) {

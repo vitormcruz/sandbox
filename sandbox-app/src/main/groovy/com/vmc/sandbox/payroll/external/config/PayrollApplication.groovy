@@ -1,13 +1,12 @@
-package com.vmc.sandbox.allapps.external.config
+package com.vmc.sandbox.payroll.external.config
 
 import com.vaadin.server.VaadinServlet
-import com.vmc.sandbox.payroll.external.config.HibernateInMemoryConfig
-import com.vmc.sandbox.payroll.external.config.SpringMVCConfig
 import com.vmc.sandbox.sevletContextConfig.ContextConfigListener
 import com.vmc.sandbox.validationNotification.servlet.ValidationNotifierFilter
 import org.hibernate.SessionFactory
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.boot.web.servlet.ServletRegistrationBean
@@ -15,7 +14,6 @@ import org.springframework.boot.web.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
-import org.springframework.jms.listener.adapter.MessageListenerAdapter
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
 import javax.servlet.ServletContext
@@ -24,10 +22,10 @@ import javax.servlet.http.HttpSessionEvent
 import javax.servlet.http.HttpSessionListener
 
 @Configuration
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration)
 @EnableTransactionManagement
-@ComponentScan("com.vmc.sandbox")
-class SandboxApplication extends SpringBootServletInitializer{
+@ComponentScan("com.vmc.sandbox.payroll")
+class PayrollApplication extends SpringBootServletInitializer{
 
     /**
      * The first method, configure, is used to define this class as the configuration class of spring in a normal
@@ -37,11 +35,11 @@ class SandboxApplication extends SpringBootServletInitializer{
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        application.sources(SandboxApplication.class);
+        application.sources(PayrollApplication.class);
     }
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(SandboxApplication, args);
+        SpringApplication.run(PayrollApplication, args);
     }
 
     @Override
@@ -63,13 +61,12 @@ class SandboxApplication extends SpringBootServletInitializer{
 
     @Bean
     public ServletRegistrationBean vaadinServlet(){
-        ServletRegistrationBean registration = new ServletRegistrationBean(new VaadinServlet(), "/com.vmc.sandbox/*", "/VAADIN/*");
+        ServletRegistrationBean registration = new ServletRegistrationBean(new VaadinServlet(), "/payroll/*", "/VAADIN/*");
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("UI", "com.vmc.sandbox.allapps.external.interfaceAdapter.vaadin.SandboxUI");
+        params.put("UI", "com.vmc.sandbox.payroll.external.interfaceAdapter.presentation.vaadin.PayrollUI");
         params.put("async-supported", "true")
         params.put("org.atmosphere.useWebSocketAndServlet3", "true")
-
         registration.setInitParameters(params);
         return registration;
     }
@@ -84,13 +81,6 @@ class SandboxApplication extends SpringBootServletInitializer{
 
     @Bean
     public SessionFactory sessionFactory() {
-        return SessionFactory.smartNewFor(SandboxApplication)
-    }
-
-    @Bean
-    MessageListenerAdapter adapter() {
-        MessageListenerAdapter messageListener = new MessageListenerAdapter(receiver);
-        messageListener.setDefaultListenerMethod("receiveMessage");
-        return messageListener;
+        return SessionFactory.smartNewFor(PayrollApplication)
     }
 }

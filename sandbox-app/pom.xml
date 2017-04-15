@@ -349,5 +349,21 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>PayrollApp</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <configuration>
+                            <mainClass>com.vmc.sandbox.payroll.external.config.PayrollApplication</mainClass>
+                            <jvmArguments>-Dserver.port=7003</jvmArguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 </project>

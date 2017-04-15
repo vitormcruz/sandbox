@@ -1,7 +1,7 @@
 package com.vmc.sandbox.heavyValidation.external.config
 
 import com.vaadin.server.VaadinServlet
-import com.vmc.sandbox.allapps.external.interfaceAdapter.jms.MessageReceiver
+import com.vmc.sandbox.heavyValidation.external.interfaceAdapter.messaging.MessageReceiver
 import com.vmc.sandbox.heavyValidation.AsyncHeavyValidation
 import com.vmc.sandbox.heavyValidation.external.interfaceAdapter.messaging.jms.JMSAsyncHeavyValidation
 import com.vmc.sandbox.payroll.external.config.SpringMVCConfig

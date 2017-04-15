@@ -7,7 +7,7 @@ import com.vmc.sandbox.payroll.Employee
 import com.vmc.sandbox.payroll.EmployeeRepository
 import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
 
-@RequestMapping(value = "payroll")
+@RequestMapping(value = "api/payroll/")
 @RestController
 class EmployeeRestController implements BasicControllerOperationsTrait{
 
