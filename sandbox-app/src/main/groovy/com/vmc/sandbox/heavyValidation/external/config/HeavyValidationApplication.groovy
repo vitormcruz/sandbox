@@ -6,7 +6,7 @@ import com.vmc.sandbox.heavyValidation.AsyncHeavyValidation
 import com.vmc.sandbox.heavyValidation.external.interfaceAdapter.messaging.jms.JMSAsyncHeavyValidation
 import com.vmc.sandbox.payroll.external.config.SpringMVCConfig
 import com.vmc.sandbox.sevletContextConfig.ContextConfigListener
-import com.vmc.sandbox.validationNotification.servlet.ValidationNotifierFilter
+import com.vmc.sandbox.validationNotification.external.presentation.servlet.ValidationNotifierFilter
 import org.detangle.smartfactory.SmartFactory
 import org.hibernate.SessionFactory
 import org.springframework.boot.SpringApplication

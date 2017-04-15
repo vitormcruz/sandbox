@@ -1,4 +1,4 @@
-package com.vmc.sandbox.concurrency.dbBased.hibernate
+package com.vmc.sandbox.concurrency.external.persistence.hibernate
 
 import org.springframework.transaction.support.TransactionTemplate
 import com.vmc.sandbox.concurrency.AtomicBlock

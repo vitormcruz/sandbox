@@ -1,4 +1,4 @@
-package com.vmc.sandbox.simpleConverter
+package com.vmc.sandbox.payroll.external.interfaceAdapter.simpleConverter
 
 //TODO Tests
 class SimpleObjectMapping {

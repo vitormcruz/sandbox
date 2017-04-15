@@ -1,7 +1,7 @@
 package com.vmc.sandbox.payroll.external.config
 
 import com.vmc.sandbox.payroll.payment.type.Monthly
-import com.vmc.sandbox.simpleConverter.SimpleObjectMapping
+import com.vmc.sandbox.payroll.external.interfaceAdapter.simpleConverter.SimpleObjectMapping
 import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
 import org.detangle.smartfactory.SmartFactory
 

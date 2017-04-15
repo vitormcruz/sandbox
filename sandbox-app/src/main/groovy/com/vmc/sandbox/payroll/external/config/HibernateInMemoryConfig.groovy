@@ -2,7 +2,7 @@ package com.vmc.sandbox.payroll.external.config
 
 import com.vmc.sandbox.concurrency.AtomicBlock
 import com.vmc.sandbox.concurrency.ModelSnapshot
-import com.vmc.sandbox.concurrency.dbBased.hibernate.HibernateAtomicBlock
+import com.vmc.sandbox.concurrency.external.persistence.hibernate.HibernateAtomicBlock
 import com.vmc.sandbox.payroll.EmployeeRepository
 import com.vmc.sandbox.payroll.external.interfaceAdapter.persistence.hibernate.HibernatePersistentModelSnapshot
 import com.vmc.sandbox.payroll.external.interfaceAdapter.persistence.hibernate.entity.EntitiesHibernateGenericAdaptation

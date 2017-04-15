@@ -1,4 +1,4 @@
-package com.vmc.sandbox.validationNotification.servlet
+package com.vmc.sandbox.validationNotification.external.presentation.servlet
 
 import com.vmc.sandbox.validationNotification.ApplicationValidationNotifier
 
