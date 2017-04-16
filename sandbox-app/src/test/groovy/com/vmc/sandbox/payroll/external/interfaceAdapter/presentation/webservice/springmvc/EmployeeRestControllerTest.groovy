@@ -3,7 +3,7 @@ package com.vmc.sandbox.payroll.external.interfaceAdapter.presentation.webservic
 import com.vmc.sandbox.payroll.external.presentation.webservice.springmvc.EmployeeRestController
 import org.junit.Ignore
 import org.junit.Test
-import com.vmc.sandbox.sevletContextConfig.ContextConfigListener
+import com.vmc.sandbox.payroll.external.config.sevletContextConfig.ContextConfigListener
 import com.vmc.sandbox.validationNotification.ApplicationValidationNotifier
 
 /**

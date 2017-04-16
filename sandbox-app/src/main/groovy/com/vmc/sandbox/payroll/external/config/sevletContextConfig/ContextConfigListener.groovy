@@ -1,4 +1,4 @@
-package com.vmc.sandbox.sevletContextConfig
+package com.vmc.sandbox.payroll.external.config.sevletContextConfig
 
 import com.vmc.sandbox.payroll.external.config.Config
 

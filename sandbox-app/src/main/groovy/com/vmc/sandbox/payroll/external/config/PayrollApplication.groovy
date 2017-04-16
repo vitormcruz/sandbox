@@ -1,7 +1,7 @@
 package com.vmc.sandbox.payroll.external.config
 
 import com.vaadin.server.VaadinServlet
-import com.vmc.sandbox.sevletContextConfig.ContextConfigListener
+import com.vmc.sandbox.payroll.external.config.sevletContextConfig.ContextConfigListener
 import com.vmc.sandbox.validationNotification.external.presentation.servlet.ValidationNotifierFilter
 import org.hibernate.SessionFactory
 import org.springframework.boot.SpringApplication

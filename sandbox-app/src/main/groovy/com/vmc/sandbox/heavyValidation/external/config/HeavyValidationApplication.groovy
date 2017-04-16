@@ -4,8 +4,6 @@ import com.vaadin.server.VaadinServlet
 import com.vmc.sandbox.heavyValidation.AsyncHeavyValidation
 import com.vmc.sandbox.heavyValidation.external.messaging.MessageReceiver
 import com.vmc.sandbox.heavyValidation.external.messaging.jms.JMSAsyncHeavyValidation
-import com.vmc.sandbox.payroll.external.config.SpringMVCConfig
-import com.vmc.sandbox.sevletContextConfig.ContextConfigListener
 import org.detangle.smartfactory.SmartFactory
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
@@ -60,12 +58,6 @@ class HeavyValidationApplication extends SpringBootServletInitializer{
         servletContext.addListener([sessionCreated : {HttpSessionEvent se -> se.getSession().setMaxInactiveInterval(60*60*24)} ,
                                     sessionDestroyed : {}] as HttpSessionListener)
 
-    }
-
-    private ContextConfigListener getConfigListener() {
-        def configListener = new ContextConfigListener()
-        configListener.addConfig(SpringMVCConfig)
-        return configListener
     }
 
     @Bean
