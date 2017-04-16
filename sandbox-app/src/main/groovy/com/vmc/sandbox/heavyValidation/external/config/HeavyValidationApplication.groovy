@@ -1,19 +1,16 @@
 package com.vmc.sandbox.heavyValidation.external.config
 
 import com.vaadin.server.VaadinServlet
-import com.vmc.sandbox.heavyValidation.external.interfaceAdapter.messaging.MessageReceiver
 import com.vmc.sandbox.heavyValidation.AsyncHeavyValidation
-import com.vmc.sandbox.heavyValidation.external.interfaceAdapter.messaging.jms.JMSAsyncHeavyValidation
+import com.vmc.sandbox.heavyValidation.external.messaging.MessageReceiver
+import com.vmc.sandbox.heavyValidation.external.messaging.jms.JMSAsyncHeavyValidation
 import com.vmc.sandbox.payroll.external.config.SpringMVCConfig
 import com.vmc.sandbox.sevletContextConfig.ContextConfigListener
-import com.vmc.sandbox.validationNotification.external.presentation.servlet.ValidationNotifierFilter
 import org.detangle.smartfactory.SmartFactory
-import org.hibernate.SessionFactory
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
 import org.springframework.boot.builder.SpringApplicationBuilder
-import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.boot.web.servlet.ServletRegistrationBean
 import org.springframework.boot.web.support.SpringBootServletInitializer
 import org.springframework.context.ConfigurableApplicationContext
@@ -76,25 +73,12 @@ class HeavyValidationApplication extends SpringBootServletInitializer{
         ServletRegistrationBean registration = new ServletRegistrationBean(new VaadinServlet(), "/heavyValidation/*", "/VAADIN/*");
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("UI", "com.vmc.sandbox.heavyValidation.external.interfaceAdapter.presentation.vaadin.HeavyValidationUI");
+        params.put("UI", "com.vmc.sandbox.heavyValidation.external.presentation.vaadin.HeavyValidationUI");
         params.put("async-supported", "true")
         params.put("org.atmosphere.useWebSocketAndServlet3", "true")
 
         registration.setInitParameters(params);
         return registration;
-    }
-
-    @Bean
-    public FilterRegistrationBean filterRegistrationBean() {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setFilter(new ValidationNotifierFilter());
-        registrationBean.setOrder(0);
-        return registrationBean;
-    }
-
-    @Bean
-    public SessionFactory sessionFactory() {
-        return SessionFactory.smartNewFor(HeavyValidationApplication)
     }
 
     @Bean

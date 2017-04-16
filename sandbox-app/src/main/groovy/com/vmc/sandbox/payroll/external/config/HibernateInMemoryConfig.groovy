@@ -4,9 +4,9 @@ import com.vmc.sandbox.concurrency.AtomicBlock
 import com.vmc.sandbox.concurrency.ModelSnapshot
 import com.vmc.sandbox.concurrency.external.persistence.hibernate.HibernateAtomicBlock
 import com.vmc.sandbox.payroll.EmployeeRepository
-import com.vmc.sandbox.payroll.external.interfaceAdapter.persistence.hibernate.HibernatePersistentModelSnapshot
-import com.vmc.sandbox.payroll.external.interfaceAdapter.persistence.hibernate.entity.EntitiesHibernateGenericAdaptation
-import com.vmc.sandbox.payroll.external.interfaceAdapter.persistence.hibernate.repository.HibernateEmployeeRepository
+import com.vmc.sandbox.payroll.external.persistence.hibernate.HibernatePersistentModelSnapshot
+import com.vmc.sandbox.payroll.external.persistence.hibernate.entity.EntitiesHibernateGenericAdaptation
+import com.vmc.sandbox.payroll.external.persistence.hibernate.repository.HibernateEmployeeRepository
 import org.detangle.smartfactory.SmartFactory
 import org.hibernate.SessionFactory
 import org.springframework.orm.hibernate4.HibernateTransactionManager

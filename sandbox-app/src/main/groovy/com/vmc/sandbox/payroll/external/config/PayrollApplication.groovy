@@ -64,7 +64,7 @@ class PayrollApplication extends SpringBootServletInitializer{
         ServletRegistrationBean registration = new ServletRegistrationBean(new VaadinServlet(), "/payroll/*", "/VAADIN/*");
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("UI", "com.vmc.sandbox.payroll.external.interfaceAdapter.presentation.vaadin.PayrollUI");
+        params.put("UI", "com.vmc.sandbox.payroll.external.presentation.vaadin.PayrollUI");
         params.put("async-supported", "true")
         params.put("org.atmosphere.useWebSocketAndServlet3", "true")
         registration.setInitParameters(params);

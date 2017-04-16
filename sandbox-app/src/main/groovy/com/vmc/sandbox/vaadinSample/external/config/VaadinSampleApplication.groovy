@@ -50,7 +50,7 @@ class VaadinSampleApplication extends SpringBootServletInitializer{
         ServletRegistrationBean registration = new ServletRegistrationBean(new VaadinServlet(), "/vaadinSample/*", "/VAADIN/*");
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("UI", "com.vmc.sandbox.vaadinSample.external.interfaceAdapter.vaadin.VaadinSampleUI");
+        params.put("UI", "com.vmc.sandbox.vaadinSample.external.vaadin.VaadinSampleUI");
         registration.setInitParameters(params);
         return registration;
     }

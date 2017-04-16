@@ -2,7 +2,7 @@ package com.vmc.sandbox.payroll
 
 import com.querydsl.core.support.QueryBase
 import com.vmc.sandbox.concurrency.ModelSnapshot
-import com.vmc.sandbox.payroll.external.interfaceAdapter.persistence.querydsl.entity.QEmployee
+import com.vmc.sandbox.payroll.external.persistence.querydsl.entity.QEmployee
 import com.vmc.sandbox.payroll.payment.attachment.SalesReceipt
 import com.vmc.sandbox.payroll.payment.attachment.TimeCard
 import com.vmc.sandbox.payroll.payment.type.Commission
