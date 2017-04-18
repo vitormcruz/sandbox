@@ -24,8 +24,8 @@ class SalesReceipt implements PaymentAttachment, BuilderAwareness{
     }
 
     public void validateRequiredFields() {
-        if (date == null) issueError(this, "payroll.salesreceipt.date.required")
-        if (amount == null) issueError(this, "payroll.salesreceipt.amount.required")
+        if (date == null) issueError(this, [:], "payroll.salesreceipt.date.required")
+        if (amount == null) issueError(this, [:], "payroll.salesreceipt.amount.required")
     }
 
     def getId() {

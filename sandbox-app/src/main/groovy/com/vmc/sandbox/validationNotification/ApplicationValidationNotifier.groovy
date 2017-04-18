@@ -34,33 +34,33 @@ class ApplicationValidationNotifier {
         return observers != null
     }
 
-    static void executeNamedValidation(Object subject, String validationName, Closure validation) {
-        startValidation(subject, validationName)
+    static void executeNamedValidation(Object subject, Map context, String validationName, Closure validation) {
+        startValidation(subject, context, validationName)
         validation(this)
-        finishValidation(subject, validationName)
+        finishValidation(subject, context, validationName)
     }
 
-    static void startValidation(Object subject, String validationName) {
-        getObserversIterator().each {it.startValidation(subject, validationName)}
+    static void startValidation(Object subject, Map context, String validationName) {
+        getObserversIterator().each {it.startValidation(subject, context, validationName)}
     }
 
-    static private void finishValidation(Object subject, String validationName) {
-        getObserversIterator().each {it.finishValidation(subject, validationName)}
+    static private void finishValidation(Object subject, Map context, String validationName) {
+        getObserversIterator().each {it.finishValidation(subject, context, validationName)}
     }
 
-    static public void issueMandatoryObligation(Object subject, String mandatoryValidationName, String error) {
-        getObserversIterator().each {it.issueMandatoryObligation(subject, mandatoryValidationName, error)}
+    static public void issueMandatoryObligation(Object subject, Map context, String mandatoryValidationName, String error) {
+        getObserversIterator().each {it.issueMandatoryObligation(subject, context, mandatoryValidationName, error)}
     }
 
-    static public void issueMandatoryObligationComplied(Object subject, String mandatoryValidationName) {
-        getObserversIterator().each {it.issueMandatoryObligationComplied(subject, mandatoryValidationName)}
+    static public void issueMandatoryObligationComplied(Object subject, Map context, String mandatoryValidationName) {
+        getObserversIterator().each {it.issueMandatoryObligationComplied(subject, context, mandatoryValidationName)}
     }
 
-    static public void issueError(Object subject, String error) {
-        getObserversIterator().each {it.issueError(subject, error)}
+    static public void issueError(Object subject, Map context, String error) {
+        getObserversIterator().each {it.issueError(subject, context, error)}
     }
 
-    static public void issueError(Object subject, String instantValidationName, String error) {
+    static public void issueError(Object subject, Map context, String instantValidationName, String error) {
         startValidation(subject, instantValidationName)
         getObserversIterator().each {it.issueError(error)}
         finishValidation(subject, instantValidationName)

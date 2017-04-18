@@ -23,8 +23,8 @@ class TimeCard implements PaymentAttachment, BuilderAwareness{
     }
 
     public void validateRequiredFields() {
-        if (date == null) issueError(this, "payroll.timecard.date.required")
-        if (hours == null) issueError(this, "payroll.timecard.hours.required")
+        if (date == null) issueError(this, [:], "payroll.timecard.date.required")
+        if (hours == null) issueError(this, [:], "payroll.timecard.hours.required")
     }
 
     def getId() {

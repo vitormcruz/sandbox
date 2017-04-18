@@ -7,24 +7,26 @@ import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifi
 class RequiredValidation {
 
     private Object subject
+    private Map context
     private String attrLabel
     private String errorIfNull
     private Closure resetMandatoryObligation = {
-        issueMandatoryObligationComplied(subject, attrLabel)
+        issueMandatoryObligationComplied(subject, context, attrLabel)
         resetMandatoryObligation = {}
     }
 
-    RequiredValidation(Object subject, String attrLabel, String errorIfNull) {
+    RequiredValidation(Object subject, Map context, String attrLabel, String errorIfNull) {
         this.subject = subject
+        this.context = context
         this.attrLabel = attrLabel
         this.errorIfNull = errorIfNull
-        issueMandatoryObligation(subject, attrLabel, errorIfNull)
+        issueMandatoryObligation(subject, context, attrLabel, errorIfNull)
     }
 
     void set(Object anObject, Closure successClosure, Closure failClosure) {
         resetMandatoryObligation()
         if(anObject == null){
-            issueError(attrLabel, errorIfNull)
+            issueError(attrLabel, context, errorIfNull)
             failClosure()
         }else {
             successClosure()

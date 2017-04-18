@@ -9,16 +9,16 @@ class Employee {
     private id
 
     def String name
-    private RequiredValidation requiredNameValidation = new RequiredValidation(this, "employee.name", "payroll.employee.name.mandatory")
+    private RequiredValidation requiredNameValidation = new RequiredValidation(this, [:], "employee.name", "payroll.employee.name.mandatory")
 
     def String address
-    private RequiredValidation requiredAddressValidation = new RequiredValidation(this, "employee.address", "payroll.employee.address.mandatory")
+    private RequiredValidation requiredAddressValidation = new RequiredValidation(this, [:], "employee.address", "payroll.employee.address.mandatory")
 
     def String email
-    private RequiredValidation requiredEmailValidation = new RequiredValidation(this, "employee.email", "payroll.employee.email.mandatory")
+    private RequiredValidation requiredEmailValidation = new RequiredValidation(this, [:], "employee.email", "payroll.employee.email.mandatory")
 
     def PaymentType paymentType
-    private RequiredValidation requiredPaymentTypeValidation = new RequiredValidation(this, "employee.payment", "payroll.employee.payment.type.mandatory")
+    private RequiredValidation requiredPaymentTypeValidation = new RequiredValidation(this, [:], "employee.payment", "payroll.employee.payment.type.mandatory")
 
     def getId() {
         return id
