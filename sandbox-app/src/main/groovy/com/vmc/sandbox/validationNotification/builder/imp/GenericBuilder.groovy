@@ -64,29 +64,29 @@ class GenericBuilder implements CommonBuilder, ValidationObserver{
     }
 
     @Override
-    void startValidation(String validationName) {
+    void startValidation(Object subject, String validationName) {
         //don't care
     }
 
     @Override
-    void issueMandatoryObligation(String mandatoryValidationName, String error) {
+    void issueMandatoryObligation(Object subject, String mandatoryValidationName, String error) {
         mandatoryObligations.put(mandatoryValidationName, error)
         builderStrategy = new BuilderFailureStrategy();
     }
 
     @Override
-    void issueMandatoryObligationComplied(String mandatoryValidationName) {
+    void issueMandatoryObligationComplied(Object subject, String mandatoryValidationName) {
         mandatoryObligations.remove(mandatoryValidationName)
         if(mandatoryObligations.isEmpty()){ builderStrategy = new BuilderSuccessStrategy() }
     }
 
     @Override
-    void issueError(String error) {
+    void issueError(Object subject, String error) {
         builderStrategy = new BuilderFailureStrategy();
     }
 
     @Override
-    void finishValidation(String validationName) {
+    void finishValidation(Object subject, String validationName) {
         //don't care
     }
 

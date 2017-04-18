@@ -231,7 +231,7 @@ class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
 
         void setAttribute(attribute) {
             if(attribute == "fail"){
-                notifier.issueError("error")
+                notifier.issueError(this, "error")
             }else{
                 this.attribute = attribute
             }
@@ -244,7 +244,7 @@ class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
 
         public TestConstructorWithOneArgument(String attribute) {
             if(attribute == "fail"){
-                notifier.issueError("error")
+                notifier.issueError(this, "error")
             }else{
                 this.attribute = attribute
             }

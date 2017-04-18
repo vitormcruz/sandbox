@@ -1,10 +1,10 @@
 package com.vmc.sandbox.validationNotification
 
 interface ValidationObserver {
-    void startValidation(String validationName)
-    void issueMandatoryObligation(String mandatoryValidationName, String error)
-    void issueMandatoryObligationComplied(String mandatoryValidationName)
-    void issueError(String error)
-    void finishValidation(String validationName)
+    void startValidation(Object subject, String validationName)
+    void issueMandatoryObligation(Object subject, String mandatoryValidationName, String error)
+    void issueMandatoryObligationComplied(Object subject, String mandatoryValidationName)
+    void issueError(Object subject, String error)
+    void finishValidation(Object subject, String validationName)
     Boolean successful()
 }

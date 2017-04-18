@@ -9,17 +9,19 @@ class RequiredValidation {
 
     private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
 
+    private Object subject
     private String attrLabel
     private String errorIfNull
     private Closure resetMandatoryObligation = {
-        notifier.issueMandatoryObligationComplied(attrLabel)
+        notifier.issueMandatoryObligationComplied(subject, attrLabel)
         resetMandatoryObligation = {}
     }
 
-    RequiredValidation(String attrLabel, String errorIfNull) {
+    RequiredValidation(Object subject, String attrLabel, String errorIfNull) {
+        this.subject = subject
         this.attrLabel = attrLabel
         this.errorIfNull = errorIfNull
-        notifier.issueMandatoryObligation(attrLabel, errorIfNull)
+        notifier.issueMandatoryObligation(subject, attrLabel, errorIfNull)
     }
 
     void set(Object anObject, Closure successClosure, Closure failClosure) {

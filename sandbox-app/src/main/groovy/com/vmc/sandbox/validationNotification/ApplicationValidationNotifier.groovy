@@ -2,14 +2,14 @@ package com.vmc.sandbox.validationNotification
 
 class ApplicationValidationNotifier {
 
-    private static ThreadLocal<Collection<ValidationObserver>> observers
+    private static ThreadLocal<WeakHashMap<ValidationObserver, Void>> observers
 
     ApplicationValidationNotifier() {
     }
 
     public static createCurrentListOfListeners(){
         observers = new ThreadLocal<Collection<ValidationObserver>>()
-        observers.set([])
+        observers.set(new WeakHashMap())
     }
 
     public static destroyCurrentListOfListeners(){
@@ -19,7 +19,7 @@ class ApplicationValidationNotifier {
     }
 
     public static addObserver(ValidationObserver validationObserver){
-        observers.get().add(validationObserver)
+        observers.get().put(validationObserver, null)
     }
 
     public static removeObserver(ValidationObserver validationObserver){
@@ -34,35 +34,39 @@ class ApplicationValidationNotifier {
         return observers != null
     }
 
-    void executeNamedValidation(String validationName, Closure validation) {
-        startValidation(validationName)
+    void executeNamedValidation(Object subject, String validationName, Closure validation) {
+        startValidation(subject, validationName)
         validation(this)
-        finishValidation(validationName)
+        finishValidation(subject, validationName)
     }
 
-    private void startValidation(String validationName) {
-        observers.get().each {it.startValidation(validationName)}
+    private void startValidation(Object subject, String validationName) {
+        getObserversIterator().each {it.startValidation(subject, validationName)}
     }
 
-    private void finishValidation(String validationName) {
-        observers.get().each {it.finishValidation(validationName)}
+    private void finishValidation(Object subject, String validationName) {
+        getObserversIterator().each {it.finishValidation(subject, validationName)}
     }
 
-    public void issueMandatoryObligation(String mandatoryValidationName, String error) {
-        observers.get().each {it.issueMandatoryObligation(mandatoryValidationName, error)}
+    public void issueMandatoryObligation(Object subject, String mandatoryValidationName, String error) {
+        getObserversIterator().each {it.issueMandatoryObligation(subject, mandatoryValidationName, error)}
     }
 
-    public void issueError(String error) {
-        observers.get().each {it.issueError(error)}
+    public void issueMandatoryObligationComplied(Object subject, String mandatoryValidationName) {
+        getObserversIterator().each {it.issueMandatoryObligationComplied(subject, mandatoryValidationName)}
     }
 
-    public void issueError(String instantValidationName, String error) {
-        startValidation(instantValidationName)
-        observers.get().each {it.issueError(error)}
-        finishValidation(instantValidationName)
+    public void issueError(Object subject, String error) {
+        getObserversIterator().each {it.issueError(subject, error)}
     }
 
-    public void issueMandatoryObligationComplied(String mandatoryValidationName) {
-        observers.get().each {it.issueMandatoryObligationComplied(mandatoryValidationName)}
+    public void issueError(Object subject, String instantValidationName, String error) {
+        startValidation(subject, instantValidationName)
+        getObserversIterator().each {it.issueError(error)}
+        finishValidation(subject, instantValidationName)
+    }
+
+    public Set<ValidationObserver> getObserversIterator() {
+        observers.get().keySet()
     }
 }
