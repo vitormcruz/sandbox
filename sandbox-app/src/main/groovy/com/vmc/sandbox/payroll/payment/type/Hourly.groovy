@@ -3,6 +3,8 @@ package com.vmc.sandbox.payroll.payment.type
 import com.vmc.sandbox.payroll.payment.attachment.PaymentAttachment
 import com.vmc.sandbox.payroll.payment.attachment.TimeCard
 
+import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.issueError
+
 class Hourly extends GenericPaymentType{
 
     private Integer hourRate
@@ -21,7 +23,7 @@ class Hourly extends GenericPaymentType{
     @Override
     void postPaymentAttachment(PaymentAttachment paymentAttachment) {
         if(!paymentAttachment instanceof TimeCard){
-            notifier.issueError("employee.payment.hourly.time.card.payment.info.only")
+            issueError(this, "employee.payment.hourly.time.card.payment.info.only")
         }
 
         this.@paymentAttachments.add(paymentAttachment)

@@ -1,11 +1,11 @@
 package com.vmc.sandbox.validationNotification.builder
 
-import com.vmc.sandbox.validationNotification.ApplicationValidationNotifier
 import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
 import com.vmc.sandbox.validationNotification.builder.imp.UsedForbiddenConstructor
 import com.vmc.sandbox.validationNotification.testPreparation.ValidationNotificationTestSetup
 import org.junit.Test
 
+import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.issueError
 import static groovy.test.GroovyAssert.shouldFail
 import static org.junit.Assert.fail
 
@@ -226,12 +226,11 @@ class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
     }
 
     public static class TestEntity{
-        private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
         def attribute;
 
         void setAttribute(attribute) {
             if(attribute == "fail"){
-                notifier.issueError(this, "error")
+                issueError(this, "error")
             }else{
                 this.attribute = attribute
             }
@@ -239,12 +238,11 @@ class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
     }
 
     public static class TestConstructorWithOneArgument {
-        private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
         def String attribute;
 
         public TestConstructorWithOneArgument(String attribute) {
             if(attribute == "fail"){
-                notifier.issueError(this, "error")
+                issueError(this, "error")
             }else{
                 this.attribute = attribute
             }
@@ -252,7 +250,6 @@ class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
     }
 
     public static class TestConstructorWithNArguments {
-        private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
         def String attribute;
         def String attribute2;
         def String attribute3;

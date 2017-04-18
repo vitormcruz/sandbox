@@ -1,12 +1,12 @@
 package com.vmc.sandbox.payroll.payment.attachment
 
-import com.vmc.sandbox.validationNotification.ApplicationValidationNotifier
 import com.vmc.sandbox.validationNotification.builder.BuilderAwareness
 import org.joda.time.DateTime
 
+import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.issueError
+
 class SalesReceipt implements PaymentAttachment, BuilderAwareness{
 
-    private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
 
     private id
     private DateTime date
@@ -24,8 +24,8 @@ class SalesReceipt implements PaymentAttachment, BuilderAwareness{
     }
 
     public void validateRequiredFields() {
-        if (date == null) notifier.issueError(this, "payroll.salesreceipt.date.required")
-        if (amount == null) notifier.issueError(this, "payroll.salesreceipt.amount.required")
+        if (date == null) issueError(this, "payroll.salesreceipt.date.required")
+        if (amount == null) issueError(this, "payroll.salesreceipt.amount.required")
     }
 
     def getId() {

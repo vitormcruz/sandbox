@@ -1,12 +1,11 @@
 package com.vmc.sandbox.payroll.payment.attachment
 
-import com.vmc.sandbox.validationNotification.ApplicationValidationNotifier
 import com.vmc.sandbox.validationNotification.builder.BuilderAwareness
 import org.joda.time.DateTime
 
-class TimeCard implements PaymentAttachment, BuilderAwareness{
+import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.issueError
 
-    private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
+class TimeCard implements PaymentAttachment, BuilderAwareness{
 
     private id
     private DateTime date
@@ -24,8 +23,8 @@ class TimeCard implements PaymentAttachment, BuilderAwareness{
     }
 
     public void validateRequiredFields() {
-        if (date == null) notifier.issueError(this, "payroll.timecard.date.required")
-        if (hours == null) notifier.issueError(this, "payroll.timecard.hours.required")
+        if (date == null) issueError(this, "payroll.timecard.date.required")
+        if (hours == null) issueError(this, "payroll.timecard.hours.required")
     }
 
     def getId() {

@@ -2,12 +2,9 @@ package com.vmc.sandbox.payroll
 
 import com.vmc.sandbox.payroll.payment.attachment.PaymentAttachment
 import com.vmc.sandbox.payroll.payment.type.PaymentType
-import com.vmc.sandbox.validationNotification.ApplicationValidationNotifier
 import com.vmc.sandbox.validationNotification.imp.RequiredValidation
 
 class Employee {
-
-    private static ApplicationValidationNotifier notifier = new ApplicationValidationNotifier()
 
     private id
 
