@@ -28,7 +28,7 @@ class SimpleValidationObserver implements ValidationObserver{
     }
 
     @Override
-    void finishValidation(Object subject, Map context, String validationName) {
+    void finishValidation(Object subject, Map context) {
 
     }
 

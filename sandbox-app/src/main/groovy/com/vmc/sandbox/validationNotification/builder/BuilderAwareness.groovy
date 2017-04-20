@@ -9,8 +9,8 @@ trait BuilderAwareness {
     private Boolean builtWithValidBuilder = true
 
     /**
-     * Tells if a construction is invalid for the builder. Useful to provide constructor used in reflection magic but
-     * that should not be used in the normal program execution.
+     * Tells if a construction is invalid for the builder. Useful to provide a constructor that can be used in
+     * reflection magic but that should not be used in the normal program execution.
      */
     public Boolean wasBuiltWithValidBuilder(){
         return builtWithValidBuilder

@@ -37,36 +37,36 @@ class ApplicationValidationNotifier {
     static void executeNamedValidation(Object subject, Map context, String validationName, Closure validation) {
         startValidation(subject, context, validationName)
         validation(this)
-        finishValidation(subject, context, validationName)
+        finishValidation(subject, context)
     }
 
     static void startValidation(Object subject, Map context, String validationName) {
         getObserversIterator().each {it.startValidation(subject, context, validationName)}
     }
 
-    static private void finishValidation(Object subject, Map context, String validationName) {
-        getObserversIterator().each {it.finishValidation(subject, context, validationName)}
+    static void finishValidation(Object subject, Map context) {
+        getObserversIterator().each {it.finishValidation(subject, context)}
     }
 
-    static public void issueMandatoryObligation(Object subject, Map context, String mandatoryValidationName, String error) {
+    static void issueMandatoryObligation(Object subject, Map context, String mandatoryValidationName, String error) {
         getObserversIterator().each {it.issueMandatoryObligation(subject, context, mandatoryValidationName, error)}
     }
 
-    static public void issueMandatoryObligationComplied(Object subject, Map context, String mandatoryValidationName) {
+    static void issueMandatoryObligationComplied(Object subject, Map context, String mandatoryValidationName) {
         getObserversIterator().each {it.issueMandatoryObligationComplied(subject, context, mandatoryValidationName)}
     }
 
-    static public void issueError(Object subject, Map context, String error) {
+    static void issueError(Object subject, Map context, String error) {
         getObserversIterator().each {it.issueError(subject, context, error)}
     }
 
-    static public void issueError(Object subject, Map context, String instantValidationName, String error) {
+    static void issueError(Object subject, Map context, String instantValidationName, String error) {
         startValidation(subject, instantValidationName)
         getObserversIterator().each {it.issueError(error)}
         finishValidation(subject, instantValidationName)
     }
 
-    static public Set<ValidationObserver> getObserversIterator() {
+    static Set<ValidationObserver> getObserversIterator() {
         observers.get().keySet()
     }
 }
