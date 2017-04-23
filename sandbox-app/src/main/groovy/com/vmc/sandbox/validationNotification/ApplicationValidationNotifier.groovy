@@ -19,19 +19,15 @@ class ApplicationValidationNotifier {
     }
 
     static void addObserver(ValidationObserver validationObserver){
-        observers.get().put(validationObserver, null)
+        getObservers().put(validationObserver, null)
     }
 
     static void removeObserver(ValidationObserver validationObserver){
-        observers.get().remove(validationObserver)
+        getObservers().remove(validationObserver)
     }
 
     static void removeAllObservers(){
-        observers.get().clear()
-    }
-
-    static boolean isInitialized(){
-        return observers != null
+        getObservers().clear()
     }
 
     static void executeNamedValidation(Object subject, Map context, String validationName, Closure validation) {
@@ -67,6 +63,17 @@ class ApplicationValidationNotifier {
     }
 
     static Set<ValidationObserver> getObserversIterator() {
-        observers.get().keySet()
+        getObservers().keySet()
+    }
+
+    static WeakHashMap<ValidationObserver, Void> getObservers() {
+        if(!isInitialized()){
+            createCurrentListOfListeners()
+        }
+        return observers.get()
+    }
+
+    static boolean isInitialized(){
+        return observers != null
     }
 }

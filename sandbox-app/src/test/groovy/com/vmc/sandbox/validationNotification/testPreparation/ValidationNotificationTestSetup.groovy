@@ -9,20 +9,13 @@ abstract class ValidationNotificationTestSetup {
 
     protected SimpleValidationObserver validationObserver = new SimpleValidationObserver()
 
-    static{
-        if(!ApplicationValidationNotifier.isInitialized()){
-            ApplicationValidationNotifier.createCurrentListOfListeners()
-            Thread.addShutdownHook {ApplicationValidationNotifier.destroyCurrentListOfListeners()}
-        }
-    }
-
     public ValidationObserver getValidationObserver(){
         return validationObserver
     }
 
     @Before
     public void setUp(){
-        ApplicationValidationNotifier.removeAllObservers()
+        ApplicationValidationNotifier.createCurrentListOfListeners()
         validationObserver = new SimpleValidationObserver()
         ApplicationValidationNotifier.addObserver(validationObserver)
     }
