@@ -319,6 +319,16 @@
 
     <profiles>
         <profile>
+            <id>Containerless</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
             <id>HeavyValidationApp</id>
             <build>
                 <plugins>
