@@ -32,7 +32,7 @@ public class RestControllerValidationListener implements ValidationObserver{
 
     @Override
     void issueMandatoryObligation(Object subject, Map context, String mandatoryValidationName, String error) {
-        mandatoryObligations.put(mandatoryValidationName, error)
+        mandatoryObligations.put(mandatoryValidationName, {issueError(subject, context, error)})
     }
 
     @Override
@@ -67,7 +67,7 @@ public class RestControllerValidationListener implements ValidationObserver{
     }
 
     public generateResponse(){
-        mandatoryObligations.each {issueError(it.value)}
+        mandatoryObligations.each {it.value()}
         mandatoryObligations.clear()
         return generateResponseStrategy()
     }

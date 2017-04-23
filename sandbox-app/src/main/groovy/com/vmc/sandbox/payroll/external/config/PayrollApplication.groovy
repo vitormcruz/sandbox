@@ -16,10 +16,7 @@ import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
-import javax.servlet.ServletContext
-import javax.servlet.ServletException
-import javax.servlet.http.HttpSessionEvent
-import javax.servlet.http.HttpSessionListener
+import javax.servlet.ServletContextListener
 
 @Configuration
 @EnableAutoConfiguration(exclude = HibernateJpaAutoConfiguration)
@@ -42,20 +39,15 @@ class PayrollApplication extends SpringBootServletInitializer{
         SpringApplication.run(PayrollApplication, args);
     }
 
-    @Override
-    void onStartup(ServletContext servletContext) throws ServletException {
-        super.onStartup(servletContext)
-        servletContext.setInitParameter("productionMode", "false")
-        servletContext.addListener(getConfigListener())
-        servletContext.addListener([sessionCreated : {HttpSessionEvent se -> se.getSession().setMaxInactiveInterval(60*60*24)} ,
-                                    sessionDestroyed : {}] as HttpSessionListener)
-
+    @Bean
+    public ServletContextListener appConfigurationListener(){
+        return getConfigListener()
     }
 
     private ContextConfigListener getConfigListener() {
         def configListener = new ContextConfigListener()
-        configListener.addConfig(SpringMVCConfig)
-        configListener.addConfig(HibernateInMemoryConfig)
+        configListener.addConfig(new SpringMVCConfig())
+        configListener.addConfig(new HibernateInMemoryConfig())
         configListener
     }
 
@@ -64,7 +56,8 @@ class PayrollApplication extends SpringBootServletInitializer{
         ServletRegistrationBean registration = new ServletRegistrationBean(new VaadinServlet(), "/payroll/*", "/VAADIN/*");
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("UI", "com.vmc.sandbox.payroll.external.presentation.vaadin.PayrollUI");
+        params.put("productionMode", "false")
+        params.put("UI", "com.vmc.sandbox.payroll.external.presentation.vaadin.PayrollUI")
         params.put("async-supported", "true")
         params.put("org.atmosphere.useWebSocketAndServlet3", "true")
         registration.setInitParameters(params);
