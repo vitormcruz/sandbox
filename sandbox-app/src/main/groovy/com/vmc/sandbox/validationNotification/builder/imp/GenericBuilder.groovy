@@ -15,13 +15,20 @@ import com.vmc.sandbox.validationNotification.builder.CommonBuilder
  */
 class GenericBuilder implements CommonBuilder, ValidationObserver{
 
-    private BuilderStrategy builderStrategy = new BuilderSuccessStrategy()
-    private mandatoryObligations = [:]
-    private messagesCall = [:]
-    private constructorArgs = new ArrayList()
-    private Class aClass
+    protected BuilderStrategy builderStrategy = new BuilderSuccessStrategy()
+    protected mandatoryObligations = [:]
+    protected messagesCall = [:]
+    protected constructorArgs = new ArrayList()
+    protected Class aClass
 
-    GenericBuilder(Class aClass) {
+    public GenericBuilder(Class aClass) {
+        if(aClass == null ) throw new IllegalArgumentException("A class to build must be provided")
+        this.aClass = aClass
+    }
+
+    protected GenericBuilder(Class aClass, messagesCall, constructorArgs) {
+        this.messagesCall = new HashMap(messagesCall)
+        this.constructorArgs = new ArrayList(constructorArgs)
         this.aClass = aClass
     }
 

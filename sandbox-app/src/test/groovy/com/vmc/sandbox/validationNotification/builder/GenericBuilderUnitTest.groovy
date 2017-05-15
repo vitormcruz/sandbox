@@ -12,6 +12,13 @@ import static org.junit.Assert.fail
 class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
 
     @Test
+    def void "The GenericBuilder class parameter must be provided"(){
+        def ex = shouldFail IllegalArgumentException, {new GenericBuilder(null)}
+        assert ex.message == "A class to build must be provided"
+    }
+
+
+    @Test
     def void "Call onSuccessDoWithBuiltEntity with a success built entity "(){
         def buildersForTest = getSuccessBuilders()
         buildersForTest.each { builderForTest ->

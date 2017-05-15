@@ -1,7 +1,6 @@
 package com.vmc.sandbox.validationNotification.testPreparation
 
 import com.vmc.sandbox.validationNotification.ApplicationValidationNotifier
-import com.vmc.sandbox.validationNotification.ValidationObserver
 import com.vmc.sandbox.validationNotification.imp.SimpleValidationObserver
 import org.junit.Before
 
@@ -9,7 +8,7 @@ abstract class ValidationNotificationTestSetup {
 
     protected SimpleValidationObserver validationObserver = new SimpleValidationObserver()
 
-    public ValidationObserver getValidationObserver(){
+    public SimpleValidationObserver getValidationObserver(){
         return validationObserver
     }
 

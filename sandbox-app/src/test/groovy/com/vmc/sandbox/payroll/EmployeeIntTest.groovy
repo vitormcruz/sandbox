@@ -9,6 +9,7 @@ import com.vmc.sandbox.payroll.payment.type.Commission
 import com.vmc.sandbox.payroll.payment.type.Hourly
 import com.vmc.sandbox.payroll.payment.type.Monthly
 import com.vmc.sandbox.payroll.testPreparation.IntegrationTestBase
+import com.vmc.sandbox.validationNotification.builder.imp.DataSetBuilder
 import org.joda.time.DateTime
 import org.junit.Before
 import org.junit.Test
@@ -19,7 +20,7 @@ class EmployeeIntTest extends IntegrationTestBase {
 
     private EmployeeRepository employeeRepository
     private ModelSnapshot model
-    private EmployeeDataSetBuilder employeeDataSetBuilder
+    private DataSetBuilder employeeDataSetBuilder
     private Employee employee1
     private Employee employee2
     private Employee employee3
@@ -31,12 +32,15 @@ class EmployeeIntTest extends IntegrationTestBase {
         super.setUp()
         employeeRepository = EmployeeRepository.smartNewFor(EmployeeIntTest)
         model = ModelSnapshot.smartNewFor(EmployeeIntTest)
-        employeeDataSetBuilder = new EmployeeDataSetBuilder(getEmployeeClass())
-        employee1 = employeeDataSetBuilder.createNewEmployee("Heloísa", "Street 1", "heloisa@bla.com", new Monthly(2000))
-        employee2 = employeeDataSetBuilder.createNewEmployee("Heloísa Medina", "test address", "test email", new Commission(2000, 100))
-        employee3 = employeeDataSetBuilder.createNewEmployee("Sofia", "test address", "test email", new Monthly(2000))
-        employee4 = employeeDataSetBuilder.createNewEmployee("Sofia Medina", "test address", "test email", new Monthly(2000))
-        employee5 = employeeDataSetBuilder.createNewEmployee("Sofia Medina Carvalho", "test address", "test email", new Hourly(100))
+        employeeDataSetBuilder = new DataSetBuilder(getEmployeeClass(), {
+            employeeRepository.add(it)
+            model.save()
+        })
+        employee1 = employeeDataSetBuilder.setName("Heloísa").setAddress("Street 1").setEmail("heloisa@bla.com").setPaymentType(new Monthly(2000)).build()
+        employee2 = employeeDataSetBuilder.setName("Heloísa Medina").setAddress("test address").setEmail("test email").setPaymentType(new Commission(2000, 100)).build()
+        employee3 = employeeDataSetBuilder.setName("Sofia").setAddress("test address").setEmail("test email").setPaymentType(new Monthly(2000)).build()
+        employee4 = employeeDataSetBuilder.setName("Sofia Medina").setAddress("test address").setEmail("test email").setPaymentType(new Monthly(2000)).build()
+        employee5 = employeeDataSetBuilder.setName("Sofia Medina Carvalho").setAddress("test address").setEmail("test email").setPaymentType(new Hourly(100)).build()
     }
 
     @Test
@@ -47,19 +51,19 @@ class EmployeeIntTest extends IntegrationTestBase {
 
     @Test
     def void "Add a new monthly paid Employee"(){
-        def addedEmployee = employeeDataSetBuilder.createNewEmployee("New Employee", "test adress", "test email", new Monthly(1000))
+        def addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").setPaymentType(new Monthly(1000)).build()
         assertMonthlyPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 1000)
     }
 
     @Test
     def void "Add a new hourly paid Employee"(){
-        def addedEmployee = employeeDataSetBuilder.createNewEmployee("New Employee", "test adress", "test email", new Hourly(50))
+        def addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").setPaymentType(new Hourly(50)).build()
         assertHourlyPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 50)
     }
 
     @Test
     def void "Add a new commission paid Employee"(){
-        def addedEmployee = employeeDataSetBuilder.createNewEmployee("New Employee", "test adress", "test email", new Commission(1000, 20))
+        def addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").setPaymentType(new Commission(1000, 20)).build()
         assertCommissionPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 1000, 20)
     }
 
