@@ -9,14 +9,14 @@ import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
 
 @RequestMapping(value = "api/payroll/")
 @RestController
-class EmployeeRestController implements BasicControllerOperationsTrait{
+class EmployeeWebServiceController implements BasicControllerOperationsTrait{
 
-    private EmployeeRepository employeeRepository = EmployeeRepository.smartNewFor(EmployeeRestController)
-    private ModelSnapshot model = ModelSnapshot.smartNewFor(EmployeeRestController)
+    private EmployeeRepository employeeRepository = EmployeeRepository.smartNewFor(EmployeeWebServiceController)
+    private ModelSnapshot model = ModelSnapshot.smartNewFor(EmployeeWebServiceController)
 
     @RequestMapping(value = "/employee", method = RequestMethod.POST)
     ResponseEntity<Employee> newEmployee(@RequestBody Map newEmployeeMap) {
-        RestControllerValidationListener listener = getValidationListener()
+        WebServiceControllerValidationListener listener = getValidationListener()
         GenericBuilder employeeBuilder = new GenericBuilder(Employee).applyMap(newEmployeeMap)
         employeeBuilder.buildAndDoOnSuccess { newEmployee ->
             employeeRepository.add(newEmployee)
@@ -28,7 +28,7 @@ class EmployeeRestController implements BasicControllerOperationsTrait{
 
     @RequestMapping(value = "/employee/{employeeId}", method = RequestMethod.PATCH)
     ResponseEntity<Employee> changeEmployee(@PathVariable Long employeeId, @RequestBody Map changedAttributes) {
-        RestControllerValidationListener listener = getValidationListener()
+        WebServiceControllerValidationListener listener = getValidationListener()
         def changedEmployee = getResource(employeeId, employeeRepository)
         changedEmployee.applyMap(changedAttributes)
         if(listener.successful()){
@@ -42,7 +42,7 @@ class EmployeeRestController implements BasicControllerOperationsTrait{
 
     @RequestMapping(value = "/employee/{employeeId}", method = RequestMethod.DELETE)
     ResponseEntity<Employee> deleteEmployee(@PathVariable Long employeeId) {
-        RestControllerValidationListener listener = getValidationListener()
+        WebServiceControllerValidationListener listener = getValidationListener()
         Employee employeeSubjectedRemoval = getResource(employeeId, employeeRepository)
         if(listener.successful()) {
             employeeRepository.remove(employeeSubjectedRemoval)

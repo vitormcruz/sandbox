@@ -8,27 +8,27 @@ class SimpleValidationObserver implements ValidationObserver{
     def mandatoryObligation = [:]
 
     @Override
-    void startValidation(Object subject, Map context, String validationName) {
+    void validationStarted(Object subject, Map context, String validationName) {
 
     }
 
     @Override
-    void issueMandatoryObligation(Object subject, Map context, String mandatoryValidationName, String error) {
+    void mandatoryObligationIssued(Object subject, Map context, String mandatoryValidationName, String error) {
         mandatoryObligation.put(mandatoryValidationName, error)
     }
 
     @Override
-    void issueMandatoryObligationComplied(Object subject, Map context, String mandatoryValidationName) {
+    void mandatoryObligationComplied(Object subject, Map context, String mandatoryValidationName) {
         mandatoryObligation.remove(mandatoryValidationName)
     }
 
     @Override
-    void issueError(Object subject, Map context, String error) {
+    void errorIssued(Object subject, Map context, String error) {
         errors.add(error)
     }
 
     @Override
-    void finishValidation(Object subject, Map context) {
+    void validationFinished(Object subject, Map context) {
 
     }
 

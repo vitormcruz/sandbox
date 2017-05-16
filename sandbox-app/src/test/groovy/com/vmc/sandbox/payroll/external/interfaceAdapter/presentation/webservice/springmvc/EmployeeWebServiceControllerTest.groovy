@@ -1,6 +1,6 @@
 package com.vmc.sandbox.payroll.external.interfaceAdapter.presentation.webservice.springmvc
 
-import com.vmc.sandbox.payroll.external.presentation.webservice.springmvc.EmployeeRestController
+import com.vmc.sandbox.payroll.external.presentation.webservice.springmvc.EmployeeWebServiceController
 import org.junit.Ignore
 import org.junit.Test
 import com.vmc.sandbox.payroll.external.config.sevletContextConfig.ContextConfigListener
@@ -10,7 +10,7 @@ import com.vmc.sandbox.validationNotification.ApplicationValidationNotifier
  * Created by UR5Y on 01/07/2016.
  */
 @Ignore
-class EmployeeRestControllerTest {
+class EmployeeWebServiceControllerTest {
 
     @Test
     def void abc(){
@@ -26,7 +26,7 @@ class EmployeeRestControllerTest {
 //                "   \"paymentMethod\": {\"salary\": \"5000\"}\n" +
 //                "}")
 
-        new EmployeeRestController().newEmployee(new HashMap<String, String>(){{
+        new EmployeeWebServiceController().newEmployee(new HashMap<String, String>(){{
             put("name", "Joao1")
             put("address", "Rua2")
             put("email", "blabla@gmail.com")

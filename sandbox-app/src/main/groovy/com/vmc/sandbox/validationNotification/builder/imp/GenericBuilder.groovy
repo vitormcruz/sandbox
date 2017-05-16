@@ -71,29 +71,29 @@ class GenericBuilder implements CommonBuilder, ValidationObserver{
     }
 
     @Override
-    void startValidation(Object subject, Map context, String validationName) {
+    void validationStarted(Object subject, Map context, String validationName) {
         //don't care
     }
 
     @Override
-    void issueMandatoryObligation(Object subject, Map context, String mandatoryValidationName, String error) {
+    void mandatoryObligationIssued(Object subject, Map context, String mandatoryValidationName, String error) {
         mandatoryObligations.put(mandatoryValidationName, error)
         builderStrategy = new BuilderFailureStrategy();
     }
 
     @Override
-    void issueMandatoryObligationComplied(Object subject, Map context, String mandatoryValidationName) {
+    void mandatoryObligationComplied(Object subject, Map context, String mandatoryValidationName) {
         mandatoryObligations.remove(mandatoryValidationName)
         if(mandatoryObligations.isEmpty()){ builderStrategy = new BuilderSuccessStrategy() }
     }
 
     @Override
-    void issueError(Object subject, Map context, String error) {
+    void errorIssued(Object subject, Map context, String error) {
         builderStrategy = new BuilderFailureStrategy();
     }
 
     @Override
-    void finishValidation(Object subject, Map context) {
+    void validationFinished(Object subject, Map context) {
         //don't care
     }
 

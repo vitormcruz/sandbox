@@ -3,7 +3,7 @@ package com.vmc.sandbox.payroll.external.presentation.webservice.springmvc
 import org.springframework.http.ResponseEntity
 import com.vmc.sandbox.validationNotification.ValidationObserver
 
-public class RestControllerValidationListener implements ValidationObserver{
+public class WebServiceControllerValidationListener implements ValidationObserver{
 
     private Map<String, Collection> errorsByValidation
     private currentErrors
@@ -13,7 +13,7 @@ public class RestControllerValidationListener implements ValidationObserver{
     def private issueErrorStrategy
     def body
 
-    RestControllerValidationListener() {
+    WebServiceControllerValidationListener() {
         currentErrors = new ArrayList()
         errorsByValidation = [null: currentErrors]
         generateResponseStrategy = responseOkStrategy
@@ -25,23 +25,23 @@ public class RestControllerValidationListener implements ValidationObserver{
     }
 
     @Override
-    void startValidation(Object subject, Map context, String validationName) {
+    void validationStarted(Object subject, Map context, String validationName) {
         currentErrors = new ArrayList()
         errorsByValidation.put(validationName, currentErrors)
     }
 
     @Override
-    void issueMandatoryObligation(Object subject, Map context, String mandatoryValidationName, String error) {
-        mandatoryObligations.put(mandatoryValidationName, {issueError(subject, context, error)})
+    void mandatoryObligationIssued(Object subject, Map context, String mandatoryValidationName, String error) {
+        mandatoryObligations.put(mandatoryValidationName, {errorIssued(subject, context, error)})
     }
 
     @Override
-    void issueMandatoryObligationComplied(Object subject, Map context, String mandatoryValidationName) {
+    void mandatoryObligationComplied(Object subject, Map context, String mandatoryValidationName) {
         mandatoryObligations.remove(mandatoryValidationName)
     }
 
     @Override
-    void issueError(Object subject, Map context, String error) {
+    void errorIssued(Object subject, Map context, String error) {
         issueErrorStrategy(error)
     }
 
@@ -57,7 +57,7 @@ public class RestControllerValidationListener implements ValidationObserver{
     }
 
     @Override
-    void finishValidation(Object subject, Map context) {
+    void validationFinished(Object subject, Map context) {
         currentErrors = errorsByValidation.get(null)
     }
 

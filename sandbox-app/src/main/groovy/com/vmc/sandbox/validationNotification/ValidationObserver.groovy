@@ -1,10 +1,10 @@
 package com.vmc.sandbox.validationNotification
 
 interface ValidationObserver {
-    void startValidation(Object subject, Map context, String validationName)
-    void issueMandatoryObligation(Object subject, Map context, String mandatoryValidationName, String error)
-    void issueMandatoryObligationComplied(Object subject, Map context, String mandatoryValidationName)
-    void issueError(Object subject, Map context, String error)
-    void finishValidation(Object subject, Map context)
+    void validationStarted(Object subject, Map context, String validationName)
+    void mandatoryObligationIssued(Object subject, Map context, String mandatoryValidationName, String error)
+    void mandatoryObligationComplied(Object subject, Map context, String mandatoryValidationName)
+    void errorIssued(Object subject, Map context, String error)
+    void validationFinished(Object subject, Map context)
     Boolean successful()
 }

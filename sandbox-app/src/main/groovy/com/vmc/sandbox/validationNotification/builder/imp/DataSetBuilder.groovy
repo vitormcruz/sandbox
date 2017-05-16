@@ -1,6 +1,7 @@
 package com.vmc.sandbox.validationNotification.builder.imp
 /**
- * Act as a builder, but receives a closure to insert object on the database at the end
+ * Act as a builder, but receives a closure to insert object on the database at the build end if validation was
+ * ok.
  */
 class DataSetBuilder extends GenericBuilder {
 

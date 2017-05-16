@@ -4,8 +4,8 @@ import com.vmc.sandbox.validationNotification.ApplicationValidationNotifier
 
 trait BasicControllerOperationsTrait {
 
-    public RestControllerValidationListener getValidationListener() {
-        def listener = new RestControllerValidationListener()
+    public WebServiceControllerValidationListener getValidationListener() {
+        def listener = new WebServiceControllerValidationListener()
         ApplicationValidationNotifier.addObserver(listener)
         listener
     }

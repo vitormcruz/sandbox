@@ -37,28 +37,28 @@ class ApplicationValidationNotifier {
     }
 
     static void startValidation(Object subject, Map context, String validationName) {
-        getObserversIterator().each {it.startValidation(subject, context, validationName)}
+        getObserversIterator().each {it.validationStarted(subject, context, validationName)}
     }
 
     static void finishValidation(Object subject, Map context) {
-        getObserversIterator().each {it.finishValidation(subject, context)}
+        getObserversIterator().each {it.validationFinished(subject, context)}
     }
 
     static void issueMandatoryObligation(Object subject, Map context, String mandatoryValidationName, String error) {
-        getObserversIterator().each {it.issueMandatoryObligation(subject, context, mandatoryValidationName, error)}
+        getObserversIterator().each {it.mandatoryObligationIssued(subject, context, mandatoryValidationName, error)}
     }
 
     static void issueMandatoryObligationComplied(Object subject, Map context, String mandatoryValidationName) {
-        getObserversIterator().each {it.issueMandatoryObligationComplied(subject, context, mandatoryValidationName)}
+        getObserversIterator().each {it.mandatoryObligationComplied(subject, context, mandatoryValidationName)}
     }
 
     static void issueError(Object subject, Map context, String error) {
-        getObserversIterator().each {it.issueError(subject, context, error)}
+        getObserversIterator().each {it.errorIssued(subject, context, error)}
     }
 
     static void issueError(Object subject, Map context, String instantValidationName, String error) {
         startValidation(subject, instantValidationName)
-        getObserversIterator().each {it.issueError(error)}
+        getObserversIterator().each {it.errorIssued(error)}
         finishValidation(subject, instantValidationName)
     }
 
