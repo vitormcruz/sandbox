@@ -51,25 +51,28 @@ class EmployeeIntTest extends IntegrationTestBase {
 
     @Test
     def void "Add a new monthly paid Employee"(){
-        def addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").setPaymentType(new Monthly(1000)).build()
+        Employee addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").setPaymentType(new Monthly(1000)).build()
+        addedEmployee = employeeRepository.get(addedEmployee.getId())
         assertMonthlyPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 1000)
     }
 
     @Test
     def void "Add a new hourly paid Employee"(){
-        def addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").setPaymentType(new Hourly(50)).build()
+        Employee addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").setPaymentType(new Hourly(50)).build()
+        addedEmployee = employeeRepository.get(addedEmployee.getId())
         assertHourlyPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 50)
     }
 
     @Test
     def void "Add a new commission paid Employee"(){
-        def addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").setPaymentType(new Commission(1000, 20)).build()
+        Employee addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").setPaymentType(new Commission(1000, 20)).build()
+        addedEmployee = employeeRepository.get(addedEmployee.getId())
         assertCommissionPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 1000, 20)
     }
 
     @Test
     def void "Edit an Employee"(){
-        def employeeToChange = employeeRepository.get(employee1.id)
+        Employee employeeToChange = employeeRepository.get(employee1.id)
         employeeToChange.name = "Change Test"
         employeeToChange.address = "Change Test adress"
         employeeToChange.email = "Change Test email"
