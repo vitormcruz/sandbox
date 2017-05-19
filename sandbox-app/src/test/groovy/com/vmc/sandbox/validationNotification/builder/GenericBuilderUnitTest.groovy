@@ -13,7 +13,7 @@ class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
 
     @Test
     def void "The GenericBuilder class parameter must be provided"(){
-        def ex = shouldFail IllegalArgumentException, {new GenericBuilder(null)}
+        def ex = shouldFail IllegalArgumentException, {getBuilderFor(null)}
         assert ex.message == "A class to build must be provided"
     }
 
@@ -100,87 +100,87 @@ class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
 
     @Test
     def void "Using one with to call constructor in the correct order"(){
-        def entity = new GenericBuilder(TestNPropertiesOneConstructor).with("a", "b", 1, 1L).build()
+        def entity = getBuilderFor(TestNPropertiesOneConstructor).with("a", "b", 1, 1L).build()
         assert entity != null
         assert entity instanceof TestNPropertiesOneConstructor
     }
 
     @Test
     def void "Using one with to call constructor in the wrong order"(){
-        def error = shouldFail GroovyRuntimeException, {new GenericBuilder(TestNPropertiesOneConstructor).with("a", 1, 1L, "b").build()}
+        def error = shouldFail GroovyRuntimeException, {getBuilderFor(TestNPropertiesOneConstructor).with("a", 1, 1L, "b").build()}
         assert error.message.contains("Could not find matching constructor")
     }
 
     @Test
     def void "Using one with to call constructor using less arguments than the constructor has"(){
-        def error = shouldFail GroovyRuntimeException, {new GenericBuilder(TestNPropertiesOneConstructor).with("a", "b", 1).build()}
+        def error = shouldFail GroovyRuntimeException, {getBuilderFor(TestNPropertiesOneConstructor).with("a", "b", 1).build()}
         assert error.message.contains("Could not find matching constructor")
     }
 
     @Test
     def void "Using one with to call constructor using more arguments than the constructor has"(){
-        def error = shouldFail GroovyRuntimeException, {new GenericBuilder(TestNPropertiesOneConstructor).with("a", "b", 1, 1L, "c").build()}
+        def error = shouldFail GroovyRuntimeException, {getBuilderFor(TestNPropertiesOneConstructor).with("a", "b", 1, 1L, "c").build()}
         assert error.message.contains("Could not find matching constructor")
     }
 
     @Test
     def void "N withs in the correct order for K arguments, where N <> K"(){
-        def error = shouldFail GroovyRuntimeException, {new GenericBuilder(TestNPropertiesOneConstructor).withA("a")
-                                                                                                     .withRest("b", 1, 1L, "c")
-                                                                                                     .build()}
+        def error = shouldFail GroovyRuntimeException, {getBuilderFor(TestNPropertiesOneConstructor).withA("a")
+                                                                                                          .withRest("b", 1, 1L, "c")
+                                                                                                          .build()}
         assert error.message.contains("Could not find matching constructor")
     }
 
     @Test
     def void "N withs in the correct order for K arguments, where N == K"(){
-        def object = new GenericBuilder(TestNPropertiesOneConstructor).withA("a")
-                                                                  .withRest("b", 1, 1L)
-                                                                  .build()
+        def object = getBuilderFor(TestNPropertiesOneConstructor).withA("a")
+                                                                 .withRest("b", 1, 1L)
+                                                                 .build()
         assert object != null
         assert object instanceof TestNPropertiesOneConstructor
     }
 
     @Test
     def void "N withs in the incorrect order for K arguments, where N == K"(){
-        def error = shouldFail GroovyRuntimeException, {new GenericBuilder(TestNPropertiesOneConstructor).with1(1)
-                                                                                                         .withRest("a", "b", 1L)
-                                                                                                         .build()}
+        def error = shouldFail GroovyRuntimeException, {getBuilderFor(TestNPropertiesOneConstructor).with1(1)
+                                                                                                          .withRest("a", "b", 1L)
+                                                                                                          .build()}
         assert error.message.contains("Could not find matching constructor")
     }
 
     @Test
     def void "Repeat with giving wrong arguments"(){
-        def error = shouldFail GroovyRuntimeException, {new GenericBuilder(TestNPropertiesOneConstructor).with("a")
-                                                                                                         .with(1, 1L)
-                                                                                                         .build()}
+        def error = shouldFail GroovyRuntimeException, {getBuilderFor(TestNPropertiesOneConstructor).with("a")
+                                                                                                          .with(1, 1L)
+                                                                                                          .build()}
         assert error.message.contains("Could not find matching constructor")
     }
 
     @Test
     def void "Repeat with giving right arguments"(){
-        def entity = new GenericBuilder(TestNPropertiesOneConstructor).with("a", "b").with(1, 1L).build()
+        def entity = getBuilderFor(TestNPropertiesOneConstructor).with("a", "b").with(1, 1L).build()
         assert entity != null
         assert entity instanceof TestNPropertiesOneConstructor
     }
 
     @Test
     def void "Mixing with and set"(){
-        TestNPropertiesOneConstructor object = new GenericBuilder(TestNPropertiesOneConstructor).with("a", "b")
-                                                                                                .with(1, 1L)
-                                                                                                .setA("Changed")
-                                                                                                .build()
+        TestNPropertiesOneConstructor object = getBuilderFor(TestNPropertiesOneConstructor).with("a", "b")
+                                                                                           .with(1, 1L)
+                                                                                           .setA("Changed")
+                                                                                           .build()
 
         assert object.getA() == "Changed"
     }
 
     @Test
     def void "Repeat set"(){
-        TestNPropertiesOneConstructor object = new GenericBuilder(TestNPropertiesOneConstructor).with("a", "b")
-                                                                                                .with(1, 1L)
-                                                                                                .setA("Changed")
-                                                                                                .setB("Changed")
-                                                                                                .setB("Changed2")
-                                                                                                .build()
+        TestNPropertiesOneConstructor object = getBuilderFor(TestNPropertiesOneConstructor).with("a", "b")
+                                                                                           .with(1, 1L)
+                                                                                           .setA("Changed")
+                                                                                           .setB("Changed")
+                                                                                           .setB("Changed2")
+                                                                                           .build()
 
         assert object.getA() == "Changed"
         assert object.getB() == "Changed2"
@@ -188,48 +188,52 @@ class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
 
     @Test
     def void "Builder should not call forbidden constructors"(){
-        def ex = shouldFail UsedForbiddenConstructor, {new GenericBuilder(TestForbiddenConstructor).build()}
+        def ex = shouldFail UsedForbiddenConstructor, {getBuilderFor(TestForbiddenConstructor).build()}
         assert ex.message == "The constructor found for TestForbiddenConstructor with [] arguments is of forbidden use."
-        ex = shouldFail UsedForbiddenConstructor, {new GenericBuilder(TestForbiddenConstructor).withString("test").build()}
+        ex = shouldFail UsedForbiddenConstructor, {getBuilderFor(TestForbiddenConstructor).withString("test").build()}
         assert ex.message == "The constructor found for TestForbiddenConstructor with [String] arguments is of forbidden use."
     }
 
     @Test
     def void "Builder should not call forbidden constructors, even with null arguments"(){
-        def ex = shouldFail UsedForbiddenConstructor, {new GenericBuilder(TestForbiddenConstructor).withString(null).build()}
+        def ex = shouldFail UsedForbiddenConstructor, {getBuilderFor(TestForbiddenConstructor).withString(null).build()}
         assert ex.message == "The constructor found for TestForbiddenConstructor with [NullObject] arguments is of forbidden use."
     }
 
     @Test
     def void "Builder should work with all allowed constructors"(){
         [Integer, Byte, Long].forEach {
-            def generatedEntity = new GenericBuilder(TestForbiddenConstructor).with(it.valueOf("1")).build()
+            def generatedEntity = getBuilderFor(TestForbiddenConstructor).with(it.valueOf("1")).build()
             assert generatedEntity != null : "Entity should be build for constructor with ${it.simpleName}, but wasn't"
         }
     }
 
     @Test
     def void "Builder used for constructor passing one null argument"(){
-        def entity = new GenericBuilder(TestConstructorWithNull).withName(null).build()
+        def entity = getBuilderFor(TestConstructorWithNull).withName(null).build()
         assert entity != null : "When null is used, a constructor with the same number of arguments should be used"
     }
 
     @Test
     def void "Builder used for constructor passing N null arguments"(){
-        def entity = new GenericBuilder(TestConstructorWithNull).withName(null)
-                                                                .withAddress(null)
-                                                                .build()
+        def entity = getBuilderFor(TestConstructorWithNull).withName(null)
+                                                           .withAddress(null)
+                                                           .build()
         assert entity != null : "When null is used, a constructor with the same number of arguments should be used"
     }
 
     def getSuccessBuilders(){
-        return [new GenericBuilder(TestEntity).setAttribute("ok"),
-                new GenericBuilder(TestConstructorWithOneArgument).withAttribute("ok")]
+        return [getBuilderFor(TestEntity).setAttribute("ok"),
+                getBuilderFor(TestConstructorWithOneArgument).withAttribute("ok")]
     }
 
     def getFailBuilders(){
-        return [new GenericBuilder(TestEntity).setAttribute("fail"),
-                new GenericBuilder(TestConstructorWithOneArgument).withAttribute("fail")]
+        return [getBuilderFor(TestEntity).setAttribute("fail"),
+                getBuilderFor(TestConstructorWithOneArgument).withAttribute("fail")]
+    }
+
+    public GenericBuilder getBuilderFor(Class<TestEntity> clazz) {
+        new GenericBuilder(clazz)
     }
 
     public static class TestEntity{

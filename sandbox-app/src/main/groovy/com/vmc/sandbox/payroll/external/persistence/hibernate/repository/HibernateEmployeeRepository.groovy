@@ -6,7 +6,7 @@ import org.hibernate.SessionFactory
 import org.springframework.transaction.support.TransactionTemplate
 import com.vmc.sandbox.payroll.Employee
 import com.vmc.sandbox.payroll.EmployeeRepository
-import com.vmc.sandbox.payroll.external.persistence.querydsl.entity.QEmployee
+import com.vmc.sandbox.payroll.external.persistence.querydsl.queryEntity.QEmployee
 
 class HibernateEmployeeRepository implements EmployeeRepository{
 

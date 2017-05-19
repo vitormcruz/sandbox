@@ -5,9 +5,9 @@ import com.vmc.sandbox.payroll.payment.attachment.PaymentAttachment
 
 abstract class GenericPaymentType implements PaymentType{
 
-    protected Set<? extends PaymentAttachment> paymentAttachments = new HashSet<PaymentAttachment>()
-
     private id
+
+    protected Set<? extends PaymentAttachment> paymentAttachments = new HashSet<PaymentAttachment>()
 
     protected Employee employee
 

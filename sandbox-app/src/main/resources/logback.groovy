@@ -1,5 +1,4 @@
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder
-import ch.qos.logback.core.ConsoleAppender
 import org.apache.commons.io.IOUtils
 
 import static ch.qos.logback.classic.Level.WARN
@@ -27,7 +26,6 @@ def logpath = appProperties.get("logpath")
 //    pattern = "%d %p [%c] - %m%n"
 //  }
 //}
-//logger("org.hibernate.SQL", ${SEVERITY})
 
 appender("stdout", ConsoleAppender) {
   encoder(PatternLayoutEncoder) {
@@ -36,6 +34,7 @@ appender("stdout", ConsoleAppender) {
 }
 
 root(WARN, ["stdout"])
+logger("org.flywaydb", DEBUG)
 
 
 def loadProperties(){

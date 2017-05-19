@@ -47,7 +47,8 @@ class PayrollApplication extends SpringBootServletInitializer{
     private ContextConfigListener getConfigListener() {
         def configListener = new ContextConfigListener()
         configListener.addConfig(new SpringMVCConfig())
-        configListener.addConfig(new HibernateInMemoryConfig())
+//        configListener.addConfig(new HibernateInMemoryConfig())
+        configListener.addConfig(new QueryDslInMemoryConfig())
         configListener
     }
 

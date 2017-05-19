@@ -114,6 +114,34 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>com.querydsl</groupId>
+                <artifactId>querydsl-maven-plugin</artifactId>
+                <version>${querydsl.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>export</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jdbcDriver>org.hsqldb.jdbcDriver</jdbcDriver>
+                    <jdbcUrl>jdbc:hsqldb:mem:tsg</jdbcUrl>
+                    <jdbcUser>sa</jdbcUser>
+                    <jdbcPassword></jdbcPassword>
+                    <packageName>payroll.external.queryDsl.entity</packageName>
+                    <targetFolder>${project.basedir}/target/generated-sources/java</targetFolder>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.hsqldb</groupId>
+                        <artifactId>hsqldb</artifactId>
+                        <version>2.4.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
 
@@ -208,6 +236,31 @@
         </dependency>
 
         <dependency>
+          <groupId>com.querydsl</groupId>
+          <artifactId>querydsl-sql</artifactId>
+          <version>${querydsl.version}</version>
+        </dependency>
+
+        <dependency>
+          <groupId>com.querydsl</groupId>
+          <artifactId>querydsl-sql-codegen</artifactId>
+          <version>${querydsl.version}</version>
+          <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-sql-codegen</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
+
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+          <version>1.6.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>2.9.4</version>
@@ -222,6 +275,13 @@
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>4.2.0</version>
         </dependency>
 
         <dependency>
