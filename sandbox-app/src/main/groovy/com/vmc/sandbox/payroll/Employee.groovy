@@ -4,9 +4,7 @@ import com.vmc.sandbox.payroll.payment.attachment.PaymentAttachment
 import com.vmc.sandbox.payroll.payment.type.PaymentType
 import com.vmc.sandbox.validationNotification.imp.RequiredValidation
 
-class Employee {
-
-    private id
+class Employee implements IEmploye{
 
     def String name
     private RequiredValidation requiredNameValidation = new RequiredValidation(this, [:], "employee.name", "payroll.employee.name.mandatory")
@@ -20,26 +18,27 @@ class Employee {
     def PaymentType paymentType
     private RequiredValidation requiredPaymentTypeValidation = new RequiredValidation(this, [:], "employee.payment", "payroll.employee.payment.type.mandatory")
 
-    def getId() {
-        return id
-    }
-
+    @Override
     public void setName(String name) {
         requiredNameValidation.set(name, { this.@name = name })
     }
 
+    @Override
     public void setAddress(String address) {
         requiredAddressValidation.set(address, { this.@address = address })
     }
 
+    @Override
     public void setEmail(String email) {
         requiredEmailValidation.set(email, { this.@email = email })
     }
 
+    @Override
     public void setPaymentType(PaymentType paymentType) {
         requiredPaymentTypeValidation.set(paymentType, { this.@paymentType = paymentType })
     }
 
+    @Override
     void postPaymentAttachment(PaymentAttachment paymentAttachment){
         paymentType.postPaymentAttachment(paymentAttachment)
     }

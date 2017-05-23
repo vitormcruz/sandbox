@@ -35,6 +35,7 @@ appender("stdout", ConsoleAppender) {
 
 root(WARN, ["stdout"])
 logger("org.flywaydb", DEBUG)
+logger("com.querydsl.sql", DEBUG)
 
 
 def loadProperties(){
