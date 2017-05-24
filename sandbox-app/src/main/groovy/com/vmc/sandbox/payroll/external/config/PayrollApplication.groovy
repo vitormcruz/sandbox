@@ -3,7 +3,6 @@ package com.vmc.sandbox.payroll.external.config
 import com.vaadin.server.VaadinServlet
 import com.vmc.sandbox.payroll.external.config.sevletContextConfig.ContextConfigListener
 import com.vmc.sandbox.validationNotification.external.presentation.servlet.ValidationNotifierFilter
-import org.hibernate.SessionFactory
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
@@ -47,8 +46,7 @@ class PayrollApplication extends SpringBootServletInitializer{
     private ContextConfigListener getConfigListener() {
         def configListener = new ContextConfigListener()
         configListener.addConfig(new SpringMVCConfig())
-//        configListener.addConfig(new HibernateInMemoryConfig())
-        configListener.addConfig(new QueryDslInMemoryConfig())
+        configListener.addConfig(new InMemoryPersistenceConfig())
         configListener
     }
 
@@ -71,10 +69,5 @@ class PayrollApplication extends SpringBootServletInitializer{
         registrationBean.setFilter(new ValidationNotifierFilter());
         registrationBean.setOrder(0);
         return registrationBean;
-    }
-
-    @Bean
-    public SessionFactory sessionFactory() {
-        return SessionFactory.smartNewFor(PayrollApplication)
     }
 }

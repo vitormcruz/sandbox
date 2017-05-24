@@ -1,8 +1,7 @@
 package com.vmc.sandbox.payroll
 
-import com.querydsl.core.support.QueryBase
 import com.vmc.sandbox.concurrency.ModelSnapshot
-import com.vmc.sandbox.payroll.external.persistence.querydsl.queryEntity.QEmployee
+import com.vmc.sandbox.payroll.external.persistence.inMemory.repository.CommonInMemoryRepository
 import com.vmc.sandbox.payroll.payment.attachment.SalesReceipt
 import com.vmc.sandbox.payroll.payment.attachment.TimeCard
 import com.vmc.sandbox.payroll.payment.type.Commission
@@ -12,15 +11,13 @@ import com.vmc.sandbox.payroll.testPreparation.IntegrationTestBase
 import com.vmc.sandbox.validationNotification.builder.imp.DataSetBuilder
 import org.joda.time.DateTime
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 
 import static groovy.test.GroovyAssert.shouldFail
 
-@Ignore("Will change after hiberante removal")
 class EmployeeIntTest extends IntegrationTestBase {
 
-    private EmployeeRepository employeeRepository
+    private CommonInMemoryRepository<Employee> employeeRepository
     private ModelSnapshot model
     private DataSetBuilder employeeDataSetBuilder
     private Employee employee1
@@ -32,7 +29,7 @@ class EmployeeIntTest extends IntegrationTestBase {
     @Before
     public void setUp(){
         super.setUp()
-        employeeRepository = EmployeeRepository.smartNewFor(EmployeeIntTest)
+        employeeRepository = CommonInMemoryRepository.smartNewFor(EmployeeIntTest)
         model = ModelSnapshot.smartNewFor(EmployeeIntTest)
         employeeDataSetBuilder = new DataSetBuilder(getEmployeeClass(), {
             employeeRepository.add(it)
@@ -88,14 +85,13 @@ class EmployeeIntTest extends IntegrationTestBase {
     @Test
     def void "Remove an Employee"(){
         employeeRepository.remove(employee1)
+        model.save()
         assert employeeRepository.get(employee1.id) == null
     }
 
     @Test
     def void "Find Employees"(){
-        def employeeFound = employeeRepository.findAll { QueryBase<Employee> employeeQuery, QEmployee qEmployee ->
-            employeeQuery.where(qEmployee.name.like("%Medina%"))
-        }
+        def employeeFound = employeeRepository.findAll {it.name.contains("Medina")}
 
         assert employeeFound.collect {it.id} as Set == [employee2, employee4, employee5].collect {it.id} as Set
     }

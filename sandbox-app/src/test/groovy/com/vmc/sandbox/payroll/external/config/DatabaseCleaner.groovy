@@ -1,23 +1,14 @@
 package com.vmc.sandbox.payroll.external.config
 
-import com.querydsl.jpa.hibernate.HibernateQueryFactory
-import org.hibernate.SessionFactory
-import org.springframework.transaction.support.TransactionTemplate
-import com.vmc.sandbox.payroll.testPreparation.IntegrationTestBase
-import com.vmc.sandbox.payroll.external.persistence.querydsl.queryEntity.QEmployee
+import com.vmc.sandbox.concurrency.ModelSnapshot
+import com.vmc.sandbox.payroll.external.persistence.inMemory.repository.CommonInMemoryRepository
 
 class DatabaseCleaner {
-
-    private SessionFactory sessionFactory = SessionFactory.smartNewFor(IntegrationTestBase)
-    private TransactionTemplate transactionTemplate = TransactionTemplate.smartNewFor(IntegrationTestBase)
-    private def entitiesToDelete = [QEmployee.employee]
-
+    private ModelSnapshot model = ModelSnapshot.smartNewFor(DatabaseCleaner)
 
     public void cleanDatabase(){
-        transactionTemplate.execute{
-            def queryFactory = new HibernateQueryFactory(this.sessionFactory.getCurrentSession())
-            entitiesToDelete.forEach {queryFactory.delete(it).execute()}
-        }
+        CommonInMemoryRepository.smartNewFor(DatabaseCleaner).clear()
+        model.save()
     }
 
 

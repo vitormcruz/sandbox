@@ -1,4 +1,4 @@
-package com.vmc.sandbox.payroll.external.persistence.hibernate
+package com.vmc.sandbox.concurrency.hibernate
 
 import com.vmc.sandbox.concurrency.AtomicBlock
 import com.vmc.sandbox.concurrency.ModelSnapshot
