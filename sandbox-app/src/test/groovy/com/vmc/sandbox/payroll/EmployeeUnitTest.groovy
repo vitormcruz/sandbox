@@ -62,6 +62,24 @@ class EmployeeUnitTest extends ValidationNotificationTestSetup{
         verifyEmployeeWithExpectedData(employeeForChange, "test name 2", "test address 2", "test email 2", EXPECTED_PAYMENT_DATA_2)
     }
 
+    @Test
+    public void "By default, employee should not be member of Union"(){
+        assert !getEmployeeForChange().isUnionMember() : "Should not be an union member by default"
+    }
+
+    @Test
+    public void "Validate register Union association"(){
+        employeeForChange.beUnionMember(0.5)
+        assert employeeForChange.isUnionMember() : "Should be an union member"
+    }
+
+    @Test
+    public void "Validate de-register Union association"(){
+        employeeForChange.beUnionMember(0.5)
+        employeeForChange.dropUnionMembership()
+        assert !employeeForChange.isUnionMember() : "Should not be an union member after de-registration"
+    }
+
     private void verifyMandatoryErrorsMessagesWereIssued() {
         assert validationObserver.getErrors().contains("payroll.employee.name.mandatory")
         assert validationObserver.getErrors().contains("payroll.employee.address.mandatory")

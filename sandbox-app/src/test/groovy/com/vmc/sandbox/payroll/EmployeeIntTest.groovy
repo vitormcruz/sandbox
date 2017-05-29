@@ -70,6 +70,14 @@ class EmployeeIntTest extends IntegrationTestBase {
     }
 
     @Test
+    def void "Add a new Union member Employee"(){
+        def addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email")
+                                                  .setPaymentType(new Monthly(1000)).beUnionMember(0.5).build()
+        assertMonthlyPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 1000)
+        assert addedEmployee.isUnionMember() : "Should be an Union Member"
+    }
+
+    @Test
     def void "Edit an Employee"(){
         Employee employeeToChange = employeeRepository.get(employee1.id)
         employeeToChange.name = "Change Test"

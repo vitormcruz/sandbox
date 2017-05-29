@@ -2,6 +2,9 @@ package com.vmc.sandbox.payroll
 
 import com.vmc.sandbox.payroll.payment.attachment.PaymentAttachment
 import com.vmc.sandbox.payroll.payment.type.PaymentType
+import com.vmc.sandbox.payroll.union.DefaultUnionAssociation
+import com.vmc.sandbox.payroll.union.NoUnionAssociation
+import com.vmc.sandbox.payroll.union.UnionAssociation
 import com.vmc.sandbox.validationNotification.imp.RequiredValidation
 
 class Employee implements Entity{
@@ -20,6 +23,8 @@ class Employee implements Entity{
     def PaymentType paymentType
 
     private RequiredValidation requiredPaymentTypeValidation = new RequiredValidation(this, [:], "employee.payment", "payroll.employee.payment.type.mandatory")
+
+    private UnionAssociation unionAssociation = NoUnionAssociation.getInstance()
 
     @Override
     def getId() {
@@ -42,7 +47,19 @@ class Employee implements Entity{
         requiredPaymentTypeValidation.set(paymentType, { this.@paymentType = paymentType })
     }
 
-    void postPaymentAttachment(PaymentAttachment paymentAttachment){
+    public void postPaymentAttachment(PaymentAttachment paymentAttachment){
         paymentType.postPaymentAttachment(paymentAttachment)
+    }
+
+    public void beUnionMember(rate) {
+        unionAssociation = new DefaultUnionAssociation(rate)
+    }
+
+    public Boolean isUnionMember() {
+        unionAssociation.isUnionMember()
+    }
+
+    public void dropUnionMembership() {
+        unionAssociation = NoUnionAssociation.getInstance()
     }
 }
