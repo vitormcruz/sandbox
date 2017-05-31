@@ -1,8 +1,8 @@
 package com.vmc.sandbox.validationNotification.imp
 
-import com.vmc.sandbox.validationNotification.ValidationObserver
+import com.vmc.sandbox.validationNotification.SimpleValidationObserver
 
-class SimpleValidationObserver implements ValidationObserver{
+class SimpleValidationObserverImp implements SimpleValidationObserver{
 
     def errors = []
     def mandatoryObligation = [:]
@@ -37,6 +37,7 @@ class SimpleValidationObserver implements ValidationObserver{
         return errors.isEmpty()
     }
 
+    @Override
     def getErrors() {
         return errors + mandatoryObligation.collect {it.value}
     }

@@ -1,5 +1,7 @@
 package com.vmc.sandbox.validationNotification
 
+import com.vmc.sandbox.validationNotification.imp.SimpleValidationObserverImp
+
 class ApplicationValidationNotifier {
 
     private static ThreadLocal<WeakHashMap<ValidationObserver, Void>> observers
@@ -75,5 +77,11 @@ class ApplicationValidationNotifier {
 
     static boolean isInitialized(){
         return observers != null
+    }
+
+    static SimpleValidationObserver getSimpleObserver() {
+        def validationObserver = new SimpleValidationObserverImp()
+        addObserver(validationObserver)
+        return validationObserver
     }
 }

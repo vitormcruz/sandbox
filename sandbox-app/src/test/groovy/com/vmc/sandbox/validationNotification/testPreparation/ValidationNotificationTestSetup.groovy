@@ -1,21 +1,21 @@
 package com.vmc.sandbox.validationNotification.testPreparation
 
 import com.vmc.sandbox.validationNotification.ApplicationValidationNotifier
-import com.vmc.sandbox.validationNotification.imp.SimpleValidationObserver
+import com.vmc.sandbox.validationNotification.imp.SimpleValidationObserverImp
 import org.junit.Before
 
 abstract class ValidationNotificationTestSetup {
 
-    protected SimpleValidationObserver validationObserver = new SimpleValidationObserver()
+    protected SimpleValidationObserverImp validationObserver = new SimpleValidationObserverImp()
 
-    public SimpleValidationObserver getValidationObserver(){
+    public SimpleValidationObserverImp getValidationObserver(){
         return validationObserver
     }
 
     @Before
     public void setUp(){
         ApplicationValidationNotifier.createCurrentListOfListeners()
-        validationObserver = new SimpleValidationObserver()
+        validationObserver = new SimpleValidationObserverImp()
         ApplicationValidationNotifier.addObserver(validationObserver)
     }
 

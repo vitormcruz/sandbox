@@ -4,6 +4,7 @@ import com.vmc.sandbox.validationNotification.ApplicationValidationNotifier
 import com.vmc.sandbox.validationNotification.ValidationObserver
 import com.vmc.sandbox.validationNotification.builder.BuilderAwareness
 import com.vmc.sandbox.validationNotification.builder.CommonBuilder
+import com.vmc.sandbox.validationNotification.builder.ConstructionValidationFailedException
 
 /**
  * Provides a generic builder for a given class where with* methods are mapped to constructor arguments in the call
@@ -59,15 +60,30 @@ class GenericBuilder implements CommonBuilder, ValidationObserver{
 
     public buildAndDo(aSuccessClosure, aFailureClosure) {
         ApplicationValidationNotifier.addObserver(this)
-        def builtEntity = aClass."newInstance"(*constructorArgs)
-        if(builtEntity instanceof BuilderAwareness && !builtEntity.wasBuiltWithValidBuilder()){
+        def builtEntity = buildIgnoringConstructionValidationError()
+        validateConstructorUsed(builtEntity)
+        messagesCall.each {String name, args -> builtEntity."${name}"(*args) }
+        ApplicationValidationNotifier.removeObserver(this)
+        return builderStrategy.doWithBuiltEntity(builtEntity, aSuccessClosure, aFailureClosure)
+    }
+
+    public Object buildIgnoringConstructionValidationError() {
+        def builtEntity = null
+        try {
+            builtEntity = aClass."newInstance"(*constructorArgs)
+        } catch (ConstructionValidationFailedException e) {
+            //Ignore. Construction validation failure is dealt by me. I will return null as the built entity and those observing
+            //the validation will know what went wrong
+        }
+        return builtEntity
+    }
+
+    public void validateConstructorUsed(builtEntity) {
+        if (builtEntity instanceof BuilderAwareness && !builtEntity.wasBuiltWithValidConstructor()) {
             throw new UsedForbiddenConstructor("The constructor found for ${aClass.getSimpleName()} with " +
                                                "${constructorArgs.collect { it.getClass().simpleName }} arguments is of " +
                                                "forbidden use.")
         }
-        messagesCall.each {String name, args -> builtEntity."${name}"(*args) }
-        ApplicationValidationNotifier.removeObserver(this)
-        return builderStrategy.doWithBuiltEntity(builtEntity, aSuccessClosure, aFailureClosure)
     }
 
     @Override

@@ -1,8 +1,12 @@
 package com.vmc.sandbox.payroll.payment.attachment
 
+import com.vmc.sandbox.validationNotification.SimpleValidationObserver
 import com.vmc.sandbox.validationNotification.builder.BuilderAwareness
+import com.vmc.sandbox.validationNotification.builder.ConstructionValidationFailedException
+import org.apache.commons.lang.StringUtils
 import org.joda.time.DateTime
 
+import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.getSimpleObserver
 import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.issueError
 
 class TimeCard implements PaymentAttachment, BuilderAwareness{
@@ -17,9 +21,11 @@ class TimeCard implements PaymentAttachment, BuilderAwareness{
     }
 
     TimeCard(DateTime date, Integer hours) {
+        SimpleValidationObserver simpleValidationObserver = getSimpleObserver()
         this.hours = hours
         this.date = date
         validateRequiredFields()
+        if(!simpleValidationObserver.successful()) throw new ConstructionValidationFailedException(StringUtils.join(simpleValidationObserver.errors, ", "))
     }
 
     public void validateRequiredFields() {
