@@ -3,6 +3,7 @@ package com.vmc.sandbox.payroll
 import com.vmc.sandbox.concurrency.ModelSnapshot
 import com.vmc.sandbox.payroll.external.persistence.inMemory.repository.CommonInMemoryRepository
 import com.vmc.sandbox.payroll.payment.attachment.SalesReceipt
+import com.vmc.sandbox.payroll.payment.attachment.ServiceCharge
 import com.vmc.sandbox.payroll.payment.attachment.TimeCard
 import com.vmc.sandbox.payroll.payment.type.Commission
 import com.vmc.sandbox.payroll.payment.type.Hourly
@@ -24,7 +25,7 @@ class EmployeeIntTest extends IntegrationTestBase {
     private Employee employee2
     private Employee employee3
     private Employee employee4
-    private Employee employee5
+    private Employee employeeUnion5
 
     @Before
     public void setUp(){
@@ -39,7 +40,7 @@ class EmployeeIntTest extends IntegrationTestBase {
         employee2 = employeeDataSetBuilder.setName("Heloísa Medina").setAddress("test address").setEmail("test email").setPaymentType(new Commission(2000, 100)).build()
         employee3 = employeeDataSetBuilder.setName("Sofia").setAddress("test address").setEmail("test email").setPaymentType(new Monthly(2000)).build()
         employee4 = employeeDataSetBuilder.setName("Sofia Medina").setAddress("test address").setEmail("test email").setPaymentType(new Monthly(2000)).build()
-        employee5 = employeeDataSetBuilder.setName("Sofia Medina Carvalho").setAddress("test address").setEmail("test email").setPaymentType(new Hourly(100)).build()
+        employeeUnion5 = employeeDataSetBuilder.setName("Sofia Medina Carvalho").setAddress("test address").setEmail("test email").beUnionMember(0.5).setPaymentType(new Hourly(100)).build()
     }
 
     @Test
@@ -63,21 +64,6 @@ class EmployeeIntTest extends IntegrationTestBase {
     }
 
     @Test
-    def void "Add a new commission paid Employee"(){
-        Employee addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").setPaymentType(new Commission(1000, 20)).build()
-        addedEmployee = employeeRepository.get(addedEmployee.getId())
-        assertCommissionPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 1000, 20)
-    }
-
-    @Test
-    def void "Add a new Union member Employee"(){
-        def addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email")
-                                                  .setPaymentType(new Monthly(1000)).beUnionMember(0.5).build()
-        assertMonthlyPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 1000)
-        assert addedEmployee.isUnionMember() : "Should be an Union Member"
-    }
-
-    @Test
     def void "Edit an Employee"(){
         Employee employeeToChange = employeeRepository.get(employee1.id)
         employeeToChange.name = "Change Test"
@@ -98,21 +84,36 @@ class EmployeeIntTest extends IntegrationTestBase {
     }
 
     @Test
+    def void "Add a new Union member Employee"(){
+        def addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email")
+                .setPaymentType(new Monthly(1000)).beUnionMember(0.5).build()
+        assertMonthlyPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 1000)
+        assert addedEmployee.isUnionMember() : "Should be an Union Member"
+    }
+
+    @Test
     def void "Find Employees"(){
         def employeeFound = employeeRepository.findAll {it.name.contains("Medina")}
 
-        assert employeeFound.collect {it.id} as Set == [employee2, employee4, employee5].collect {it.id} as Set
+        assert employeeFound.collect {it.id} as Set == [employee2, employee4, employeeUnion5].collect {it.id} as Set
+    }
+
+    @Test
+    def void "Add a new commission paid Employee"(){
+        Employee addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").setPaymentType(new Commission(1000, 20)).build()
+        addedEmployee = employeeRepository.get(addedEmployee.getId())
+        assertCommissionPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 1000, 20)
     }
 
     @Test
     def void "Post a time card"(){
         def expectedDate = new DateTime()
         def expectedTimeCard = new TimeCard(expectedDate, 6)
-        employee5.postPaymentAttachment(expectedTimeCard)
-        employeeRepository.update(employee5)
+        employeeUnion5.postPaymentAttachment(expectedTimeCard)
+        employeeRepository.update(employeeUnion5)
         model.save()
-        def employeeChanged = employeeRepository.get(employee5.id)
-        assert validationObserver.successful()
+        def employeeChanged = employeeRepository.get(employeeUnion5.id)
+        assert validationObserver.successful() : "${validationObserver.commaSeparatedErrors()}"
         assert employeeChanged.paymentType.getPaymentAttachments().collect{ it.getDate().toString() + "_" + it.getHours()} ==
                [expectedDate.toString() + "_" + 6]
     }
@@ -125,9 +126,22 @@ class EmployeeIntTest extends IntegrationTestBase {
         employeeRepository.update(employee2)
         model.save()
         def employeeChanged = employeeRepository.get(employee2.id)
-        assert validationObserver.successful()
+        assert validationObserver.successful() : "${validationObserver.commaSeparatedErrors()}"
         assert employeeChanged.paymentType.getPaymentAttachments().collect{ it.getDate().toString() + "_" + it.getAmount()} ==
                [expectedDate.toString() + "_" + 200]
+    }
+
+    @Test
+    def void "Post an Union charge"(){
+        def expectedDate = new DateTime()
+        def expectedServiceCharge = new ServiceCharge(expectedDate, 5)
+        employeeUnion5.postPaymentAttachment(expectedServiceCharge)
+        employeeRepository.update(employeeUnion5)
+        model.save()
+        def employeeChanged = employeeRepository.get(employeeUnion5.id)
+        assert validationObserver.successful() : "${validationObserver.commaSeparatedErrors()}"
+        assert employeeChanged.paymentType.getPaymentAttachments().collect{ it.getDate().toString() + "_" + it.getAmount()} ==
+                [expectedDate.toString() + "_" + 5]
     }
 
     @Test

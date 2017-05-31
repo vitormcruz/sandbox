@@ -1,10 +1,10 @@
 package com.vmc.sandbox.payroll
 
+import com.vmc.sandbox.payroll.payment.type.PaymentType
+import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
+import com.vmc.sandbox.validationNotification.testPreparation.ValidationNotificationTestSetup
 import org.junit.Before
 import org.junit.Test
-import com.vmc.sandbox.payroll.payment.type.PaymentType
-import com.vmc.sandbox.validationNotification.testPreparation.ValidationNotificationTestSetup
-import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
 
 class EmployeeUnitTest extends ValidationNotificationTestSetup{
 

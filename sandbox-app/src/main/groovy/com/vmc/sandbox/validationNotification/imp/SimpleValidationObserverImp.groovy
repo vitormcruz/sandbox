@@ -1,6 +1,7 @@
 package com.vmc.sandbox.validationNotification.imp
 
 import com.vmc.sandbox.validationNotification.SimpleValidationObserver
+import org.apache.commons.lang.StringUtils
 
 class SimpleValidationObserverImp implements SimpleValidationObserver{
 
@@ -40,5 +41,9 @@ class SimpleValidationObserverImp implements SimpleValidationObserver{
     @Override
     def getErrors() {
         return errors + mandatoryObligation.collect {it.value}
+    }
+
+    def getCommaSeparatedErrors(){
+        return StringUtils.join(getErrors(), ", ")
     }
 }

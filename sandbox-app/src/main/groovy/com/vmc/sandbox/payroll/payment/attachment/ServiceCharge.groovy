@@ -5,22 +5,22 @@ import org.joda.time.DateTime
 
 import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.issueError
 
-class TimeCard implements PaymentAttachment, BuilderAwareness{
+class ServiceCharge implements UnionAttachment, BuilderAwareness{
 
     private DateTime date
-    private Integer hours
+    private amount
 
-    private TimeCard() {
+    private ServiceCharge() {
         //Available only for reflection magic
         invalidForBuilder()
     }
 
-    TimeCard(DateTime date, Integer hours) {
+    ServiceCharge(DateTime date, amount) {
         validateConstruction {
-            this.hours = hours
             this.date = date
-            if (date == null) issueError(this, [:], "payroll.timecard.date.required")
-            if (hours == null) issueError(this, [:], "payroll.timecard.hours.required")
+            this.amount = amount
+            if (date == null) issueError(this, [:], "payroll.servicecharge.date.required")
+            if (amount == null) issueError(this, [:], "payroll.servicecharge.amount.required")
         }
     }
 
@@ -28,7 +28,7 @@ class TimeCard implements PaymentAttachment, BuilderAwareness{
         return date
     }
 
-    Integer getHours() {
-        return hours
+    Integer getAmount() {
+        return amount
     }
 }
