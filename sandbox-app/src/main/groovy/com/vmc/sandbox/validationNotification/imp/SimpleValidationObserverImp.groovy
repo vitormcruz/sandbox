@@ -9,7 +9,7 @@ class SimpleValidationObserverImp implements SimpleValidationObserver{
     def mandatoryObligation = [:]
 
     @Override
-    void validationStarted(Object subject, Map context, String validationName) {
+    void validationStarted(String validationName) {
 
     }
 
@@ -29,7 +29,7 @@ class SimpleValidationObserverImp implements SimpleValidationObserver{
     }
 
     @Override
-    void validationFinished(Object subject, Map context) {
+    void validationFinished() {
 
     }
 

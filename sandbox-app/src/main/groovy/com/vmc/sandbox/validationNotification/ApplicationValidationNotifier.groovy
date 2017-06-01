@@ -32,18 +32,18 @@ class ApplicationValidationNotifier {
         getObservers().clear()
     }
 
-    static void executeNamedValidation(Object subject, Map context, String validationName, Closure validation) {
-        startValidation(subject, context, validationName)
+    static void executeNamedValidation(String validationName, Closure validation) {
+        startValidation(validationName)
         validation(this)
-        finishValidation(subject, context)
+        finishValidation()
     }
 
-    static void startValidation(Object subject, Map context, String validationName) {
-        getObserversIterator().each {it.validationStarted(subject, context, validationName)}
+    static void startValidation(String validationName) {
+        getObserversIterator().each {it.validationStarted(validationName)}
     }
 
-    static void finishValidation(Object subject, Map context) {
-        getObserversIterator().each {it.validationFinished(subject, context)}
+    static void finishValidation() {
+        getObserversIterator().each {it.validationFinished()}
     }
 
     static void issueMandatoryObligation(Object subject, Map context, String mandatoryValidationName, String error) {

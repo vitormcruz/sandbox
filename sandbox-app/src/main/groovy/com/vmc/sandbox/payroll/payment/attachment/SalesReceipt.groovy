@@ -19,7 +19,7 @@ class SalesReceipt implements PaymentAttachment, BuilderAwareness{
 
     //Should be used by builder only
     protected SalesReceipt(DateTime date, amount) {
-        executeNamedValidation(this, [:], "Validate new SalesReceipt", {
+        executeNamedValidation("Validate new SalesReceipt", {
             date != null? this.date = date : issueError(this, [:], "payroll.salesreceipt.date.required")
             amount != null? this.amount = amount : issueError(this, [:], "payroll.salesreceipt.amount.required")
         })

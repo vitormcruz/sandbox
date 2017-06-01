@@ -25,7 +25,7 @@ public class WebServiceControllerValidationListener implements ValidationObserve
     }
 
     @Override
-    void validationStarted(Object subject, Map context, String validationName) {
+    void validationStarted(String validationName) {
         currentErrors = new ArrayList()
         errorsByValidation.put(validationName, currentErrors)
     }
@@ -57,7 +57,7 @@ public class WebServiceControllerValidationListener implements ValidationObserve
     }
 
     @Override
-    void validationFinished(Object subject, Map context) {
+    void validationFinished() {
         currentErrors = errorsByValidation.get(null)
     }
 

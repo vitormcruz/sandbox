@@ -74,7 +74,7 @@ class GenericBuilder implements CommonBuilder, ValidationObserver{
     }
 
     @Override
-    void validationStarted(Object subject, Map context, String validationName) {
+    void validationStarted(String validationName) {
         //don't care
     }
 
@@ -96,7 +96,7 @@ class GenericBuilder implements CommonBuilder, ValidationObserver{
     }
 
     @Override
-    void validationFinished(Object subject, Map context) {
+    void validationFinished() {
         //don't care
     }
 
