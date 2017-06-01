@@ -99,13 +99,6 @@ class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
     }
 
     @Test
-    def void "Call build on a class that throws ConstructionValidationFailedException"(){
-        def builder = getBuilderFor(TestConstructorThrowingConstructionValidationFailedException)
-        def test = builder.withTest("test").build()
-        assert test == null : "Should have ignored the ConstructionValidationFailedException and return null"
-    }
-
-    @Test
     def void "Using one with to call constructor in the correct order"(){
         def entity = getBuilderFor(TestNPropertiesOneConstructor).with("a", "b", 1, 1L).build()
         assert entity != null
@@ -306,12 +299,4 @@ class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
             this.a = a
         }
     }
-
-    public static class TestConstructorThrowingConstructionValidationFailedException {
-
-        TestConstructorThrowingConstructionValidationFailedException(String test){
-                throw new ConstructionValidationFailedException();
-            }
-        }
-
 }

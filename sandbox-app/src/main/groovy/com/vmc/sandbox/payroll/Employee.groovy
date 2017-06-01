@@ -2,9 +2,9 @@ package com.vmc.sandbox.payroll
 
 import com.vmc.sandbox.payroll.payment.attachment.PaymentAttachment
 import com.vmc.sandbox.payroll.payment.type.PaymentType
-import com.vmc.sandbox.payroll.union.DefaultUnionAssociation
-import com.vmc.sandbox.payroll.union.NoUnionAssociation
-import com.vmc.sandbox.payroll.union.UnionAssociation
+import com.vmc.sandbox.payroll.unionAssociation.DefaultUnionAssociation
+import com.vmc.sandbox.payroll.unionAssociation.NoUnionAssociation
+import com.vmc.sandbox.payroll.unionAssociation.UnionAssociation
 import com.vmc.sandbox.validationNotification.imp.RequiredValidation
 
 class Employee implements Entity{

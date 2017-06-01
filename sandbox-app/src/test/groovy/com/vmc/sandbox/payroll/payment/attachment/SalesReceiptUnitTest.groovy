@@ -7,7 +7,7 @@ import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
 
 import static junit.framework.TestCase.fail
 
-class SalesReceiptTest extends ValidationNotificationTestSetup {
+class SalesReceiptUnitTest extends ValidationNotificationTestSetup {
 
     @Test
     def void "Create a sales receipt providing null to required fields"(){

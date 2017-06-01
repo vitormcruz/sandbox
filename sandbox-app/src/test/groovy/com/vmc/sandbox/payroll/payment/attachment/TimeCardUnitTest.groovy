@@ -7,7 +7,7 @@ import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
 
 import static junit.framework.TestCase.fail
 
-class TimeCardTest extends ValidationNotificationTestSetup {
+class TimeCardUnitTest extends ValidationNotificationTestSetup {
 
     @Test
     def void "Create a time card providing null to required fields"(){

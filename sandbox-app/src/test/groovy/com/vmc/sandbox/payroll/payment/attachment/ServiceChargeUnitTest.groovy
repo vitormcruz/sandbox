@@ -7,7 +7,7 @@ import org.junit.Test
 
 import static junit.framework.TestCase.fail
 
-class ServiceChargeTest extends ValidationNotificationTestSetup {
+class ServiceChargeUnitTest extends ValidationNotificationTestSetup {
 
     @Test
     def void "Create a service charge providing null to required fields"(){

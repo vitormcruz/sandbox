@@ -108,12 +108,12 @@ class EmployeeIntTest extends IntegrationTestBase {
     @Test
     def void "Post a time card"(){
         def expectedDate = new DateTime()
-        def expectedTimeCard = new TimeCard(expectedDate, 6)
+        def expectedTimeCard = TimeCard.newTimeCard(expectedDate, 6)
         employeeUnion5.postPaymentAttachment(expectedTimeCard)
         employeeRepository.update(employeeUnion5)
         model.save()
         def employeeChanged = employeeRepository.get(employeeUnion5.id)
-        assert validationObserver.successful() : "${validationObserver.commaSeparatedErrors()}"
+        assert validationObserver.successful() : "${validationObserver.getCommaSeparatedErrors()}"
         assert employeeChanged.paymentType.getPaymentAttachments().collect{ it.getDate().toString() + "_" + it.getHours()} ==
                [expectedDate.toString() + "_" + 6]
     }
@@ -121,12 +121,12 @@ class EmployeeIntTest extends IntegrationTestBase {
     @Test
     def void "Post a sales receipt"(){
         def expectedDate = new DateTime()
-        def expectedSalesReceipt = new SalesReceipt(expectedDate, 200)
+        def expectedSalesReceipt = SalesReceipt.newSalesReceipt(expectedDate, 200)
         employee2.postPaymentAttachment(expectedSalesReceipt)
         employeeRepository.update(employee2)
         model.save()
         def employeeChanged = employeeRepository.get(employee2.id)
-        assert validationObserver.successful() : "${validationObserver.commaSeparatedErrors()}"
+        assert validationObserver.successful() : "${validationObserver.getCommaSeparatedErrors()}"
         assert employeeChanged.paymentType.getPaymentAttachments().collect{ it.getDate().toString() + "_" + it.getAmount()} ==
                [expectedDate.toString() + "_" + 200]
     }
@@ -134,12 +134,12 @@ class EmployeeIntTest extends IntegrationTestBase {
     @Test
     def void "Post an Union charge"(){
         def expectedDate = new DateTime()
-        def expectedServiceCharge = new ServiceCharge(expectedDate, 5)
+        def expectedServiceCharge = ServiceCharge.newServiceCharge(expectedDate, 5)
         employeeUnion5.postPaymentAttachment(expectedServiceCharge)
         employeeRepository.update(employeeUnion5)
         model.save()
         def employeeChanged = employeeRepository.get(employeeUnion5.id)
-        assert validationObserver.successful() : "${validationObserver.commaSeparatedErrors()}"
+        assert validationObserver.successful() : "${validationObserver.getCommaSeparatedErrors()}"
         assert employeeChanged.paymentType.getPaymentAttachments().collect{ it.getDate().toString() + "_" + it.getAmount()} ==
                 [expectedDate.toString() + "_" + 5]
     }
@@ -147,7 +147,7 @@ class EmployeeIntTest extends IntegrationTestBase {
     @Test
     def void "Post attachment to monthly paid employee"(){
         def e = shouldFail UnsupportedOperationException,
-                           {employee1.postPaymentAttachment(new SalesReceipt(new DateTime(), 200))}
+                           {employee1.postPaymentAttachment(SalesReceipt.newSalesReceipt(new DateTime(), 200))}
 
         assert e.getMessage() == "Monthly payment does not have payment attachments"
     }

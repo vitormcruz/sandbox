@@ -1,4 +1,4 @@
-package com.vmc.sandbox.payroll.union
+package com.vmc.sandbox.payroll.unionAssociation
 
 import org.junit.Test
 

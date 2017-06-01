@@ -4,8 +4,6 @@ import com.vmc.sandbox.validationNotification.ApplicationValidationNotifier
 import com.vmc.sandbox.validationNotification.ValidationObserver
 import com.vmc.sandbox.validationNotification.builder.BuilderAwareness
 import com.vmc.sandbox.validationNotification.builder.CommonBuilder
-import com.vmc.sandbox.validationNotification.builder.ConstructionValidationFailedException
-
 /**
  * Provides a generic builder for a given class where with* methods are mapped to constructor arguments in the call
  * order and set* methods are mapped to setters of the built object. It uses Validation Notifiers to figure out if a
@@ -18,7 +16,7 @@ class GenericBuilder implements CommonBuilder, ValidationObserver{
 
     protected BuilderStrategy builderStrategy = new BuilderSuccessStrategy()
     protected mandatoryObligations = [:]
-    protected messagesCall = [:]
+    protected messagesCall = new HashMap()
     protected constructorArgs = new ArrayList()
     protected Class aClass
 
@@ -60,22 +58,11 @@ class GenericBuilder implements CommonBuilder, ValidationObserver{
 
     public buildAndDo(aSuccessClosure, aFailureClosure) {
         ApplicationValidationNotifier.addObserver(this)
-        def builtEntity = buildIgnoringConstructionValidationError()
+        def builtEntity = aClass."newInstance"(*constructorArgs)
         validateConstructorUsed(builtEntity)
         messagesCall.each {String name, args -> builtEntity."${name}"(*args) }
         ApplicationValidationNotifier.removeObserver(this)
         return builderStrategy.doWithBuiltEntity(builtEntity, aSuccessClosure, aFailureClosure)
-    }
-
-    public Object buildIgnoringConstructionValidationError() {
-        def builtEntity = null
-        try {
-            builtEntity = aClass."newInstance"(*constructorArgs)
-        } catch (ConstructionValidationFailedException e) {
-            //Ignore. Construction validation failure is dealt by me. I will return null as the built entity and those observing
-            //the validation will know what went wrong
-        }
-        return builtEntity
     }
 
     public void validateConstructorUsed(builtEntity) {

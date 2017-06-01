@@ -1,5 +1,4 @@
 moduleName=sandbox-module
 moduleVersion=1.0
-extensionClasses=com.vmc.sandbox.payroll.external.simpleConverter.ObjectConvertionExtensions, \
-com.vmc.sandbox.validationNotification.constructor.ObjectValidationConstructorExtensions
+extensionClasses=com.vmc.sandbox.payroll.external.simpleConverter.ObjectConvertionExtensions
 staticExtensionClasses=
