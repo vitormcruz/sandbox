@@ -4,6 +4,7 @@ import com.vmc.sandbox.validationNotification.builder.BuilderAwareness
 import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
 import org.joda.time.DateTime
 
+import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.executeNamedValidation
 import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.issueError
 
 class TimeCard implements PaymentAttachment, BuilderAwareness{
@@ -18,8 +19,10 @@ class TimeCard implements PaymentAttachment, BuilderAwareness{
 
     //Should be used by builder only
     protected TimeCard(DateTime date, Integer hours) {
-        date != null? this.date = date : issueError(this, [:], "payroll.timecard.date.required")
-        hours != null? this.hours = hours : issueError(this, [:], "payroll.timecard.hours.required")
+        executeNamedValidation("Validate new TimeCard", {
+            date != null ? this.@date = date : issueError(this, [name:"date"], "payroll.timecard.date.required")
+            hours != null ? this.@hours = hours : issueError(this, [name:"hours"], "payroll.timecard.hours.required")
+        })
     }
 
     public static TimeCard newTimeCard(DateTime date, Integer hours){

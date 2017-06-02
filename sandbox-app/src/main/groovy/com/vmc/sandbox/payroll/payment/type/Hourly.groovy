@@ -5,6 +5,7 @@ import com.vmc.sandbox.payroll.payment.attachment.TimeCard
 import com.vmc.sandbox.validationNotification.builder.BuilderAwareness
 import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
 
+import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.executeNamedValidation
 import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.issueError
 
 class Hourly extends GenericPaymentType implements BuilderAwareness{
@@ -17,10 +18,17 @@ class Hourly extends GenericPaymentType implements BuilderAwareness{
     }
 
     //Should be used by builder only
-    protected Hourly(Integer hourRate) {
-        if(hourRate == null){ issueError(this, [:], "payroll.employee.hourlypayment.hourRate.mandatory") }
-        else if(hourRate < 1){ issueError(this, [:], "payroll.employee.hourlypayment.hourRate.mustbe.positive.integer") }
-        else {this.hourRate = hourRate}
+    protected Hourly(Integer aHourRate) {
+        executeNamedValidation("Validate new Hourly Payment", {
+            def context = [name:"hourRate"]
+            if (aHourRate == null) {
+                issueError(this, context, "payroll.employee.hourlypayment.hourRate.mandatory")
+            } else if (aHourRate < 1) {
+                issueError(this, context, "payroll.employee.hourlypayment.hourRate.mustbe.positive.integer")
+            } else {
+                this.@hourRate = aHourRate
+            }
+        })
     }
 
     static Hourly newHourly(Integer hourRate) {

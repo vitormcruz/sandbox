@@ -4,11 +4,12 @@ import com.vmc.sandbox.payroll.payment.attachment.PaymentAttachment
 import com.vmc.sandbox.validationNotification.builder.BuilderAwareness
 import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
 
+import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.executeNamedValidation
 import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.issueError
 
 class Monthly extends GenericPaymentType implements BuilderAwareness{
 
-    private Integer salary
+    protected Integer salary
 
 
     protected Monthly() {
@@ -17,10 +18,17 @@ class Monthly extends GenericPaymentType implements BuilderAwareness{
     }
 
     //Should be used by builder only
-    protected Monthly(Integer salary) {
-        if(salary == null){ issueError(this, [:], "payroll.employee.monthlypayment.salary.mandatory") }
-        else if(salary < 1){ issueError(this, [:], "payroll.employee.monthlypayment.salary.mustbe.positive.integer") }
-        else {this.salary = salary}
+    protected Monthly(Integer aSalary) {
+        executeNamedValidation("Validate new Monhtly Payment", {
+            def context = [name: "salary"]
+            if (aSalary == null) {
+                issueError(this, context, "payroll.employee.monthlypayment.salary.mandatory")
+            } else if (aSalary < 1) {
+                issueError(this, context, "payroll.employee.monthlypayment.salary.mustbe.positive.integer")
+            } else {
+                this.@salary = aSalary
+            }
+        })
     }
 
     public static Monthly newMonthly(Integer salary){

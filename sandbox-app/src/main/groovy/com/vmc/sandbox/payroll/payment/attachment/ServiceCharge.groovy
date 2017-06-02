@@ -4,6 +4,7 @@ import com.vmc.sandbox.validationNotification.builder.BuilderAwareness
 import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
 import org.joda.time.DateTime
 
+import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.executeNamedValidation
 import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.issueError
 
 class ServiceCharge implements UnionAttachment, BuilderAwareness{
@@ -18,8 +19,10 @@ class ServiceCharge implements UnionAttachment, BuilderAwareness{
 
     //Should be used by builder only
     protected ServiceCharge(DateTime date, amount) {
-        date != null? this.date = date : issueError(this, [:], "payroll.servicecharge.date.required")
-        amount != null? this.amount = amount : issueError(this, [:], "payroll.servicecharge.amount.required")
+        executeNamedValidation("Validate new ServiceCharge", {
+            date != null ? this.@date = date : issueError(this, [name:"date"], "payroll.servicecharge.date.required")
+            amount != null ? this.@amount = amount : issueError(this, [name:"amount"], "payroll.servicecharge.amount.required")
+        })
     }
 
     public static ServiceCharge newServiceCharge(DateTime date, amount){
