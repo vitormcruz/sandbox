@@ -7,7 +7,7 @@ import org.joda.time.DateTime
 import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.executeNamedValidation
 import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.issueError
 
-class SalesReceipt implements PaymentAttachment, BuilderAwareness{
+class SalesReceipt implements WorkEvent, BuilderAwareness{
 
     private DateTime date
     private amount

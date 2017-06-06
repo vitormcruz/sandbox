@@ -1,5 +1,6 @@
 package com.vmc.sandbox.payroll.payment.type
 
+import com.vmc.sandbox.payroll.Employee
 import com.vmc.sandbox.payroll.payment.attachment.PaymentAttachment
 import com.vmc.sandbox.validationNotification.builder.BuilderAwareness
 import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
@@ -13,12 +14,14 @@ class Monthly extends GenericPaymentType implements BuilderAwareness{
 
 
     protected Monthly() {
+        super()
         //Available only for reflection magic
         invalidForBuilder()
     }
 
     //Should be used by builder only
-    protected Monthly(Integer aSalary) {
+    protected Monthly(Employee employee, Integer aSalary) {
+        super(employee)
         executeNamedValidation("Validate new Monhtly Payment", {
             def context = [name: "salary"]
             if (aSalary == null) {
@@ -31,8 +34,8 @@ class Monthly extends GenericPaymentType implements BuilderAwareness{
         })
     }
 
-    public static Monthly newMonthly(Integer salary){
-        return new GenericBuilder(Monthly).withSalary(salary).build()
+    public static Monthly newPaymentType(Employee employee, Integer salary){
+        return new GenericBuilder(Monthly).withEmployee(employee).withSalary(salary).build()
     }
 
     Integer getSalary() {

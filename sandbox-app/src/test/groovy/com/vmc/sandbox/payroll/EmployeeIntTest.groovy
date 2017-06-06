@@ -21,7 +21,7 @@ class EmployeeIntTest extends IntegrationTestBase {
 
     private CommonInMemoryRepository<Employee> employeeRepository
     private ModelSnapshot model
-    private DataSetBuilder employeeDataSetBuilder
+    private DataSetBuilder employeeBuilder
     private Employee employee1
     private Employee employee2
     private Employee employee3
@@ -33,15 +33,21 @@ class EmployeeIntTest extends IntegrationTestBase {
         super.setUp()
         employeeRepository = CommonInMemoryRepository.smartNewFor(EmployeeIntTest)
         model = ModelSnapshot.smartNewFor(EmployeeIntTest)
-        employeeDataSetBuilder = new DataSetBuilder(getEmployeeClass(), {
+        employeeBuilder = new DataSetBuilder(getEmployeeClass(), {
             employeeRepository.add(it)
             model.save()
         })
-        employee1 = employeeDataSetBuilder.setName("Heloísa").setAddress("Street 1").setEmail("heloisa@bla.com").setPaymentType(new Monthly(2000)).build()
-        employee2 = employeeDataSetBuilder.setName("Heloísa Medina").setAddress("test address").setEmail("test email").setPaymentType(new Commission(2000, 100)).build()
-        employee3 = employeeDataSetBuilder.setName("Sofia").setAddress("test address").setEmail("test email").setPaymentType(new Monthly(2000)).build()
-        employee4 = employeeDataSetBuilder.setName("Sofia Medina").setAddress("test address").setEmail("test email").setPaymentType(new Monthly(2000)).build()
-        employeeUnion5 = employeeDataSetBuilder.setName("Sofia Medina Carvalho").setAddress("test address").setEmail("test email").beUnionMember(0.5).setPaymentType(new Hourly(100)).build()
+
+        employee1 = employeeBuilder.setName("Heloísa").setAddress("Street 1").setEmail("heloisa@bla.com")
+                                   .bePaid(Monthly, 2000).build()
+        employee2 = employeeBuilder.setName("Heloísa Medina").setAddress("test address").setEmail("test email")
+                                   .bePaid(Commission, 2000, 100).build()
+        employee3 = employeeBuilder.setName("Sofia").setAddress("test address").setEmail("test email")
+                                   .bePaid(Monthly, 2000).build()
+        employee4 = employeeBuilder.setName("Sofia Medina").setAddress("test address").setEmail("test email")
+                                   .bePaid(Monthly, 2000).build()
+        employeeUnion5 = employeeBuilder.setName("Sofia Medina Carvalho").setAddress("test address").setEmail("test email").beUnionMember(5)
+                                        .bePaid(Hourly, 100).build()
     }
 
     @Test
@@ -52,14 +58,14 @@ class EmployeeIntTest extends IntegrationTestBase {
 
     @Test
     def void "Add a new monthly paid Employee"(){
-        Employee addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").setPaymentType(new Monthly(1000)).build()
+        Employee addedEmployee = employeeBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").bePaid(Monthly, 1000).build()
         addedEmployee = employeeRepository.get(addedEmployee.getId())
         assertMonthlyPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 1000)
     }
 
     @Test
     def void "Add a new hourly paid Employee"(){
-        Employee addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").setPaymentType(new Hourly(50)).build()
+        Employee addedEmployee = employeeBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").bePaid(Hourly, 50).build()
         addedEmployee = employeeRepository.get(addedEmployee.getId())
         assertHourlyPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 50)
     }
@@ -70,7 +76,7 @@ class EmployeeIntTest extends IntegrationTestBase {
         employeeToChange.name = "Change Test"
         employeeToChange.address = "Change Test adress"
         employeeToChange.email = "Change Test email"
-        employeeToChange.paymentType = new Monthly(5000)
+        employeeToChange.bePaid(Monthly, 5000)
         employeeRepository.update(employeeToChange)
         model.save()
         def changedEmployee = employeeRepository.get(employeeToChange.id)
@@ -86,8 +92,8 @@ class EmployeeIntTest extends IntegrationTestBase {
 
     @Test
     def void "Add a new Union member Employee"(){
-        def addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email")
-                .setPaymentType(new Monthly(1000)).beUnionMember(0.5).build()
+        def addedEmployee = employeeBuilder.setName("New Employee").setAddress("test adress").setEmail("test email")
+                                           .bePaid(Monthly, 1000).beUnionMember(5).build()
         assertMonthlyPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 1000)
         assert addedEmployee.isUnionMember() : "Should be an Union Member"
     }
@@ -101,7 +107,7 @@ class EmployeeIntTest extends IntegrationTestBase {
 
     @Test
     def void "Add a new commission paid Employee"(){
-        Employee addedEmployee = employeeDataSetBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").setPaymentType(new Commission(1000, 20)).build()
+        Employee addedEmployee = employeeBuilder.setName("New Employee").setAddress("test adress").setEmail("test email").bePaid(Commission, 1000, 20).build()
         addedEmployee = employeeRepository.get(addedEmployee.getId())
         assertCommissionPaidEmployeeIs(addedEmployee, "New Employee", "test adress", "test email", 1000, 20)
     }

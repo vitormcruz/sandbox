@@ -1,5 +1,6 @@
 package com.vmc.sandbox.payroll.payment.type
 
+import com.vmc.sandbox.payroll.Employee
 import com.vmc.sandbox.validationNotification.testPreparation.ValidationNotificationTestSetup
 import org.junit.Test
 
@@ -7,7 +8,7 @@ class HourlyBasicValidationUnitTest extends ValidationNotificationTestSetup{
 
     @Test
     def void "Validate positive Hour Rate"(){
-        def hourRate = Hourly.newHourly(3)
+        def hourRate = Hourly.newPaymentType(new Employee(), 3)
         assert hourRate != null
         assert hourRate.getHourRate() == 3
     }
@@ -31,6 +32,6 @@ class HourlyBasicValidationUnitTest extends ValidationNotificationTestSetup{
     }
 
     public Hourly getHourlyWith(Integer hourRate) {
-        Hourly.newHourly(hourRate)
+        Hourly.newPaymentType(new Employee(), hourRate)
     }
 }

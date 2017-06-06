@@ -10,7 +10,8 @@ import com.vmc.sandbox.validationNotification.builder.CommonBuilder
  * class was built successfully or not. Others parts interested in the result of validation must only register a new
  * validation observer before starting using this builder. This builder uses any constructor that fits it's
  * configuration, even those private, but when the object is Builder Aware (@see BuilderAwareness) the builder Raises a
- * ForbiddenConstructor if the constructor execution was explicitly marked as invalid
+ * ForbiddenConstructor if the constructor execution was explicitly marked as invalid.
+ *
  */
 class GenericBuilder implements CommonBuilder, ValidationObserver{
 
@@ -26,15 +27,14 @@ class GenericBuilder implements CommonBuilder, ValidationObserver{
     }
 
     protected GenericBuilder(Class aClass, messagesCall, constructorArgs) {
-        this.messagesCall = new HashMap(messagesCall)
-        this.constructorArgs = new ArrayList(constructorArgs)
         this.aClass = aClass
+        this.constructorArgs = new ArrayList(constructorArgs)
+        this.messagesCall = new HashMap(messagesCall)
     }
 
     def methodMissing(String name, def args) {
         if(name.startsWith("with")){
             constructorArgs.addAll(args)
-
         }else {
             messagesCall.put(name, args)
         }

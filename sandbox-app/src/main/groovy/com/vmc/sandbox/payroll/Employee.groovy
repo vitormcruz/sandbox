@@ -11,20 +11,22 @@ class Employee implements Entity{
 
     private String id = UUID.randomUUID()
 
-    def String name
+    String name
 
     private RequiredValidation requiredNameValidation = new RequiredValidation(this, [:], "employee.name", "payroll.employee.name.mandatory")
-    def String address
+    String address
 
     private RequiredValidation requiredAddressValidation = new RequiredValidation(this, [:], "employee.address", "payroll.employee.address.mandatory")
-    def String email
+    String email
 
     private RequiredValidation requiredEmailValidation = new RequiredValidation(this, [:], "employee.email", "payroll.employee.email.mandatory")
-    def PaymentType paymentType
+    private PaymentType paymentType
 
     private RequiredValidation requiredPaymentTypeValidation = new RequiredValidation(this, [:], "employee.payment", "payroll.employee.payment.type.mandatory")
 
     private UnionAssociation unionAssociation = NoUnionAssociation.getInstance()
+
+    private paymentAttachmentHandlers = []
 
     @Override
     def getId() {
@@ -43,15 +45,24 @@ class Employee implements Entity{
         requiredEmailValidation.set(email, { this.@email = email })
     }
 
-    public void setPaymentType(PaymentType paymentType) {
-        requiredPaymentTypeValidation.set(paymentType, { this.@paymentType = paymentType })
+    PaymentType getPaymentType() {
+        return paymentType
+    }
+
+    public void bePaid(Class<PaymentType> aPaymentTypeClass, ...args){
+        def aPaymentType = aPaymentTypeClass.newPaymentType(this, *args)
+        requiredPaymentTypeValidation.set(aPaymentType, { this.@paymentType = aPaymentType })
     }
 
     public void postPaymentAttachment(PaymentAttachment paymentAttachment){
-        paymentType.postPaymentAttachment(paymentAttachment)
+        paymentAttachmentHandlers.each {it.postPaymentAttachment(paymentAttachment)}
     }
 
-    public void beUnionMember(rate) {
+    public void registerAsPaymentAttachmentHandler(handler) {
+        paymentAttachmentHandlers.add(handler)
+    }
+
+    public void beUnionMember(Integer rate) {
         unionAssociation = new DefaultUnionAssociation(rate)
     }
 

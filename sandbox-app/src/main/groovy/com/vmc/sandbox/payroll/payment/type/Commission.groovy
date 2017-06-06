@@ -1,5 +1,6 @@
 package com.vmc.sandbox.payroll.payment.type
 
+import com.vmc.sandbox.payroll.Employee
 import com.vmc.sandbox.payroll.payment.attachment.PaymentAttachment
 import com.vmc.sandbox.payroll.payment.attachment.SalesReceipt
 import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
@@ -14,8 +15,8 @@ class Commission extends Monthly{
     protected Commission() {    }
 
     //Should be used by builder only
-    protected Commission(Integer aSalary, Integer aCommissionRate) {
-        super(aSalary)
+    protected Commission(Employee employee, Integer aSalary, Integer aCommissionRate) {
+        super(employee, aSalary)
         executeNamedValidation("Validate new Hourly Payment", {
             def context = [name:"commissionRate"]
             if (aCommissionRate == null) {
@@ -28,8 +29,8 @@ class Commission extends Monthly{
         })
     }
 
-    static Commission newCommission(Integer salary, Integer commissionRate) {
-        return new GenericBuilder(Commission).withSalary(salary).withCommissionRate(commissionRate).build()
+    static Commission newPaymentType(Employee employee, Integer salary, Integer commissionRate) {
+        return new GenericBuilder(Commission).withEmployee(employee).withSalary(salary).withCommissionRate(commissionRate).build()
     }
 
     Integer getCommissionRate() {
@@ -43,6 +44,6 @@ class Commission extends Monthly{
             return
         }
 
-        this.@paymentAttachments.add(paymentAttachment)
+        this.@workEventAttachments.add(paymentAttachment)
     }
 }

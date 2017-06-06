@@ -1,5 +1,6 @@
 package com.vmc.sandbox.payroll.payment.type
 
+import com.vmc.sandbox.payroll.Employee
 import com.vmc.sandbox.validationNotification.testPreparation.ValidationNotificationTestSetup
 import org.junit.Test
 
@@ -31,6 +32,6 @@ class MonthlyBasicValidationUnitTest extends ValidationNotificationTestSetup{
     }
 
     public Monthly getMonthlyPaymentTypeWith(Integer salary) {
-        return Monthly.newMonthly(salary)
+        return Monthly.newPaymentType(new Employee(), salary)
     }
 }

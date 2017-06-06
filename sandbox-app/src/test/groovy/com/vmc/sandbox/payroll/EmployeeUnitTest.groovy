@@ -1,6 +1,7 @@
 package com.vmc.sandbox.payroll
 
-import com.vmc.sandbox.payroll.payment.type.PaymentType
+import com.vmc.sandbox.payroll.payment.type.Commission
+import com.vmc.sandbox.payroll.payment.type.Monthly
 import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
 import com.vmc.sandbox.validationNotification.testPreparation.ValidationNotificationTestSetup
 import org.junit.Before
@@ -9,8 +10,6 @@ import org.junit.Test
 class EmployeeUnitTest extends ValidationNotificationTestSetup{
 
     private Employee employeeForChange
-    private static EXPECTED_PAYMENT_DATA = [] as PaymentType
-    private static EXPECTED_PAYMENT_DATA_2 = [] as PaymentType
 
     @Before
     public void setUp(){
@@ -22,26 +21,28 @@ class EmployeeUnitTest extends ValidationNotificationTestSetup{
         return new GenericBuilder(getEmployeeClass()).setName("test name")
                                                      .setAddress("test address")
                                                      .setEmail("test email")
-                                                     .setPaymentType(EXPECTED_PAYMENT_DATA)
+                                                     .bePaid(Monthly, 1000)
                                                      .build()
     }
 
     @Test
     public void "Create employee not providing mandatory information"(){
         new GenericBuilder(getEmployeeClass()).build()
-        verifyMandatoryErrorsMessagesWereIssued()
+        verifyMandatoryErrorsMessagesForCreationWereIssued()
     }
 
     @Test
     public void "Create employee providing mandatory information"(){
         def EmployeeBuilder = new GenericBuilder(getEmployeeClass())
-        def builtEmployee = EmployeeBuilder.setName("test name")
+        Employee builtEmployee = EmployeeBuilder.setName("test name")
                                            .setAddress("test address")
                                            .setEmail("test email")
-                                           .setPaymentType(EXPECTED_PAYMENT_DATA)
+                                           .bePaid(Monthly, 1000)
                                            .build()
 
-        verifyEmployeeWithExpectedData(builtEmployee, "test name", "test address", "test email", EXPECTED_PAYMENT_DATA)
+        verifyEmployeeWithExpectedData(builtEmployee, "test name", "test address", "test email")
+        assert builtEmployee.paymentType.class == Monthly
+        assert builtEmployee.paymentType.getSalary() == 1000
     }
 
     @Test
@@ -49,8 +50,7 @@ class EmployeeUnitTest extends ValidationNotificationTestSetup{
         employeeForChange.setName(null)
         employeeForChange.setEmail(null)
         employeeForChange.setAddress(null)
-        employeeForChange.setPaymentType(null)
-        verifyMandatoryErrorsMessagesWereIssued()
+        verifyMandatoryErrorsMessagesForChangingWereIssued()
     }
 
     @Test
@@ -58,8 +58,11 @@ class EmployeeUnitTest extends ValidationNotificationTestSetup{
         employeeForChange.setName("test name 2")
         employeeForChange.setEmail("test email 2")
         employeeForChange.setAddress("test address 2")
-        employeeForChange.setPaymentType(EXPECTED_PAYMENT_DATA_2)
-        verifyEmployeeWithExpectedData(employeeForChange, "test name 2", "test address 2", "test email 2", EXPECTED_PAYMENT_DATA_2)
+        employeeForChange.bePaid(Commission, 1000, 100)
+        verifyEmployeeWithExpectedData(employeeForChange, "test name 2", "test address 2", "test email 2")
+        assert employeeForChange.getPaymentType().getClass() == Commission
+        assert employeeForChange.getPaymentType().getSalary() == 1000
+        assert employeeForChange.getPaymentType().getCommissionRate() == 100
     }
 
     @Test
@@ -69,30 +72,34 @@ class EmployeeUnitTest extends ValidationNotificationTestSetup{
 
     @Test
     public void "Validate register Union association"(){
-        employeeForChange.beUnionMember(0.5)
+        employeeForChange.beUnionMember(5)
         assert employeeForChange.isUnionMember() : "Should be an union member"
     }
 
     @Test
     public void "Validate de-register Union association"(){
-        employeeForChange.beUnionMember(0.5)
+        employeeForChange.beUnionMember(5)
         employeeForChange.dropUnionMembership()
         assert !employeeForChange.isUnionMember() : "Should not be an union member after de-registration"
     }
 
-    private void verifyMandatoryErrorsMessagesWereIssued() {
-        assert validationObserver.getErrors().contains("payroll.employee.name.mandatory")
-        assert validationObserver.getErrors().contains("payroll.employee.address.mandatory")
-        assert validationObserver.getErrors().contains("payroll.employee.email.mandatory")
+    private void verifyMandatoryErrorsMessagesForCreationWereIssued() {
+        verifyMandatoryErrorsMessagesForChangingWereIssued()
         assert validationObserver.getErrors().contains("payroll.employee.payment.type.mandatory")
     }
 
-    private void verifyEmployeeWithExpectedData(builtEmployee, String name, String address, String email, paymentType) {
+    private void verifyMandatoryErrorsMessagesForChangingWereIssued() {
+        assert validationObserver.getErrors().contains("payroll.employee.name.mandatory")
+        assert validationObserver.getErrors().contains("payroll.employee.address.mandatory")
+        assert validationObserver.getErrors().contains("payroll.employee.email.mandatory")
+    }
+
+
+    private void verifyEmployeeWithExpectedData(builtEmployee, String name, String address, String email) {
         assert validationObserver.successful()
         assert builtEmployee.getName() == name
         assert builtEmployee.getAddress() == address
         assert builtEmployee.getEmail() == email
-        assert builtEmployee.getPaymentType() == paymentType
     }
 
     Class<Employee> getEmployeeClass() {

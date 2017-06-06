@@ -68,6 +68,8 @@ class DataSetBuilderUnitTest extends ValidationNotificationTestSetup{
         assert !inserted : "InsertCommand was called when the build process failed."
     }
 
+
+
     def getDataSetBuilder(aClass, insertCommand){
         return new DataSetBuilder(aClass, insertCommand)
     }

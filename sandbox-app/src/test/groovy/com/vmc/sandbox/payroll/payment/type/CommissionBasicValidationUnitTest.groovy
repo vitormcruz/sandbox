@@ -1,5 +1,6 @@
 package com.vmc.sandbox.payroll.payment.type
 
+import com.vmc.sandbox.payroll.Employee
 import org.junit.Test
 
 class CommissionBasicValidationUnitTest extends MonthlyBasicValidationUnitTest{
@@ -30,11 +31,11 @@ class CommissionBasicValidationUnitTest extends MonthlyBasicValidationUnitTest{
     }
 
     Commission getCommissionPaymentTypeWith(Integer salary, Integer rate) {
-        return Commission.newCommission(salary, rate)
+        return Commission.newPaymentType(new Employee(), salary, rate)
     }
 
     @Override
     Monthly getMonthlyPaymentTypeWith(Integer salary) {
-        return Commission.newCommission(salary, 500)
+        return Commission.newPaymentType(new Employee(), salary, 500)
     }
 }

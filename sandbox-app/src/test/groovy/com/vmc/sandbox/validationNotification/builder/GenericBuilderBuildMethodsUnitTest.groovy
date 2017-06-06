@@ -9,14 +9,13 @@ import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifi
 import static groovy.test.GroovyAssert.shouldFail
 import static org.junit.Assert.fail
 
-class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
+class GenericBuilderBuildMethodsUnitTest extends ValidationNotificationTestSetup{
 
     @Test
     def void "The GenericBuilder class parameter must be provided"(){
         def ex = shouldFail IllegalArgumentException, {getBuilderFor(null)}
         assert ex.message == "A class to build must be provided"
     }
-
 
     @Test
     def void "Call onSuccessDoWithBuiltEntity with a success built entity "(){
@@ -99,94 +98,6 @@ class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
     }
 
     @Test
-    def void "Using one with to call constructor in the correct order"(){
-        def entity = getBuilderFor(TestNPropertiesOneConstructor).with("a", "b", 1, 1L).build()
-        assert entity != null
-        assert entity instanceof TestNPropertiesOneConstructor
-    }
-
-    @Test
-    def void "Using one with to call constructor in the wrong order"(){
-        def error = shouldFail GroovyRuntimeException, {getBuilderFor(TestNPropertiesOneConstructor).with("a", 1, 1L, "b").build()}
-        assert error.message.contains("Could not find matching constructor")
-    }
-
-    @Test
-    def void "Using one with to call constructor using less arguments than the constructor has"(){
-        def error = shouldFail GroovyRuntimeException, {getBuilderFor(TestNPropertiesOneConstructor).with("a", "b", 1).build()}
-        assert error.message.contains("Could not find matching constructor")
-    }
-
-    @Test
-    def void "Using one with to call constructor using more arguments than the constructor has"(){
-        def error = shouldFail GroovyRuntimeException, {getBuilderFor(TestNPropertiesOneConstructor).with("a", "b", 1, 1L, "c").build()}
-        assert error.message.contains("Could not find matching constructor")
-    }
-
-    @Test
-    def void "N withs in the correct order for K arguments, where N <> K"(){
-        def error = shouldFail GroovyRuntimeException, {getBuilderFor(TestNPropertiesOneConstructor).withA("a")
-                                                                                                          .withRest("b", 1, 1L, "c")
-                                                                                                          .build()}
-        assert error.message.contains("Could not find matching constructor")
-    }
-
-    @Test
-    def void "N withs in the correct order for K arguments, where N == K"(){
-        def object = getBuilderFor(TestNPropertiesOneConstructor).withA("a")
-                                                                 .withRest("b", 1, 1L)
-                                                                 .build()
-        assert object != null
-        assert object instanceof TestNPropertiesOneConstructor
-    }
-
-    @Test
-    def void "N withs in the incorrect order for K arguments, where N == K"(){
-        def error = shouldFail GroovyRuntimeException, {getBuilderFor(TestNPropertiesOneConstructor).with1(1)
-                                                                                                          .withRest("a", "b", 1L)
-                                                                                                          .build()}
-        assert error.message.contains("Could not find matching constructor")
-    }
-
-    @Test
-    def void "Repeat with giving wrong arguments"(){
-        def error = shouldFail GroovyRuntimeException, {getBuilderFor(TestNPropertiesOneConstructor).with("a")
-                                                                                                          .with(1, 1L)
-                                                                                                          .build()}
-        assert error.message.contains("Could not find matching constructor")
-    }
-
-    @Test
-    def void "Repeat with giving right arguments"(){
-        def entity = getBuilderFor(TestNPropertiesOneConstructor).with("a", "b").with(1, 1L).build()
-        assert entity != null
-        assert entity instanceof TestNPropertiesOneConstructor
-    }
-
-    @Test
-    def void "Mixing with and set"(){
-        TestNPropertiesOneConstructor object = getBuilderFor(TestNPropertiesOneConstructor).with("a", "b")
-                                                                                           .with(1, 1L)
-                                                                                           .setA("Changed")
-                                                                                           .build()
-
-        assert object.getA() == "Changed"
-    }
-
-    @Test
-    def void "Repeat set"(){
-        TestNPropertiesOneConstructor object = getBuilderFor(TestNPropertiesOneConstructor).with("a", "b")
-                                                                                           .with(1, 1L)
-                                                                                           .setA("Changed")
-                                                                                           .setB("Changed")
-                                                                                           .setB("Changed2")
-                                                                                           .build()
-
-        assert object.getA() == "Changed"
-        assert object.getB() == "Changed2"
-    }
-
-    @Test
     def void "Builder should not call forbidden constructors"(){
         def ex = shouldFail UsedForbiddenConstructor, {getBuilderFor(TestForbiddenConstructor).build()}
         assert ex.message == "The constructor found for TestForbiddenConstructor with [] arguments is of forbidden use."
@@ -208,20 +119,6 @@ class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
         }
     }
 
-    @Test
-    def void "Builder used for constructor passing one null argument"(){
-        def entity = getBuilderFor(TestConstructorWithNull).withName(null).build()
-        assert entity != null : "When null is used, a constructor with the same number of arguments should be used"
-    }
-
-    @Test
-    def void "Builder used for constructor passing N null arguments"(){
-        def entity = getBuilderFor(TestConstructorWithNull).withName(null)
-                                                           .withAddress(null)
-                                                           .build()
-        assert entity != null : "When null is used, a constructor with the same number of arguments should be used"
-    }
-
     def getSuccessBuilders(){
         return [getBuilderFor(TestEntity).setAttribute("ok"),
                 getBuilderFor(TestConstructorWithOneArgument).withAttribute("ok")]
@@ -232,7 +129,7 @@ class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
                 getBuilderFor(TestConstructorWithOneArgument).withAttribute("fail")]
     }
 
-    public GenericBuilder getBuilderFor(Class<TestEntity> clazz) {
+    public GenericBuilder getBuilderFor(Class clazz) {
         new GenericBuilder(clazz)
     }
 
@@ -260,18 +157,6 @@ class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
         }
     }
 
-    public static class TestConstructorWithNArguments {
-        def String attribute;
-        def String attribute2;
-        def String attribute3;
-
-        public TestConstructorWithNArguments(String attribute, String attribute2, String attribute3) {
-            this.attribute = attribute
-            this.attribute2 = attribute2
-            this.attribute3 = attribute3
-        }
-    }
-
     public static class TestForbiddenConstructor implements BuilderAwareness{
         private TestForbiddenConstructor(){invalidForBuilder()}
         private TestForbiddenConstructor(String a){invalidForBuilder()}
@@ -279,24 +164,5 @@ class GenericBuilderUnitTest extends ValidationNotificationTestSetup{
         public TestForbiddenConstructor(Byte a){}
 
         TestForbiddenConstructor(Long a){}
-    }
-
-    public static class TestConstructorWithNull {
-        TestConstructorWithNull(String a){}
-        TestConstructorWithNull(String a, String b){}
-    }
-
-    public static class TestNPropertiesOneConstructor {
-        def String a
-        def String b
-        def int c
-        def long d
-
-        TestNPropertiesOneConstructor(String a, String b, Integer c, Long d){
-            this.d = d
-            this.c = c
-            this.b = b
-            this.a = a
-        }
     }
 }

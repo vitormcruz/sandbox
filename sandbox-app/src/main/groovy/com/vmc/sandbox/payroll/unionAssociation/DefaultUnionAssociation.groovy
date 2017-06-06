@@ -2,9 +2,9 @@ package com.vmc.sandbox.payroll.unionAssociation
 
 class DefaultUnionAssociation implements UnionAssociation{
 
-    private rate
+    private Integer rate
 
-    DefaultUnionAssociation(rate) {
+    DefaultUnionAssociation(Integer rate) {
         this.rate = rate
     }
 

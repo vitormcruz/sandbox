@@ -7,7 +7,7 @@ import org.joda.time.DateTime
 import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.executeNamedValidation
 import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.issueError
 
-class ServiceCharge implements UnionAttachment, BuilderAwareness{
+class ServiceCharge implements UnionCharge, BuilderAwareness{
 
     private DateTime date
     private amount
