@@ -34,7 +34,11 @@ class GenericBuilder implements CommonBuilder, ValidationObserver{
 
     def methodMissing(String name, def args) {
         if(name.startsWith("with")){
-            constructorArgs.addAll(args)
+            if(args.size() > 1){
+                constructorArgs.add(args)
+            } else {
+                constructorArgs.addAll(args)
+            }
         }else {
             messagesCall.put(name, args)
         }

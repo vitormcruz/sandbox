@@ -45,7 +45,9 @@ class FillingGenericBuilderUnitTest extends ValidationNotificationTestSetup{
     @Test
     def void "N withs in the correct order for K arguments, where N == K"(){
         def object = getBuilderFor(TestNPropertiesOneConstructor).withA("a")
-                                                                 .withRest("b", 1, 1L)
+                                                                 .withB("b")
+                                                                 .withC(1)
+                                                                 .withD(1L)
                                                                  .build()
         assert object != null
         assert object instanceof TestNPropertiesOneConstructor
@@ -54,7 +56,9 @@ class FillingGenericBuilderUnitTest extends ValidationNotificationTestSetup{
     @Test
     def void "N withs in the incorrect order for K arguments, where N == K"(){
         def error = shouldFail GroovyRuntimeException, {getBuilderFor(TestNPropertiesOneConstructor).with1(1)
-                                                                                                          .withRest("a", "b", 1L)
+                                                                                                          .withA("a")
+                                                                                                          .withB("b")
+                                                                                                          .withC(1L)
                                                                                                           .build()}
         assert error.message.contains("Could not find matching constructor")
     }
@@ -62,14 +66,15 @@ class FillingGenericBuilderUnitTest extends ValidationNotificationTestSetup{
     @Test
     def void "Repeat with giving wrong arguments"(){
         def error = shouldFail GroovyRuntimeException, {getBuilderFor(TestNPropertiesOneConstructor).with("a")
-                                                                                                          .with(1, 1L)
+                                                                                                          .withA(1)
+                                                                                                          .withB(1L)
                                                                                                           .build()}
         assert error.message.contains("Could not find matching constructor")
     }
 
     @Test
     def void "Repeat with giving right arguments"(){
-        def entity = getBuilderFor(TestNPropertiesOneConstructor).with("a", "b").with(1, 1L).build()
+        def entity = getBuilderFor(TestNPropertiesOneConstructor).withA("a").withB("b").withC(1).withD(1L).build()
         assert entity != null
         assert entity instanceof TestNPropertiesOneConstructor
     }
@@ -90,8 +95,10 @@ class FillingGenericBuilderUnitTest extends ValidationNotificationTestSetup{
 
     @Test
     def void "Mixing with and set"(){
-        TestNPropertiesOneConstructor object = getBuilderFor(TestNPropertiesOneConstructor).with("a", "b")
-                                                                                           .with(1, 1L)
+        TestNPropertiesOneConstructor object = getBuilderFor(TestNPropertiesOneConstructor).withA("a")
+                                                                                           .withB("b")
+                                                                                           .withC(1)
+                                                                                           .withD(1L)
                                                                                            .setA("Changed")
                                                                                            .build()
 
@@ -100,8 +107,10 @@ class FillingGenericBuilderUnitTest extends ValidationNotificationTestSetup{
 
     @Test
     def void "Repeat set"(){
-        TestNPropertiesOneConstructor object = getBuilderFor(TestNPropertiesOneConstructor).with("a", "b")
-                                                                                           .with(1, 1L)
+        TestNPropertiesOneConstructor object = getBuilderFor(TestNPropertiesOneConstructor).withA("a")
+                                                                                           .withB("b")
+                                                                                           .withC(1)
+                                                                                           .withD(1L)
                                                                                            .setA("Changed")
                                                                                            .setB("Changed")
                                                                                            .setB("Changed2")

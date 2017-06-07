@@ -12,7 +12,7 @@ class SalesReceipt implements WorkEvent, BuilderAwareness{
     private DateTime date
     private amount
 
-    SalesReceipt() {
+    private SalesReceipt() {
         //Available only for reflection magic
         invalidForBuilder()
     }

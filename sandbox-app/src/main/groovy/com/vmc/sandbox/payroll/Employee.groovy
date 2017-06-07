@@ -5,44 +5,67 @@ import com.vmc.sandbox.payroll.payment.type.PaymentType
 import com.vmc.sandbox.payroll.unionAssociation.DefaultUnionAssociation
 import com.vmc.sandbox.payroll.unionAssociation.NoUnionAssociation
 import com.vmc.sandbox.payroll.unionAssociation.UnionAssociation
-import com.vmc.sandbox.validationNotification.imp.RequiredValidation
+import com.vmc.sandbox.validationNotification.builder.BuilderAwareness
 
-class Employee implements Entity{
+import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.executeNamedValidation
+import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.issueError
+
+class Employee implements Entity, BuilderAwareness{
 
     private String id = UUID.randomUUID()
 
     String name
-
-    private RequiredValidation requiredNameValidation = new RequiredValidation(this, [:], "employee.name", "payroll.employee.name.mandatory")
     String address
-
-    private RequiredValidation requiredAddressValidation = new RequiredValidation(this, [:], "employee.address", "payroll.employee.address.mandatory")
     String email
-
-    private RequiredValidation requiredEmailValidation = new RequiredValidation(this, [:], "employee.email", "payroll.employee.email.mandatory")
     private PaymentType paymentType
-
-    private RequiredValidation requiredPaymentTypeValidation = new RequiredValidation(this, [:], "employee.payment", "payroll.employee.payment.type.mandatory")
-
     private UnionAssociation unionAssociation = NoUnionAssociation.getInstance()
-
     private paymentAttachmentHandlers = []
+
+    private Employee() {
+        //Available only for reflection magic
+        invalidForBuilder()
+    }
+
+    //Should be used by builder only
+    protected Employee(String name, String address, String email, paymentArgs) {
+        executeNamedValidation("Validate new ServiceCharge", {
+            setName(name)
+            setAddress(address)
+            setEmail(email)
+            bePaid(*paymentArgs)
+        })
+    }
 
     @Override
     def getId() {
         return id
     }
 
-    public void setName(String name) {
-        requiredNameValidation.set(name, { this.@name = name })
+    public void setName(String aName) {
+        if(aName == null){
+            issueError(this, [name:"employee.name"], "payroll.employee.name.mandatory")
+            return
+        }
+
+        this.@name = aName
     }
 
-    public void setAddress(String address) {
-        requiredAddressValidation.set(address, { this.@address = address })
+    public void setAddress(String anAddress) {
+        if(anAddress == null){
+            issueError(this, [name:"employee.address"], "payroll.employee.address.mandatory")
+            return
+        }
+
+        this.@address = anAddress
     }
 
-    public void setEmail(String email) {
-        requiredEmailValidation.set(email, { this.@email = email })
+    public void setEmail(String anEmail) {
+        if(anEmail == null){
+            issueError(this, [name:"employee.email"], "payroll.employee.email.mandatory")
+            return
+        }
+
+        this.@email = anEmail
     }
 
     PaymentType getPaymentType() {
@@ -50,8 +73,11 @@ class Employee implements Entity{
     }
 
     public void bePaid(Class<PaymentType> aPaymentTypeClass, ...args){
-        def aPaymentType = aPaymentTypeClass.newPaymentType(this, *args)
-        requiredPaymentTypeValidation.set(aPaymentType, { this.@paymentType = aPaymentType })
+        if(aPaymentTypeClass == null || (args as List).isEmpty()){
+            issueError(this, [name:"employee.payment"], "payroll.employee.payment.type.mandatory")
+            return
+        }
+        paymentType = aPaymentTypeClass.newPaymentType(this, *args)
     }
 
     public void postPaymentAttachment(PaymentAttachment paymentAttachment){

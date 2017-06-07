@@ -18,27 +18,32 @@ class EmployeeUnitTest extends ValidationNotificationTestSetup{
     }
 
     Employee getEmployeeForChange(){
-        return new GenericBuilder(getEmployeeClass()).setName("test name")
-                                                     .setAddress("test address")
-                                                     .setEmail("test email")
-                                                     .bePaid(Monthly, 1000)
+        return new GenericBuilder(getEmployeeClass()).withName("test name")
+                                                     .withAddress("test address")
+                                                     .withEmail("test email")
+                                                     .withPaimentArgs(Monthly, 1000)
                                                      .build()
     }
 
     @Test
     public void "Create employee not providing mandatory information"(){
-        new GenericBuilder(getEmployeeClass()).build()
+        def employee = new GenericBuilder(getEmployeeClass()).withName(null)
+                                                             .withAddress(null)
+                                                             .withEmail(null)
+                                                             .withPaimentArgs(null)
+                                                             .build()
+        assert employee == null
         verifyMandatoryErrorsMessagesForCreationWereIssued()
     }
 
     @Test
     public void "Create employee providing mandatory information"(){
         def EmployeeBuilder = new GenericBuilder(getEmployeeClass())
-        Employee builtEmployee = EmployeeBuilder.setName("test name")
-                                           .setAddress("test address")
-                                           .setEmail("test email")
-                                           .bePaid(Monthly, 1000)
-                                           .build()
+        Employee builtEmployee = EmployeeBuilder.withName("test name")
+                                                .withAddress("test address")
+                                                .withEmail("test email")
+                                                .withPaimentArgs(Monthly, 1000)
+                                                .build()
 
         verifyEmployeeWithExpectedData(builtEmployee, "test name", "test address", "test email")
         assert builtEmployee.paymentType.class == Monthly
