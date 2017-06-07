@@ -1,6 +1,6 @@
 package com.vmc.sandbox.payroll
 
-import com.vmc.sandbox.payroll.payment.attachment.PaymentAttachment
+import com.vmc.sandbox.payroll.payment.attachment.WorkEvent
 import com.vmc.sandbox.payroll.payment.type.PaymentType
 import com.vmc.sandbox.payroll.unionAssociation.DefaultUnionAssociation
 import com.vmc.sandbox.payroll.unionAssociation.NoUnionAssociation
@@ -19,7 +19,7 @@ class Employee implements Entity, BuilderAwareness{
     String email
     private PaymentType paymentType
     private UnionAssociation unionAssociation = NoUnionAssociation.getInstance()
-    private paymentAttachmentHandlers = []
+    private workEventHandlers = []
 
     private Employee() {
         //Available only for reflection magic
@@ -80,16 +80,24 @@ class Employee implements Entity, BuilderAwareness{
         paymentType = aPaymentTypeClass.newPaymentType(this, *args)
     }
 
-    public void postPaymentAttachment(PaymentAttachment paymentAttachment){
-        paymentAttachmentHandlers.each {it.postPaymentAttachment(paymentAttachment)}
+    public void postWorkEvent(WorkEvent workEvent){
+        workEventHandlers.each {it.postWorkEvent(workEvent)}
     }
 
-    public void registerAsPaymentAttachmentHandler(handler) {
-        paymentAttachmentHandlers.add(handler)
+    public void registerAsWorkEventHandler(handler) {
+        workEventHandlers.add(handler)
     }
 
     public void beUnionMember(Integer rate) {
-        unionAssociation = new DefaultUnionAssociation(rate)
+        unionAssociation = DefaultUnionAssociation.newUnionAssociation(this, rate)
+    }
+
+    UnionAssociation getUnionAssociation() {
+        return unionAssociation
+    }
+
+    public getPaymentAttachments(){
+        return paymentType.getPaymentAttachments()
     }
 
     public Boolean isUnionMember() {

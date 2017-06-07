@@ -38,7 +38,7 @@ class Commission extends Monthly{
     }
 
     @Override
-    void postPaymentAttachment(PaymentAttachment paymentAttachment) {
+    void addPaymentAttachment(PaymentAttachment paymentAttachment) {
         if(!(paymentAttachment instanceof SalesReceipt)){
             issueError(this, [:], "employee.payment.commission.sales.receipt.payment.info.only")
             return

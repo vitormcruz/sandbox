@@ -43,7 +43,7 @@ class Monthly extends GenericPaymentType implements BuilderAwareness{
     }
 
     @Override
-    void postPaymentAttachment(PaymentAttachment paymentAttachment) {
+    void addPaymentAttachment(PaymentAttachment paymentAttachment) {
         throw new UnsupportedOperationException("Monthly payment does not have payment attachments")
     }
 }

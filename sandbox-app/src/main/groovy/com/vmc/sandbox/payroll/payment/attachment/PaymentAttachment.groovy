@@ -1,5 +1,5 @@
 package com.vmc.sandbox.payroll.payment.attachment
 
-interface PaymentAttachment {
+interface PaymentAttachment extends WorkEvent{
 
 }

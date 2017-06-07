@@ -12,7 +12,6 @@ import com.vmc.sandbox.payroll.testPreparation.IntegrationTestBase
 import com.vmc.sandbox.validationNotification.builder.imp.DataSetBuilder
 import org.joda.time.DateTime
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 
 import static groovy.test.GroovyAssert.shouldFail
@@ -116,7 +115,7 @@ class EmployeeIntTest extends IntegrationTestBase {
     def void "Post a time card"(){
         def expectedDate = new DateTime()
         def expectedTimeCard = TimeCard.newTimeCard(expectedDate, 6)
-        employeeUnion5.postPaymentAttachment(expectedTimeCard)
+        employeeUnion5.postWorkEvent(expectedTimeCard)
         employeeRepository.update(employeeUnion5)
         model.save()
         def employeeChanged = employeeRepository.get(employeeUnion5.id)
@@ -129,7 +128,7 @@ class EmployeeIntTest extends IntegrationTestBase {
     def void "Post a sales receipt"(){
         def expectedDate = new DateTime()
         def expectedSalesReceipt = SalesReceipt.newSalesReceipt(expectedDate, 200)
-        employee2.postPaymentAttachment(expectedSalesReceipt)
+        employee2.postWorkEvent(expectedSalesReceipt)
         employeeRepository.update(employee2)
         model.save()
         def employeeChanged = employeeRepository.get(employee2.id)
@@ -139,23 +138,22 @@ class EmployeeIntTest extends IntegrationTestBase {
     }
 
     @Test
-    @Ignore("Will refactor a lot before I continue to implement this feature.")
     def void "Post an Union charge"(){
         def expectedDate = new DateTime()
         def expectedServiceCharge = ServiceCharge.newServiceCharge(expectedDate, 5)
-        employeeUnion5.postPaymentAttachment(expectedServiceCharge)
+        employeeUnion5.postWorkEvent(expectedServiceCharge)
         employeeRepository.update(employeeUnion5)
         model.save()
         def employeeChanged = employeeRepository.get(employeeUnion5.id)
         assert validationObserver.successful() : "${validationObserver.getCommaSeparatedErrors()}"
-        assert employeeChanged.paymentType.getPaymentAttachments().collect{ it.getDate().toString() + "_" + it.getAmount()} ==
+        assert employeeChanged.unionAssociation.getCharges().collect{ it.getDate().toString() + "_" + it.getAmount()} ==
                 [expectedDate.toString() + "_" + 5]
     }
 
     @Test
     def void "Post attachment to monthly paid employee"(){
         def e = shouldFail UnsupportedOperationException,
-                           {employee1.postPaymentAttachment(SalesReceipt.newSalesReceipt(new DateTime(), 200))}
+                           {employee1.postWorkEvent(SalesReceipt.newSalesReceipt(new DateTime(), 200))}
 
         assert e.getMessage() == "Monthly payment does not have payment attachments"
     }

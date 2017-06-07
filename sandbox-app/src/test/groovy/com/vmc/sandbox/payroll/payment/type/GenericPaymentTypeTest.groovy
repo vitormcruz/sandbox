@@ -1,7 +1,8 @@
 package com.vmc.sandbox.payroll.payment.type
 
 import com.vmc.sandbox.payroll.Employee
-import com.vmc.sandbox.payroll.payment.attachment.WorkEvent
+import com.vmc.sandbox.payroll.payment.attachment.PaymentAttachment
+import com.vmc.sandbox.payroll.payment.attachment.UnionCharge
 import groovy.test.GroovyAssert
 import org.junit.Test
 
@@ -20,17 +21,19 @@ class GenericPaymentTypeTest {
     }
 
     @Test
-    def void "Adding a work event attachment"(){
+    def void "Adding a payment attachment"(){
         def paymentType = new GenericPaymentTypeForTest(new Employee())
-        def workEventExpected = [] as WorkEvent
-        paymentType.postPaymentAttachment(workEventExpected)
-        assert paymentType.getPaymentAttachments().contains(workEventExpected)
+        def paymentAttachmentExpected = [] as PaymentAttachment
+        paymentType.postWorkEvent(paymentAttachmentExpected)
+        assert paymentType.getPaymentAttachments().contains(paymentAttachmentExpected)
     }
 
     @Test
-    def void "Adding a non work event attachment"(){
-        def expectedEmployee = new Employee()
-        assert new GenericPaymentTypeForTest(expectedEmployee).employee == expectedEmployee
+    def void "Adding a non payment attachment"(){
+        def paymentType = new GenericPaymentTypeForTest([] as Employee)
+        def nonPaymentAttachment = [] as UnionCharge
+        paymentType.postWorkEvent(nonPaymentAttachment)
+        assert !paymentType.getPaymentAttachments().contains(nonPaymentAttachment)
     }
 
     public class GenericPaymentTypeForTest extends GenericPaymentType{

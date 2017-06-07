@@ -7,7 +7,7 @@ import org.joda.time.DateTime
 import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.executeNamedValidation
 import static com.vmc.sandbox.validationNotification.ApplicationValidationNotifier.issueError
 
-class TimeCard implements WorkEvent, BuilderAwareness{
+class TimeCard implements PaymentAttachment, BuilderAwareness{
 
     private DateTime date
     private Integer hours

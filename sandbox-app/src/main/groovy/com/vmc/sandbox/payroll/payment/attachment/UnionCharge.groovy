@@ -1,6 +1,6 @@
 package com.vmc.sandbox.payroll.payment.attachment
 
 
-interface UnionCharge extends PaymentAttachment{
+interface UnionCharge extends WorkEvent{
 
 }

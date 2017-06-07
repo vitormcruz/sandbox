@@ -1,8 +1,8 @@
 package com.vmc.sandbox.payroll.payment.type
 
 import com.vmc.sandbox.payroll.Employee
+import com.vmc.sandbox.payroll.payment.attachment.PaymentAttachment
 import com.vmc.sandbox.payroll.payment.attachment.TimeCard
-import com.vmc.sandbox.payroll.payment.attachment.WorkEvent
 import com.vmc.sandbox.validationNotification.builder.BuilderAwareness
 import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
 
@@ -43,12 +43,12 @@ class Hourly extends GenericPaymentType implements BuilderAwareness{
     }
 
     @Override
-    void addWorkEvent(WorkEvent workEvent) {
-        if(!(workEvent instanceof TimeCard)){
+    void addPaymentAttachment(PaymentAttachment paymentAttachment) {
+        if(!(paymentAttachment instanceof TimeCard)){
             issueError(this, [:], "employee.payment.hourly.time.card.payment.info.only")
             return
         }
 
-        this.@workEventAttachments.add(workEvent)
+        this.@workEventAttachments.add(paymentAttachment)
     }
 }

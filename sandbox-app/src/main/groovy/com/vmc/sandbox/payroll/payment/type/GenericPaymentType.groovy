@@ -17,7 +17,7 @@ abstract class GenericPaymentType implements PaymentType{
     public GenericPaymentType(Employee anEmployee){
         checkArgument(anEmployee != null, "Employee must be provided for payment types, but I got it null")
         this.employee = anEmployee
-        anEmployee.registerAsPaymentAttachmentHandler(this)
+        anEmployee.registerAsWorkEventHandler(this)
     }
 
     @Override
@@ -26,14 +26,14 @@ abstract class GenericPaymentType implements PaymentType{
     }
 
     @Override
-    void postPaymentAttachment(PaymentAttachment paymentAttachment) {
-        if(paymentAttachment instanceof WorkEvent){
-            addWorkEvent(paymentAttachment)
+    void postWorkEvent(WorkEvent workEvent) {
+        if(workEvent instanceof PaymentAttachment){
+            addPaymentAttachment(workEvent)
         }
     }
 
-    void addWorkEvent(WorkEvent workEvent){
-        workEventAttachments.add(workEvent)
+    void addPaymentAttachment(PaymentAttachment paymentAttachment){
+        workEventAttachments.add(paymentAttachment)
     }
 
     public Set<PaymentAttachment> getPaymentAttachments(){
