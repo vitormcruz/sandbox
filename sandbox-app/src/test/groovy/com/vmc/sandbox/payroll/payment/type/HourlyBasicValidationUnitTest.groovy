@@ -8,7 +8,7 @@ class HourlyBasicValidationUnitTest extends ValidationNotificationTestSetup{
 
     @Test
     def void "Validate positive Hour Rate"(){
-        def hourRate = Hourly.newPaymentType(new Employee(), 3)
+        def hourRate = Hourly.newPaymentType([] as Employee, 3)
         assert hourRate != null
         assert hourRate.getHourRate() == 3
     }
@@ -32,6 +32,6 @@ class HourlyBasicValidationUnitTest extends ValidationNotificationTestSetup{
     }
 
     public Hourly getHourlyWith(Integer hourRate) {
-        Hourly.newPaymentType(new Employee(), hourRate)
+        Hourly.newPaymentType([] as Employee, hourRate)
     }
 }

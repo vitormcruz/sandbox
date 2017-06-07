@@ -32,6 +32,6 @@ class MonthlyBasicValidationUnitTest extends ValidationNotificationTestSetup{
     }
 
     public Monthly getMonthlyPaymentTypeWith(Integer salary) {
-        return Monthly.newPaymentType(new Employee(), salary)
+        return Monthly.newPaymentType([] as Employee, salary)
     }
 }

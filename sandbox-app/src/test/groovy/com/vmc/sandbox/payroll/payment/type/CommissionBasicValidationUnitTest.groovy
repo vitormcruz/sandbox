@@ -31,11 +31,11 @@ class CommissionBasicValidationUnitTest extends MonthlyBasicValidationUnitTest{
     }
 
     Commission getCommissionPaymentTypeWith(Integer salary, Integer rate) {
-        return Commission.newPaymentType(new Employee(), salary, rate)
+        return Commission.newPaymentType([] as Employee, salary, rate)
     }
 
     @Override
     Monthly getMonthlyPaymentTypeWith(Integer salary) {
-        return Commission.newPaymentType(new Employee(), salary, 500)
+        return Commission.newPaymentType([] as Employee, salary, 500)
     }
 }

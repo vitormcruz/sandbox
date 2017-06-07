@@ -16,13 +16,13 @@ class GenericPaymentTypeTest {
 
     @Test
     def void "Provide a valid employee"(){
-        def expectedEmployee = new Employee()
+        def expectedEmployee = [] as Employee
         assert new GenericPaymentTypeForTest(expectedEmployee).employee == expectedEmployee
     }
 
     @Test
     def void "Adding a payment attachment"(){
-        def paymentType = new GenericPaymentTypeForTest(new Employee())
+        def paymentType = new GenericPaymentTypeForTest([] as Employee)
         def paymentAttachmentExpected = [] as PaymentAttachment
         paymentType.postWorkEvent(paymentAttachmentExpected)
         assert paymentType.getPaymentAttachments().contains(paymentAttachmentExpected)
