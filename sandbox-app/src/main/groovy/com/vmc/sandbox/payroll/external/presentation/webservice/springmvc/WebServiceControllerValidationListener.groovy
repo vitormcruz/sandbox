@@ -1,7 +1,9 @@
 package com.vmc.sandbox.payroll.external.presentation.webservice.springmvc
 
-import org.springframework.http.ResponseEntity
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.vmc.sandbox.validationNotification.ValidationObserver
+import org.apache.http.HttpStatus
+import spark.Response
 
 public class WebServiceControllerValidationListener implements ValidationObserver{
 
@@ -9,14 +11,16 @@ public class WebServiceControllerValidationListener implements ValidationObserve
     private currentErrors
     private mandatoryObligations = [:]
     private Boolean successful = true
-    def private generateResponseStrategy
+    def private fillResponseStrategy
     def private issueErrorStrategy
     def body
+
+    private ObjectMapper mapper = new ObjectMapper()
 
     WebServiceControllerValidationListener() {
         currentErrors = new ArrayList()
         errorsByValidation = [null: currentErrors]
-        generateResponseStrategy = responseOkStrategy
+        fillResponseStrategy = responseOkStrategy
         issueErrorStrategy = issueFirstErrorStrategy
     }
 
@@ -47,7 +51,7 @@ public class WebServiceControllerValidationListener implements ValidationObserve
 
     def private issueFirstErrorStrategy = { error ->
         issueErrorOnly(error)
-        generateResponseStrategy = responseFailStrategy
+        fillResponseStrategy = responseFailStrategy
         successful = false
         issueFirstErrorStrategy = issueErrorOnly
     }
@@ -66,17 +70,19 @@ public class WebServiceControllerValidationListener implements ValidationObserve
         return successful && mandatoryObligations.isEmpty()
     }
 
-    public generateResponse(){
+    public fillResponse(Response response){
         mandatoryObligations.each {it.value()}
         mandatoryObligations.clear()
-        return generateResponseStrategy()
+        fillResponseStrategy(response)
     }
 
-    def private responseOkStrategy = {
-        return ResponseEntity.ok(body)
+    def private responseOkStrategy = {Response res ->
+        res.status(HttpStatus.SC_OK)
+        res.body(mapper.writeValueAsString(body))
     }
 
-    def private responseFailStrategy = {
-        return ResponseEntity.badRequest().body(errorsByValidation)
+    def private responseFailStrategy = {Response res ->
+        res.status(HttpStatus.SC_BAD_REQUEST)
+        res.body(mapper.writeValueAsString(errorsByValidation))
     }
 }

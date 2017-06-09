@@ -28,7 +28,7 @@ class Employee implements Entity, BuilderAwareness{
 
     //Should be used by builder only
     protected Employee(String name, String address, String email, paymentArgs) {
-        executeNamedValidation("Validate new ServiceCharge", {
+        executeNamedValidation("Validate new Employee", {
             setName(name)
             setAddress(address)
             setEmail(email)

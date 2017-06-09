@@ -1,46 +1,50 @@
 package com.vmc.sandbox.payroll.external.presentation.webservice.springmvc
 
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
 import com.vmc.sandbox.concurrency.ModelSnapshot
 import com.vmc.sandbox.payroll.Employee
-import com.vmc.sandbox.payroll.EmployeeRepository
+import com.vmc.sandbox.payroll.Repository
+import com.vmc.sandbox.payroll.external.presentation.converter.EmployeeJsonConverter
 import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestBody
+import spark.Request
+import spark.Response
 
-@RequestMapping(value = "api/payroll/")
-@RestController
 class EmployeeWebServiceController implements BasicControllerOperationsTrait{
 
-    private EmployeeRepository employeeRepository = EmployeeRepository.smartNewFor(EmployeeWebServiceController)
-    private ModelSnapshot model = ModelSnapshot.smartNewFor(EmployeeWebServiceController)
+    private Repository<Employee> employeeRepository
+    private ModelSnapshot model
 
-    @RequestMapping(value = "/employee", method = RequestMethod.POST)
-    ResponseEntity<Employee> newEmployee(@RequestBody Map newEmployeeMap) {
+    EmployeeWebServiceController(Repository<Employee> anEmployeeRepo, ModelSnapshot aModel) {
+        this.employeeRepository = anEmployeeRepo
+        this.model = aModel
+    }
+
+    void newEmployee(Request request, Response response) {
         WebServiceControllerValidationListener listener = getValidationListener()
-        GenericBuilder employeeBuilder = new GenericBuilder(Employee).applyMap(newEmployeeMap)
+        GenericBuilder employeeBuilder = EmployeeJsonConverter.builderFromJson(request.body())
         employeeBuilder.buildAndDoOnSuccess { newEmployee ->
             employeeRepository.add(newEmployee)
             listener.setBody(newEmployee)
             model.save()
         }
-        return listener.generateResponse();
+        listener.fillResponse(response);
     }
 
-    @RequestMapping(value = "/employee/{employeeId}", method = RequestMethod.PATCH)
     ResponseEntity<Employee> changeEmployee(@PathVariable Long employeeId, @RequestBody Map changedAttributes) {
         WebServiceControllerValidationListener listener = getValidationListener()
         def changedEmployee = getResource(employeeId, employeeRepository)
-        changedEmployee.applyMap(changedAttributes)
+        changedEmployee.applySetMap(changedAttributes)
         if(listener.successful()){
             employeeRepository.update(changedEmployee)
             listener.setBody(changedEmployee)
             model.save()
         }
 
-        return listener.generateResponse()
+        return listener.fillResponse()
     }
 
-    @RequestMapping(value = "/employee/{employeeId}", method = RequestMethod.DELETE)
     ResponseEntity<Employee> deleteEmployee(@PathVariable Long employeeId) {
         WebServiceControllerValidationListener listener = getValidationListener()
         Employee employeeSubjectedRemoval = getResource(employeeId, employeeRepository)
@@ -49,10 +53,9 @@ class EmployeeWebServiceController implements BasicControllerOperationsTrait{
             listener.setBody(employeeSubjectedRemoval)
             model.save()
         }
-        return listener.generateResponse();
+        return listener.fillResponse();
     }
 
-    @RequestMapping(value = "/employee", method = RequestMethod.GET)
     Collection<Employee> listEmployees() {
         return employeeRepository
     }

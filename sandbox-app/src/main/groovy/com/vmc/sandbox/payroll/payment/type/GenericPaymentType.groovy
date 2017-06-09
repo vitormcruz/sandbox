@@ -4,7 +4,7 @@ import com.vmc.sandbox.payroll.Employee
 import com.vmc.sandbox.payroll.payment.attachment.PaymentAttachment
 import com.vmc.sandbox.payroll.payment.attachment.WorkEvent
 
-import static com.google.gwt.core.shared.impl.InternalPreconditions.checkArgument
+import static com.google.common.base.Preconditions.checkArgument
 
 abstract class GenericPaymentType implements PaymentType{
 

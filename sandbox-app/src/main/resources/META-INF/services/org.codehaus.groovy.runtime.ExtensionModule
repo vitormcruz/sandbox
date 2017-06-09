@@ -1,4 +1,4 @@
 moduleName=sandbox-module
 moduleVersion=1.0
-extensionClasses=com.vmc.sandbox.payroll.external.simpleConverter.ObjectConvertionExtensions
-staticExtensionClasses=
+extensionClasses=
+staticExtensionClasses=com.vmc.sandbox.payroll.external.presentation.converter.PaymentTypeConverterExtensions

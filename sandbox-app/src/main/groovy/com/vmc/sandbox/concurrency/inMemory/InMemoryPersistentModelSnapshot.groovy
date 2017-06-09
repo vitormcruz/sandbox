@@ -5,8 +5,12 @@ import com.vmc.sandbox.concurrency.ModelSnapshot
 
 class InMemoryPersistentModelSnapshot implements ModelSnapshot{
 
-    private AtomicBlock atomicBlock = AtomicBlock.smartNewFor(InMemoryPersistentModelSnapshot)
+    private AtomicBlock atomicBlock
     private modelObjects = []
+
+    InMemoryPersistentModelSnapshot(AtomicBlock atomicBlock) {
+        this.atomicBlock = atomicBlock
+    }
 
     @Override
     def synchronized void save() {
