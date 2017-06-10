@@ -5,7 +5,7 @@ import com.vmc.sandbox.validationNotification.ValidationObserver
 import org.apache.http.HttpStatus
 import spark.Response
 
-public class WebServiceControllerValidationListener implements ValidationObserver{
+public class SparkControllerValidationListener implements ValidationObserver{
 
     private Map<String, Collection> errorsByValidation
     private currentErrors
@@ -17,7 +17,7 @@ public class WebServiceControllerValidationListener implements ValidationObserve
 
     private ObjectMapper mapper = new ObjectMapper()
 
-    WebServiceControllerValidationListener() {
+    SparkControllerValidationListener() {
         currentErrors = new ArrayList()
         errorsByValidation = [null: currentErrors]
         fillResponseStrategy = responseOkStrategy

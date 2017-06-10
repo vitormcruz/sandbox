@@ -1,6 +1,6 @@
 package com.vmc.sandbox.payroll
 
-import com.vmc.sandbox.concurrency.ModelSnapshot
+import com.vmc.sandbox.payroll.external.config.ServiceLocator
 import com.vmc.sandbox.payroll.external.persistence.inMemory.repository.CommonInMemoryRepository
 import com.vmc.sandbox.payroll.payment.attachment.SalesReceipt
 import com.vmc.sandbox.payroll.payment.attachment.ServiceCharge
@@ -18,8 +18,7 @@ import static groovy.test.GroovyAssert.shouldFail
 
 class EmployeeIntTest extends IntegrationTestBase {
 
-    private CommonInMemoryRepository<Employee> employeeRepository
-    private ModelSnapshot model
+    private CommonInMemoryRepository<Employee> employeeRepository = ServiceLocator.instance.employeeRepository()
     private DataSetBuilder employeeBuilder
     private Employee employee1
     private Employee employee2
@@ -30,8 +29,6 @@ class EmployeeIntTest extends IntegrationTestBase {
     @Before
     public void setUp(){
         super.setUp()
-        employeeRepository = CommonInMemoryRepository.smartNewFor(EmployeeIntTest)
-        model = ModelSnapshot.smartNewFor(EmployeeIntTest)
         employeeBuilder = new DataSetBuilder(getEmployeeClass(), {
             employeeRepository.add(it)
             model.save()

@@ -73,7 +73,7 @@ class Employee implements Entity, BuilderAwareness{
     }
 
     public void bePaid(Class<PaymentType> aPaymentTypeClass, ...args){
-        if(aPaymentTypeClass == null || (args as List).isEmpty()){
+        if(aPaymentTypeClass == null || args == null || (args as List).isEmpty()){
             issueError(this, [name:"employee.payment"], "payroll.employee.payment.type.mandatory")
             return
         }

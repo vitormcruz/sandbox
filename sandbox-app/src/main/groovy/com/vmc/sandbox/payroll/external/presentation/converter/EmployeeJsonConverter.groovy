@@ -1,17 +1,17 @@
 package com.vmc.sandbox.payroll.external.presentation.converter
 
-import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.common.base.Preconditions
 import com.vmc.sandbox.payroll.Employee
+import com.vmc.sandbox.payroll.external.config.ServiceLocator
 import com.vmc.sandbox.payroll.payment.type.PaymentType
 import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
 import org.apache.commons.lang.StringUtils
 import org.reflections.Reflections
 
-class EmployeeJsonConverter {
+class EmployeeJsonConverter implements JsonConverter{
 
-    private static ObjectMapper mapper = new ObjectMapper().configure(MapperFeature.AUTO_DETECT_FIELDS, false)
+    private static ObjectMapper mapper = ServiceLocator.getInstance().mapper()
     private static Set<Class> paymentTypes = new Reflections("com.vmc.sandbox.payroll.payment.type").getSubTypesOf(PaymentType)
 
     String id
@@ -24,6 +24,17 @@ class EmployeeJsonConverter {
     Integer commissionRate
     Integer hourRate
     Integer rate
+
+    EmployeeJsonConverter() {
+    }
+
+    EmployeeJsonConverter(Employee employee) {
+        id = employee.id
+        name = employee.name
+        address = employee.address
+        employee.paymentType.fillConverterWithParams(this)
+
+    }
 
     static builderFromJson(String string){
         def employeeConverter = mapper.readValue(string, EmployeeJsonConverter)
@@ -46,5 +57,10 @@ class EmployeeJsonConverter {
         paymentTypeClass = paymentTypes.find { it.getSimpleName().equalsIgnoreCase(aPaymentType) }
         Preconditions.checkArgument(aPaymentType!=null, "Json formmat is invalid: you must specify a payment type of one of the following alternatives:" +
                                                         StringUtils.join(paymentTypes.collect {it.getSimpleName()}, ", "))
+    }
+
+    @Override
+    String toJson() {
+        return mapper.writeValueAsString(this)
     }
 }

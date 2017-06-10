@@ -45,13 +45,13 @@ class PayrollJettyApplication {
         servletVaadinHolder.setInitParameter("UI", "com.vmc.sandbox.payroll.external.presentation.vaadin.PayrollUI")
         servletVaadinHolder.setInitParameter("async-supported", "true")
         servletVaadinHolder.setInitParameter("org.atmosphere.useWebSocketAndServlet3", "true")
-        servletVaadinHolder
+        return servletVaadinHolder
     }
 
     static FilterHolder getConfiguredSparkFilterHolder() {
         def sparkFilter = new SparkFilter()
         def sparkFilterHolder = new FilterHolder(sparkFilter)
-        sparkFilterHolder.setInitParameter("applicationClass", "com.vmc.sandbox.payroll.external.config.PayrollSparkConfiguration")
-        sparkFilterHolder
+        sparkFilterHolder.setInitParameter("applicationClass", "com.vmc.sandbox.payroll.external.config.PayrollSparkRoutesConfiguration")
+        return sparkFilterHolder
     }
 }

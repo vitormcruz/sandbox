@@ -4,10 +4,10 @@ import com.vmc.sandbox.validationNotification.ApplicationValidationNotifier
 
 trait BasicControllerOperationsTrait {
 
-    public WebServiceControllerValidationListener getValidationListener() {
-        def listener = new WebServiceControllerValidationListener()
+    public SparkControllerValidationListener getValidationListener() {
+        def listener = new SparkControllerValidationListener()
         ApplicationValidationNotifier.addObserver(listener)
-        listener
+        return listener
     }
 
     public Object getResource(long employeeId, resourceRepository) {

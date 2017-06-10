@@ -7,7 +7,6 @@ import com.vmc.sandbox.payroll.external.presentation.converter.EmployeeJsonConve
 import com.vmc.sandbox.validationNotification.builder.imp.GenericBuilder
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestBody
 import spark.Request
 import spark.Response
 
@@ -22,18 +21,18 @@ class EmployeeWebServiceController implements BasicControllerOperationsTrait{
     }
 
     void newEmployee(Request request, Response response) {
-        WebServiceControllerValidationListener listener = getValidationListener()
+        def listener = getValidationListener()
         GenericBuilder employeeBuilder = EmployeeJsonConverter.builderFromJson(request.body())
         employeeBuilder.buildAndDoOnSuccess { newEmployee ->
             employeeRepository.add(newEmployee)
-            listener.setBody(newEmployee)
+            listener.setBody(newEmployee.asJson())
             model.save()
         }
         listener.fillResponse(response);
     }
 
-    ResponseEntity<Employee> changeEmployee(@PathVariable Long employeeId, @RequestBody Map changedAttributes) {
-        WebServiceControllerValidationListener listener = getValidationListener()
+    void changeEmployee(Request request, Response response) {
+        SparkControllerValidationListener listener = getValidationListener()
         def changedEmployee = getResource(employeeId, employeeRepository)
         changedEmployee.applySetMap(changedAttributes)
         if(listener.successful()){
@@ -42,11 +41,11 @@ class EmployeeWebServiceController implements BasicControllerOperationsTrait{
             model.save()
         }
 
-        return listener.fillResponse()
+        listener.fillResponse(response)
     }
 
     ResponseEntity<Employee> deleteEmployee(@PathVariable Long employeeId) {
-        WebServiceControllerValidationListener listener = getValidationListener()
+        SparkControllerValidationListener listener = getValidationListener()
         Employee employeeSubjectedRemoval = getResource(employeeId, employeeRepository)
         if(listener.successful()) {
             employeeRepository.remove(employeeSubjectedRemoval)
