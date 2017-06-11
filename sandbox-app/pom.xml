@@ -158,14 +158,6 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.detangle.smartFactory</groupId>
-            <artifactId>smartFactory</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/libs/smartFactory-0.1.0-SNAPSHOT.jar</systemPath>
-        </dependency>
-
-        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>1.9.5</version>

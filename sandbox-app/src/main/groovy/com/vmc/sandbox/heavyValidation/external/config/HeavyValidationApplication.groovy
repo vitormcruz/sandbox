@@ -1,10 +1,7 @@
 package com.vmc.sandbox.heavyValidation.external.config
 
 import com.vaadin.server.VaadinServlet
-import com.vmc.sandbox.heavyValidation.AsyncHeavyValidation
 import com.vmc.sandbox.heavyValidation.external.messaging.MessageReceiver
-import com.vmc.sandbox.heavyValidation.external.messaging.jms.JMSAsyncHeavyValidation
-import org.detangle.smartfactory.SmartFactory
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
@@ -34,6 +31,7 @@ class HeavyValidationApplication extends SpringBootServletInitializer{
 
     def static receiver = new MessageReceiver()
     public static final String MAIL_BOX = "com.vmc.sandbox.heavyValidation_message-box"
+    public static JmsTemplate jmsTemplate
 
     /**
      * The first method, configure, is used to define this class as the configuration class of spring in a normal
@@ -89,9 +87,7 @@ class HeavyValidationApplication extends SpringBootServletInitializer{
         container.setConnectionFactory(connectionFactory);
         container.setDestinationName(MAIL_BOX);
 
-        def heavyValidationConfig = SmartFactory.instance().configurationFor("com.vmc.sandbox.heavyValidation.**")
-        heavyValidationConfig.put(JmsTemplate, context.getBean(JmsTemplate.class))
-        heavyValidationConfig.put(AsyncHeavyValidation, new JMSAsyncHeavyValidation())
+        jmsTemplate = context.getBean(JmsTemplate.class)
         return container;
     }
 }

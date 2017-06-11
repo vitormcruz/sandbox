@@ -12,7 +12,7 @@ import javax.jms.Session
 
 class JMSAsyncHeavyValidation implements AsyncHeavyValidation {
 
-    private JmsTemplate jmsTemplate = JmsTemplate.smartNewFor(JMSAsyncHeavyValidation)
+    private JmsTemplate jmsTemplate = HeavyValidationApplication.jmsTemplate
 
     @Override
     def doValidation(AsyncHeavyValidation.NotifyProgress notifyFunction) {

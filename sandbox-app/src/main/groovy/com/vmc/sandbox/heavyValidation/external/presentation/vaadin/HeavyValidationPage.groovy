@@ -6,12 +6,13 @@ import com.vaadin.ui.Button
 import com.vaadin.ui.CssLayout
 import com.vaadin.ui.ProgressBar
 import com.vmc.sandbox.heavyValidation.AsyncHeavyValidation
+import com.vmc.sandbox.heavyValidation.external.messaging.jms.JMSAsyncHeavyValidation
 
 class HeavyValidationPage extends CssLayout{
     private ProgressBar progressBar
     private Property<Float> progressBarDataSource
     private Button button
-    private AsyncHeavyValidation asyncHeavyValidation = AsyncHeavyValidation.smartNewFor(HeavyValidationPage)
+    private AsyncHeavyValidation asyncHeavyValidation = new JMSAsyncHeavyValidation()
 
     HeavyValidationPage() {
         button = new Button("Validate")
