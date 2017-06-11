@@ -12,43 +12,21 @@ Project in which I experiment various technologies and techniques.
 
 I will eventually create a build based on Graddle while maintaining maven working so that I can compare them.
 
-####Spring Boot with spring-boot-starter-web (using spring parent)
+####~~Spring Boot with spring-boot-starter-web (using spring parent)~~
 
-No XML, please.
+<fill>
 
-####Vaadin + Spring MVC
+####~~Vaadin + Spring MVC~~
 
-Experimenting Vaadin and exploring how I could use it alongside Spring MVC.
+_Using [Spark](http://sparkjava.com) now. See _
 
-* Vaadin UI is mapped to /com.vmc.sandbox/*
-* Spring "/" redirects to com.vmc.sandbox/
-* Spring responds to /hello.do with a hello world message :)
+####~~Validation using an uniform notification pattern~~
 
-####Validation using an uniform notification pattern
+_Moved to_
+ 
+####~~Implementation of Payroll~~
 
-There are lots of validation frameworks with different mechanics. I have seen frameworks that:
-
-1. Relies on annotations, which tent to be rigid toward validation using the annotations on single properties only. 
-Also, I don't see annotations as a good way to make validations, since validation is not a meta-information of a 
-property. I also like to stick to the common OO facilities, using classes and messages to create behavior leverages 
-all the advantages of the language and facilitates reuse and flexibility;
-2. Uses callbacks in a very flexible but complicated way; 
-3. Uses XML. XML are less a problem because of its verbose nature than for its rigidity;
-
-I don't find good any of the approaches I looked at, but I couldn't think of a better solution also. Them I read the 
-great book [A Mentoring Course in Smalltalk](http://www.lulu.com/shop/andres-valloud/a-mentoring-course-on-smalltalk/paperback/product-3788890.html), 
-which describes a very interesting way of doing validation and an easy way to implement it. The author compare 
-Testing to Validation, and realize that they are the same, since Testing is just a specific kind of Validation. 
-The family of xUnit started in Smalltalk, so they have a SUnit, and since Testing is validation, the author proposes 
-changing SUnit and create a validation framework that has, for free, all of SUnit features.
-
-I did here was the same, but with JUnit, I like the results, but then I decided to use a purely 
-[notification pattern](http://martinfowler.com/eaaDev/Notification.html), and I thinks it is better since I can cut the 
- dependency with JUnit, make things easier (JUnit provides notifications) and specialized. 
-
-####Implementation of Payroll
-
-TODO
+_Moved to_
 
 ####~~Validation based on JUnit~~
 
